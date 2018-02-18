@@ -1,0 +1,469 @@
+/* ========================================================================== */
+/* ================================ MIXINS ================================== */
+/* ========================================================================== */
+/* ================================ GENERAL ================================== */
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-sizing: border-box; }
+  *:focus {
+    border: 2px solid red !important; }
+
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4; }
+
+body {
+  margin: auto;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  font-family: "Source Code Pro", "Consolas", "Inconsolata", monospace;
+  font-size: 0.8em; }
+
+button {
+  outline: none !important;
+  background: none;
+  border: none; }
+
+a {
+  text-decoration: none;
+  color: #222; }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0; }
+  ul li {
+    font-size: 12px; }
+
+/* checkbox buttons */
+input[type=checkbox] {
+  position: absolute;
+  top: -9999px;
+  left: -9999px; }
+  input[type=checkbox]:checked + .checkbox-label {
+    background: #444;
+    color: #eee; }
+
+label.checkbox-label, button {
+  border-radius: 1px;
+  text-align: center;
+  width: 100%;
+  color: #444;
+  background: #eee;
+  border: 1px solid #e1e1e1;
+  display: inline-block;
+  cursor: pointer;
+  height: 25px;
+  padding: 2px 7px; }
+
+label.checkbox-label {
+  background: #fff;
+  border-color: #bbb; }
+
+button:active {
+  background: #d5d5d5; }
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+#holder {
+  background-color: #EEE;
+  height: 100vh;
+  width: 100%; }
+
+.show-hide {
+  position: absolute;
+  background: #eee;
+  color: #444;
+  border: 1px solid #777;
+  border-right: none;
+  font-size: 15px;
+  height: 20px; }
+  .show-hide i, .show-hide span {
+    position: relative;
+    top: -3px; }
+
+.dropdown {
+  position: relative;
+  display: inline-block; }
+  .dropdown .dropdown-content {
+    box-shadow: -2px 2px 25px rgba(0, 0, 0, 0.1);
+    display: none;
+    position: absolute; }
+  .dropdown:hover .dropdown-content {
+    display: block; }
+
+.icon-button {
+  background: none;
+  border: none;
+  transition: all 0.1s ease-in-out;
+  color: #777;
+  transform: scaleX(1) scaleY(1) scaleZ(1);
+  position: relative;
+  z-index: 100;
+  color: #444;
+  font-size: 1.8em;
+  width: 30px;
+  height: 100%; }
+  .icon-button:hover {
+    transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
+    color: #222;
+    z-index: 500; }
+  .icon-button:active {
+    transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
+    color: #222; }
+  .icon-button:disabled {
+    color: #bbb; }
+    .icon-button:disabled:hover {
+      color: #bbb;
+      transform: scaleX(1) scaleY(1) scaleZ(1); }
+  .icon-button:active {
+    background: none; }
+  .icon-button i {
+    position: relative;
+    top: 1px; }
+
+.inst-selectors {
+  overflow: hidden;
+  position: absolute;
+  height: 290px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none; }
+  .inst-selectors ul.inst-list {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    height: 100%; }
+    .inst-selectors ul.inst-list::-webkit-scrollbar {
+      display: none; }
+    .inst-selectors ul.inst-list li.inst-option {
+      pointer-events: auto;
+      position: relative;
+      top: calc(100% - 88px);
+      background: #ccc;
+      text-align: center;
+      width: 25%;
+      min-width: 270px;
+      font-size: 12px;
+      display: inline-block;
+      color: #fff; }
+      .inst-selectors ul.inst-list li.inst-option .inst-title {
+        background: #aaa;
+        height: 21px;
+        text-align: left;
+        position: relative; }
+        .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select {
+          position: relative;
+          top: 2px;
+          left: 0;
+          width: 100%;
+          background: none;
+          color: #fff;
+          border: none;
+          box-shadow: none !important; }
+          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select.is-open {
+            position: relative;
+            z-index: 1000; }
+            .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select.is-open .Select-arrow {
+              border-bottom-color: #fff; }
+          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-value-label {
+            color: #fff;
+            padding-left: 2px; }
+          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-input {
+            color: #fff; }
+          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer {
+            top: auto;
+            bottom: calc(100% + 2px);
+            border: none; }
+            .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer div {
+              background: none;
+              color: #fff; }
+            .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option {
+              padding-left: 8px; }
+              .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-selected {
+                background-color: rgba(255, 255, 255, 0.4) !important; }
+                .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-selected div, .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-selected span {
+                  background: none !important;
+                  color: #fff !important; }
+              .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-focused {
+                background-color: rgba(255, 255, 255, 0.2) !important; }
+                .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-focused div, .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-focused span {
+                  background: none !important;
+                  color: #fff !important; }
+          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-placeholder {
+            color: #ddd; }
+          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-control {
+            background: none;
+            border: none;
+            position: relative; }
+          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-arrow {
+            border-top-color: #fff; }
+      .inst-selectors ul.inst-list li.inst-option .inst-params {
+        height: 100%; }
+        .inst-selectors ul.inst-list li.inst-option .inst-params li {
+          display: inline-block;
+          position: relative;
+          height: 67px;
+          width: 25%;
+          min-width: 65px;
+          overflow: hidden;
+          padding-right: 10px;
+          padding-left: 10px; }
+          .inst-selectors ul.inst-list li.inst-option .inst-params li .knob-container {
+            border: 1px solid transparent;
+            padding-top: 7px; }
+            .inst-selectors ul.inst-list li.inst-option .inst-params li .knob-container:focus {
+              outline: none; }
+          .inst-selectors ul.inst-list li.inst-option .inst-params li .expand-on-hover {
+            transition: all 0.1s ease-in-out;
+            color: #777;
+            transform: scaleX(1) scaleY(1) scaleZ(1);
+            position: relative;
+            z-index: 100; }
+            .inst-selectors ul.inst-list li.inst-option .inst-params li .expand-on-hover:hover {
+              transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
+              color: #222;
+              z-index: 500; }
+            .inst-selectors ul.inst-list li.inst-option .inst-params li .expand-on-hover:active {
+              transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
+              color: #222; }
+            .inst-selectors ul.inst-list li.inst-option .inst-params li .expand-on-hover:disabled {
+              color: #bbb; }
+              .inst-selectors ul.inst-list li.inst-option .inst-params li .expand-on-hover:disabled:hover {
+                color: #bbb;
+                transform: scaleX(1) scaleY(1) scaleZ(1); }
+        .inst-selectors ul.inst-list li.inst-option .inst-params .inst-param-title {
+          position: absolute;
+          text-transform: capitalize;
+          display: block;
+          width: 100%;
+          text-align: center;
+          font-size: 0.9em;
+          bottom: 6px;
+          margin: 0 auto;
+          left: 0;
+          right: 0; }
+
+/* ========================================================================== */
+.controls {
+  position: relative;
+  top: 0px;
+  height: 56px;
+  padding: 8px;
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  align-items: center; }
+  .controls .controls-section {
+    display: inline-block;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 50px; }
+    .controls .controls-section.music-controls {
+      position: relative;
+      top: -6px; }
+      .controls .controls-section.music-controls label {
+        display: inline-block;
+        position: relative;
+        top: 1px;
+        font-size: 10px; }
+  .controls .project-color-picker {
+    width: 30px;
+    height: 30px; }
+    .controls .project-color-picker .color-picker-button {
+      position: absolute;
+      background: #ddd;
+      border-radius: 3px;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      transition: all 0.1s ease-in-out;
+      color: #777;
+      transform: scaleX(1) scaleY(1) scaleZ(1);
+      position: relative;
+      z-index: 100; }
+      .controls .project-color-picker .color-picker-button:hover {
+        transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
+        color: #222;
+        z-index: 500; }
+      .controls .project-color-picker .color-picker-button:active {
+        transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
+        color: #222; }
+      .controls .project-color-picker .color-picker-button:disabled {
+        color: #bbb; }
+        .controls .project-color-picker .color-picker-button:disabled:hover {
+          color: #bbb;
+          transform: scaleX(1) scaleY(1) scaleZ(1); }
+    .controls .project-color-picker .project-color-picker-options {
+      position: relative;
+      z-index: 50;
+      top: 10px;
+      background: #fff;
+      text-align: center; }
+      .controls .project-color-picker .project-color-picker-options .color-option {
+        cursor: pointer;
+        border-radius: 2px;
+        display: inline-block;
+        transition: all 0.1s ease-in-out;
+        color: #777;
+        transform: scaleX(1) scaleY(1) scaleZ(1);
+        position: relative;
+        z-index: 100;
+        width: 20px;
+        height: 20px; }
+        .controls .project-color-picker .project-color-picker-options .color-option:hover {
+          transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
+          color: #222;
+          z-index: 500; }
+        .controls .project-color-picker .project-color-picker-options .color-option:active {
+          transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
+          color: #222; }
+        .controls .project-color-picker .project-color-picker-options .color-option:disabled {
+          color: #bbb; }
+          .controls .project-color-picker .project-color-picker-options .color-option:disabled:hover {
+            color: #bbb;
+            transform: scaleX(1) scaleY(1) scaleZ(1); }
+  .controls .tool-button {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+    border-radius: 3px;
+    background: #eee;
+    cursor: pointer; }
+    .controls .tool-button:hover {
+      background: #bbb; }
+    .controls .tool-button.selected {
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      background: #444; }
+      .controls .tool-button.selected img {
+        filter: drop-shadow(0 0 5px #000); }
+    .controls .tool-button img {
+      width: 100%; }
+  .controls .divider {
+    width: 1px;
+    height: 100%;
+    background: #fff;
+    margin: 0 25px;
+    display: inline-block; }
+  .controls .ctrl-elem {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: auto; }
+    .controls .ctrl-elem.no-margin {
+      margin: 0; }
+    .controls .ctrl-elem.small {
+      width: 50px; }
+    .controls .ctrl-elem.large {
+      width: 140px; }
+    .controls .ctrl-elem label {
+      margin-right: 3px;
+      width: 100%; }
+      .controls .ctrl-elem label.checkbox-label {
+        display: inline-block;
+        border-color: #ccc;
+        width: auto;
+        margin: 0;
+        height: 30px;
+        padding: 5px 10px;
+        margin-left: -1px;
+        font-size: 0.9em; }
+    .controls .ctrl-elem .numeric-input {
+      width: 100%;
+      height: 22px;
+      border-radius: 0 !important; }
+      .controls .ctrl-elem .numeric-input .numeric-input-btn-up {
+        background: #000 !important; }
+
+.full-width {
+  width: 100%; }
+
+.anim-circle {
+  height: 10px;
+  width: 10px;
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  border-radius: 10px;
+  background-color: #000;
+  z-index: 100; }
+
+.shape-editor-panel {
+  box-shadow: -2px 2px 25px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  position: absolute;
+  left: 100px;
+  top: 100px;
+  padding: 5px 15px; }
+  .shape-editor-panel .tooltip-arrow {
+    top: 40px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(255, 255, 255, 0);
+    border-width: 10px;
+    margin-top: -10px; }
+    .shape-editor-panel .tooltip-arrow.arrow-left {
+      right: 100%;
+      border-right-color: #fff; }
+    .shape-editor-panel .tooltip-arrow.arrow-right {
+      left: 100%;
+      border-left-color: #fff; }
+  .shape-editor-panel .slider-container {
+    text-align: center; }
+  .shape-editor-panel .section {
+    padding-top: 5px;
+    padding-bottom: 15px; }
+  .shape-editor-panel .col {
+    margin-top: 0;
+    margin-bottom: 0; }
+    .shape-editor-panel .col.shape-attr-delete-shape {
+      background: none;
+      color: #ff6464;
+      padding-top: 4px;
+      border: none; }
+      .shape-editor-panel .col.shape-attr-delete-shape:hover {
+        text-decoration: underline;
+        background-color: transparent;
+        color: #ff6464; }
+  .shape-editor-panel label.checkbox-label, .shape-editor-panel button {
+    margin-bottom: 10px; }
+  .shape-editor-panel .shape-color-picker {
+    margin-top: 10px;
+    padding: 0 5px;
+    margin-bottom: 15px; }
+    .shape-editor-panel .shape-color-picker .shape-color-option {
+      display: inline-block;
+      width: 20%;
+      height: 10px;
+      position: relative;
+      transition: all 0.2s; }
+      .shape-editor-panel .shape-color-picker .shape-color-option:hover {
+        transform: scale(1.2) !important;
+        z-index: 2 !important;
+        opacity: 1 !important;
+        cursor: pointer; }
+
+/*# sourceMappingURL=main.css.map */

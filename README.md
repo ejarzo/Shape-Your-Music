@@ -1,42 +1,48 @@
-# karma-mocha-chai-react
-Simple proof of concept in configuring karma and webpack to work with a React project.
+# Shape Your Music
 
-## Project Set Up
+A web application for drawing music.
 
-* Node >= (v 4.0)
+This is V3, a new and improved React implementation of [V2](https://github.com/ejarzo/sym_v2), which was written in vanilla JS/jQuery.
 
-```bash
-  $ npm install
-```
 
-### To run tests
+## Application Controls
 
-```bash
-  $ npm test
-```
+### Playback
+| Button    | Description       |
+| --------- | ----------------- |
+| Play/Stop | Pressing play starts all shapes at their origin point. A shape plays in the order that it was drawn. |
+| Record    | Pressing record allows you to download your project as an audio file. If playback is stopped, recording will begin when you begin playback. If he song is playing, the recording will start instantly. Pressing stop or record will end the recording and show a window where you can listen and download what you just recorded |
 
-or
+### Tools
+| Tool      | Description       |
+| --------- | ----------------- |
+| Draw      | Draw mode allows you to create shapes. click to place vertices. Click on the origin point to complete a shape. Select your draw color by using the colored box within the draw tool button. |
+| Edit      | Edit mode allows you to adjust your shapes. Drag vertices to edit the perimeter of your shape. drag the whole shape to move it. Click on a shape to show more detailed options (see shape controls). |
 
-```bash
-  $ npm test_watch
-```
+### Canvas Modifiers
+| Toggle        | Description       |
+| ------------- | ----------------- |
+| Grid          | When selected, the grid is shown |
+| Snap To Grid  | When selected, all points will snap to the grid when drawn, or when shapes are moved |
+| Auto Quantize (Sync) | When selected, shapes will snap and lock to the same length - so that they will loop at the same time. Shapes can be “halved’ or “doubled” so that they loop half or twice as often. This allows for a defined rhythm. |
 
-### To run project
+### Musical Modifiers
+| Control       | Description       |
+| ------------- | ----------------- |
+| Tempo         | Change the speed of playback |
+| Key           | Select the root note |
+| Scale         | Select the musical scale (mode) |
 
-```bash
-  $ npm start
-```
+### View Modifiers
+| Control       | Description       |
+| ------------- | ----------------- |
+| Fullscreen    | Toggle Fullscreen |
+| Clear         | Delete all shapes |
 
-## Insiration, refrence, and resources
-* [tutorial on karma and webpack for react](https://www.codementor.io/reactjs/tutorial/test-reactjs-components-karma-webpack) walkthrough on setting up tests with karma for react.
+## Development
 
-* [react-es6-webpack-karma-boilerplate](https://github.com/mvader/react-es6-webpack-karma-boilerplate) is a boilerplate for kick starting a project with the following technologies:
-    React
-    ES6 with Babel
-    Webpack for bundling
-    Webpack Dev Server
-    React Hot Loader for tweaking React components in real time.
-    Karma for running unit tests.
-    The various webpack options used have been explained in detailed as comments in the config file. Should help with understanding the nitty-gritty :).
+### To Run
+Clone this repo and run `npm install` and then `npm start`.
 
-* [react-es6-webpack-boilerplate](https://github.com/vasanthk/react-es6-webpack-boilerplate) is a simple boilerplate.
+### To Test
+Testing is handled by Karma. Run `npm test` or `npm test_watch`.

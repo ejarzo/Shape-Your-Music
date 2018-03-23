@@ -25,7 +25,7 @@ const setEffectWet = (effectIndex) =>
 */
 const InstrumentPresets = [
   // KEYS ======================================================
-  {   
+  {
     name: {
       label: 'Keys',
       value: 0,
@@ -47,7 +47,7 @@ const InstrumentPresets = [
         'release': 1,
       }
     },
-    effects:  [
+    effects: [
       {
         type: Tone.Freeverb,
         params: {
@@ -108,14 +108,14 @@ const InstrumentPresets = [
         volume: -5,
         portamento: 0,
         filter: {
-          type: "lowpass",
+          type: 'lowpass',
           frequency: 1000,
           rolloff: -12,
           Q: 1,
           gain: 0
         },
         oscillator: {
-          type: "sawtooth",
+          type: 'sawtooth',
           detune: 20,
         },
         filterEnvelope: {
@@ -135,7 +135,7 @@ const InstrumentPresets = [
         volume: -5,
         portamento:0,
         oscillator: {
-          type:"sine",
+          type: 'sine',
           detune: -20,
 
         },

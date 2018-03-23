@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Teoria from 'teoria';
-import Select from 'react-select';
-import NumericInput from 'react-numeric-input';
 import Fullscreen from 'react-full-screen';
+import Teoria from 'teoria';
 import Tone from 'tone';
 
 import Controls from 'components/Controls';
 import ShapeCanvas from 'components/ShapeCanvas';
-import ColorPicker from 'components/ColorPicker';
-import DrawToolIcon from 'components/icons/DrawTool';
-import EditToolIcon from 'components/icons/EditTool';
-
 import InstColorController from './InstColorController';
 import InstrumentPresets from 'presets/InstrumentPresets';
 
@@ -60,12 +54,10 @@ const scalesList = [
   { value: 'wholetone', label: 'Wholetone' }
 ];
 
-const instNamesList = InstrumentPresets.map((preset) => {
-  return {
-    label: preset.name.label,
-    value: preset.name.value,
-  };
-});
+const instNamesList = InstrumentPresets.map(preset => ({
+  label: preset.name.label,
+  value: preset.name.value,
+}));
 
 /* master output */
 const masterCompressor = new Tone.Compressor({
@@ -77,6 +69,7 @@ const masterCompressor = new Tone.Compressor({
 });
 const masterLimiter = new Tone.Limiter(-2);
 const masterOutput = new Tone.Gain(0.9).receive('masterOutput');
+
 masterOutput.chain(masterCompressor, masterLimiter, Tone.Master);
 
 
@@ -97,23 +90,23 @@ class Project extends Component {
 
     this.state = {
       name: props.initState.name,
-      isFullscreenEnabled: false,
 
+      isFullscreenEnabled: false,
       isGridActive: false,
       isSnapToGridActive: false,
       isAutoQuantizeActive: false,
+      isPlaying: false,
       
       quantizeLength: 700,
       tempo: props.initState.tempo,
-      scaleObj: Teoria.note(props.initState.tonic).scale(props.initState.scale),
-      
-      isPlaying: false,
+      scaleObj: Teoria
+                  .note(props.initState.tonic)
+                  .scale(props.initState.scale),
+
       activeTool: 'draw',
       activeColorIndex: 0,
-      selectedInstruments: [0,1,0,1,0],
-      knobVals: colorsList.map(() => {
-        return [0,0,0,0];
-      })
+      selectedInstruments: [0,1,0,1,0], // indeces of default instruments
+      knobVals: colorsList.map(() => [0,0,0,0])
     };
 
     // transport

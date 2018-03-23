@@ -42,7 +42,7 @@ function PhantomShapeComponent (props) {
         fill={props.color}
         stroke={props.color}
         strokeWidth={strokeWidth}
-        opacity={0.8}
+        opacity={0.8 }
       />
       {originPoint}
       <Line // shape so far

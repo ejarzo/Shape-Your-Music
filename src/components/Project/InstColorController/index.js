@@ -38,15 +38,21 @@ class InstColorController extends Component {
     this.output = new Tone.Gain(1);
     this.output.send('masterOutput', 0);
 
-    this.setEffects(props.synthParams.effects);
-    this.setDefaults(props.synthParams.dynamicParams);
+    console.log('inst color controller constructor');
+    console.log('param effects', props.synthParams.effects);
+    console.log('knob vals', props.knobVals);
+
+    this.connectEffects(props.synthParams.effects);
+    //this.setDefaults(props.synthParams.dynamicParams);
 
     this.handleInstChange = this.handleInstChange.bind(this);
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log('cwrp... knob vals', nextProps.knobVals);
+    // this.setDefaults(nextProps.synthParams.dynamicParams);
     if (nextProps.synthParams.name.value !== this.props.synthParams.name.value) {
-      this.setEffects(nextProps.synthParams.effects);
+      this.connectEffects(nextProps.synthParams.effects);
       this.setDefaults(nextProps.synthParams.dynamicParams);
     }
   }
@@ -61,7 +67,7 @@ class InstColorController extends Component {
     this.fxList[effectIndex].set(parameter, val);
   }
 
-  setEffects (fxConstructors) {
+  connectEffects (fxConstructors) {
     this.fxBus.disconnect();
     if (this.fxList) {
       this.fxList.forEach((effect) => {
@@ -94,10 +100,12 @@ class InstColorController extends Component {
   }
 
   handleParamValueChange (i) {
+    console.log('handle param value change called');
+    const synthParams = this.props.synthParams;
     return (val) => {
       this.props.onKnobChange(i, val);
-      if (this.props.synthParams.dynamicParams[i].target === 'effect') {
-        this.props.synthParams.dynamicParams[i].func(this, val);
+      if (synthParams.dynamicParams[i].target === 'effect') {
+        synthParams.dynamicParams[i].func(this, val);
       }
     };
   }
@@ -133,18 +141,21 @@ class InstColorController extends Component {
             </button>*/}
           </div>
         </div>
-        <ul className="inst-params" style={{backgroundColor: contentBackgroundColor}}>
-          {this.props.synthParams.dynamicParams.map((effect, i) => {
-            return (
-              <li key={i}>
-                <Knob
-                  paramName={effect.name}
-                  value={this.props.knobVals[i]}
-                  onChange={this.handleParamValueChange(i)}
-                />
-              </li>
-            );
-          })}
+        <ul
+          className="inst-params"
+          style={{
+            backgroundColor: contentBackgroundColor
+          }}
+        >
+          {this.props.synthParams.dynamicParams.map((effect, i) => (
+            <li key={i}>
+              <Knob
+                paramName={effect.name}
+                value={this.props.knobVals[i]}
+                onChange={this.handleParamValueChange(i)}
+              />
+            </li>
+          ))}
         </ul>
       </li>
     );

@@ -44,5 +44,5 @@ This is V3, a new and improved React implementation of [V2](https://github.com/e
 ### To Run
 Clone this repo and run `npm install` and then `npm start`.
 
-### Testing
+### To Test
 Testing is handled by Karma. Run `npm test` or `npm test_watch`.

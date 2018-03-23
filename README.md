@@ -39,28 +39,10 @@ This is V3, a new and improved React implementation of [V2](https://github.com/e
 | Fullscreen    | Toggle Fullscreen |
 | Clear         | Delete all shapes |
 
-## Project Set Up
+## Development
 
-* Node >= (v 4.0)
+### To Run
+Clone this repo and run `npm install` and then `npm start`.
 
-```bash
-  $ npm install
-```
-
-### To run tests
-
-```bash
-  $ npm test
-```
-
-or
-
-```bash
-  $ npm test_watch
-```
-
-### To run project
-
-```bash
-  $ npm start
-```
+### Testing
+Testing is handled by Karma. Run `npm test` or `npm test_watch`.

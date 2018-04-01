@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Color from 'color';
 import Tone from 'tone';
-import { Group, Line, Circle } from 'react-konva';
 
 import Utils from 'utils/Utils.js';
 import InstrumentPresets from 'presets/InstrumentPresets';

@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  onColorChange: PropTypes.func.isRequired,
+  colorsList: PropTypes.array.isRequired,
+  activeColorIndex: PropTypes.number.isRequired,
+};
 
 /*
   A dropdown used to select the draw color.
@@ -67,5 +74,7 @@ class ColorPickerContainer extends Component {
     );
   }
 }
+
+ColorPickerContainer.propTypes = propTypes;
 
 export default ColorPickerContainer;

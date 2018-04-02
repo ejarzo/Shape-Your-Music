@@ -143,6 +143,7 @@ class ShapeCanvas extends Component {
   }
 
   handleMouseMove (e) {
+    console.log('mousemove');
     let x = e.evt.offsetX;
     let y = e.evt.offsetY;
     const originX = this.state.currPoints[0];
@@ -274,7 +275,6 @@ class ShapeCanvas extends Component {
         handleShapeClick={this.handleShapeClick}
         handleShapeDelete={this.handleShapeDelete}
       />
-    
     );
   }
 }

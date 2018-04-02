@@ -317,6 +317,7 @@ class Project extends Component {
   /* =============================== RENDER =============================== */
 
   render () {    
+    console.log('project render');
     return (
       <Fullscreen
         enabled={this.state.isFullscreenEnabled}

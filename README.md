@@ -21,7 +21,7 @@ This is V3, a new and improved React implementation of [V2](https://github.com/e
 | Tool      | Description       |
 | --------- | ----------------- |
 | Color     | Select the color of the shapes you are drawing. Different colored shapes produce different sounds. |
-| Draw      | Draw mode allows you to create shapes. click to place vertices. Click on the origin point to complete a shape. Select your draw color by using the colored box within the draw tool button. |
+| Draw      | Draw mode allows you to create shapes. Click to place vertices. Click on the origin point to complete a shape. |
 | Edit      | Edit mode allows you to adjust your shapes. Drag vertices to edit the perimeter of your shape. drag the whole shape to move it. Click on a shape to show more detailed options (see shape controls). |
 
 ### Canvas Modifiers

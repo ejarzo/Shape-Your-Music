@@ -5,7 +5,7 @@ import { Circle, Group, Line } from 'react-konva';
 import Utils from 'utils/Utils';
 import ShapeVertex from './ShapeVertex';
 import Portal from 'react-portal';
-import ShapeEditorPanel from './ShapeEditorPanel.js';
+import ShapeEditorPanel from './ShapeEditorPanel';
 
 const propTypes = {
   project: PropTypes.shape({

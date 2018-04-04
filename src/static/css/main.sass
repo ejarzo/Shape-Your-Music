@@ -101,8 +101,8 @@ $color-warning-red: rgba(255,100,100,1)
 *
     @include noselect
     box-sizing: border-box
-    &:focus
-        border: 2px solid red !important
+    // &:focus
+    //     border: 2px solid red !important
 
 html 
     color: $color-black
@@ -135,13 +135,13 @@ ul
         font-size: 12px
 
 /* checkbox buttons */
-input[type=checkbox]
-    position: absolute
-    top: -9999px
-    left: -9999px
-    &:checked + .checkbox-label
-        background: $color-grey-dark
-        color: $color-grey-lighter
+// input[type=checkbox]
+//     position: absolute
+//     top: -9999px
+//     left: -9999px
+//     &:checked + .checkbox-label
+//         background: $color-grey-dark
+//         color: $color-grey-lighter
 
 label.checkbox-label, button
     border-radius: 1px
@@ -155,10 +155,11 @@ label.checkbox-label, button
     //margin-bottom: 10px
     height: 25px
     padding: 2px 7px 
+    margin: 0
 
-label.checkbox-label
-    background: $color-white
-    border-color: $color-grey-light
+// label.checkbox-label
+//     background: $color-white
+//     border-color: $color-grey-light
 
 button
     &:active
@@ -198,6 +199,10 @@ button
     i
         position: relative
         top: 1px
+
+.row
+    margin-top: 6px;
+    margin-bottom: 6px;
 
 .inst-selectors
     overflow: hidden

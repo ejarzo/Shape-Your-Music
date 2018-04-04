@@ -10,8 +10,6 @@
   -ms-user-select: none;
   user-select: none;
   box-sizing: border-box; }
-  *:focus {
-    border: 2px solid red !important; }
 
 html {
   color: #222;
@@ -44,14 +42,6 @@ ul {
     font-size: 12px; }
 
 /* checkbox buttons */
-input[type=checkbox] {
-  position: absolute;
-  top: -9999px;
-  left: -9999px; }
-  input[type=checkbox]:checked + .checkbox-label {
-    background: #444;
-    color: #eee; }
-
 label.checkbox-label, button {
   border-radius: 1px;
   text-align: center;
@@ -62,11 +52,8 @@ label.checkbox-label, button {
   display: inline-block;
   cursor: pointer;
   height: 25px;
-  padding: 2px 7px; }
-
-label.checkbox-label {
-  background: #fff;
-  border-color: #bbb; }
+  padding: 2px 7px;
+  margin: 0; }
 
 button:active {
   background: #d5d5d5; }

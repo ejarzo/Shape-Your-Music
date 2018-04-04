@@ -1,0 +1,36 @@
+.shapeEditorPanel {
+  position: absolute;
+  width: 225px;
+  height: 260px;
+  background: #fff;
+  padding: 5px 15px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: auto;
+}
+
+.tooltipArrow {
+  display: block;
+  position: absolute;
+  top: 40px;
+  content: " ";
+  height: 0;
+  width: 0;
+  pointer-events: none;
+  border: solid rgba(255, 255, 255, 0);
+  border-color: rgba(255, 255, 255, 0);
+  border-width: 10px;
+  margin-top: -10px;
+}
+
+.arrowLeft {
+  right: 100%;
+  border-right-color: #fff;
+}
+
+.arrowRight {
+  left: 100%;
+  border-left-color: #fff;
+}

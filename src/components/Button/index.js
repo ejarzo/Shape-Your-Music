@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Color from 'color';
-import Radium from 'radium'
-// import styles from './styles.css';
+import Radium from 'radium';
 
 const propTypes = {
   color: PropTypes.string,

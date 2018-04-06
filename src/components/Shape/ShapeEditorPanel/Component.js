@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-// import Slider from 'react-rangeslider';
-
 import Color from 'color';
 
 import CheckboxButton from 'components/CheckboxButton';
@@ -11,11 +9,13 @@ import Button from 'components/Button';
 import styles from './styles.css';
 
 const propTypes = {
-  position: PropTypes.shape({
+  panelStyle: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
     left: PropTypes.number.isRequired,
     top: PropTypes.number.isRequired,
   }),
-  arrowPosition: PropTypes.shape({
+  caretPosition: PropTypes.shape({
     top: PropTypes.number.isRequired,
     isLeft: PropTypes.bool.isRequired,
   }),
@@ -41,68 +41,52 @@ const propTypes = {
   // perimeter: PropTypes.number.isRequired,
 };
 
-const colorPicker = props => (
-  <div className="row section">
-    <div className="col col-12">
-      <div className="shape-color-picker">
-        {props.colorsList.map((color, i) => {
-          const isSelected = i === props.colorIndex;
-          const style = {
-            backgroundColor: color,
-            opacity: isSelected ? 1 : 0.3,
-          };
-          return (
-            <div 
-              key={i}
-              className="shape-color-option" 
-              style={style}
-              onClick={props.onColorChange(i)}>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  </div>
-);
-
 const Caret = props => (
   <div
     className={cx({
       [styles.tooltipArrow]: true,
-      [styles.arrowLeft]: props.arrowPosition.isLeft,
-      [styles.arrowRight]: !props.arrowPosition.isLeft,
+      [styles.arrowLeft]: props.caretPosition.isLeft,
+      [styles.arrowRight]: !props.caretPosition.isLeft,
     })}
     style={{
-      top: props.arrowPosition.top,
-      borderRightColor: props.arrowPosition.isLeft ? props.color : 'transparent',
-      borderLeftColor: !props.arrowPosition.isLeft ? props.color : 'transparent',
+      top: props.caretPosition.top,
+      borderRightColor: props.caretPosition.isLeft ? props.color : 'transparent',
+      borderLeftColor: !props.caretPosition.isLeft ? props.color : 'transparent',
     }}>
   </div>
 );
+
+Caret.propTypes = {
+  caretPosition: PropTypes.shape({
+    top: PropTypes.number,
+    isLeft: PropTypes.bool,
+  }).isRequired,
+  color: PropTypes.string.isRequired,
+};
 
 function ShapeEditorPanelComponent (props) {
   const colorString = props.colorsList[props.colorIndex];
   const color = Color(colorString);
   const darkColor = color.darken(0.2).toString();
-
+  const { width, height, top, left } = props.panelStyle;
   return (
     <div
       className={styles.shapeEditorPanel}
       style={{
-        left: props.position.left,
-        top: props.position.top,
+        width,
+        height,
+        top,
+        left,
         backgroundColor: darkColor,
       }}
     >
       <div className={styles.sliderContainer}>
         <CustomSlider
           color={colorString}
-          // className={'color-'+ props.colorIndex}
-          // orientation='vertical'
-          // min={-18}
-          // max={0}
-          // value={props.volume}
-          // onChange={props.onVolumeChange}
+          min={-18}
+          max={0}
+          value={props.volume}
+          onChange={props.onVolumeChange}
         />
       </div>
       <div className={styles.buttonShort}>
@@ -134,7 +118,7 @@ function ShapeEditorPanelComponent (props) {
       <Button color={color.toString()} onClick={props.onToBottomClick}>To Back</Button>
       <Button color={color.darken(0.1).toString()} className={styles.deleteButton} onClick={props.onDeleteClick}>Delete</Button>
 
-      <Caret arrowPosition={props.arrowPosition} color={darkColor} />
+      <Caret caretPosition={props.caretPosition} color={darkColor} />
     </div>
   );
 }

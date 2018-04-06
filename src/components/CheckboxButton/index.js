@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Radium from 'radium';
-import Color from 'color';
+// import Radium from 'radium';
+// import Color from 'color';
 
 import styles from './styles.css';
 
@@ -42,4 +42,4 @@ function CheckboxButton (props) {
 
 CheckboxButton.propTypes = propTypes;
 
-export default Radium(CheckboxButton);
+export default CheckboxButton;

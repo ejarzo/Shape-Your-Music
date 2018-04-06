@@ -1,16 +1,15 @@
 .checkboxButton {
   position: absolute;
   top: -9999px;
-  left: -9999px; }
+  left: -9999px;
+}
 
 .checkboxLabel {
   height: 100%;
   width: 100%;
   color: #fff;
   display: inline-block;
-  border: 1px solid transparent;
   cursor: pointer;
   padding: 4px 7px;
-  text-align: center; }
-
-/*# sourceMappingURL=styles.css.map */
+  text-align: center;
+}

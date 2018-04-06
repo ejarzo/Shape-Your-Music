@@ -260,11 +260,11 @@ class Shape extends Component {
     const knobVals = props.knobVals[colorIndex];
     const synthObj = InstrumentPresets[selectedInstrumentIndex];
     
-    console.log('__SETTING SYNTH___');
-    console.log('new instrument:', selectedInstrumentIndex);
-    console.log('new color:', colorIndex);
-    console.log('knob vals:', knobVals);
-    console.log('sending', `colorFx-${colorIndex}`);
+    // console.log('__SETTING SYNTH___');
+    // console.log('new instrument:', selectedInstrumentIndex);
+    // console.log('new color:', colorIndex);
+    // console.log('knob vals:', knobVals);
+    // console.log('sending', `colorFx-${colorIndex}`);
     
     if (this.synth) {
       this.synth.triggerRelease();
@@ -275,7 +275,8 @@ class Shape extends Component {
       this.solo.dispose();
       this.gain.disconnect();
       this.gain.dispose();
-      this.synth.volume.value = -Infinity;
+
+      this.synth.volume.exponentialRampToValueAtTime(-Infinity, Tone.now()+0.2)
       
       this.synth.disconnect();
       this.synth.dispose();
@@ -283,7 +284,8 @@ class Shape extends Component {
     
     
     this.synth = new synthObj.baseSynth(synthObj.params);
-    this.synth.volume.value = this.state.volume;
+    this.synth.volume.exponentialRampToValueAtTime(this.state.volume, Tone.now()+0.2)
+
     
     knobVals.forEach((val, i) => {
       if (synthObj.dynamicParams[i].target === 'instrument') {
@@ -415,7 +417,7 @@ class Shape extends Component {
 
   /* --- Volume --- */
   handleVolumeChange (val) {
-    this.synth.volume.value = val;
+    this.synth.volume.exponentialRampToValueAtTime(val, Tone.now()+0.2);
     this.setState({
       volume: val
     });
@@ -577,8 +579,8 @@ class Shape extends Component {
           x: this.state.editorX,
           y: this.state.editorY
         }}
-        
-        // shape handlers
+
+        // shape event handlers
         dragBoundFunc={this.dragBoundFunc}
         handleDrag={this.handleDrag}
         handleDragStart={this.handleDragStart}
@@ -591,7 +593,7 @@ class Shape extends Component {
 
         handleVertexDragMove={this.handleVertexDragMove}
         
-        // editor handlers
+        // editor panel handlers
         handleColorChange={this.handleColorChange}
         handleQuantizeClick={this.handleQuantizeClick}
         handleDelete={this.handleDelete}

@@ -3,12 +3,29 @@
   width: 225px;
   height: 260px;
   background: #fff;
-  padding: 5px 15px;
-
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: auto;
+  grid-gap: 2px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 30px 1fr 1fr 30px;
+  box-shadow: 1px 2px 19px rgba(0,0,0,0.3);
+}
+
+.sliderContainer {
+  grid-row: 1 / 6;
+  /*border: 1px solid white;*/
+}
+
+.buttonShort {
+  /*height: 30px;*/
+}
+
+.shapeEditorPanel button {
+  height: 100%;
+  background: none;
+  border: none;
+  background: #c9563c;
+  /*border: 1px solid #fff;*/
+  color: #fff;
 }
 
 .tooltipArrow {
@@ -23,6 +40,10 @@
   border-color: rgba(255, 255, 255, 0);
   border-width: 10px;
   margin-top: -10px;
+}
+
+.deleteButton {
+  grid-column: 2 / 4;
 }
 
 .arrowLeft {

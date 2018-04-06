@@ -42,19 +42,6 @@ ul {
     font-size: 12px; }
 
 /* checkbox buttons */
-label.checkbox-label, button {
-  border-radius: 1px;
-  text-align: center;
-  width: 100%;
-  color: #444;
-  background: #eee;
-  border: 1px solid #e1e1e1;
-  display: inline-block;
-  cursor: pointer;
-  height: 25px;
-  padding: 2px 7px;
-  margin: 0; }
-
 button:active {
   background: #d5d5d5; }
 
@@ -384,63 +371,11 @@ button:active {
 .full-width {
   width: 100%; }
 
-.shape-editor-panel {
-  box-shadow: -2px 2px 25px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  position: absolute;
-  left: 100px;
-  top: 100px;
-  padding: 5px 15px; }
-  .shape-editor-panel .tooltip-arrow {
-    top: 40px;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-color: rgba(255, 255, 255, 0);
-    border-width: 10px;
-    margin-top: -10px; }
-    .shape-editor-panel .tooltip-arrow.arrow-left {
-      right: 100%;
-      border-right-color: #fff; }
-    .shape-editor-panel .tooltip-arrow.arrow-right {
-      left: 100%;
-      border-left-color: #fff; }
-  .shape-editor-panel .slider-container {
-    text-align: center; }
-  .shape-editor-panel .section {
-    padding-top: 5px;
-    padding-bottom: 15px; }
-  .shape-editor-panel .col {
-    margin-top: 0;
-    margin-bottom: 0; }
-    .shape-editor-panel .col.shape-attr-delete-shape {
-      background: none;
-      color: #ff6464;
-      padding-top: 4px;
-      border: none; }
-      .shape-editor-panel .col.shape-attr-delete-shape:hover {
-        text-decoration: underline;
-        background-color: transparent;
-        color: #ff6464; }
-  .shape-editor-panel label.checkbox-label, .shape-editor-panel button {
-    margin-bottom: 10px; }
-  .shape-editor-panel .shape-color-picker {
-    margin-top: 10px;
-    padding: 0 5px;
-    margin-bottom: 15px; }
-    .shape-editor-panel .shape-color-picker .shape-color-option {
-      display: inline-block;
-      width: 20%;
-      height: 10px;
-      position: relative;
-      transition: all 0.2s; }
-      .shape-editor-panel .shape-color-picker .shape-color-option:hover {
-        transform: scale(1.2) !important;
-        z-index: 2 !important;
-        opacity: 1 !important;
-        cursor: pointer; }
+.rc-slider-vertical {
+  width: 100%;
+  height: 100%;
+  padding: 0; }
+  .rc-slider-vertical .rc-slider-mark {
+    display: none; }
 
 /*# sourceMappingURL=main.css.map */

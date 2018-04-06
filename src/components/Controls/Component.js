@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NumericInput from 'react-numeric-input';
 import Select from 'react-select';
+import CustomSlider from 'components/Slider';
 
 import ColorPicker from 'components/ColorPicker';
 import DrawToolIcon from 'components/icons/DrawTool';
@@ -44,6 +45,7 @@ function ControlsComponent (props) {
 
   return (
     <div className="controls">
+     
       {/* Transport Controls */}
       <div className="controls-section transport-controls">
         <div className="ctrl-elem">

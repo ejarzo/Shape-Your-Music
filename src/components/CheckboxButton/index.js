@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Radium from 'radium';
+import Color from 'color';
 
 import styles from './styles.css';
 
@@ -7,6 +9,7 @@ const propTypes = {
   label: PropTypes.string.isRequired,
   checked: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
+  color: PropTypes.string,
 };
 
 function CheckboxButton (props) {
@@ -21,7 +24,17 @@ function CheckboxButton (props) {
       />
       <label
         className={styles.checkboxLabel}
-        htmlFor={props.label.toLowerCase()}>{props.label}
+        htmlFor={props.label.toLowerCase()}
+        style={{
+          background: props.checked
+            ? '#fff'
+            : props.color.darken(0.1).toString(),
+          color: props.checked
+            ? props.color.toString()
+            : '#fff',
+        }}
+      >
+        {props.label}
       </label>
     </div>
   );
@@ -29,4 +42,4 @@ function CheckboxButton (props) {
 
 CheckboxButton.propTypes = propTypes;
 
-export default CheckboxButton;
+export default Radium(CheckboxButton);

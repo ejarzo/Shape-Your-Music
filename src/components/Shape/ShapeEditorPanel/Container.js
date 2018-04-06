@@ -1,39 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Slider from 'react-rangeslider';
-
-// import styles from './styles.css';
-// import RangeSlider from '../RangeSlider';
 
 import ShapeEditorPanelComponent from './Component';
-
-const propTypes = {
-  position: PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  }).isRequired,
-  colorsList: PropTypes.array.isRequired,
-  colorIndex: PropTypes.number.isRequired,
-  volume: PropTypes.number.isRequired,
-  
-  isMuted: PropTypes.bool.isRequired,
-  isSoloed: PropTypes.bool.isRequired,
-  
-  closePortal: PropTypes.func.isRequired,
-  
-  onColorChange: PropTypes.func.isRequired,
-  onVolumeChange: PropTypes.func.isRequired,
-  onMuteChange: PropTypes.func.isRequired,
-  onSoloChange: PropTypes.func.isRequired,
-  onQuantizeFactorChange: PropTypes.func.isRequired,
-  
-  onQuantizeClick: PropTypes.func.isRequired,
-  onToTopClick: PropTypes.func.isRequired,
-  onToBottomClick: PropTypes.func.isRequired,
-  onDeleteClick: PropTypes.func.isRequired,
-  
-  perimeter: PropTypes.number.isRequired,
-};
 
 /*
   Shape Editor Panel: appears when a shape is clicked on.
@@ -197,7 +164,5 @@ class ShapeEditorPanel extends Component {
     // );
   }
 }
-
-ShapeEditorPanel.propTypes = propTypes;
 
 export default ShapeEditorPanel;

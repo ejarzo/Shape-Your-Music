@@ -143,19 +143,19 @@ ul
 //         background: $color-grey-dark
 //         color: $color-grey-lighter
 
-label.checkbox-label, button
-    border-radius: 1px
-    text-align: center
-    width: 100%
-    color: $color-grey-dark
-    background: $color-grey-lighter
-    border: 1px solid darken($color-grey-lighter, 5)
-    display: inline-block
-    cursor: pointer
-    //margin-bottom: 10px
-    height: 25px
-    padding: 2px 7px 
-    margin: 0
+// label.checkbox-label, button
+//     border-radius: 1px
+//     text-align: center
+//     width: 100%
+//     color: $color-grey-dark
+//     background: $color-grey-lighter
+//     border: 1px solid darken($color-grey-lighter, 5)
+//     display: inline-block
+//     cursor: pointer
+//     //margin-bottom: 10px
+//     height: 25px
+//     padding: 2px 7px 
+//     margin: 0
 
 // label.checkbox-label
 //     background: $color-white
@@ -200,9 +200,6 @@ button
         position: relative
         top: 1px
 
-.row
-    margin-top: 6px;
-    margin-bottom: 6px;
 
 .inst-selectors
     overflow: hidden
@@ -439,49 +436,9 @@ button
 .full-width
     width: 100%
 
-.shape-editor-panel
-    @include drop_shadow
-    background-color: $color-white
-    position: absolute
-    left: 100px
-    top: 100px
-    padding: 5px 15px
-
-    .tooltip-arrow
-        @include tooltip_arrow
-    
-    .slider-container
-        text-align: center
-
-    .section
-        padding-top: 5px
-        padding-bottom: 15px
-    
-    .col
-        margin-top: 0
-        margin-bottom: 0
-
-        &.shape-attr-delete-shape
-            background: none
-            @include button_warning
-            padding-top: 4px
-            border: none
-    
-    label.checkbox-label, button
-        margin-bottom: 10px
-    
-    .shape-color-picker
-        margin-top: 10px
-        padding: 0 5px
-        margin-bottom: 15px
-        .shape-color-option
-            display: inline-block
-            width: 20%
-            height: 10px
-            position: relative
-            transition: all 0.2s
-            &:hover
-                transform: scale(1.2) !important
-                z-index: 2 !important
-                opacity: 1 !important
-                cursor: pointer
+.rc-slider-vertical
+    width: 100%
+    height: 100%
+    padding: 0
+    .rc-slider-mark
+        display: none

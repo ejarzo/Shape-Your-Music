@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import Fullscreen from 'react-full-screen';
 import Teoria from 'teoria';
 import Tone from 'tone';
-
 import Controls from 'components/Controls';
 import ShapeCanvas from 'components/ShapeCanvas';
 import InstColorController from './InstColorController';
 import InstrumentPresets from 'presets/InstrumentPresets';
+
 
 /* ========================================================================== */
 

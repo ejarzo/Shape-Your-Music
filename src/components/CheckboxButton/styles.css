@@ -2,24 +2,15 @@
   position: absolute;
   top: -9999px;
   left: -9999px; }
-  .checkboxButton:checked + .checkboxLabel {
-    background: #222;
-    color: #aaa; }
-
-.checkboxLabel, button {
-  height: 25px;
-  width: 100%;
-  display: inline-block;
-  border: 1px solid #9d9d9d;
-  border-radius: 1px;
-  text-align: center;
-  color: #222;
-  background: #aaa;
-  cursor: pointer;
-  padding: 2px 7px; }
 
 .checkboxLabel {
-  background: #fff;
-  border-color: #aaa; }
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  display: inline-block;
+  border: 1px solid transparent;
+  cursor: pointer;
+  padding: 4px 7px;
+  text-align: center; }
 
 /*# sourceMappingURL=styles.css.map */

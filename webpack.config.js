@@ -16,7 +16,7 @@ module.exports = {
   },
   resolve: {
     root: [path.resolve(__dirname, 'src')],
-    extensions: ['', '.js', 'jsx']
+    extensions: ['', '.js', '.jsx']
   },
   plugins: [
     new Text('styles.css', { allChunks: true }),

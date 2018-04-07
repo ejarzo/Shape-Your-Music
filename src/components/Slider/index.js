@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Color from 'color';
+import { ColorUtils } from 'utils/Utils';
 import 'rc-slider/assets/index.css';
 import Slider from 'rc-slider';
 
@@ -9,9 +9,7 @@ const propTypes = {
 };
 
 function CustomSlider (props) {
-  const colorObj = Color(props.color);
-  const darkerColor = colorObj.darken(0.2).toString();
-  // const lighterColor = colorObj.lighten(0.3).toString();
+  const darkerColor = ColorUtils.getDarker(props.color, 0.2);
   return (
     <Slider
       {...props}

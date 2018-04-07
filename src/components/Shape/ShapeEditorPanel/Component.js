@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import Color from 'color';
+import { ColorUtils } from 'utils/Utils';
 
 import CheckboxButton from 'components/CheckboxButton';
 import CustomSlider from 'components/Slider';
@@ -83,8 +83,8 @@ class ShapeEditorPanelComponent extends Component {
 
   render () {
     const colorString = this.props.colorsList[this.props.colorIndex];
-    const color = Color(colorString);
-    const darkColor = color.darken(0.2).toString();
+    const darkColor = ColorUtils.getDarker(colorString);
+    const medColor = ColorUtils.getDarker(colorString, 0.1);
     const { width, height, top, left } = this.props.panelStyle;
     return (
       <div
@@ -111,7 +111,7 @@ class ShapeEditorPanelComponent extends Component {
             label="Mute" 
             checked={this.props.isMuted}
             onChange={this.props.onMuteChange}
-            color={color}
+            color={colorString}
           />
         </div>
         <div className={styles.buttonShort}>
@@ -119,18 +119,18 @@ class ShapeEditorPanelComponent extends Component {
             label="Solo"
             checked={this.props.isSoloed}
             onChange={this.props.onSoloChange}
-            color={color}
+            color={colorString}
           />
         </div>
         <div
           className={styles.colorPickerContainer}
           style={{
-            backgroundColor: color.toString(),
+            backgroundColor: colorString,
             height: this.state.isColorPickerOpen ? 61 : 30,
           }}
         >
           <Button
-            color={color.toString()}
+            color={colorString}
             onClick={this.handleToggleColorPickerClick}
           >
             Color <i className={this.state.isColorPickerOpen
@@ -143,7 +143,7 @@ class ShapeEditorPanelComponent extends Component {
             style={{
               borderRadius: 0
             }}
-            color={color.toString()}
+            color={colorString}
             colors={this.props.colorsList}
             width="100%"
             triangle="hide"
@@ -153,31 +153,31 @@ class ShapeEditorPanelComponent extends Component {
         </div>
         {/*<button onClick={this.props.onQuantizeClick}>Quantize</button>*/}
         <Button
-          color={color.toString()}
+          color={colorString}
           onClick={this.props.onQuantizeFactorChange(2)}
         >
           {'*2'}
         </Button>
         <Button
-          color={color.toString()}
+          color={colorString}
           onClick={this.props.onQuantizeFactorChange(0.5)}
         >
           {'/2'}
         </Button>
         <Button
-          color={color.toString()}
+          color={colorString}
           onClick={this.props.onToTopClick}
         >
           To Front
         </Button>
         <Button
-          color={color.toString()}
+          color={colorString}
           onClick={this.props.onToBottomClick}
         >
           To Back
         </Button>
         <Button
-          color={color.darken(0.1).toString()}
+          color={medColor}
           className={styles.deleteButton}
           onClick={this.props.onDeleteClick}
         >

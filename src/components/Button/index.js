@@ -5,7 +5,7 @@ import Radium from 'radium';
 
 const propTypes = {
   color: PropTypes.string,
-  children: PropTypes.string,
+  children: PropTypes.node,
 };
 
 function Button (props) {

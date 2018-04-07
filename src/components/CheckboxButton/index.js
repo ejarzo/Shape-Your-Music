@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import Radium from 'radium';
-// import Color from 'color';
-
+import { ColorUtils } from 'utils/Utils';
 import styles from './styles.css';
 
 const propTypes = {
@@ -28,9 +26,9 @@ function CheckboxButton (props) {
         style={{
           background: props.checked
             ? '#fff'
-            : props.color.darken(0.1).toString(),
+            : ColorUtils.getDarker(props.color, 0.1),
           color: props.checked
-            ? props.color.toString()
+            ? props.color
             : '#fff',
         }}
       >

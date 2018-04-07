@@ -1,42 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Color from 'color';
 import Radium from 'radium';
 
 const propTypes = {
   color: PropTypes.string,
-  children: PropTypes.array,
+  children: PropTypes.string,
 };
 
-class Button extends Component {
-  constructor (props) {
-    super(props);
-
-    this.baseColor = props.color || '#ddd';
-    this.state = {
-      backgroundColorObj: Color(this.baseColor),
-    };
-  }
-
-
-  render () {
-    return (
-      <button
-        {...this.props}
-        style={{
-          backgroundColor: this.state.backgroundColorObj.toString(),
-          ':hover': {
-            backgroundColor: this.state.backgroundColorObj.lighten(0.1)
-          },
-          ':active': {
-            backgroundColor: this.state.backgroundColorObj.darken(0.1)
-          }
-        }}
-      >
-        {this.props.children}
-      </button>
-    );
-  }
+function Button (props) {
+  const baseColor = props.color || '#ddd';
+  const backgroundColorObj = Color(baseColor);
+  return (
+    <button
+      {...props}
+      style={{
+        backgroundColor: backgroundColorObj.toString(),
+        ':hover': {
+          backgroundColor: backgroundColorObj.lighten(0.1),
+        },
+        ':active': {
+          backgroundColor: backgroundColorObj.darken(0.1),
+        }
+      }}
+    >
+      {props.children}
+    </button>
+  );
 }
 
 Button.propTypes = propTypes;

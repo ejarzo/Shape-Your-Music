@@ -41,7 +41,6 @@ ul {
   ul li {
     font-size: 12px; }
 
-/* checkbox buttons */
 button:active {
   background: #d5d5d5; }
 
@@ -377,5 +376,21 @@ button:active {
   padding: 0; }
   .rc-slider-vertical .rc-slider-mark {
     display: none; }
+
+.github-picker {
+  position: static !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 3px !important;
+  width: 100% !important;
+  height: 31px !important;
+  text-align: center !important;
+  box-shadow: none !important;
+  background: rgba(255, 255, 255, 0.2) !important; }
+  .github-picker span {
+    width: 20% !important;
+    height: 100% !important; }
+    .github-picker span div {
+      width: 100% !important; }
 
 /*# sourceMappingURL=main.css.map */

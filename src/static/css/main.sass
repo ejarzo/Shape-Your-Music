@@ -134,33 +134,6 @@ ul
     li
         font-size: 12px
 
-/* checkbox buttons */
-// input[type=checkbox]
-//     position: absolute
-//     top: -9999px
-//     left: -9999px
-//     &:checked + .checkbox-label
-//         background: $color-grey-dark
-//         color: $color-grey-lighter
-
-// label.checkbox-label, button
-//     border-radius: 1px
-//     text-align: center
-//     width: 100%
-//     color: $color-grey-dark
-//     background: $color-grey-lighter
-//     border: 1px solid darken($color-grey-lighter, 5)
-//     display: inline-block
-//     cursor: pointer
-//     //margin-bottom: 10px
-//     height: 25px
-//     padding: 2px 7px 
-//     margin: 0
-
-// label.checkbox-label
-//     background: $color-white
-//     border-color: $color-grey-light
-
 button
     &:active
         background: darken($color-grey-lighter, 10)
@@ -442,3 +415,20 @@ button
     padding: 0
     .rc-slider-mark
         display: none
+
+// TODO figure out better way
+.github-picker
+    position: static !important
+    border: none !important
+    border-radius: 0 !important
+    padding: 3px !important
+    width: 100% !important
+    height: 31px !important
+    text-align: center !important
+    box-shadow: none !important
+    background: rgba(255,255,255,0.2) !important
+    span
+        width: 20% !important
+        height: 100% !important
+        div
+            width: 100% !important

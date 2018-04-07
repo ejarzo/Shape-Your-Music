@@ -135,8 +135,8 @@ function polarToCartesian (centerX, centerY, radius, angleInDegrees) {
 }
 
 export const ColorUtils = {
-  getDarker: (color, amount = 0.2) => Color(color).darken(amount).toString(),
-  getLighter: (color, amount = 0.2) => Color(color).lighten(amount).toString(),
+  getDarker: (color, amount = 0.1) => Color(color).darken(amount).toString(),
+  getLighter: (color, amount = 0.1) => Color(color).lighten(amount).toString(),
 };
 
 export default Utils;

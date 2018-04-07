@@ -83,8 +83,8 @@ class ShapeEditorPanelComponent extends Component {
 
   render () {
     const colorString = this.props.colorsList[this.props.colorIndex];
-    const darkColor = ColorUtils.getDarker(colorString);
-    const medColor = ColorUtils.getDarker(colorString, 0.1);
+    const darkColor = ColorUtils.getDarker(colorString, 0.2);
+    const medColor = ColorUtils.getDarker(colorString);
     const { width, height, top, left } = this.props.panelStyle;
     return (
       <div

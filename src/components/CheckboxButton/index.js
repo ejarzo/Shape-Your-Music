@@ -26,7 +26,7 @@ function CheckboxButton (props) {
         style={{
           background: props.checked
             ? '#fff'
-            : ColorUtils.getDarker(props.color, 0.1),
+            : ColorUtils.getDarker(props.color),
           color: props.checked
             ? props.color
             : '#fff',

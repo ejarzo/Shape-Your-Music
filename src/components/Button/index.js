@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Color from 'color';
+import { ColorUtils } from 'utils/Utils';
 import Radium from 'radium';
 
 const propTypes = {
@@ -10,17 +10,16 @@ const propTypes = {
 
 function Button (props) {
   const baseColor = props.color || '#ddd';
-  const backgroundColorObj = Color(baseColor);
   return (
     <button
       {...props}
       style={{
-        backgroundColor: backgroundColorObj.toString(),
+        backgroundColor: baseColor,
         ':hover': {
-          backgroundColor: backgroundColorObj.lighten(0.1),
+          backgroundColor: ColorUtils.getLighter(props.color),
         },
         ':active': {
-          backgroundColor: backgroundColorObj.darken(0.1),
+          backgroundColor: ColorUtils.getDarker(props.color),
         }
       }}
     >

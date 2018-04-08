@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Color from 'color';
 import Tone from 'tone';
 
-import Utils from 'utils/Utils.js';
+import Utils from 'utils/Utils';
 import InstrumentPresets from 'presets/InstrumentPresets';
 import ShapeComponent from './Component';
 

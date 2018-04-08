@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Circle } from 'react-konva';
 
-import Utils from 'utils/Utils.js';
+import Utils from 'utils/Utils';
 import ShapeCanvasComponent from './Component';
 
 const propTypes = {

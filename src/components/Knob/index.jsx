@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
-import Utils from '../../utils/Utils.js';
+import Utils from 'utils/Utils';
 
 const propTypes = {
   value: PropTypes.number.isRequired,

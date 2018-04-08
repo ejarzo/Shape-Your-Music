@@ -25,10 +25,10 @@ class ShapeEditorPanel extends Component {
     y += yPad;
 
     let caretTop = 40;
-    let isLeft = true;
+    let isCaretLeft = true;
 
     if (x + width + xPad > window.innerWidth) {
-      isLeft = false;
+      isCaretLeft = false;
       x = x - width - xPad;
     } else {
       x = x + xPad;
@@ -52,7 +52,7 @@ class ShapeEditorPanel extends Component {
       },
       caretPosition: {
         top: caretTop,
-        isLeft,
+        isLeft: isCaretLeft,
       }
     };
   }

@@ -27,8 +27,8 @@ const propTypes = {
 
   isSelected: PropTypes.bool.isRequired,
   isMuted: PropTypes.bool.isRequired,
-  soloedShapeIndex: PropTypes.bool.isRequired,
   isDragging: PropTypes.bool.isRequired,
+  soloedShapeIndex: PropTypes.number.isRequired,
   
   dragBoundFunc: PropTypes.func.isRequired,
   handleDrag: PropTypes.func.isRequired,

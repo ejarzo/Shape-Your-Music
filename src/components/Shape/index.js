@@ -408,12 +408,9 @@ class Shape extends Component {
 
   /* --- Color --- */
   handleColorChange (colorObj) {
-    // console.log(this.props.colorsList.indexOf(colorObj.hex));
-    // return () => {
     this.setState({
       colorIndex: this.props.colorsList.indexOf(colorObj.hex)
     });
-    // };
   }
 
   /* --- Volume --- */

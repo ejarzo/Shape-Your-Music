@@ -29,17 +29,20 @@ const propTypes = {
 class ShapeCanvas extends Component {
   constructor (props) {
     super(props);
-
-    this.state = {
+    
+    this.initState = {
       shapesList: [],
       deletedShapeIndeces: [],
       selectedShapeIndex: -1,
+      soloedShapeIndex: -1,
 
       currPoints: [],
       drawingState: 'pending',
-      mousePos: { x: 0, y: 0 },
+      mousePos: { x: -10, y: -10 },
       gridSize: 50,
     };
+
+    this.state = this.initState;
 
     this.originLockRadius = 15;
     this.gridDots = this.createGrid();
@@ -49,15 +52,16 @@ class ShapeCanvas extends Component {
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleShapeClick = this.handleShapeClick.bind(this);
     this.handleShapeDelete = this.handleShapeDelete.bind(this);
+    this.handleShapeSolo = this.handleShapeSolo.bind(this);
     this.snapToGrid = this.snapToGrid.bind(this);
     
     this.clearAll = this.clearAll.bind(this);
   }
 
   componentDidMount () {
-    // this.setState({
-    //   shapesList: this.generateRandomShapes(10, 20)
-    // });
+    this.setState({
+      shapesList: this.generateRandomShapes(2, 3)
+    });
   }
 
   componentWillReceiveProps (nextProps) {
@@ -94,10 +98,7 @@ class ShapeCanvas extends Component {
   }
 
   clearAll () {
-    this.setState({
-      shapesList: [],
-      deletedShapeIndeces: []
-    });
+    this.setState(this.initState);
   }
 
   /* ============================== HANDLERS ============================== */
@@ -110,8 +111,6 @@ class ShapeCanvas extends Component {
   }
 
   handleClick (e) {
-    // this.props.closeColorPicker();
-
     // left click
     if (e.evt.which === 1) {
       if (this.props.activeTool === 'draw') {
@@ -185,8 +184,16 @@ class ShapeCanvas extends Component {
     });
   }
 
-  /* ================================ GRID ================================ */
+  handleShapeSolo (index) {
+    return () => {
+      const soloedShapeIndex =
+        index === this.state.soloedShapeIndex ? -1 : index;
+      this.setState({ soloedShapeIndex });
+    };
+  }
 
+  /* ================================ GRID ================================ */
+  // TODO move grid to component
   createGrid () {
     const gridDots = [];
     const color = '#999';
@@ -247,11 +254,13 @@ class ShapeCanvas extends Component {
         onContentClick={this.handleClick}
         onContentMouseMove={this.handleMouseMove}
         onContentMouseDown={this.handleMouseDown}
+
         gridDots={gridDots}
         quantizeLength={this.props.quantizeLength}
 
         shapesList={this.state.shapesList}
         selectedShapeIndex={this.state.selectedShapeIndex}
+        soloedShapeIndex={this.state.soloedShapeIndex}
         deletedShapeIndeces={this.state.deletedShapeIndeces}
         
         colorsList={this.props.colorsList}
@@ -270,9 +279,10 @@ class ShapeCanvas extends Component {
        
         selectedInstruments={this.props.selectedInstruments}
         knobVals={this.props.knobVals}
-
+        
         handleShapeClick={this.handleShapeClick}
         handleShapeDelete={this.handleShapeDelete}
+        handleShapeSolo={this.handleShapeSolo}
       />
     );
   }

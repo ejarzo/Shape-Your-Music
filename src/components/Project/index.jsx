@@ -105,6 +105,7 @@ class Project extends Component {
 
       activeTool: 'draw',
       activeColorIndex: 0,
+
       selectedInstruments: [0,1,0,1,0], // indeces of default instruments
       knobVals: colorsList.map(() => [0,0,0,0])
     };

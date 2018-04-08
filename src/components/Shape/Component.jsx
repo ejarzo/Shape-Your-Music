@@ -27,7 +27,7 @@ const propTypes = {
 
   isSelected: PropTypes.bool.isRequired,
   isMuted: PropTypes.bool.isRequired,
-  isSoloed: PropTypes.bool.isRequired,
+  soloedShapeIndex: PropTypes.bool.isRequired,
   isDragging: PropTypes.bool.isRequired,
   
   dragBoundFunc: PropTypes.func.isRequired,
@@ -146,7 +146,7 @@ class ShapeComponent extends React.Component {
               backgroundColor: color,
               padding: '5px',
               position: 'absolute',
-              opacity:0.8,
+              opacity: 0.8,
               top: this.props.averagePoint.y + 20,
               left: this.props.averagePoint.x - 20,
               fontSize: '0.8em'
@@ -169,7 +169,7 @@ class ShapeComponent extends React.Component {
               
               isMuted={this.props.isMuted}
               onMuteChange={this.props.handleMuteChange}
-              isSoloed={this.props.isSoloed}
+              isSoloed={this.props.soloedShapeIndex === this.props.index}
               onSoloChange={this.props.handleSoloChange}
 
               colorIndex={this.props.colorIndex}

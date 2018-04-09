@@ -24,7 +24,7 @@ This is SYM's third iteration - a new and improved React implementation of [V2](
 | Tool      | Description       |
 | --------- | ----------------- |
 | Color     | Select the color of the shapes you are drawing. Different colored shapes produce different sounds. |
-| Draw      | Draw mode allows you to create shapes. Click to place vertices. Click on the origin point to complete a shape. |
+| Draw      | Draw mode allows you to create shapes. Click to place vertices. Click on the origin point to complete a shape. Right click to cancel. |
 | Edit      | Edit mode allows you to adjust your shapes. Drag vertices to edit the perimeter of your shape. drag the whole shape to move it. Click on a shape to show more detailed options (see shape controls). |
 
 ### Canvas Modifiers
@@ -53,7 +53,7 @@ This is SYM's third iteration - a new and improved React implementation of [V2](
 | Fullscreen    | Toggle Fullscreen |
 | Clear         | Delete all shapes |
 
-## Developmen
+## Development
 ### To Run
 Clone this repo and run `npm install` and then `npm start`.
 

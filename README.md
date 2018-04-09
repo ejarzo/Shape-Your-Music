@@ -7,8 +7,9 @@ The idea is to create melodic loops by drawing shapes. When a shape plays, a nod
 
 This is SYM's third iteration - a new and improved React implementation of [V2](https://github.com/ejarzo/sym_v2), which was written in vanilla JS/jQuery.
 
+-----------
 
-## Application Controls
+## User Manual
 
 ### Playback
 ![playback controls](https://github.com/ejarzo/Shape-Your-Music/blob/master/src/static/img/readme_images/transport.png)
@@ -52,6 +53,8 @@ This is SYM's third iteration - a new and improved React implementation of [V2](
 | ------------- | ----------------- |
 | Fullscreen    | Toggle Fullscreen |
 | Clear         | Delete all shapes |
+
+-----------
 
 ## Development
 ### To Run

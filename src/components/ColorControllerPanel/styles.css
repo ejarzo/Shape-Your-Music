@@ -1,0 +1,40 @@
+.colorControllerPanel {
+  height: 100px;
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #aaa;
+  transition: all 0.3s;
+  overflow-x: scroll;
+}
+
+.colorControllerPanel::-webkit-scrollbar {
+  display: none
+}
+
+.colorControllerPanel.isCollapsed {
+  bottom: -70px;
+}
+
+.toggleCollapseButton {
+  width: 100%;
+  height: 5px;
+  background: #fff;
+  cursor: ns-resize;
+}
+
+.colorControllers {
+  width: 1500px;
+  height: calc(100% - 5px);
+  white-space: nowrap;
+}
+
+.colorControllerContainer {
+  display: inline-block;
+  height: 100%;
+  width: 300px;
+  /*min-width: 300px;*/
+  /*border: 1px solid #fff;*/
+}
+

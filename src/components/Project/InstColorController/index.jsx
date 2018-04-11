@@ -7,6 +7,8 @@ import Tone from 'tone';
 
 import Knob from 'components/Knob';
 
+import InstColorControllerComponent from './Component';
+
 const propTypes = {
   colorIndex: PropTypes.number.isRequired,
   colorsList: PropTypes.array.isRequired,
@@ -24,7 +26,7 @@ const propTypes = {
   knobVals: PropTypes.array.isRequired,
   
   onKnobChange: PropTypes.func.isRequired,
-  handleInstChange: PropTypes.func.isRequired,
+  onInstChange: PropTypes.func.isRequired,
 };
 
 class InstColorController extends Component {
@@ -38,9 +40,9 @@ class InstColorController extends Component {
     this.output = new Tone.Gain(1);
     this.output.send('masterOutput', 0);
 
-    console.log('inst color controller constructor');
-    console.log('param effects', props.synthParams.effects);
-    console.log('knob vals', props.knobVals);
+    // console.log('inst color controller constructor');
+    // console.log('param effects', props.synthParams.effects);
+    // console.log('knob vals', props.knobVals);
 
     this.connectEffects(props.synthParams.effects);
     //this.setDefaults(props.synthParams.dynamicParams);
@@ -95,7 +97,7 @@ class InstColorController extends Component {
 
   handleInstChange (val) {
     if (val) {
-      this.props.handleInstChange(val.value);
+      this.props.onInstChange(val.value);
     }
   }
 
@@ -114,8 +116,7 @@ class InstColorController extends Component {
     const color = this.props.colorsList[this.props.colorIndex];
     const titleBackgroundColor = color;
     const contentBackgroundColor = Color(color).lighten(0.1);
-    
-    return (    
+    return (
       <li className="inst-option">
         <div className="inst-title" style={{backgroundColor: titleBackgroundColor}}>
           <div style={{width: '50%', backgroundColor: Color(color).darken(0.1)}}>

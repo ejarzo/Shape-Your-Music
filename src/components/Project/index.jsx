@@ -6,6 +6,7 @@ import Teoria from 'teoria';
 import Tone from 'tone';
 import Controls from 'components/Controls';
 import ShapeCanvas from 'components/ShapeCanvas';
+import ColorControllerPanel from 'components/ColorControllerPanel';
 import InstColorController from './InstColorController';
 import InstrumentPresets from 'presets/InstrumentPresets';
 
@@ -132,6 +133,7 @@ class Project extends Component {
 
     // inst colors
     this.handleInstChange = this.handleInstChange.bind(this);
+    this.handleKnobChange = this.handleKnobChange.bind(this);
 
     // canvas
     this.handleClearButtonClick = this.handleClearButtonClick.bind(this);
@@ -376,9 +378,19 @@ class Project extends Component {
           isGridActive={this.state.isGridActive}
           isSnapToGridActive={this.state.isSnapToGridActive}
         />
-          
+
         {/* Instrument controller panels */}
-        <div className="inst-selectors">
+        <ColorControllerPanel
+          colorsList={colorsList}
+          selectedInstruments={this.state.selectedInstruments}
+          instNamesList={instNamesList}
+          instrumentPresets={InstrumentPresets}
+          onInstChange={this.handleInstChange}
+          onKnobChange={this.handleKnobChange}
+          knobVals={this.state.knobVals}
+        />
+
+        {/*<div className="inst-selectors">
           <ul className="inst-list">
             {colorsList.map((color, i) => {
               const selectedInstrumentIndex = this.state.selectedInstruments[i];
@@ -396,7 +408,7 @@ class Project extends Component {
               );
             })}
           </ul>
-        </div>
+        </div>*/}
 
       </Fullscreen>        
     );

@@ -258,6 +258,7 @@ class Project extends Component {
 
   handleInstChange (colorIndex) {
     return (instrumentIndex) => {
+      console.log(instrumentIndex);
       const selectedInstruments = this.state.selectedInstruments.slice();
       selectedInstruments[colorIndex] = instrumentIndex;
       this.setState({

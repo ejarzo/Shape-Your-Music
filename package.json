@@ -27,6 +27,7 @@
     "postcss-loader": "^0.8.0",
     "prop-types": "^15.6.0",
     "radium": "^0.24.0",
+    "rc-select": "^7.7.6",
     "rc-slider": "^8.6.1",
     "react": "^16.1.0-beta",
     "react-color": "^2.14.0",

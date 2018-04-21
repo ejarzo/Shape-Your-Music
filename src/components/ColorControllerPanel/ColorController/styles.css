@@ -7,6 +7,16 @@
 }
 
 .titleBar {
+  padding: 2px;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 1fr 50px 50px;
+  grid-gap: 2px;
+  position: relative;
   grid-column: 1 / 5;
   height: 100%;
+}
+
+.option {
+  background-color: rgba(0,0,0,0);
 }

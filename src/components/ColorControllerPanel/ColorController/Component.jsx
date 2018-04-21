@@ -1,8 +1,8 @@
 import React from 'react';
-import Select from 'react-select';
-import Color from 'color';
+import CustomSelect from 'components/CustomSelect';
 import PropTypes from 'prop-types';
 import Knob from 'components/Knob';
+import Button from 'components/Button';
 
 import { ColorUtils } from 'utils/Utils';
 
@@ -41,23 +41,22 @@ function ColorControllerComponent (props) {
           backgroundColor: darkerColor
         }}
       >
-        <Select
-          optionRenderer={option => (
-            <div style={{backgroundColor: darkerColor}}>
-              {option.label}
-            </div>
-          )}
-          menuStyle={{
-            background: darkerColor
-          }}
-          className="inst-select"
-          searchable={true}
-          clearable={false}
+        <CustomSelect
+          dropDownAlign="BottomLeft"
+          color={props.color}
           name="Instrument Select"
           value={props.synthParams.name.value}
           options={props.instNamesList}
           onChange={props.onInstChange}
+          synthParams={props.synthParams}
+          instNamesList={props.instNamesList}
         />
+        <Button color={props.color}>
+          <i className="ion-chevron-left" />
+        </Button>
+        <Button color={props.color}>
+          <i className="ion-chevron-right" />
+        </Button>
       </div>
     </div>
   );

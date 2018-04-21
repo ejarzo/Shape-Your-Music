@@ -43,44 +43,48 @@ class ColorControllerPanel extends Component {
     } = this.props;
 
     return (
-      <div className={cx({
-        [styles.colorControllerPanel]: true,
-        [styles.isCollapsed]: this.state.isCollapsed,
-      })}>
+      <div className={styles.wrapper}>
         <div
-          className={styles.toggleCollapseButton}
-          onClick={this.handleToggleCollapseClick}
-        />
-        <div className={styles.colorControllers}>
-          {colorsList.map((color, colorIndex) => {
-            const selectedInstrumentIndex = selectedInstruments[colorIndex];
-            return (
-              <div
-                className={styles.colorControllerContainer}
-                key={`colorController-${colorIndex}`}
-              >
-                <ColorController
-                  color={colorsList[colorIndex]}
+          className={cx({
+            [styles.colorControllerPanel]: true,
+            [styles.isCollapsed]: this.state.isCollapsed,
+          })}
+        >
+          <div
+            className={styles.toggleCollapseButton}
+            onClick={this.handleToggleCollapseClick}
+          />
+          <div className={styles.colorControllers}>
+            {colorsList.map((color, colorIndex) => {
+              const selectedInstrumentIndex = selectedInstruments[colorIndex];
+              return (
+                <div
+                  className={styles.colorControllerContainer}
+                  key={`colorController-${colorIndex}`}
+                >
+                  <ColorController
+                    color={colorsList[colorIndex]}
+                    instNamesList={instNamesList}
+                    onInstChange={onInstChange(colorIndex)}
+                    onKnobChange={onKnobChange(colorIndex)}
+                    knobVals={knobVals[colorIndex]}
+                    synthParams={instrumentPresets[selectedInstrumentIndex]}
+                  />
+                </div>
+              
+                /*<InstColorController 
+                  key={`colorController-${colorIndex}`}
+                  colorIndex={colorIndex}
+                  colorsList={colorsList}
                   instNamesList={instNamesList}
                   onInstChange={onInstChange(colorIndex)}
                   onKnobChange={onKnobChange(colorIndex)}
                   knobVals={knobVals[colorIndex]}
                   synthParams={instrumentPresets[selectedInstrumentIndex]}
-                />
-              </div>
-            
-              /*<InstColorController 
-                key={`colorController-${colorIndex}`}
-                colorIndex={colorIndex}
-                colorsList={colorsList}
-                instNamesList={instNamesList}
-                onInstChange={onInstChange(colorIndex)}
-                onKnobChange={onKnobChange(colorIndex)}
-                knobVals={knobVals[colorIndex]}
-                synthParams={instrumentPresets[selectedInstrumentIndex]}
-              />*/
-            );
-          })}
+                />*/
+              );
+            })}
+          </div>
         </div>
       </div>
     );

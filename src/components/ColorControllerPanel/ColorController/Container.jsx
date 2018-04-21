@@ -22,6 +22,7 @@ class ColorController extends Component {
 
   handleInstChange (val) {
     if (val) {
+      console.log(val);
       this.props.onInstChange(val.value);
     }
   }

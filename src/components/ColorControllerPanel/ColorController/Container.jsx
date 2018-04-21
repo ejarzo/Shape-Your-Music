@@ -8,7 +8,7 @@ const propTypes = {
   color: PropTypes.string.isRequired,
   instNamesList: PropTypes.array.isRequired,
   knobVals: PropTypes.array.isRequired,
-  synthParams: PropTypes.array.isRequired,
+  synthParams: PropTypes.object.isRequired,
   onInstChange: PropTypes.func.isRequired,
   onKnobChange: PropTypes.func.isRequired,
 };

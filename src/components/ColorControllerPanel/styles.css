@@ -42,8 +42,8 @@
 .colorControllerContainer {
   display: inline-block;
   height: 100%;
-  width: 300px;
-  /*min-width: 300px;*/
+  width: 310px;
+  min-width: 20vw;
   /*border: 1px solid #fff;*/
 }
 

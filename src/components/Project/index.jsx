@@ -268,19 +268,20 @@ class Project extends Component {
   }
 
   handleKnobChange (colorIndex) {
-    return (effectIndex, val) => {
-      this.setState(
-        (prevState) => {
-          const knobVals = prevState.knobVals.slice();
-          const colorKnobVals = knobVals[colorIndex].slice();
-          colorKnobVals[effectIndex] = val;
-          knobVals[colorIndex] = colorKnobVals;
-          return {
-            knobVals: knobVals,
-          };
-        }
-      );
-    };
+    return effectIndex =>
+      val => {
+        this.setState(
+          (prevState) => {
+            const knobVals = prevState.knobVals.slice();
+            const colorKnobVals = knobVals[colorIndex].slice();
+            colorKnobVals[effectIndex] = val;
+            knobVals[colorIndex] = colorKnobVals;
+            return {
+              knobVals: knobVals,
+            };
+          }
+        );
+      };
   }
 
   /* --- Keyboard Shortcuts ----------------------------------------------- */

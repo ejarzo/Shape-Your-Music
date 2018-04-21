@@ -21,9 +21,10 @@ const propTypes = {
     dynamicParams: PropTypes.array.isRequired,
     effects: PropTypes.array,
   }).isRequired,
-  // knobVals: PropTypes.array.isRequired,
-  // onKnobChange: PropTypes.func.isRequired,
+  knobVals: PropTypes.array.isRequired,
+  onKnobChange: PropTypes.func.isRequired,
   onInstChange: PropTypes.func.isRequired,
+  onIncrementClick: PropTypes.func.isRequired,
 };
 
 function ColorControllerComponent (props) {
@@ -51,12 +52,32 @@ function ColorControllerComponent (props) {
           synthParams={props.synthParams}
           instNamesList={props.instNamesList}
         />
-        <Button color={props.color}>
+        <Button 
+          color={props.color}
+          onClick={props.onIncrementClick(-1)}
+        >
           <i className="ion-chevron-left" />
         </Button>
-        <Button color={props.color}>
+        <Button 
+          color={props.color}
+          onClick={props.onIncrementClick(1)}
+        >
           <i className="ion-chevron-right" />
         </Button>
+      </div>
+      <div className={styles.knobsContainer}>
+        {props.synthParams.dynamicParams.map((effect, i) => (
+          <div
+            key={`${props.color}-knob-${i}`}
+            className={styles.knobContainer}
+          >
+            <Knob
+              paramName={effect.name}
+              value={props.knobVals[i]}
+              onChange={props.onKnobChange(i)}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

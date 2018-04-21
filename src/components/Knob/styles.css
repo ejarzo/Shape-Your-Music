@@ -1,0 +1,12 @@
+.svg {
+  transition: all 0.2s;
+  transform: scale(1);
+}
+
+.svg:hover {
+  transform: scale(1.2);
+}
+
+.svg:active {
+  transform: scale(1.2);
+}

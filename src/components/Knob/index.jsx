@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
 import Utils from 'utils/Utils';
+import styles from './styles.css';
 
 const propTypes = {
   value: PropTypes.number.isRequired,
@@ -75,7 +76,10 @@ class Knob extends Component {
             onStart={this.handleDragStart}
             onDrag={this.handleDrag}
             onStop={this.handleDragStop}>
-            <svg style={svgStyle} className="expand-on-hover">
+            <svg
+              className={styles.svg}
+              style={svgStyle}
+            >
 
               {/* background static arc */}
               <path

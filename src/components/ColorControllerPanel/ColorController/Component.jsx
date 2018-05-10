@@ -10,7 +10,6 @@ import styles from './styles.css';
 
 const propTypes = {
   color: PropTypes.string.isRequired,
-
   instNamesList: PropTypes.array.isRequired,
   synthParams: PropTypes.shape({
     name: PropTypes.shape({
@@ -67,11 +66,9 @@ function ColorControllerComponent (props) {
       </div>
       <div className={styles.knobsContainer}>
         {props.synthParams.dynamicParams.map((effect, i) => (
-          <div
-            key={`${props.color}-knob-${i}`}
-            className={styles.knobContainer}
-          >
+          <div key={`${props.color}-knob-${i}`} >
             <Knob
+              // color={props.color}
               paramName={effect.name}
               value={props.knobVals[i]}
               onChange={props.onKnobChange(i)}

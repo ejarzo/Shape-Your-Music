@@ -21,11 +21,6 @@
 
 .knobsContainer {
   display: grid;
+  padding-top: 10px;
   grid-template-columns: repeat(4, 1fr);
-}
-
-.knobContainer {
-  text-align: center;
-  padding-top: 3px;
-  color: #fff;
 }

@@ -266,14 +266,13 @@ button:active {
   width: 100% !important;
   height: 31px !important;
   text-align: center !important;
-  box-shadow: none !important; }
+  box-shadow: none !important;
+  background: white !important; }
   .github-picker span {
-    width: 16% !important;
-    margin: 2% !important;
-    height: 10px !important; }
+    width: 20% !important;
+    height: 100% !important; }
     .github-picker span div {
-      width: 100% !important;
-      height: 100% !important; }
+      width: 100% !important; }
 
 .Select-control {
   height: 100%;

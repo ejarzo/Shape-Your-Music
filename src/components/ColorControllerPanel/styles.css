@@ -31,11 +31,13 @@
   height: 5px;
   background: #fff;
   cursor: ns-resize;
+  display: none;
 }
 
 .colorControllers {
   width: 1500px;
-  height: calc(100% - 5px);
+  /*height: calc(100% - 5px);*/
+  height: 100%;
   white-space: nowrap;
 }
 

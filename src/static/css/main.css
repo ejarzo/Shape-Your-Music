@@ -14,14 +14,17 @@
 html {
   color: #222;
   font-size: 1em;
-  line-height: 1.4; }
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700; }
 
 body {
   margin: auto;
   overflow: hidden;
   width: 100%;
   height: 100%;
-  font-family: "Source Code Pro", "Consolas", "Inconsolata", monospace;
+  font-family: "Inconsolata", monospace;
   font-size: 0.8em; }
 
 button {
@@ -247,6 +250,7 @@ button:active {
 .full-width {
   width: 100%; }
 
+/* ---------------------------------------- */
 .rc-slider-vertical {
   width: 100%;
   height: 100%;
@@ -254,7 +258,6 @@ button:active {
   .rc-slider-vertical .rc-slider-mark {
     display: none; }
 
-/* ---------------------------------------- */
 .github-picker {
   position: static !important;
   border: none !important;
@@ -263,17 +266,14 @@ button:active {
   width: 100% !important;
   height: 31px !important;
   text-align: center !important;
-  box-shadow: none !important;
-  background: rgba(255, 255, 255, 0.2) !important; }
+  box-shadow: none !important; }
   .github-picker span {
-    width: 20% !important;
-    height: 100% !important; }
+    width: 16% !important;
+    margin: 2% !important;
+    height: 10px !important; }
     .github-picker span div {
-      width: 100% !important; }
-
-.Select-menu-outer {
-  top: auto;
-  bottom: 100%; }
+      width: 100% !important;
+      height: 100% !important; }
 
 .Select-control {
   height: 100%;
@@ -288,9 +288,9 @@ button:active {
   background-color: rgba(255, 255, 255, 0); }
   .Select-option.is-selected {
     color: #fff;
-    background-color: rgba(255, 255, 255, 0.2) !important; }
+    background-color: rgba(255, 255, 255, 0.3) !important; }
   .Select-option.is-focused {
     color: #fff;
-    background-color: rgba(255, 255, 255, 0.3); }
+    background-color: rgba(255, 255, 255, 0.2); }
 
 /*# sourceMappingURL=main.css.map */

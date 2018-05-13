@@ -64,6 +64,7 @@ class ColorControllerPanel extends Component {
                 >
                   <ColorController
                     color={colorsList[colorIndex]}
+                    receiveChannel={`colorFx-${colorIndex}`}
                     instNamesList={instNamesList}
                     onInstChange={onInstChange(colorIndex)}
                     onKnobChange={onKnobChange(colorIndex)}

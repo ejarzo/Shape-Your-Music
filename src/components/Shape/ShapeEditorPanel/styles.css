@@ -34,6 +34,10 @@
   margin-top: -10px;
 }
 
+.buttonShort {
+  height: 30px;
+}
+
 .deleteButton, .colorPickerContainer {
   grid-column: 2 / 4;
   text-align: center;

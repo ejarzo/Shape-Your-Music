@@ -35,11 +35,13 @@ function CustomSelect (props) {
   return (
     <Select
       {...props}
-      className={styles.customSelect}
+      // className={'Select-menu-top'}
       wrapperStyle={{ height: '100%' }}
       menuContainerStyle={{
         marginBottom: 'none',
-        background: 'transparent'
+        background: 'transparent',
+        top: 'auto', // TODO prop
+        bottom: '100%',
       }}
       optionClassName={styles.option}
       valueRenderer={value => (
@@ -49,6 +51,7 @@ function CustomSelect (props) {
           border: 0,
           height: '100%',
           padding: 3,
+          paddingLeft: 6,
         }}>
           {value.label}
         </div>

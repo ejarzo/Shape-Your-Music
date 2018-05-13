@@ -336,6 +336,8 @@ class ShapeContainer extends Component {
   setEffectVal (val, i) {
     const synthParamsIndex = this.props.selectedInstruments[this.state.colorIndex];
     const synthParams = InstrumentPresets[synthParamsIndex];
+    // set synth value when knobs are changed
+    // values for connected effects are set with the colorController
     if (synthParams.dynamicParams[i].target === 'instrument') {
       synthParams.dynamicParams[i].func(this, val);
     }

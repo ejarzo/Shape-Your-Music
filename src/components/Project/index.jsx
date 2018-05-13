@@ -270,6 +270,7 @@ class Project extends Component {
   handleKnobChange (colorIndex) {
     return effectIndex =>
       val => {
+        console.log(colorIndex, effectIndex, val);
         this.setState(
           (prevState) => {
             const knobVals = prevState.knobVals.slice();

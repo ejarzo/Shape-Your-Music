@@ -3,7 +3,11 @@ _A web application for drawing music._
 
 Shape Your Music is a program that explores a new way of composing and performing music through geometry.
 
-The idea is to create melodic loops by drawing shapes. When a shape plays, a node traverses the perimeter of the shape at a constant speed, sounding a note at each vertex. The interval between the previous note and the next note is determined by the angle at that vertex - A sharp right turn means that the next note is much higher than the previous, while a shallow left turn means that the next note is a little lower. When the last point is reached, the loop starts again.
+Simply put, the idea is to create melodic loops by drawing shapes. When a shape plays, a node traverses the perimeter of the shape at a constant speed, sounding a note at each vertex. The interval between the previous note and the next note is determined by the angle at that vertex - A sharp right turn means that the next note is much higher than the previous, while a shallow left turn means that the next note is a little lower. When the last point is reached, the loop starts again.
+
+Draw multiple shapes to generate unique polyrhythms and manipulate shapes in real time to improvise and perform your composition.
+
+[Read more](https://ejarzo.github.io/#sym)
 
 This is SYM's third iteration - a new and improved React implementation of [V2](https://github.com/ejarzo/sym_v2), which was written in vanilla JS/jQuery.
 

@@ -68,7 +68,7 @@ class Knob extends Component {
             onDrag={this.handleDrag}
             onStop={this.handleDragStop}>
             <svg
-              className={styles.svg}
+              className={styles.knobSvg}
               style={svgStyle}
             >
 

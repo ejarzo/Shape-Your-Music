@@ -7,15 +7,16 @@
   text-transform: capitalize; 
 }
 
-.svg {
+/* TODO use expand on hover */
+.knobSvg {
   transition: all 0.2s;
   transform: scale(1);
 }
 
-.svg:hover {
+.knobSvg:hover {
   transform: scale(1.2);
 }
 
-.svg:active {
+.knobSvg:active {
   transform: scale(1.2);
 }

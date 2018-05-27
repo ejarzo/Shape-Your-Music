@@ -1,0 +1,26 @@
+.colorController {
+  height: 100%;
+  display: grid;
+  grid-gap: 2px;
+  grid-template-rows: 30px 1fr;
+}
+
+.titleBar {
+  padding: 2px;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 1fr 50px 50px;
+  grid-gap: 2px;
+  position: relative;
+  height: 100%;
+}
+
+.option {
+  background-color: rgba(0,0,0,0);
+}
+
+.knobsContainer {
+  display: grid;
+  padding-top: 10px;
+  grid-template-columns: repeat(4, 25%);
+}

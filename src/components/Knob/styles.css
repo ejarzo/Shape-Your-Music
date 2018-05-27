@@ -1,0 +1,22 @@
+.knobContainer {
+  text-align: center;
+}
+
+.knobTitle {
+  color: #fff;
+  text-transform: capitalize; 
+}
+
+/* TODO use expand on hover */
+.knobSvg {
+  transition: all 0.2s;
+  transform: scale(1);
+}
+
+.knobSvg:hover {
+  transform: scale(1.2);
+}
+
+.knobSvg:active {
+  transform: scale(1.2);
+}

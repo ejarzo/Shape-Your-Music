@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
 import Utils from 'utils/Utils';
+import styles from './styles.css';
 
 const propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   paramName: PropTypes.string.isRequired,
+  color: PropTypes.string,
 };
 
 class Knob extends Component {
@@ -39,22 +41,12 @@ class Knob extends Component {
   }
 
   handleDrag (e) {
-    // TODO add horizontal drag
-    // console.log(e.movementX, e.movementY);
-
-    // const xDiff = (e.clientX - this.dragStart.x);
+    const xDiff = (e.clientX - this.dragStart.x);
     const yDiff = (e.clientY - this.dragStart.y) * -1;
+    let newVal = this.dragStart.value + yDiff + xDiff;
 
-    // console.log("drag", xDiff, yDiff);
-
-    let newVal = this.dragStart.value + yDiff;
-
-    if (newVal > 100) {
-      newVal = 100;
-    }
-    if (newVal < 0) {
-      newVal = 0;
-    }
+    if (newVal > 100) { newVal = 100; }
+    if (newVal < 0) { newVal = 0; }
 
     this.props.onChange(newVal);
   }
@@ -66,8 +58,8 @@ class Knob extends Component {
     };
 
     return (
-      <div>
-        <div className="knob-container" tabIndex="0">
+      <div className={styles.knobContainer}>
+        <div tabIndex="0">
           <Draggable
             axis="both"
             position={{x: 0, y: 0}}
@@ -75,7 +67,10 @@ class Knob extends Component {
             onStart={this.handleDragStart}
             onDrag={this.handleDrag}
             onStop={this.handleDragStop}>
-            <svg style={svgStyle} className="expand-on-hover">
+            <svg
+              className={styles.knobSvg}
+              style={svgStyle}
+            >
 
               {/* background static arc */}
               <path
@@ -105,7 +100,9 @@ class Knob extends Component {
             </svg>
           </Draggable>
         </div>
-        <span className="inst-param-title">{this.props.paramName}</span>
+        <span className={styles.knobTitle}>
+          {this.props.paramName}
+        </span>
       </div>
     );
   }

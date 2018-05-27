@@ -14,14 +14,17 @@
 html {
   color: #222;
   font-size: 1em;
-  line-height: 1.4; }
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700; }
 
 body {
   margin: auto;
   overflow: hidden;
   width: 100%;
   height: 100%;
-  font-family: "Source Code Pro", "Consolas", "Inconsolata", monospace;
+  font-family: "Inconsolata", monospace;
   font-size: 0.8em; }
 
 button {
@@ -108,129 +111,6 @@ button:active {
   .icon-button i {
     position: relative;
     top: 1px; }
-
-.inst-selectors {
-  overflow: hidden;
-  position: absolute;
-  height: 290px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  pointer-events: none; }
-  .inst-selectors ul.inst-list {
-    overflow-x: scroll;
-    overflow-y: hiddenw;
-    white-space: nowrap;
-    height: 100%; }
-    .inst-selectors ul.inst-list::-webkit-scrollbar {
-      display: none; }
-    .inst-selectors ul.inst-list li.inst-option {
-      pointer-events: auto;
-      position: relative;
-      top: calc(100% - 88px);
-      background: #ccc;
-      text-align: center;
-      width: 25%;
-      min-width: 270px;
-      font-size: 12px;
-      display: inline-block;
-      color: #fff; }
-      .inst-selectors ul.inst-list li.inst-option .inst-title {
-        background: #aaa;
-        height: 21px;
-        text-align: left;
-        position: relative; }
-        .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select {
-          position: relative;
-          top: 2px;
-          left: 0;
-          width: 100%;
-          background: none;
-          color: #fff;
-          border: none;
-          box-shadow: none !important; }
-          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select.is-open {
-            position: relative;
-            z-index: 1000; }
-            .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select.is-open .Select-arrow {
-              border-bottom-color: #fff; }
-          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-value-label {
-            color: #fff;
-            padding-left: 2px; }
-          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-input {
-            color: #fff; }
-          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer {
-            top: auto;
-            bottom: calc(100% + 2px);
-            border: none; }
-            .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer div {
-              background: none;
-              color: #fff; }
-            .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option {
-              padding-left: 8px; }
-              .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-selected {
-                background-color: rgba(255, 255, 255, 0.4) !important; }
-                .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-selected div, .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-selected span {
-                  background: none !important;
-                  color: #fff !important; }
-              .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-focused {
-                background-color: rgba(255, 255, 255, 0.2) !important; }
-                .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-focused div, .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-menu-outer .Select-option.is-focused span {
-                  background: none !important;
-                  color: #fff !important; }
-          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-placeholder {
-            color: #ddd; }
-          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-control {
-            background: none;
-            border: none;
-            position: relative; }
-          .inst-selectors ul.inst-list li.inst-option .inst-title .inst-select .Select-arrow {
-            border-top-color: #fff; }
-      .inst-selectors ul.inst-list li.inst-option .inst-params {
-        height: 100%; }
-        .inst-selectors ul.inst-list li.inst-option .inst-params li {
-          display: inline-block;
-          position: relative;
-          height: 67px;
-          width: 25%;
-          min-width: 65px;
-          overflow: hidden;
-          padding-right: 10px;
-          padding-left: 10px; }
-          .inst-selectors ul.inst-list li.inst-option .inst-params li .knob-container {
-            border: 1px solid transparent;
-            padding-top: 7px; }
-            .inst-selectors ul.inst-list li.inst-option .inst-params li .knob-container:focus {
-              outline: none; }
-          .inst-selectors ul.inst-list li.inst-option .inst-params li .expand-on-hover {
-            transition: all 0.1s ease-in-out;
-            color: #777;
-            transform: scaleX(1) scaleY(1) scaleZ(1);
-            position: relative;
-            z-index: 100; }
-            .inst-selectors ul.inst-list li.inst-option .inst-params li .expand-on-hover:hover {
-              transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
-              color: #222;
-              z-index: 500; }
-            .inst-selectors ul.inst-list li.inst-option .inst-params li .expand-on-hover:active {
-              transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
-              color: #222; }
-            .inst-selectors ul.inst-list li.inst-option .inst-params li .expand-on-hover:disabled {
-              color: #bbb; }
-              .inst-selectors ul.inst-list li.inst-option .inst-params li .expand-on-hover:disabled:hover {
-                color: #bbb;
-                transform: scaleX(1) scaleY(1) scaleZ(1); }
-        .inst-selectors ul.inst-list li.inst-option .inst-params .inst-param-title {
-          position: absolute;
-          text-transform: capitalize;
-          display: block;
-          width: 100%;
-          text-align: center;
-          font-size: 0.9em;
-          bottom: 6px;
-          margin: 0 auto;
-          left: 0;
-          right: 0; }
 
 /* ========================================================================== */
 .controls {
@@ -370,6 +250,7 @@ button:active {
 .full-width {
   width: 100%; }
 
+/* ---------------------------------------- */
 .rc-slider-vertical {
   width: 100%;
   height: 100%;
@@ -386,11 +267,29 @@ button:active {
   height: 31px !important;
   text-align: center !important;
   box-shadow: none !important;
-  background: rgba(255, 255, 255, 0.2) !important; }
+  background: white !important; }
   .github-picker span {
     width: 20% !important;
     height: 100% !important; }
     .github-picker span div {
       width: 100% !important; }
+
+.Select-control {
+  height: 100%;
+  border: none; }
+
+.Select-value {
+  padding: 0 !important; }
+
+.Select-option {
+  padding: 4px 6px;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0); }
+  .Select-option.is-selected {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.3) !important; }
+  .Select-option.is-focused {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.2); }
 
 /*# sourceMappingURL=main.css.map */

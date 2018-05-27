@@ -12,8 +12,8 @@ const setSynthEnvelopeParam = (property, min, max) =>
   };
 
 const setEffectWet = (effectIndex) => 
-  (instColorController, val) => {
-    instColorController.setEffectAmount(effectIndex, Utils.convertValToRange(val, 0, 100, 0, 1), 'wet');
+  (colorController, val) => {
+    colorController.setEffectAmount(effectIndex, Utils.convertValToRange(val, 0, 100, 0, 1), 'wet');
   };
 /*
   An instrument has
@@ -162,29 +162,30 @@ const InstrumentPresets = [
         }
         
       }, {
-        type: Tone.Filter,
-        params: {
-          frequency : 1500,
-          type : 'lowpass',
-          wet: 1,
-        }
-      }, {
         type: Tone.Freeverb,
         params: {
           roomSize : 0.1,
           dampening : 3000,
           wet: 1,
         }
-      }, {
-        type: Tone.Tremolo, // TODO start
-        params: {
-          frequency : 2,
-          type : 'sawtooth',
-          depth : 0.7,
-          wet: 1,
-          spread : 1
-        }
-      }
+      }, 
+      // {
+      //   type: Tone.Filter,
+      //   params: {
+      //     frequency : 1500,
+      //     type : 'lowpass',
+      //     wet: 1,
+      //   }
+      // }, {
+      //   type: Tone.Tremolo, // TODO start
+      //   params: {
+      //     frequency : 2,
+      //     type : 'sawtooth',
+      //     depth : 0.7,
+      //     wet: 1,
+      //     spread : 1
+      //   }
+      // }
     ],
     dynamicParams: [
       {
@@ -214,7 +215,7 @@ const InstrumentPresets = [
         name: 'space',
         default: 5,
         target: 'effect',
-        func: setEffectWet(2),
+        func: setEffectWet(1),
       }
     ],
   },

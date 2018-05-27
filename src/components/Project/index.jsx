@@ -6,9 +6,8 @@ import Teoria from 'teoria';
 import Tone from 'tone';
 import Controls from 'components/Controls';
 import ShapeCanvas from 'components/ShapeCanvas';
-import InstColorController from './InstColorController';
+import ColorControllerPanel from 'components/ColorControllerPanel';
 import InstrumentPresets from 'presets/InstrumentPresets';
-
 
 /* ========================================================================== */
 
@@ -88,6 +87,15 @@ class Project extends Component {
   constructor (props) {
     super(props);
 
+    // indeces of default instruments
+    const selectedInstruments = [0,1,2,1,0];
+    const knobVals = [];
+    selectedInstruments.forEach(instrumentIndex => {
+      const instrumentDefaults = InstrumentPresets[instrumentIndex]
+                                  .dynamicParams.map(param => param.default);
+      knobVals.push(instrumentDefaults);
+    });
+
     this.state = {
       name: props.initState.name,
 
@@ -106,8 +114,8 @@ class Project extends Component {
       activeTool: 'draw',
       activeColorIndex: 0,
 
-      selectedInstruments: [0,1,0,1,0], // indeces of default instruments
-      knobVals: colorsList.map(() => [0,0,0,0])
+      selectedInstruments,
+      knobVals,
     };
 
     // transport
@@ -118,7 +126,6 @@ class Project extends Component {
     this.handleDrawToolClick = this.handleDrawToolClick.bind(this);
     this.handleEditToolClick = this.handleEditToolClick.bind(this);
     this.toggleActiveTool = this.toggleActiveTool.bind(this);
-    this.closeColorPicker = this.closeColorPicker.bind(this);
 
     // toggles
     this.handleGridToggleChange = this.handleGridToggleChange.bind(this);
@@ -132,6 +139,7 @@ class Project extends Component {
 
     // inst colors
     this.handleInstChange = this.handleInstChange.bind(this);
+    this.handleKnobChange = this.handleKnobChange.bind(this);
 
     // canvas
     this.handleClearButtonClick = this.handleClearButtonClick.bind(this);
@@ -252,32 +260,40 @@ class Project extends Component {
     });
   }
 
-  /* --- Instrument Colors ------------------------------------------------ */
+  /* --- Color Controllers ------------------------------------------------ */
 
   handleInstChange (colorIndex) {
-    return (instrumentIndex) => {
+    return instrumentIndex => {
       const selectedInstruments = this.state.selectedInstruments.slice();
       selectedInstruments[colorIndex] = instrumentIndex;
+      const defaultKnobvals = InstrumentPresets[instrumentIndex]
+                                .dynamicParams.map(param => param.default);
+
+      const knobVals = this.state.knobVals.slice();
+      knobVals[colorIndex] = defaultKnobvals;
+
       this.setState({
         selectedInstruments,
+        knobVals,
       });
     };
   }
 
   handleKnobChange (colorIndex) {
-    return (effectIndex, val) => {
-      this.setState(
-        (prevState) => {
-          const knobVals = prevState.knobVals.slice();
-          const colorKnobVals = knobVals[colorIndex].slice();
-          colorKnobVals[effectIndex] = val;
-          knobVals[colorIndex] = colorKnobVals;
-          return {
-            knobVals: knobVals,
-          };
-        }
-      );
-    };
+    return effectIndex =>
+      val => {
+        this.setState(
+          (prevState) => {
+            const knobVals = prevState.knobVals.slice();
+            const colorKnobVals = knobVals[colorIndex].slice();
+            colorKnobVals[effectIndex] = val;
+            knobVals[colorIndex] = colorKnobVals;
+            return {
+              knobVals: knobVals,
+            };
+          }
+        );
+      };
   }
 
   /* --- Keyboard Shortcuts ----------------------------------------------- */
@@ -311,14 +327,9 @@ class Project extends Component {
     }
   }
 
-  closeColorPicker () {
-    // this.colorPicker.close();
-  }
-
   /* =============================== RENDER =============================== */
 
   render () {    
-    console.log('project render');
     return (
       <Fullscreen
         enabled={this.state.isFullscreenEnabled}
@@ -362,7 +373,6 @@ class Project extends Component {
           colorsList={colorsList}
           colorIndex={this.state.activeColorIndex}
           activeTool={this.state.activeTool}
-          closeColorPicker={this.closeColorPicker}
           selectedInstruments={this.state.selectedInstruments}
           
           knobVals={this.state.knobVals}
@@ -376,28 +386,17 @@ class Project extends Component {
           isGridActive={this.state.isGridActive}
           isSnapToGridActive={this.state.isSnapToGridActive}
         />
-          
-        {/* Instrument controller panels */}
-        <div className="inst-selectors">
-          <ul className="inst-list">
-            {colorsList.map((color, i) => {
-              const selectedInstrumentIndex = this.state.selectedInstruments[i];
-              return (
-                <InstColorController 
-                    key={i}
-                    colorIndex={i}
-                    colorsList={colorsList}
-                    instNamesList={instNamesList}
-                    handleInstChange={this.handleInstChange(i)}
-                    onKnobChange={this.handleKnobChange(i)}
-                    knobVals={this.state.knobVals[i]}
-                    synthParams={InstrumentPresets[selectedInstrumentIndex]}
-                />
-              );
-            })}
-          </ul>
-        </div>
 
+        {/* Instrument controller panels */}
+        <ColorControllerPanel
+          colorsList={colorsList}
+          selectedInstruments={this.state.selectedInstruments}
+          instNamesList={instNamesList}
+          instrumentPresets={InstrumentPresets}
+          onInstChange={this.handleInstChange}
+          onKnobChange={this.handleKnobChange}
+          knobVals={this.state.knobVals}
+        />
       </Fullscreen>        
     );
   }

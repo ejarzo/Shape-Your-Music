@@ -19,7 +19,6 @@ const propTypes = {
   Used to show the shape that is currently being drawn. 
 */
 function PhantomShapeComponent (props) {
-  console.log('phantom render');
   const radius = 4;
   const strokeWidth = 2;
   const previewFillOpacity = 0.1;

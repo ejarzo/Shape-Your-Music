@@ -89,6 +89,16 @@ class Project extends Component {
   constructor (props) {
     super(props);
 
+    // indeces of default instruments
+    const selectedInstruments = [0,1,2,1,0];
+    const knobVals = [];
+    selectedInstruments.forEach((instrumentIndex, colorIndex) => {
+      const instrumentDefaults = InstrumentPresets[instrumentIndex]
+                                  .dynamicParams.map(param => param.default);
+      knobVals.push(instrumentDefaults);
+    });
+    console.log('defulat Knob vals', knobVals);
+
     this.state = {
       name: props.initState.name,
 
@@ -107,8 +117,8 @@ class Project extends Component {
       activeTool: 'draw',
       activeColorIndex: 0,
 
-      selectedInstruments: [0,1,0,1,0], // indeces of default instruments
-      knobVals: colorsList.map(() => [0,0,0,0])
+      selectedInstruments,
+      knobVals,
     };
 
     // transport
@@ -254,15 +264,21 @@ class Project extends Component {
     });
   }
 
-  /* --- Instrument Colors ------------------------------------------------ */
+  /* --- Color Controllers ------------------------------------------------ */
 
   handleInstChange (colorIndex) {
     return (instrumentIndex) => {
       console.log(instrumentIndex);
       const selectedInstruments = this.state.selectedInstruments.slice();
       selectedInstruments[colorIndex] = instrumentIndex;
+      const defaultKnobvals = InstrumentPresets[instrumentIndex]
+                                .dynamicParams.map(param => param.default);
+      console.log('NEW DEFAULTS', defaultKnobvals);
+      const knobVals = this.state.knobVals.slice();
+      knobVals[colorIndex] = defaultKnobvals;
       this.setState({
         selectedInstruments,
+        knobVals,
       });
     };
   }

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ColorController from './ColorController';
 import cx from 'classnames';
-// import InstColorController from 'components/Project/InstColorController';
-// import Utils from 'utils/Utils';
 
 import styles from './styles.css';
 
@@ -56,6 +54,8 @@ class ColorControllerPanel extends Component {
           />
           <div className={styles.colorControllers}>
             {colorsList.map((color, colorIndex) => {
+              // TODO added just for testing
+              if (colorIndex !== 0) return null;
               const selectedInstrumentIndex = selectedInstruments[colorIndex];
               return (
                 <div
@@ -72,17 +72,6 @@ class ColorControllerPanel extends Component {
                     synthParams={instrumentPresets[selectedInstrumentIndex]}
                   />
                 </div>
-              
-                /*<InstColorController 
-                  key={`colorController-${colorIndex}`}
-                  colorIndex={colorIndex}
-                  colorsList={colorsList}
-                  instNamesList={instNamesList}
-                  onInstChange={onInstChange(colorIndex)}
-                  onKnobChange={onKnobChange(colorIndex)}
-                  knobVals={knobVals[colorIndex]}
-                  synthParams={instrumentPresets[selectedInstrumentIndex]}
-                />*/
               );
             })}
           </div>

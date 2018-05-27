@@ -31,15 +31,11 @@ function ColorControllerComponent (props) {
   return (
     <div
       className={styles.colorController}
-      style={{
-        backgroundColor: props.color
-      }}
+      style={{ backgroundColor: props.color }}
     >
       <div
         className={styles.titleBar}
-        style={{
-          backgroundColor: darkerColor
-        }}
+        style={{ backgroundColor: darkerColor }}
       >
         <CustomSelect
           dropDownAlign="BottomLeft"

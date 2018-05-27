@@ -8,23 +8,38 @@ const propTypes = {
   receiveChannel: PropTypes.string.isRequired,
   instNamesList: PropTypes.array.isRequired,
   knobVals: PropTypes.array.isRequired,
-  synthParams: PropTypes.object.isRequired,
+  synthParams: PropTypes.shape({
+    name: PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired,
+    }),
+    baseSynth: PropTypes.func.isRequired,
+    dynamicParams: PropTypes.array.isRequired,
+    effects: PropTypes.array,
+  }).isRequired,
   onInstChange: PropTypes.func.isRequired,
   onKnobChange: PropTypes.func.isRequired,
 };
 
 
+const knobIndexChanged = (currVals, nextVals) => {
+  for (var i = 0; i < currVals.length; i++) {
+    if (currVals[i] !== nextVals[i]) { return i; }
+  }
+  return -1;
+};
+
 class ColorController extends Component {
   constructor (props) {
     super(props);
-    console.log(props);
+    // console.log(props);
     
     this.fxList = [];
 
     this.fxBus = new Tone.Gain(0.8);
     this.fxBus.receive(this.props.receiveChannel);
+
     this.output = new Tone.Gain(1);
-    // this.fxBus.chain(this.output);
     this.output.send('masterOutput', 0);
     this.connectEffects(props.synthParams.effects);
 
@@ -32,40 +47,58 @@ class ColorController extends Component {
     this.handleIncrementClick = this.handleIncrementClick.bind(this);
   }
 
-  knobIndexChanged(currVals, nextVals) {
-    for (var i = 0; i < currVals.length; i++) {
-      if (currVals[i] !== nextVals[i]) { return i; }
-    }
-    return -1;
-  }
-  
-  componentWillReceiveProps(nextProps) {
-    console.log('knob vals:', nextProps.knobVals);
-
-    const changedKnobIndex = this.knobIndexChanged(this.props.knobVals, nextProps.knobVals);
-
-    if (nextProps.synthParams.name.value !== this.props.synthParams.name.value) {
-      this.connectEffects(nextProps.synthParams.effects);
-      this.setDefaults(nextProps.synthParams.dynamicParams);
-    }
-
-    if (changedKnobIndex >= 0) {
-      nextProps.synthParams.dynamicParams[changedKnobIndex].func(nextProps.knobVals[changedKnobIndex])
-    }
-  }
-
-  setEffectAmount (effectIndex, val, parameter) {
-    this.fxList[effectIndex].set(parameter, val);
-  }
-
-  setDefaults (dynamicParams) {
-    dynamicParams.forEach((param, i) => {
-      this.props.onKnobChange(i, param.default);
+  componentDidMount () {
+    this.props.knobVals.forEach((val, i) => {
+      this.triggerEffectCallback(this.props.synthParams, i, val);
     });
   }
 
+  componentWillReceiveProps (nextProps) {
+
+    // Change instrument
+    if (nextProps.synthParams.name.value !== this.props.synthParams.name.value) {
+      this.connectEffects(nextProps.synthParams.effects);
+      nextProps.knobVals.forEach((val, i) => {
+        this.triggerEffectCallback(nextProps.synthParams, i, val);
+      });
+      // this.setDefaults(nextProps.synthParams.dynamicParams);
+    }
+
+    // change knob effect
+    const changedKnobIndex = knobIndexChanged(this.props.knobVals, nextProps.knobVals);
+    if (!this.props.knobVals || changedKnobIndex >= 0) {
+      const val = nextProps.knobVals[changedKnobIndex];
+      this.triggerEffectCallback(nextProps.synthParams, changedKnobIndex, val);
+    }
+  }
+
+  triggerEffectCallback (synthParams, knobIndex, val) {
+    const targetParam = synthParams.dynamicParams[knobIndex];
+    // change effect amount
+    // synth parameters are handled by shapes
+    if (targetParam.target === 'effect') {
+      targetParam.func(this, val);
+    }
+  }
+
+  // called by the callbacks in the synthParams object
+  // TODO figure out better way?
+  setEffectAmount (effectIndex, val, parameter) {
+    // console.log('setting effect', effectIndex, val, parameter);
+    // console.log('effect:', this.fxList[effectIndex]);
+    console.log('setting effect amount', effectIndex, parameter, val);
+    this.fxList[effectIndex].set(parameter, val);
+  }
+
+  // setDefaults (dynamicParams) {
+  //   const defaults = dynamicParams.map(param => param.default);
+  //   console.log('new default values', defaults);
+  //   dynamicParams.forEach((param, i) => {
+  //     this.props.onKnobChange(i, param.default);
+  //   });
+  // }
+
   connectEffects (fxConstructors) {
-    this.fxBus.disconnect();
     if (this.fxList) {
       this.fxList.forEach((effect) => {
         effect.dispose();
@@ -73,11 +106,17 @@ class ColorController extends Component {
       this.fxList = [];
     }
 
+    this.fxBus.disconnect();
+    this.fxBus.dispose();
+    this.fxBus = new Tone.Gain(0.8);
+    this.fxBus.receive(this.props.receiveChannel);
+
     fxConstructors.forEach((fxObj) => {
-      // console.log('adding effect', fxObj.type);
+      console.log('adding effect', fxObj.type);
       const newEffect = new fxObj.type(fxObj.params);
       this.fxList.push(newEffect);
     });
+    console.log(this.fxBus);
 
     // TODO
     if (this.fxList.length === 2) {
@@ -87,6 +126,7 @@ class ColorController extends Component {
     } else {
       this.fxBus.chain(this.output);
     }
+    console.log(this.fxBus);
   }
 
   handleInstChange (option) {
@@ -100,6 +140,7 @@ class ColorController extends Component {
       const currentVal = this.props.synthParams.name.value;
       const numOptions = this.props.instNamesList.length - 1;
       let nextVal = currentVal + difference;
+
       if (nextVal > numOptions) { nextVal = 0; }
       if (nextVal < 0) { nextVal = numOptions; }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Project from 'components/Project';
+import Project from 'views/Project';
 
 const defaultState = {
   name: 'New Project',

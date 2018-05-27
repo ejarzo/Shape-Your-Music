@@ -65,7 +65,7 @@ Caret.propTypes = {
   color: PropTypes.string.isRequired,
 };
 
-class ShapeEditorPanelComponent extends Component {
+class ShapeEditorPopoverComponent extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -88,7 +88,7 @@ class ShapeEditorPanelComponent extends Component {
     const { width, height, top, left } = this.props.panelStyle;
     return (
       <div
-        className={styles.shapeEditorPanel}
+        className={styles.ShapeEditorPopover}
         style={{
           width,
           height,
@@ -190,6 +190,6 @@ class ShapeEditorPanelComponent extends Component {
   }
 }
 
-ShapeEditorPanelComponent.propTypes = propTypes;
+ShapeEditorPopoverComponent.propTypes = propTypes;
 
-export default ShapeEditorPanelComponent;
+export default ShapeEditorPopoverComponent;

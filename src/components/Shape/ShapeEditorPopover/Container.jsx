@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ShapeEditorPanelComponent from './Component';
+import ShapeEditorPopoverComponent from './Component';
 
 const propTypes = {
   position: PropTypes.shape({
@@ -13,7 +13,7 @@ const propTypes = {
   Shape Editor Panel: appears when a shape is clicked on.
   Used to adjust/mix the shape
 */
-class ShapeEditorPanel extends Component {
+class ShapeEditorPopover extends Component {
   constructor (props) {
     super(props);
 
@@ -59,7 +59,7 @@ class ShapeEditorPanel extends Component {
 
   render () {
     return (
-      <ShapeEditorPanelComponent
+      <ShapeEditorPopoverComponent
         {...this.props}
         panelStyle={this.state.panelStyle}
         caretPosition={this.state.caretPosition}
@@ -68,6 +68,6 @@ class ShapeEditorPanel extends Component {
   }
 }
 
-ShapeEditorPanel.propTypes = propTypes;
+ShapeEditorPopover.propTypes = propTypes;
 
-export default ShapeEditorPanel;
+export default ShapeEditorPopover;

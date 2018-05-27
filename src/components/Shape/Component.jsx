@@ -5,7 +5,7 @@ import { Circle, Group, Line } from 'react-konva';
 import Utils from 'utils/Utils';
 import ShapeVertex from './ShapeVertex';
 import Portal from 'react-portal';
-import ShapeEditorPanel from './ShapeEditorPanel';
+import ShapeEditorPopover from './ShapeEditorPopover';
 
 const propTypes = {
   project: PropTypes.shape({
@@ -158,7 +158,7 @@ class ShapeComponent extends React.Component {
 
           {/* editor panel that opens on shape click */}
           <Portal isOpened={this.props.isSelected}> 
-            <ShapeEditorPanel
+            <ShapeEditorPopover
               index={this.props.index}
               position={this.props.editorPosition}
               

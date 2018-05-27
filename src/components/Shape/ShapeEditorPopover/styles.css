@@ -1,4 +1,4 @@
-.shapeEditorPanel {
+.ShapeEditorPopover {
   position: absolute;
   width: 225px;
   height: 260px;
@@ -14,7 +14,7 @@
   grid-row: 1 / 6;
 }
 
-.shapeEditorPanel button {
+.ShapeEditorPopover button {
   height: 100%;
   background: none;
   border: none;
@@ -32,6 +32,10 @@
   pointer-events: none;
   border: 10px solid rgba(255, 255, 255, 0);
   margin-top: -10px;
+}
+
+.buttonShort {
+  height: 30px;
 }
 
 .deleteButton, .colorPickerContainer {

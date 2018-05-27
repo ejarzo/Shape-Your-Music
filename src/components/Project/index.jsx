@@ -7,9 +7,7 @@ import Tone from 'tone';
 import Controls from 'components/Controls';
 import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
-import InstColorController from './InstColorController';
 import InstrumentPresets from 'presets/InstrumentPresets';
-
 
 /* ========================================================================== */
 
@@ -92,12 +90,11 @@ class Project extends Component {
     // indeces of default instruments
     const selectedInstruments = [0,1,2,1,0];
     const knobVals = [];
-    selectedInstruments.forEach((instrumentIndex, colorIndex) => {
+    selectedInstruments.forEach(instrumentIndex => {
       const instrumentDefaults = InstrumentPresets[instrumentIndex]
                                   .dynamicParams.map(param => param.default);
       knobVals.push(instrumentDefaults);
     });
-    console.log('defulat Knob vals', knobVals);
 
     this.state = {
       name: props.initState.name,
@@ -129,7 +126,6 @@ class Project extends Component {
     this.handleDrawToolClick = this.handleDrawToolClick.bind(this);
     this.handleEditToolClick = this.handleEditToolClick.bind(this);
     this.toggleActiveTool = this.toggleActiveTool.bind(this);
-    this.closeColorPicker = this.closeColorPicker.bind(this);
 
     // toggles
     this.handleGridToggleChange = this.handleGridToggleChange.bind(this);
@@ -267,15 +263,15 @@ class Project extends Component {
   /* --- Color Controllers ------------------------------------------------ */
 
   handleInstChange (colorIndex) {
-    return (instrumentIndex) => {
-      console.log(instrumentIndex);
+    return instrumentIndex => {
       const selectedInstruments = this.state.selectedInstruments.slice();
       selectedInstruments[colorIndex] = instrumentIndex;
       const defaultKnobvals = InstrumentPresets[instrumentIndex]
                                 .dynamicParams.map(param => param.default);
-      console.log('NEW DEFAULTS', defaultKnobvals);
+
       const knobVals = this.state.knobVals.slice();
       knobVals[colorIndex] = defaultKnobvals;
+
       this.setState({
         selectedInstruments,
         knobVals,
@@ -286,7 +282,6 @@ class Project extends Component {
   handleKnobChange (colorIndex) {
     return effectIndex =>
       val => {
-        console.log(colorIndex, effectIndex, val);
         this.setState(
           (prevState) => {
             const knobVals = prevState.knobVals.slice();
@@ -332,14 +327,9 @@ class Project extends Component {
     }
   }
 
-  closeColorPicker () {
-    // this.colorPicker.close();
-  }
-
   /* =============================== RENDER =============================== */
 
   render () {    
-    console.log('project render');
     return (
       <Fullscreen
         enabled={this.state.isFullscreenEnabled}
@@ -383,7 +373,6 @@ class Project extends Component {
           colorsList={colorsList}
           colorIndex={this.state.activeColorIndex}
           activeTool={this.state.activeTool}
-          closeColorPicker={this.closeColorPicker}
           selectedInstruments={this.state.selectedInstruments}
           
           knobVals={this.state.knobVals}
@@ -408,27 +397,6 @@ class Project extends Component {
           onKnobChange={this.handleKnobChange}
           knobVals={this.state.knobVals}
         />
-
-        {/*<div className="inst-selectors">
-          <ul className="inst-list">
-            {colorsList.map((color, i) => {
-              const selectedInstrumentIndex = this.state.selectedInstruments[i];
-              return (
-                <InstColorController 
-                    key={i}
-                    colorIndex={i}
-                    colorsList={colorsList}
-                    instNamesList={instNamesList}
-                    handleInstChange={this.handleInstChange(i)}
-                    onKnobChange={this.handleKnobChange(i)}
-                    knobVals={this.state.knobVals[i]}
-                    synthParams={InstrumentPresets[selectedInstrumentIndex]}
-                />
-              );
-            })}
-          </ul>
-        </div>*/}
-
       </Fullscreen>        
     );
   }

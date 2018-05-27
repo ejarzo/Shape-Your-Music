@@ -21,7 +21,6 @@ const propTypes = {
   onKnobChange: PropTypes.func.isRequired,
 };
 
-
 const knobIndexChanged = (currVals, nextVals) => {
   for (var i = 0; i < currVals.length; i++) {
     if (currVals[i] !== nextVals[i]) { return i; }
@@ -32,10 +31,8 @@ const knobIndexChanged = (currVals, nextVals) => {
 class ColorController extends Component {
   constructor (props) {
     super(props);
-    // console.log(props);
     
     this.fxList = [];
-
     this.fxBus = new Tone.Gain(0.8);
     this.fxBus.receive(this.props.receiveChannel);
 
@@ -54,14 +51,12 @@ class ColorController extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-
     // Change instrument
     if (nextProps.synthParams.name.value !== this.props.synthParams.name.value) {
       this.connectEffects(nextProps.synthParams.effects);
       nextProps.knobVals.forEach((val, i) => {
         this.triggerEffectCallback(nextProps.synthParams, i, val);
       });
-      // this.setDefaults(nextProps.synthParams.dynamicParams);
     }
 
     // change knob effect
@@ -84,19 +79,8 @@ class ColorController extends Component {
   // called by the callbacks in the synthParams object
   // TODO figure out better way?
   setEffectAmount (effectIndex, val, parameter) {
-    // console.log('setting effect', effectIndex, val, parameter);
-    // console.log('effect:', this.fxList[effectIndex]);
-    console.log('setting effect amount', effectIndex, parameter, val);
     this.fxList[effectIndex].set(parameter, val);
   }
-
-  // setDefaults (dynamicParams) {
-  //   const defaults = dynamicParams.map(param => param.default);
-  //   console.log('new default values', defaults);
-  //   dynamicParams.forEach((param, i) => {
-  //     this.props.onKnobChange(i, param.default);
-  //   });
-  // }
 
   connectEffects (fxConstructors) {
     if (this.fxList) {
@@ -112,11 +96,9 @@ class ColorController extends Component {
     this.fxBus.receive(this.props.receiveChannel);
 
     fxConstructors.forEach((fxObj) => {
-      console.log('adding effect', fxObj.type);
       const newEffect = new fxObj.type(fxObj.params);
       this.fxList.push(newEffect);
     });
-    console.log(this.fxBus);
 
     // TODO
     if (this.fxList.length === 2) {
@@ -126,7 +108,6 @@ class ColorController extends Component {
     } else {
       this.fxBus.chain(this.output);
     }
-    console.log(this.fxBus);
   }
 
   handleInstChange (option) {

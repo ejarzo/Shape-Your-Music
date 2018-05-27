@@ -55,7 +55,7 @@ class ColorControllerPanel extends Component {
           <div className={styles.colorControllers}>
             {colorsList.map((color, colorIndex) => {
               // TODO added just for testing
-              if (colorIndex !== 0) return null;
+              // if (colorIndex !== 0) return null;
               const selectedInstrumentIndex = selectedInstruments[colorIndex];
               return (
                 <div

@@ -12,8 +12,8 @@ const setSynthEnvelopeParam = (property, min, max) =>
   };
 
 const setEffectWet = (effectIndex) => 
-  (instColorController, val) => {
-    instColorController.setEffectAmount(effectIndex, Utils.convertValToRange(val, 0, 100, 0, 1), 'wet');
+  (colorController, val) => {
+    colorController.setEffectAmount(effectIndex, Utils.convertValToRange(val, 0, 100, 0, 1), 'wet');
   };
 /*
   An instrument has

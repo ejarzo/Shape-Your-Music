@@ -1,0 +1,39 @@
+.toolbar {
+  display: grid;
+  position: absolute;
+  z-index: 2;
+  grid-template-rows: 100%;
+  grid-column-gap: 15px;
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  top: 0px;
+  height: 44px;
+  padding: 6px;
+  width: 100%;
+  /*background: #fff;*/
+  background: transparent;
+}
+
+.toolbarSection {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-gap: 2px;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 2px;
+  background: #242424;
+}
+
+.canvasControls, .toolSelect {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.musicalControls {
+  /*width: 250px;*/
+  grid-template-columns: 70px 1fr;
+}
+
+.toolbar button {
+  font-size: 16px;
+  height: 100%;
+  width: 100%;
+  /*color: #fff;*/
+}

@@ -1,4 +1,30 @@
-.customSelect .Select-control {
-  height: 100% !important;
-  border: none;
+.lightText {
+  color: #fff !important;
+  background-color: rgba(255,255,255,0) !important;
+}
+
+.lightText:global(.is-focused) {
+    color: #fff !important;
+    background-color: rgba(255,255,255,0.2) !important;
+}
+
+.lightText:global(.is-selected) {
+  color: #fff !important;
+  background-color: rgba(255,255,255,0.3) !important;
+}
+
+
+.darkText {
+  color: #242424 !important;
+  background-color: rgba(255,255,255,0) !important;
+}
+
+.darkText:global(.is-focused) {
+    color: #242424 !important;
+    background-color: rgba(0,0,0,0.1) !important;
+}
+
+.darkText:global(.is-selected) {
+  color: #242424 !important;
+  background-color: rgba(0,0,0,0.2) !important;
 }

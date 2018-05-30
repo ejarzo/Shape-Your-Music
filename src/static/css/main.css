@@ -282,14 +282,6 @@ button:active {
   padding: 0 !important; }
 
 .Select-option {
-  padding: 4px 6px;
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0); }
-  .Select-option.is-selected {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.3) !important; }
-  .Select-option.is-focused {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.2); }
+  padding: 4px 6px; }
 
 /*# sourceMappingURL=main.css.map */

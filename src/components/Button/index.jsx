@@ -15,12 +15,14 @@ function Button (props) {
       {...props}
       style={{
         backgroundColor: baseColor,
+        // height: props.height || 'auto',
+        // width: props.width || 'auto',
         ':hover': {
           backgroundColor: ColorUtils.getLighter(props.color),
         },
         ':active': {
           backgroundColor: ColorUtils.getDarker(props.color),
-        }
+        },
       }}
     >
       {props.children}

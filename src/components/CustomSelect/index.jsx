@@ -16,11 +16,14 @@ const propTypes = {
 
 function CustomSelect (props) {
   const darkerColor = ColorUtils.getDarker(props.color);
+  // TODO theme colors
+  const foreground = props.inverted ? '#242424' : '#fff';
+  // const background = '#242424';
 
   const arrowRenderer = ({ isOpen }) => (
     <div
       style={{
-        color: '#fff',
+        color: foreground,
         fontSize: 15,
       }}
     >
@@ -40,14 +43,14 @@ function CustomSelect (props) {
       menuContainerStyle={{
         marginBottom: 'none',
         background: 'transparent',
-        top: 'auto', // TODO prop
-        bottom: '100%',
+        // top: 'auto', // TODO prop
+        // bottom: '100%',
       }}
-      optionClassName={styles.option}
+      optionClassName={props.inverted ? styles.darkText : styles.lightText}
       valueRenderer={value => (
         <div style={{
           backgroundColor: props.color,
-          color: '#fff',
+          color: foreground,
           border: 0,
           height: '100%',
           padding: 3,
@@ -60,13 +63,14 @@ function CustomSelect (props) {
       menuStyle={{
         border: `2px solid ${darkerColor}`,
         background: props.color,
+        color: 'red',
         margin: -3,
         boxShadow: '-5 0 12px 0 rgba(0,0,0,0.11)'
       }}
       searchable={false}
       clearable={false}
-      value={props.synthParams.name.value}
-      options={props.instNamesList}
+      value={props.value}
+      options={props.instNamesList || props.options}
       onChange={props.onChange}
     />
   );

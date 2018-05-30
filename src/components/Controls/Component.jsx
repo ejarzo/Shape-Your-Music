@@ -18,18 +18,18 @@ const propTypes = {
   handleEditToolClick: PropTypes.func.isRquired,
 
   isGridActive: PropTypes.bool.isRquired,
-  handleGridToggleChange: PropTypes.func.isRquired,
   isSnapToGridActive: PropTypes.bool.isRquired,
-  handleSnapToGridToggleChange: PropTypes.func.isRquired,
   isAutoQuantizeActive: PropTypes.bool.isRquired,
+  handleGridToggleChange: PropTypes.func.isRquired,
+  handleSnapToGridToggleChange: PropTypes.func.isRquired,
   handleAutoQuantizeChange: PropTypes.func.isRquired,
 
   handleTempoChange: PropTypes.func.isRquired,
   tempo: PropTypes.number.isRquired,
   scaleObj: PropTypes.object.isRquired,
   tonicsList: PropTypes.array.isRquired,
-  handleTonicChange: PropTypes.func.isRquired,
   scalesList: PropTypes.array.isRquired,
+  handleTonicChange: PropTypes.func.isRquired,
   handleScaleChange: PropTypes.func.isRquired,
 
   isFullscreenEnabled: PropTypes.bool.isRequired,

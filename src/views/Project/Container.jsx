@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import Fullscreen from 'react-full-screen';
 import Teoria from 'teoria';
 import Tone from 'tone';
-import Controls from 'components/Controls';
+// import Controls from 'components/Controls';
+import Toolbar from 'components/Toolbar';
 import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
 import InstrumentPresets from 'presets/InstrumentPresets';
@@ -336,7 +337,7 @@ class Project extends Component {
         onChange={isFullscreenEnabled => this.setState({isFullscreenEnabled})}>
 
         {/* The Controls */}   
-        <Controls
+        <Toolbar
           isPlaying={this.state.isPlaying}
           colorsList={colorsList}
           activeColorIndex={this.state.activeColorIndex}

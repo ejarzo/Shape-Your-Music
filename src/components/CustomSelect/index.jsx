@@ -6,7 +6,8 @@ import { ColorUtils } from 'utils/Utils';
 import styles from './styles.css';
 
 const propTypes = {
-  color: PropTypes.string.isRequired,
+  menuTop: PropTypes.bool,
+  color: PropTypes.string,
   value: PropTypes.number.isRequired,
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -15,10 +16,12 @@ const propTypes = {
 };
 
 function CustomSelect (props) {
-  const darkerColor = ColorUtils.getDarker(props.color);
+  const borderColor = props.color 
+    ? ColorUtils.getDarker(props.color)
+    : '#fff';
+  
   // TODO theme colors
-  const foreground = props.inverted ? '#242424' : '#fff';
-  // const background = '#242424';
+  const foreground = props.color ? '#fff' : '#242424';
 
   const arrowRenderer = ({ isOpen }) => (
     <div
@@ -35,18 +38,24 @@ function CustomSelect (props) {
   );
   arrowRenderer.propTypes = { isOpen: PropTypes.bool };
 
+  const position = props.menuTop ? {
+    top: 'auto',
+    bottom: 'calc(100% + 2px)',
+  } : {
+    bottom: 'auto',
+    top: 'calc(100% + 3px)',
+  };
+
   return (
     <Select
       {...props}
-      // className={'Select-menu-top'}
+      className={styles.customSelect}
       wrapperStyle={{ height: '100%' }}
       menuContainerStyle={{
         marginBottom: 'none',
-        background: 'transparent',
-        // top: 'auto', // TODO prop
-        // bottom: '100%',
+        ...position,
       }}
-      optionClassName={props.inverted ? styles.darkText : styles.lightText}
+      optionClassName={props.color ? styles.lightText : styles.darkText}
       valueRenderer={value => (
         <div style={{
           backgroundColor: props.color,
@@ -61,8 +70,8 @@ function CustomSelect (props) {
       )}
       arrowRenderer={arrowRenderer}
       menuStyle={{
-        border: `2px solid ${darkerColor}`,
-        background: props.color,
+        border: `2px solid ${borderColor}`,
+        background: props.color || '#fff',
         color: 'red',
         margin: -3,
         boxShadow: '-5 0 12px 0 rgba(0,0,0,0.11)'

@@ -38,6 +38,7 @@ function ColorControllerComponent (props) {
         style={{ backgroundColor: darkerColor }}
       >
         <CustomSelect
+          menuTop
           dropDownAlign="BottomLeft"
           color={props.color}
           name="Instrument Select"

@@ -10,6 +10,9 @@
   color: #fff;
   display: inline-block;
   cursor: pointer;
-  padding: 6px 7px;
+  padding: 0 7px;
   text-align: center;
+  font-size: 1em;
+  line-height: 2em;
+  border: 1px solid transparent;
 }

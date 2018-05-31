@@ -54,19 +54,17 @@ function TransportControls (props) {
     <div className={styles.toolbarSection}>
       <div>
         <Button
-          color={'#fff'}
           onClick={props.handlePlayClick}
           title="Play project (SPACE)"
         >
-          <i className={playButtonClass}></i>
+          <i className={playButtonClass} />
         </Button>
       </div>
       <div>
         <Button
-          color={'#fff'}
           // onClick={}
         >
-          <i className="ion-record"></i>
+          <i className="ion-record" />
         </Button>
       </div>
     </div>
@@ -87,9 +85,10 @@ function ToolSelect (props) {
     <div className={cx(styles.toolbarSection, styles.toolSelect)}>
       <Button
         color={activeColor}
-        onClick={}
-        title=""
+        // onClick={}
+        // title=""
       >
+      {/*
         <GithubPicker
           style={{
             borderRadius: 0
@@ -100,6 +99,7 @@ function ToolSelect (props) {
           triangle="hide"
           // onChange={props.onColorChange}
         />
+      */}
       </Button>
       <Button
         color={isDrawTool ? '#242424' : '#FFFFFF'}
@@ -132,7 +132,6 @@ function CanvasControls (props) {
     <div className={cx(styles.toolbarSection, styles.canvasControls)}>
       <div>
         <CheckboxButton
-          color={'#242424'}
           checked={props.isGridActive}
           onChange={props.handleGridToggleChange}
           label={'Grid'}
@@ -140,7 +139,6 @@ function CanvasControls (props) {
       </div>
       <div>
         <CheckboxButton
-          color={'#242424'}
           checked={props.isSnapToGridActive}
           onChange={props.handleSnapToGridToggleChange}
           label={'Snap'}
@@ -148,7 +146,6 @@ function CanvasControls (props) {
       </div>
       <div>
         <CheckboxButton
-          color={'#242424'}
           checked={props.isAutoQuantizeActive}
           onChange={props.handleAutoQuantizeChange}
           label={'Sync'}
@@ -173,15 +170,11 @@ function MusicalControls (props) {
   return (
     <div className={cx(styles.toolbarSection, styles.musicalControls)}>
       <CustomSelect
-        color={'#fff'}
-        inverted
         value={props.scaleObj.tonic.toString(true)}
         options={props.tonicsList}
         onChange={props.handleTonicChange}
       />
       <CustomSelect
-        color={'#fff'}
-        inverted
         value={props.scaleObj.name}
         options={props.scalesList}
         onChange={props.handleScaleChange}

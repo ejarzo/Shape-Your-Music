@@ -11,6 +11,28 @@ const propTypes = {
 };
 
 function CheckboxButton (props) {
+  const defaultStyle = {
+    background: props.checked
+      ? '#242424'
+      : '#fff',
+    color: props.checked
+      ? '#fff'
+      : '#242424',
+    border: '1px solid #eee',
+  };
+
+  const labelStyle = props.color
+    ? {
+      background: props.checked
+        ? '#fff'
+        : ColorUtils.getDarker(props.color),
+      color: props.checked
+        ? props.color
+        : '#fff',
+      border: '1px solid props.color',
+    }
+    : defaultStyle;
+
   return (
     <div>
       <input
@@ -23,14 +45,7 @@ function CheckboxButton (props) {
       <label
         className={styles.checkboxLabel}
         htmlFor={props.label.toLowerCase()}
-        style={{
-          background: props.checked
-            ? '#fff'
-            : ColorUtils.getDarker(props.color),
-          color: props.checked
-            ? props.color
-            : '#fff',
-        }}
+        style={labelStyle}
       >
         {props.label}
       </label>

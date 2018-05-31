@@ -28,3 +28,7 @@
   color: #242424 !important;
   background-color: rgba(0,0,0,0.2) !important;
 }
+
+.customSelect :global(.Select-control:hover) {
+  box-shadow: none !important;
+} 

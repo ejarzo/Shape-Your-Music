@@ -65,7 +65,6 @@ function ColorControllerComponent (props) {
         {props.synthParams.dynamicParams.map((effect, i) => (
           <div key={`${props.color}-knob-${i}`} >
             <Knob
-              // color={props.color}
               paramName={effect.name}
               value={props.knobVals[i]}
               onChange={props.onKnobChange(i)}

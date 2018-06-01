@@ -18,7 +18,7 @@ function CheckboxButton (props) {
     color: props.checked
       ? '#fff'
       : '#242424',
-    border: '1px solid #eee',
+    // border: '1px solid #eee',
   };
 
   const labelStyle = props.color
@@ -29,7 +29,7 @@ function CheckboxButton (props) {
       color: props.checked
         ? props.color
         : '#fff',
-      border: '1px solid props.color',
+      // border: '1px solid props.color',
     }
     : defaultStyle;
 

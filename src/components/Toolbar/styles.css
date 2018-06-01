@@ -11,8 +11,8 @@
   height: 44px;
   padding: 6px;
   width: 100%;
-  /*background: #fff;*/
-  background: transparent;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .toolbarSection {
@@ -21,8 +21,7 @@
   grid-gap: 2px;
   grid-template-columns: repeat(2, 1fr);
   padding: 2px;
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background: #ededed;
 }
 
 .canvasControls, .toolSelect {

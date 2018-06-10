@@ -3,40 +3,30 @@ import PropTypes from 'prop-types';
 import { ColorUtils } from 'utils/Utils';
 import Radium from 'radium';
 
-import styles from './styles.css';
-
 const propTypes = {
   color: PropTypes.string,
   children: PropTypes.node,
+  darkHover: PropTypes.bool,
+  border: PropTypes.bool,
 };
 
 function Button (props) {
-  // const baseColor = props.color || '#ddd';
-
-  const colorStyle = {
+  const style = {
     backgroundColor: props.color,
     ':hover': {
-      backgroundColor: ColorUtils.getLighter(props.color),
+      backgroundColor: props.darkHover ? ColorUtils.getDarker(props.color) : ColorUtils.getLighter(props.color),
     },
     ':active': {
-      backgroundColor: ColorUtils.getDarker(props.color),
+      backgroundColor: props.darkHover ? ColorUtils.getDarker(props.color, 0.2) : ColorUtils.getDarker(props.color),
     },
+    padding: 6,
+    borderColor: ColorUtils.getDarker(props.color),
+    borderStyle: 'solid',
+    borderWidth: props.border ? 1 : 0,
+    borderBottomWidth: props.border ? 2 : 0,
+    borderRadius: props.border ? 3 : 0,
   };
 
-  const expandStyle = {
-    backgroundColor: 'transparent',
-    transform: 'scale3d(1,1,1)',
-    transition: 'transform 0.2s',
-    ':hover': {
-      transform: 'scale3d(1.2,1.2,1)',
-    },
-    ':active': {
-      transform: 'scale3d(0.9,0.9,1)',
-      backgroundColor: 'transparent',
-    },
-  };
-
-  const style = props.color ? colorStyle : expandStyle;
   return (
     <button
       {...props}

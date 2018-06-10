@@ -14,95 +14,10 @@ $color-solo: #eda128
 $color-warning-red: rgba(255,100,100,1)
 
 /* ========================================================================== */
-/* ================================ MIXINS ================================== */
-
-@mixin button_expand_on_hover
-    transition: all .1s ease-in-out
-    color: $color-grey-med
-    transform: scaleX(1) scaleY(1) scaleZ(1)
-    position: relative
-    z-index: 100
-    &:hover
-        transform: scaleX(1.2) scaleY(1.2) scaleZ(1)
-        color: $color-black
-        z-index: 500
-    &:active
-        transform: scaleX(1.2) scaleY(1.2) scaleZ(1)
-        color: $color-black
-    &:disabled
-        color: $color-grey-light
-        &:hover
-            color: $color-grey-light
-            transform: scaleX(1) scaleY(1) scaleZ(1)
-
-@mixin noselect 
-    -webkit-touch-callout: none 
-    -webkit-user-select: none   
-    -khtml-user-select: none    
-    -moz-user-select: none      
-    -ms-user-select: none       
-    user-select: none       
-
-@mixin drop_shadow
-    box-shadow: -2px 2px 25px rgba(0,0,0,0.1)
-
-@mixin button_warning
-    color: $color-warning-red
-    &:hover
-        text-decoration: underline
-        background-color: transparent
-        color: $color-warning-red
-
-@mixin show_hide_button
-    position: absolute
-    background: $color-grey-lighter
-    color: $color-grey-dark
-    border: 1px solid $color-grey-med
-    border-right: none
-    font-size: 15px
-    height: 20px
-    i, span
-        position: relative
-        top: -3px
-
-@mixin dropdown
-    position: relative
-    display: inline-block
-    .dropdown-content
-        @include drop_shadow
-        display: none
-        position: absolute
-    &:hover 
-        .dropdown-content
-            display: block
-
-@mixin tooltip_arrow
-    top: 40px
-    border: solid transparent
-    content: " "
-    height: 0
-    width: 0
-    position: absolute
-    pointer-events: none
-    border-color: rgba(255,255,255,0)
-    border-width: 10px
-    margin-top: -10px
-    &.arrow-left
-        right: 100%
-        border-right-color: $color-white
-    &.arrow-right
-        left: 100%
-        border-left-color: $color-white
-
-
-/* ========================================================================== */
 /* ================================ GENERAL ================================== */
 
 *
-    @include noselect
     box-sizing: border-box
-    // &:focus
-    //     border: 2px solid red !important
 
 html 
     color: $color-black
@@ -149,18 +64,10 @@ ul
     background-color: #EEE
     height: 100vh
     width: 100%
-    //border: 5px solid $color-white
-
-.show-hide
-    @include show_hide_button
-
-.dropdown
-    @include dropdown
 
 .icon-button
     background: none
     border: none
-    @include button_expand_on_hover
     color: $color-grey-dark
     font-size: 1.8em
     width: 30px
@@ -173,124 +80,6 @@ ul
 
 /* ========================================================================== */
 
-.controls 
-    position: relative
-    top: 0px
-    height: 56px
-    padding: 8px
-    width: 100%
-    background-color: $color-white
-    display: flex
-    align-items: center
-    //overflow: hidden
-    //width: 320px
-    //white-space: nowrap
-    .controls-section
-        display: inline-block
-        margin: 0
-        height: 100%
-        display: flex
-        align-items: center
-        margin-right: 50px
-        &.music-controls
-            position: relative
-            top: -6px
-            label
-                display: inline-block
-                position: relative
-                top: 1px
-                font-size: 10px
-    
-    .project-color-picker
-        width: 30px
-        height: 30px
-        .color-picker-button
-            position: absolute
-            background: #ddd
-            border-radius: 3px
-            cursor: pointer
-            width: 100%
-            height: 100%
-            @include button_expand_on_hover
-
-        .project-color-picker-options
-            position: relative
-            z-index: 50
-            top: 10px
-            background: #fff
-            text-align: center
-            .color-option
-                cursor: pointer
-                border-radius: 2px
-                display: inline-block
-                @include button_expand_on_hover
-                width: 20px
-                height: 20px
-
-    .tool-button
-        display: inline-block
-        width: 30px
-        height: 30px
-        padding: 3px
-        border-radius: 3px
-        background: $color-grey-lighter
-        cursor: pointer
-        &:hover
-            background: $color-grey-light
-        &.selected
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5)
-            background: $color-grey-dark
-            img
-                filter: drop-shadow(0 0 5px #000)
-        img
-            width: 100%
-            
-    .divider
-        width: 1px
-        height: 100%
-        background: #fff
-        margin: 0 25px
-        display: inline-block
-
-    .ctrl-elem 
-        margin-right: 10px
-        display: flex
-        align-items: center
-        height: 100%
-        width: auto
-
-        &.no-margin
-            margin: 0
-                
-        &.small
-            width: 50px
-
-        &.large
-            width: 140px
-        
-        label
-            margin-right: 3px
-            width: 100%
-            &.checkbox-label
-                display: inline-block
-                border-color: #ccc
-                width: auto
-                margin: 0
-                height: 30px
-                padding: 0 10px
-                margin-left: -1px
-                font-size: 0.9em
-                line-height: 1.8em
-
-        .numeric-input
-            width: 100%
-            height: 22px
-            border-radius: 0 !important
-            .numeric-input-btn-up
-                background: #000 !important
-                
-.full-width
-    width: 100%
 
 
 /* ---------------------------------------- */
@@ -319,21 +108,3 @@ ul
         height: 100% !important
         div
             width: 100% !important
-
-.Select-control
-    height: 100%
-    border: none
-
-.Select-value
-    padding: 0 !important
-
-.Select-option
-    padding: 4px 6px
-    // color: #fff
-    // background-color: rgba(255,255,255,0)   
-    // &.is-selected
-    //     color: #fff
-    //     background-color: rgba(255,255,255,0.3) !important
-    // &.is-focused
-    //     color: #fff
-    //     background-color: rgba(255,255,255,0.2)

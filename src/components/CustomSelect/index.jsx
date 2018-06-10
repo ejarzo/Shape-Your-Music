@@ -16,6 +16,8 @@ const propTypes = {
 };
 
 function CustomSelect (props) {
+  const backgroundColor = props.color || '#f1f1f1';
+
   const borderColor = props.color 
     ? ColorUtils.getDarker(props.color)
     : '#fff';
@@ -58,12 +60,17 @@ function CustomSelect (props) {
       optionClassName={props.color ? styles.lightText : styles.darkText}
       valueRenderer={value => (
         <div style={{
-          backgroundColor: props.color,
+          backgroundColor: backgroundColor,
           color: foreground,
-          border: 0,
           height: '100%',
+          width: '100%',
           padding: 3,
+          paddingTop: 4,
           paddingLeft: 6,
+          display: 'grid',
+          alignItems: 'center',
+          border: !props.color && `1px solid ${ColorUtils.getDarker(backgroundColor)}`,
+          borderRadius: !props.color && 1,
         }}>
           {value.label}
         </div>
@@ -71,10 +78,10 @@ function CustomSelect (props) {
       arrowRenderer={arrowRenderer}
       menuStyle={{
         border: `2px solid ${borderColor}`,
-        background: props.color || '#fff',
+        background: backgroundColor,
         color: 'red',
         margin: -3,
-        boxShadow: '-5 0 12px 0 rgba(0,0,0,0.11)'
+        boxShadow: '-5px 0 12px 0 rgba(0,0,0,0.11)'
       }}
       searchable={false}
       clearable={false}

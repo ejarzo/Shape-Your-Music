@@ -5,10 +5,12 @@
 }
 
 .checkboxLabel {
+  display: grid;
+  align-items: center;
   height: 100%;
   width: 100%;
   color: #fff;
-  display: inline-block;
+  /*display: inline-block;*/
   cursor: pointer;
   padding: 0 7px;
   text-align: center;

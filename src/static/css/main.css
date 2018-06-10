@@ -1,14 +1,6 @@
 /* ========================================================================== */
-/* ================================ MIXINS ================================== */
-/* ========================================================================== */
 /* ================================ GENERAL ================================== */
 * {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   box-sizing: border-box; }
 
 html {
@@ -57,52 +49,13 @@ ul {
   height: 100vh;
   width: 100%; }
 
-.show-hide {
-  position: absolute;
-  background: #eee;
-  color: #444;
-  border: 1px solid #777;
-  border-right: none;
-  font-size: 15px;
-  height: 20px; }
-  .show-hide i, .show-hide span {
-    position: relative;
-    top: -3px; }
-
-.dropdown {
-  position: relative;
-  display: inline-block; }
-  .dropdown .dropdown-content {
-    box-shadow: -2px 2px 25px rgba(0, 0, 0, 0.1);
-    display: none;
-    position: absolute; }
-  .dropdown:hover .dropdown-content {
-    display: block; }
-
 .icon-button {
   background: none;
   border: none;
-  transition: all 0.1s ease-in-out;
-  color: #777;
-  transform: scaleX(1) scaleY(1) scaleZ(1);
-  position: relative;
-  z-index: 100;
   color: #444;
   font-size: 1.8em;
   width: 30px;
   height: 100%; }
-  .icon-button:hover {
-    transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
-    color: #222;
-    z-index: 500; }
-  .icon-button:active {
-    transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
-    color: #222; }
-  .icon-button:disabled {
-    color: #bbb; }
-    .icon-button:disabled:hover {
-      color: #bbb;
-      transform: scaleX(1) scaleY(1) scaleZ(1); }
   .icon-button:active {
     background: none; }
   .icon-button i {
@@ -110,144 +63,6 @@ ul {
     top: 1px; }
 
 /* ========================================================================== */
-.controls {
-  position: relative;
-  top: 0px;
-  height: 56px;
-  padding: 8px;
-  width: 100%;
-  background-color: #fff;
-  display: flex;
-  align-items: center; }
-  .controls .controls-section {
-    display: inline-block;
-    margin: 0;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    margin-right: 50px; }
-    .controls .controls-section.music-controls {
-      position: relative;
-      top: -6px; }
-      .controls .controls-section.music-controls label {
-        display: inline-block;
-        position: relative;
-        top: 1px;
-        font-size: 10px; }
-  .controls .project-color-picker {
-    width: 30px;
-    height: 30px; }
-    .controls .project-color-picker .color-picker-button {
-      position: absolute;
-      background: #ddd;
-      border-radius: 3px;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-      transition: all 0.1s ease-in-out;
-      color: #777;
-      transform: scaleX(1) scaleY(1) scaleZ(1);
-      position: relative;
-      z-index: 100; }
-      .controls .project-color-picker .color-picker-button:hover {
-        transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
-        color: #222;
-        z-index: 500; }
-      .controls .project-color-picker .color-picker-button:active {
-        transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
-        color: #222; }
-      .controls .project-color-picker .color-picker-button:disabled {
-        color: #bbb; }
-        .controls .project-color-picker .color-picker-button:disabled:hover {
-          color: #bbb;
-          transform: scaleX(1) scaleY(1) scaleZ(1); }
-    .controls .project-color-picker .project-color-picker-options {
-      position: relative;
-      z-index: 50;
-      top: 10px;
-      background: #fff;
-      text-align: center; }
-      .controls .project-color-picker .project-color-picker-options .color-option {
-        cursor: pointer;
-        border-radius: 2px;
-        display: inline-block;
-        transition: all 0.1s ease-in-out;
-        color: #777;
-        transform: scaleX(1) scaleY(1) scaleZ(1);
-        position: relative;
-        z-index: 100;
-        width: 20px;
-        height: 20px; }
-        .controls .project-color-picker .project-color-picker-options .color-option:hover {
-          transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
-          color: #222;
-          z-index: 500; }
-        .controls .project-color-picker .project-color-picker-options .color-option:active {
-          transform: scaleX(1.2) scaleY(1.2) scaleZ(1);
-          color: #222; }
-        .controls .project-color-picker .project-color-picker-options .color-option:disabled {
-          color: #bbb; }
-          .controls .project-color-picker .project-color-picker-options .color-option:disabled:hover {
-            color: #bbb;
-            transform: scaleX(1) scaleY(1) scaleZ(1); }
-  .controls .tool-button {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    padding: 3px;
-    border-radius: 3px;
-    background: #eee;
-    cursor: pointer; }
-    .controls .tool-button:hover {
-      background: #bbb; }
-    .controls .tool-button.selected {
-      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-      background: #444; }
-      .controls .tool-button.selected img {
-        filter: drop-shadow(0 0 5px #000); }
-    .controls .tool-button img {
-      width: 100%; }
-  .controls .divider {
-    width: 1px;
-    height: 100%;
-    background: #fff;
-    margin: 0 25px;
-    display: inline-block; }
-  .controls .ctrl-elem {
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    width: auto; }
-    .controls .ctrl-elem.no-margin {
-      margin: 0; }
-    .controls .ctrl-elem.small {
-      width: 50px; }
-    .controls .ctrl-elem.large {
-      width: 140px; }
-    .controls .ctrl-elem label {
-      margin-right: 3px;
-      width: 100%; }
-      .controls .ctrl-elem label.checkbox-label {
-        display: inline-block;
-        border-color: #ccc;
-        width: auto;
-        margin: 0;
-        height: 30px;
-        padding: 0 10px;
-        margin-left: -1px;
-        font-size: 0.9em;
-        line-height: 1.8em; }
-    .controls .ctrl-elem .numeric-input {
-      width: 100%;
-      height: 22px;
-      border-radius: 0 !important; }
-      .controls .ctrl-elem .numeric-input .numeric-input-btn-up {
-        background: #000 !important; }
-
-.full-width {
-  width: 100%; }
-
 /* ---------------------------------------- */
 .rc-slider-vertical {
   width: 100%;
@@ -271,15 +86,5 @@ ul {
     height: 100% !important; }
     .github-picker span div {
       width: 100% !important; }
-
-.Select-control {
-  height: 100%;
-  border: none; }
-
-.Select-value {
-  padding: 0 !important; }
-
-.Select-option {
-  padding: 4px 6px; }
 
 /*# sourceMappingURL=main.css.map */

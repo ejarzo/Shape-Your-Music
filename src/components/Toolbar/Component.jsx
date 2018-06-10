@@ -7,12 +7,15 @@ import Select from 'react-select';
 import { GithubPicker } from 'react-color';
 
 import Button from 'components/Button';
+import IconButton from 'components/IconButton';
 import CheckboxButton from 'components/CheckboxButton';
 import CustomSelect from 'components/CustomSelect';
+import CustomNumericInput from 'components/CustomNumericInput';
 
 import ColorPicker from 'components/ColorPicker';
 import DrawToolIcon from 'components/icons/DrawTool';
 import EditToolIcon from 'components/icons/EditTool';
+import { ColorUtils } from 'utils/Utils';
 
 import styles from './styles.css';
 
@@ -53,19 +56,18 @@ function TransportControls (props) {
   return (
     <div className={styles.toolbarSection}>
       <div>
-        <Button
+        <IconButton
+          iconClassName={playButtonClass}
           onClick={props.handlePlayClick}
           title="Play project (SPACE)"
-        >
-          <i className={playButtonClass} />
-        </Button>
+        />
       </div>
       <div>
-        <Button
-          // onClick={}
-        >
-          <i className="ion-record" />
-        </Button>
+        <IconButton
+          iconClassName={'ion-record'}
+          onClick={props.handlePlayClick}
+          title="Record project to audio file"
+        />
       </div>
     </div>
   );
@@ -84,6 +86,7 @@ function ToolSelect (props) {
   return (
     <div className={cx(styles.toolbarSection, styles.toolSelect)}>
       <Button
+        border
         color={activeColor}
         // onClick={}
         // title=""
@@ -102,16 +105,24 @@ function ToolSelect (props) {
       */}
       </Button>
       <Button
-        color={isDrawTool ? '#242424' : '#FFFFFF'}
+        darkHover
+        border
+        color={isDrawTool ? '#242424' : '#f1f1f1'}
         onClick={props.handleDrawToolClick}
         title="Draw Tool (TAB to toggle)">
-        <DrawToolIcon fill={isDrawTool ? '#FFFFFF' : '#242424'}/>
+        <DrawToolIcon
+          fill={isDrawTool ? '#f1f1f1' : '#242424'}
+        />
       </Button>
       <Button
-        color={!isDrawTool ? '#242424' : '#FFFFFF'}
+        darkHover
+        border
+        color={!isDrawTool ? '#242424' : '#f1f1f1'}
         onClick={props.handleEditToolClick}
         title="Edit Tool (TAB to toggle)">
-        <EditToolIcon fill={!isDrawTool ? '#FFFFFF' : '#242424'}/>
+        <EditToolIcon
+          fill={!isDrawTool ? '#f1f1f1' : '#242424'}
+        />
       </Button>                        
     </div>
   );
@@ -128,8 +139,20 @@ ToolSelect.propTypes = {
 /* ---------------------- Canvas ---------------------- */
 
 function CanvasControls (props) {
+  // TODO theme
+  const lightGray = ColorUtils.getDarker('#f1f1f1');
   return (
-    <div className={cx(styles.toolbarSection, styles.canvasControls)}>
+    <div
+      className={cx(styles.toolbarSection, styles.canvasControls)}
+      style={{
+        borderRadius: 3,
+        padding: 0,
+        border: `1px solid ${lightGray}`,
+        background: lightGray,
+        gridGap: 1,
+        overflow: 'hidden',
+      }}
+    >
       <div>
         <CheckboxButton
           checked={props.isGridActive}
@@ -169,6 +192,11 @@ CanvasControls.propTypes = {
 function MusicalControls (props) {
   return (
     <div className={cx(styles.toolbarSection, styles.musicalControls)}>
+      <CustomNumericInput
+        onChange={props.handleTempoChange}
+        value={props.tempo}
+        title="Tempo"
+      />
       <CustomSelect
         value={props.scaleObj.tonic.toString(true)}
         options={props.tonicsList}
@@ -189,6 +217,8 @@ MusicalControls.propTypes = {
   tonicsList: PropTypes.array.isRequired,
   handleScaleChange: PropTypes.func.isRequired,
   handleTonicChange: PropTypes.func.isRequired,
+  handleTempoChange: PropTypes.func.isRequired,
+  tempo: PropTypes.func.isRequired,
 };
 
 /* ---------------------- Other ---------------------- */
@@ -203,19 +233,21 @@ function OtherControls (props) {
     <div className={cx(styles.toolbarSection, styles.OtherControls)}>
       <div>
         <Button
-          color={'#fff'}
-          onClick={props.handleFullscreenButtonClick}
-        >
-          <i className={fullscreenButtonClass} />
-       </Button> 
-     </div>
-     <div>
-        <Button
-          color={'#fff'}
+          border
+          darkHover
+          color={'#f1f1f1'}
           onClick={props.handleClearButtonClick}
+          title="Clear all shapes (CANNOT UNDO)"
         >
           Clear
         </Button>
+      </div>
+      <div>
+        <IconButton
+          iconClassName={fullscreenButtonClass}
+          onClick={props.handleFullscreenButtonClick}
+          title="Toggle Fullscreen"
+        />
       </div>
     </div>
   );
@@ -258,6 +290,8 @@ function ToolbarComponent (props) {
         tonicsList={props.tonicsList}
         handleTonicChange={props.handleTonicChange}
         handleScaleChange={props.handleScaleChange}
+        handleTempoChange={props.handleTempoChange}
+        tempo={props.tempo}
       />
       <OtherControls
         isFullscreenEnabled={props.isFullscreenEnabled}

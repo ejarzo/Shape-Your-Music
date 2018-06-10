@@ -14,9 +14,9 @@ function CheckboxButton (props) {
   const defaultStyle = {
     background: props.checked
       ? '#242424'
-      : '#fff',
+      : '#f1f1f1',
     color: props.checked
-      ? '#fff'
+      ? '#f1f1f1'
       : '#242424',
     // border: '1px solid #eee',
   };
@@ -24,11 +24,11 @@ function CheckboxButton (props) {
   const labelStyle = props.color
     ? {
       background: props.checked
-        ? '#fff'
+        ? '#f1f1f1'
         : ColorUtils.getDarker(props.color),
       color: props.checked
         ? props.color
-        : '#fff',
+        : '#f1f1f1',
       // border: '1px solid props.color',
     }
     : defaultStyle;

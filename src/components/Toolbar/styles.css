@@ -16,6 +16,7 @@
 }
 
 .toolbarSection {
+  position: relative;
   display: grid;
   grid-template-rows: 100%;
   grid-gap: 3px;

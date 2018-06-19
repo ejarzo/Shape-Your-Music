@@ -1,80 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { GithubPicker } from 'react-color';
 
 const propTypes = {
-  onColorChange: PropTypes.func.isRequired,
-  colorsList: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  colors: PropTypes.array.isRequired,
   activeColorIndex: PropTypes.number.isRequired,
+  color: PropTypes.string.isRequired,
+  triangle: PropTypes.string
 };
 
-/*
-  A dropdown used to select the draw color.
-*/
-class ColorPickerContainer extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      isOpen: false
-    };
-
-    this.handleColorPickerClick = this.handleColorPickerClick.bind(this);
-  }
-
-  handleColorChange (colorIndex) {
-    return () => {
-      this.props.onColorChange(colorIndex);
-    };
-  }
-
-  handleColorPickerClick () {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
-
-  close () {
-    if (this.state.isOpen) {
-      this.setState({
-        isOpen: false
-      });
-    }
-  }
-
-  render () {
-    const colorPickercContent = this.state.isOpen && (
-      <div className="project-color-picker-options">
-        {this.props.colorsList.map((color, i) => {
-          const style = { backgroundColor: color };  
-          return i === this.props.activeColorIndex ? null : (
-            <div 
-              key={i}
-              index={i}
-              className="color-option" 
-              style={style}
-              onClick={this.props.onColorChange(i)}
-            >
-            </div>);
-        })}
-      </div>
-    );
-    
-    return (
-      <div
-        title="Select Draw Color (Numbers 1-5)" 
-        className="project-color-picker"
-        onClick={this.handleColorPickerClick}>
-        <div 
-          className="color-picker-button"
-          style={{
-            backgroundColor: this.props.colorsList[this.props.activeColorIndex]
-          }}>
-        </div>
-        {colorPickercContent}
-      </div>
-    );
-  }
+function ColorPicker (props) {
+  return (
+    <div>
+      <GithubPicker
+        style={{
+          borderRadius: 0,
+        }}
+        onChange={props.onChange}
+        color={props.color}
+        colors={props.colors}
+        width="100%"
+        triangle={props.triangle}
+      />
+    </div>
+  );
 }
 
-ColorPickerContainer.propTypes = propTypes;
+ColorPicker.propTypes = propTypes;
 
-export default ColorPickerContainer;
+export default ColorPicker;

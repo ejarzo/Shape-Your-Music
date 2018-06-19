@@ -7,7 +7,7 @@ import CheckboxButton from 'components/CheckboxButton';
 import CustomSlider from 'components/Slider';
 import Button from 'components/Button';
 import styles from './styles.css';
-import { GithubPicker } from 'react-color';
+import ColorPicker from 'components/ColorPicker';
 
 const propTypes = {
   panelStyle: PropTypes.shape({
@@ -138,18 +138,12 @@ class ShapeEditorPopoverComponent extends Component {
               : 'ion-arrow-down-b'}
             />
           </Button>
-          
-          <GithubPicker
-            style={{
-              borderRadius: 0
-            }}
+          <ColorPicker
+            triangle="hide"
             color={colorString}
             colors={this.props.colorsList}
-            width="100%"
-            triangle="hide"
             onChange={this.props.onColorChange}
           />
-          
         </div>
         {/*<button onClick={this.props.onQuantizeClick}>Quantize</button>*/}
         <Button

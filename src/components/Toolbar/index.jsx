@@ -1,8 +1,8 @@
 import React from 'react';
-import ControlsComponent from './Component';
+import ControlsContainer from './Container';
 
 function Controls (props) {
-  return <ControlsComponent {...props} />;
+  return <ControlsContainer {...props} />;
 }
 
 export default Controls;

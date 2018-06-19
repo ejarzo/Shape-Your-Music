@@ -20,7 +20,7 @@ class ShapeEditorPopover extends Component {
     const width = 225;
     const height = 260;
     const xPad = 23;
-    const yPad = 20;
+    const yPad = -35;
     let { x, y } = this.props.position;
     y += yPad;
 

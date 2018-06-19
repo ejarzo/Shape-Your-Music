@@ -198,12 +198,10 @@ class Project extends Component {
     }
   }
   
-  handleColorChange (colorIndex) {
-    return () => {
-      this.setState({
-        activeColorIndex: colorIndex
-      });
-    };
+  handleColorChange (colorObj) {
+    this.setState({
+      activeColorIndex: colorsList.indexOf(colorObj.hex)
+    });
   }
   
   /* --- Canvas ----------------------------------------------------------- */

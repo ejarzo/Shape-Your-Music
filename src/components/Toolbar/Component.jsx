@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import NumericInput from 'react-numeric-input';
 import Select from 'react-select';
-import { GithubPicker } from 'react-color';
+import Portal from 'react-portal';
 
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
@@ -20,29 +20,32 @@ import { ColorUtils } from 'utils/Utils';
 import styles from './styles.css';
 
 const propTypes = {
-  isPlaying: PropTypes.bool.isRquired,
-  activeTool: PropTypes.string.isRquired,
-  handlePlayClick: PropTypes.func.isRquired,
-  colorsList: PropTypes.array.isRquired,
-  activeColorIndex: PropTypes.number.isRquired,
-  handleColorChange: PropTypes.func.isRquired,
-  handleDrawToolClick: PropTypes.func.isRquired,
-  handleEditToolClick: PropTypes.func.isRquired,
+  isColorPickerOpen: PropTypes.bool.isRequired,
+  onColorSelectClick: PropTypes.func.isRequired,
 
-  isGridActive: PropTypes.bool.isRquired,
-  isSnapToGridActive: PropTypes.bool.isRquired,
-  isAutoQuantizeActive: PropTypes.bool.isRquired,
-  handleGridToggleChange: PropTypes.func.isRquired,
-  handleSnapToGridToggleChange: PropTypes.func.isRquired,
-  handleAutoQuantizeChange: PropTypes.func.isRquired,
+  isPlaying: PropTypes.bool.isRequired,
+  activeTool: PropTypes.string.isRequired,
+  handlePlayClick: PropTypes.func.isRequired,
+  colorsList: PropTypes.array.isRequired,
+  activeColorIndex: PropTypes.number.isRequired,
+  handleColorChange: PropTypes.func.isRequired,
+  handleDrawToolClick: PropTypes.func.isRequired,
+  handleEditToolClick: PropTypes.func.isRequired,
 
-  handleTempoChange: PropTypes.func.isRquired,
-  tempo: PropTypes.number.isRquired,
-  scaleObj: PropTypes.object.isRquired,
-  tonicsList: PropTypes.array.isRquired,
-  scalesList: PropTypes.array.isRquired,
-  handleTonicChange: PropTypes.func.isRquired,
-  handleScaleChange: PropTypes.func.isRquired,
+  isGridActive: PropTypes.bool.isRequired,
+  isSnapToGridActive: PropTypes.bool.isRequired,
+  isAutoQuantizeActive: PropTypes.bool.isRequired,
+  handleGridToggleChange: PropTypes.func.isRequired,
+  handleSnapToGridToggleChange: PropTypes.func.isRequired,
+  handleAutoQuantizeChange: PropTypes.func.isRequired,
+
+  handleTempoChange: PropTypes.func.isRequired,
+  tempo: PropTypes.number.isRequired,
+  scaleObj: PropTypes.object.isRequired,
+  tonicsList: PropTypes.array.isRequired,
+  scalesList: PropTypes.array.isRequired,
+  handleTonicChange: PropTypes.func.isRequired,
+  handleScaleChange: PropTypes.func.isRequired,
 
   isFullscreenEnabled: PropTypes.bool.isRequired,
   handleFullscreenButtonClick: PropTypes.func.isRequired,
@@ -65,7 +68,7 @@ function TransportControls (props) {
       <div>
         <IconButton
           iconClassName={'ion-record'}
-          onClick={props.handlePlayClick}
+          // onClick={}
           title="Record project to audio file"
         />
       </div>
@@ -88,22 +91,27 @@ function ToolSelect (props) {
       <Button
         border
         color={activeColor}
-        // onClick={}
-        // title=""
+        onClick={props.onColorSelectClick}
       >
-      {/*
-        <GithubPicker
-          style={{
-            borderRadius: 0
-          }}
-          color={activeColor}
-          colors={props.colorsList}
-          width="100%"
-          triangle="hide"
-          // onChange={props.onColorChange}
-        />
-      */}
       </Button>
+      <Portal
+        closeOnOutsideClick
+        isOpened={props.isColorPickerOpen}
+      >
+        <div style={{
+          width: 140,
+          left: 100,
+          top: 55,
+          height: 50,
+          position: 'absolute',
+        }}>
+            <ColorPicker
+              colors={props.colorsList}
+              color={props.colorsList[props.activeColorIndex]}
+              onChange={props.onColorChange}
+            />
+        </div>
+      </Portal>
       <Button
         darkHover
         border
@@ -134,6 +142,7 @@ ToolSelect.propTypes = {
   handleEditToolClick: PropTypes.func.isRequired,
   colorsList: PropTypes.array.isRequired,
   activeColorIndex: PropTypes.number.isRequired,
+  onColorChange: PropTypes.func.isRequired,
 };
 
 /* ---------------------- Canvas ---------------------- */
@@ -201,11 +210,13 @@ function MusicalControls (props) {
         value={props.scaleObj.tonic.toString(true)}
         options={props.tonicsList}
         onChange={props.handleTonicChange}
+        title="Key Root"
       />
       <CustomSelect
         value={props.scaleObj.name}
         options={props.scalesList}
         onChange={props.handleScaleChange}
+        title="Key Mode"
       />
     </div>
   );
@@ -274,6 +285,9 @@ function ToolbarComponent (props) {
         handleEditToolClick={props.handleEditToolClick}
         colorsList={props.colorsList}
         activeColorIndex={props.activeColorIndex}
+        onColorChange={props.handleColorChange}
+        onColorSelectClick={props.onColorSelectClick}
+        isColorPickerOpen={props.isColorPickerOpen}
       />
       <CanvasControls
         isGridActive={props.isGridActive}

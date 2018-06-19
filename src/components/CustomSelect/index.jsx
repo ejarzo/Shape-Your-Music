@@ -8,6 +8,7 @@ import styles from './styles.css';
 const propTypes = {
   menuTop: PropTypes.bool,
   color: PropTypes.string,
+  title: PropTypes.string,
   value: PropTypes.number.isRequired,
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -59,19 +60,22 @@ function CustomSelect (props) {
       }}
       optionClassName={props.color ? styles.lightText : styles.darkText}
       valueRenderer={value => (
-        <div style={{
-          backgroundColor: backgroundColor,
-          color: foreground,
-          height: '100%',
-          width: '100%',
-          padding: 3,
-          paddingTop: 4,
-          paddingLeft: 6,
-          display: 'grid',
-          alignItems: 'center',
-          border: !props.color && `1px solid ${ColorUtils.getDarker(backgroundColor)}`,
-          borderRadius: !props.color && 1,
-        }}>
+        <div
+          title={props.title}
+          style={{
+            backgroundColor: backgroundColor,
+            color: foreground,
+            height: '100%',
+            width: '100%',
+            padding: 3,
+            paddingTop: 4,
+            paddingLeft: 6,
+            display: 'grid',
+            alignItems: 'center',
+            border: !props.color && `1px solid ${ColorUtils.getDarker(backgroundColor)}`,
+            borderRadius: !props.color && 1,
+          }}
+        >
           {value.label}
         </div>
       )}

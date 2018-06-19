@@ -161,12 +161,12 @@ class ShapeComponent extends React.Component {
             <ShapeEditorPopover
               index={this.props.index}
               position={this.props.editorPosition}
-              
+
               tempo={this.props.project.tempo} 
-              
+
               volume={this.props.volume}
               onVolumeChange={this.props.handleVolumeChange}
-              
+
               isMuted={this.props.isMuted}
               onMuteChange={this.props.handleMuteChange}
               isSoloed={this.props.soloedShapeIndex === this.props.index}
@@ -184,7 +184,6 @@ class ShapeComponent extends React.Component {
 
               onToTopClick={this.props.handleToTopClick}
               onToBottomClick={this.props.handleToBottomClick}
-
             />
           </Portal>
         </Group>

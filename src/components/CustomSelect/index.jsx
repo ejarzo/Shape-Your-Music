@@ -3,7 +3,7 @@ import Select from 'react-select';
 import PropTypes from 'prop-types';
 
 import { ColorUtils } from 'utils/Utils';
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 const propTypes = {
   menuTop: PropTypes.bool,

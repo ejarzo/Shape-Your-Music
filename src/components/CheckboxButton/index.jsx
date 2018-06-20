@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ColorUtils } from 'utils/Utils';
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
@@ -34,7 +34,7 @@ function CheckboxButton (props) {
     : defaultStyle;
 
   return (
-    <div>
+    <div style={{height: '100%'}}>
       <input
         className={styles.checkboxButton}
         id={props.label.toLowerCase()} 

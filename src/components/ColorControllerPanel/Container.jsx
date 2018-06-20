@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ColorController from './ColorController';
 import cx from 'classnames';
 
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 const propTypes = {
   instrumentPresets: PropTypes.array.isRequired,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import NumericInput from 'react-numeric-input';
 
 import { ColorUtils } from 'utils/Utils';
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 const propTypes = {
   onChange: PropTypes.func.isRequired,

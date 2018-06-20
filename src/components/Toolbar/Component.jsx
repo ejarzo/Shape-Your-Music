@@ -17,7 +17,7 @@ import DrawToolIcon from 'components/icons/DrawTool';
 import EditToolIcon from 'components/icons/EditTool';
 import { ColorUtils } from 'utils/Utils';
 
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 const propTypes = {
   isColorPickerOpen: PropTypes.bool.isRequired,

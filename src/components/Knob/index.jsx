@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
 import Utils from 'utils/Utils';
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 const propTypes = {
   value: PropTypes.number.isRequired,

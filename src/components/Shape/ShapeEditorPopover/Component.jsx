@@ -6,7 +6,7 @@ import { ColorUtils } from 'utils/Utils';
 import CheckboxButton from 'components/CheckboxButton';
 import CustomSlider from 'components/Slider';
 import Button from 'components/Button';
-import styles from './styles.css';
+import styles from './styles.module.css';
 import ColorPicker from 'components/ColorPicker';
 
 const propTypes = {

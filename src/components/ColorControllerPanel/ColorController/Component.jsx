@@ -6,7 +6,7 @@ import Button from 'components/Button';
 
 import { ColorUtils } from 'utils/Utils';
 
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 const propTypes = {
   color: PropTypes.string.isRequired,
@@ -31,7 +31,7 @@ function ColorControllerComponent (props) {
   return (
     <div
       className={styles.colorController}
-      style={{ backgroundColor: props.color }}
+      style={{ backgroundColor: darkerColor }}
     >
       <div
         className={styles.titleBar}
@@ -61,7 +61,10 @@ function ColorControllerComponent (props) {
           <i className="ion-chevron-right" />
         </Button>
       </div>
-      <div className={styles.knobsContainer}>
+      <div
+        className={styles.knobsContainer}
+        style={{ backgroundColor: props.color }}
+      >
         {props.synthParams.dynamicParams.map((effect, i) => (
           <div key={`${props.color}-knob-${i}`} >
             <Knob

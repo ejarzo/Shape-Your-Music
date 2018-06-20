@@ -1,7 +1,7 @@
 .colorController {
   height: 100%;
   display: grid;
-  grid-gap: 2px;
+  grid-gap: 3px;
   grid-template-rows: 30px 1fr;
 }
 

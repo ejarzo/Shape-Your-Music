@@ -4,6 +4,10 @@
   left: -9999px;
 }
 
+.inputWrapper {
+  height: 100%;
+}
+
 .checkboxLabel {
   display: grid;
   align-items: center;

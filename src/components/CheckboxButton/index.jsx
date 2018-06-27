@@ -34,7 +34,7 @@ function CheckboxButton (props) {
     : defaultStyle;
 
   return (
-    <div style={{height: '100%'}}>
+    <div className={styles.inputWrapper}>
       <input
         className={styles.checkboxButton}
         id={props.label.toLowerCase()} 

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Make music by drawing shapes",
   "author": "Elias Jarzombek",
-  "homepage": "http://gitname.github.io/shape-your-music",
+  "homepage": "http://gitname.github.io/Shape-Your-Music",
   "keywords": [
     "music",
     "shapes",
@@ -40,6 +40,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   }
 }

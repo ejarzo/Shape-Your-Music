@@ -9,11 +9,9 @@ const propTypes = {
   menuTop: PropTypes.bool,
   color: PropTypes.string,
   title: PropTypes.string,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
-  synthParams: PropTypes.object.isRequired,
-  instNamesList: PropTypes.array.isRequired,
 };
 
 function CustomSelect (props) {
@@ -90,7 +88,7 @@ function CustomSelect (props) {
       searchable={false}
       clearable={false}
       value={props.value}
-      options={props.instNamesList || props.options}
+      options={props.options}
       onChange={props.onChange}
     />
   );

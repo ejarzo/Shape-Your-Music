@@ -7,7 +7,7 @@ const propTypes = {
   color: PropTypes.string,
   children: PropTypes.node,
   darkHover: PropTypes.bool,
-  border: PropTypes.bool,
+  hasBorder: PropTypes.bool,
 };
 
 function Button (props) {
@@ -22,14 +22,14 @@ function Button (props) {
     padding: 6,
     borderColor: ColorUtils.getDarker(props.color),
     borderStyle: 'solid',
-    borderWidth: props.border ? 1 : 0,
-    borderBottomWidth: props.border ? 2 : 0,
-    borderRadius: props.border ? 3 : 0,
+    borderWidth: props.hasBorder ? 1 : 0,
+    borderBottomWidth: props.hasBorder ? 2 : 0,
+    borderRadius: props.hasBorder ? 3 : 0,
   };
 
   return (
     <button
-      {...props}
+      onClick={props.onClick}
       style={style}
     >
       {props.children}

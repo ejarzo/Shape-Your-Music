@@ -23,7 +23,7 @@ function Button (props) {
 
   return (
     <button
-      {...props}
+      onClick={props.onClick}
       style={style}
     >
       {props.iconClassName

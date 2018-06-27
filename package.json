@@ -43,5 +43,8 @@
     "eject": "react-scripts eject",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "eslint-plugin-jasmine": "^2.10.1"
   }
 }

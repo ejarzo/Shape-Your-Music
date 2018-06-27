@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import NumericInput from 'react-numeric-input';
-import Select from 'react-select';
 import Portal from 'react-portal';
 
 import Button from 'components/Button';
@@ -89,7 +87,7 @@ function ToolSelect (props) {
   return (
     <div className={cx(styles.toolbarSection, styles.toolSelect)}>
       <Button
-        border
+        hasBorder
         color={activeColor}
         onClick={props.onColorSelectClick}
       >
@@ -105,16 +103,16 @@ function ToolSelect (props) {
           height: 50,
           position: 'absolute',
         }}>
-            <ColorPicker
-              colors={props.colorsList}
-              color={props.colorsList[props.activeColorIndex]}
-              onChange={props.onColorChange}
-            />
+          <ColorPicker
+            colors={props.colorsList}
+            color={props.colorsList[props.activeColorIndex]}
+            onChange={props.onColorChange}
+          />
         </div>
       </Portal>
       <Button
         darkHover
-        border
+        hasBorder
         color={isDrawTool ? '#242424' : '#f1f1f1'}
         onClick={props.handleDrawToolClick}
         title="Draw Tool (TAB to toggle)">
@@ -124,7 +122,7 @@ function ToolSelect (props) {
       </Button>
       <Button
         darkHover
-        border
+        hasBorder
         color={!isDrawTool ? '#242424' : '#f1f1f1'}
         onClick={props.handleEditToolClick}
         title="Edit Tool (TAB to toggle)">
@@ -143,6 +141,8 @@ ToolSelect.propTypes = {
   colorsList: PropTypes.array.isRequired,
   activeColorIndex: PropTypes.number.isRequired,
   onColorChange: PropTypes.func.isRequired,
+  onColorSelectClick: PropTypes.func.isRequired,
+  isColorPickerOpen: PropTypes.bool.isRequired,
 };
 
 /* ---------------------- Canvas ---------------------- */
@@ -229,7 +229,7 @@ MusicalControls.propTypes = {
   handleScaleChange: PropTypes.func.isRequired,
   handleTonicChange: PropTypes.func.isRequired,
   handleTempoChange: PropTypes.func.isRequired,
-  tempo: PropTypes.func.isRequired,
+  tempo: PropTypes.number.isRequired,
 };
 
 /* ---------------------- Other ---------------------- */
@@ -244,7 +244,7 @@ function OtherControls (props) {
     <div className={cx(styles.toolbarSection, styles.OtherControls)}>
       <div>
         <Button
-          border
+          hasBorder
           darkHover
           color={'#f1f1f1'}
           onClick={props.handleClearButtonClick}

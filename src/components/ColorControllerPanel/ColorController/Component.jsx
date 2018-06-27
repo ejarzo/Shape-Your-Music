@@ -42,7 +42,7 @@ function ColorControllerComponent (props) {
           dropDownAlign="BottomLeft"
           color={props.color}
           name="Instrument Select"
-          value={props.synthParams.name.value}
+          value={props.synthParams.name.value.toString()}
           options={props.instNamesList}
           onChange={props.onInstChange}
           synthParams={props.synthParams}

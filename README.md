@@ -1,6 +1,10 @@
 # Shape Your Music
 _A geometric sequencer._
 
+[https://ejarzo.github.io/Shape-Your-Music/](https://ejarzo.github.io/Shape-Your-Music/)
+
+## About
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Geoboard.JPG/1280px-Geoboard.JPG" alt="drawing" width="100px"/>
 
 Shape Your Music is a musical [geoboard](https://en.wikipedia.org/wiki/Geoboard) that explores a new way of composing and performing music through geometry.
@@ -39,7 +43,7 @@ M    | Clear         | Delete all shapes |
 
 ## Development
 ### To Run
-Clone this repo and run `npm install` and then `npm start`.
+Clone this repo and run `yarn` and then `yarn start`.
 
 ### To Test
-Testing is handled by Karma. Run `npm test` or `npm test_watch`.
+Run `yarn test`.

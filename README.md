@@ -3,6 +3,8 @@ _A geometric sequencer._
 
 [https://ejarzo.github.io/Shape-Your-Music/](https://ejarzo.github.io/Shape-Your-Music/)
 
+![Project](https://github.com/ejarzo/Shape-Your-Music/blob/master/src/static/img/readme_images/project_screenshot.png)
+
 ## About
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Geoboard.JPG/1280px-Geoboard.JPG" alt="drawing" width="100px"/>

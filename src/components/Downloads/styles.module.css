@@ -1,0 +1,14 @@
+.downloads {
+  position: absolute;
+  z-index: 200;
+  left: 0;
+  padding: 20px;
+  top: 100px;
+  background: white;
+}
+
+.downloads a {
+  display: block;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+}

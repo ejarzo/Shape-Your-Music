@@ -9,17 +9,23 @@ const propTypes = {
   children: PropTypes.node,
   darkHover: PropTypes.bool,
   hasBorder: PropTypes.bool,
+  href: PropTypes.bool,
+  download: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
 };
 
-function Button (props) {
+function Button(props) {
   const style = {
     backgroundColor: props.color,
     ':hover': {
-      backgroundColor: props.darkHover ? ColorUtils.getDarker(props.color) : ColorUtils.getLighter(props.color),
+      backgroundColor: props.darkHover
+        ? ColorUtils.getDarker(props.color)
+        : ColorUtils.getLighter(props.color),
     },
     ':active': {
-      backgroundColor: props.darkHover ? ColorUtils.getDarker(props.color, 0.2) : ColorUtils.getDarker(props.color),
+      backgroundColor: props.darkHover
+        ? ColorUtils.getDarker(props.color, 0.2)
+        : ColorUtils.getDarker(props.color),
     },
     padding: 6,
     borderColor: ColorUtils.getDarker(props.color),
@@ -29,12 +35,18 @@ function Button (props) {
     borderRadius: props.hasBorder ? 3 : 0,
   };
 
-  return (
-    <button
+  return props.href ? (
+    <a
+      href={props.href}
+      download={props.download}
       className={props.className}
       onClick={props.onClick}
       style={style}
     >
+      {props.children}
+    </a>
+  ) : (
+    <button className={props.className} onClick={props.onClick} style={style}>
       {props.children}
     </button>
   );

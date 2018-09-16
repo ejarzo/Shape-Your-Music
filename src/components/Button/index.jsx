@@ -4,10 +4,12 @@ import { ColorUtils } from 'utils/Utils';
 import Radium from 'radium';
 
 const propTypes = {
+  className: PropTypes.string,
   color: PropTypes.string,
   children: PropTypes.node,
   darkHover: PropTypes.bool,
   hasBorder: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
 };
 
 function Button (props) {
@@ -29,6 +31,7 @@ function Button (props) {
 
   return (
     <button
+      className={props.className}
       onClick={props.onClick}
       style={style}
     >

@@ -6,8 +6,11 @@ import { ColorUtils } from 'utils/Utils';
 import CheckboxButton from 'components/CheckboxButton';
 import CustomSlider from 'components/Slider';
 import Button from 'components/Button';
-import styles from './styles.module.css';
+
 import ColorPicker from 'components/ColorPicker';
+
+import styles from './styles.module.css';
+
 
 const propTypes = {
   panelStyle: PropTypes.shape({
@@ -171,8 +174,8 @@ class ShapeEditorPopoverComponent extends Component {
           To Back
         </Button>
         <Button
+          className={styles.deleteButton}  
           color={medColor}
-          className={styles.deleteButton}
           onClick={this.props.onDeleteClick}
         >
           Delete

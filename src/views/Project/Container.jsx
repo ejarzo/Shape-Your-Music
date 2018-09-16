@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Fullscreen from 'react-full-screen';
 import Teoria from 'teoria';
 import Tone from 'tone';
-// import Controls from 'components/Controls';
+
 import Toolbar from 'components/Toolbar';
 import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
@@ -93,7 +93,7 @@ class Project extends Component {
     const knobVals = [];
     selectedInstruments.forEach(instrumentIndex => {
       const instrumentDefaults = InstrumentPresets[instrumentIndex]
-                                  .dynamicParams.map(param => param.default);
+        .dynamicParams.map(param => param.default);
       knobVals.push(instrumentDefaults);
     });
 
@@ -109,8 +109,8 @@ class Project extends Component {
       quantizeLength: 700,
       tempo: props.initState.tempo,
       scaleObj: Teoria
-                  .note(props.initState.tonic)
-                  .scale(props.initState.scale),
+        .note(props.initState.tonic)
+        .scale(props.initState.scale),
 
       activeTool: 'draw',
       activeColorIndex: 0,

@@ -26,6 +26,7 @@
     "react-dom": "^16.4.1",
     "react-draggable": "^3.0.3",
     "react-full-screen": "0.0.2",
+    "react-fullscreenable": "^2.5.0",
     "react-ionicons": "^2.0.2",
     "react-konva": "^1.7.6",
     "react-numeric-input": "^2.2.0",
@@ -44,7 +45,9 @@
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
+    "eslint-plugin-jasmine": "^2.10.1",
+    "eslint-plugin-prettier": "^2.6.2",
     "gh-pages": "^1.2.0",
-    "eslint-plugin-jasmine": "^2.10.1"
+    "prettier": "^1.14.2"
   }
 }

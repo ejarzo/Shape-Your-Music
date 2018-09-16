@@ -108,7 +108,6 @@ class Project extends Component {
       isAutoQuantizeActive: false,
       isPlaying: false,
       isRecording: false,
-
       quantizeLength: 700,
       tempo: props.initState.tempo,
       scaleObj: Teoria.note(props.initState.tonic).scale(props.initState.scale),

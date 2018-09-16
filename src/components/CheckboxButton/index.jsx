@@ -10,36 +10,30 @@ const propTypes = {
   color: PropTypes.string,
 };
 
-function CheckboxButton (props) {
+function CheckboxButton(props) {
   const defaultStyle = {
-    background: props.checked
-      ? '#242424'
-      : '#f1f1f1',
-    color: props.checked
-      ? '#f1f1f1'
-      : '#242424',
+    background: props.checked ? '#242424' : '#f1f1f1',
+    color: props.checked ? '#f1f1f1' : '#242424',
     // border: '1px solid #eee',
   };
 
   const labelStyle = props.color
     ? {
-      background: props.checked
-        ? '#f1f1f1'
-        : ColorUtils.getDarker(props.color),
-      color: props.checked
-        ? props.color
-        : '#f1f1f1',
-      // border: '1px solid props.color',
-    }
+        background: props.checked
+          ? '#f1f1f1'
+          : ColorUtils.getDarker(props.color),
+        color: props.checked ? props.color : '#f1f1f1',
+        // border: '1px solid props.color',
+      }
     : defaultStyle;
 
   return (
     <div className={styles.inputWrapper}>
       <input
         className={styles.checkboxButton}
-        id={props.label.toLowerCase()} 
-        type="checkbox" 
-        checked={props.checked} 
+        id={props.label.toLowerCase()}
+        type="checkbox"
+        checked={props.checked}
         onChange={props.onChange}
       />
       <label

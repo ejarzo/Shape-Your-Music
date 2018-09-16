@@ -1,7 +1,7 @@
 import React from 'react';
 import ControlsComponent from './Component';
 
-function Controls (props) {
+function Controls(props) {
   return <ControlsComponent {...props} />;
 }
 

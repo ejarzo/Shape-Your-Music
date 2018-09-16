@@ -7,10 +7,10 @@ const propTypes = {
   colors: PropTypes.array.isRequired,
   activeColorIndex: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
-  triangle: PropTypes.string
+  triangle: PropTypes.string,
 };
 
-function ColorPicker (props) {
+function ColorPicker(props) {
   return (
     <div>
       <GithubPicker

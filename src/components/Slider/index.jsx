@@ -8,7 +8,7 @@ const propTypes = {
   color: PropTypes.string,
 };
 
-function CustomSlider (props) {
+function CustomSlider(props) {
   const darkerColor = ColorUtils.getDarker(props.color, 0.2);
   return (
     <Slider

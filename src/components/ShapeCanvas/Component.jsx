@@ -10,7 +10,7 @@ const propTypes = {
   onContentClick: PropTypes.func.isRequired,
   onContentMouseMove: PropTypes.func.isRequired,
   onContentMouseDown: PropTypes.func.isRequired,
-  
+
   gridDots: PropTypes.array,
   quantizeLength: PropTypes.number.isRequired,
 
@@ -18,10 +18,10 @@ const propTypes = {
   selectedShapeIndex: PropTypes.number.isRequired,
   soloedShapeIndex: PropTypes.number.isRequired,
   deletedShapeIndeces: PropTypes.array.isRequired,
-  
+
   colorsList: PropTypes.array.isRequired,
   colorIndex: PropTypes.number.isRequired,
-  
+
   mousePos: PropTypes.object.isRequired,
   currPoints: PropTypes.array.isRequired,
   activeTool: PropTypes.string.isRequired,
@@ -32,7 +32,7 @@ const propTypes = {
   scaleObj: PropTypes.object.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isAutoQuantizeActive: PropTypes.bool.isRequired,
-  
+
   selectedInstruments: PropTypes.array.isRequired,
   knobVals: PropTypes.array.isRequired,
 
@@ -41,61 +41,59 @@ const propTypes = {
   handleShapeSolo: PropTypes.func.isRequired,
 };
 
-function ShapeCanvasComponent (props) {
+function ShapeCanvasComponent(props) {
   return (
-    <div id="holder" onContextMenu={(e) => {e.preventDefault();}}>
-      <Stage 
-        width={props.width} 
+    <div
+      id="holder"
+      onContextMenu={e => {
+        e.preventDefault();
+      }}
+    >
+      <Stage
+        width={props.width}
         height={props.height}
         onContentClick={props.onContentClick}
         onContentMouseMove={props.onContentMouseMove}
         onContentMouseDown={props.onContentMouseDown}
-        quantizeLength={props.quantizeLength}>
-        
+        quantizeLength={props.quantizeLength}
+      >
+        <Layer>
+          <Group>{props.gridDots}</Group>
+        </Layer>
+
         <Layer>
           <Group>
-            {props.gridDots}
+            {props.shapesList.map(
+              (points, index) =>
+                !props.deletedShapeIndeces[index] && (
+                  <Shape
+                    key={index}
+                    index={index}
+                    points={points}
+                    snapToGrid={props.snapToGrid}
+                    activeTool={props.activeTool}
+                    scaleObj={props.scaleObj}
+                    isPlaying={props.isPlaying}
+                    isAutoQuantizeActive={props.isAutoQuantizeActive}
+                    isSelected={index === props.selectedShapeIndex}
+                    soloedShapeIndex={props.soloedShapeIndex}
+                    colorsList={props.colorsList}
+                    colorIndex={props.colorIndex}
+                    selectedInstruments={props.selectedInstruments}
+                    knobVals={props.knobVals}
+                    onShapeClick={props.handleShapeClick}
+                    onDelete={props.handleShapeDelete} // TODO
+                    onSoloChange={props.handleShapeSolo(index)}
+                    tempo={props.tempo}
+                  />
+                )
+            )}
           </Group>
         </Layer>
-        
-        <Layer>
-          <Group>
-            {props.shapesList.map((points, index) =>
-              !props.deletedShapeIndeces[index] && (
-                <Shape
-                  key={index}
-                  index={index}
-                  points={points}
-                  
-                  snapToGrid={props.snapToGrid}
-                  activeTool={props.activeTool}
-
-                  scaleObj={props.scaleObj}
-                  isPlaying={props.isPlaying}
-                  isAutoQuantizeActive={props.isAutoQuantizeActive}
-                  
-                  isSelected={index === props.selectedShapeIndex}
-                  soloedShapeIndex={props.soloedShapeIndex}
-                  
-                  colorsList={props.colorsList}
-                  colorIndex={props.colorIndex}
-                  
-                  selectedInstruments={props.selectedInstruments}
-                  knobVals={props.knobVals}
-
-                  onShapeClick={props.handleShapeClick}
-                  onDelete={props.handleShapeDelete} // TODO
-                  onSoloChange={props.handleShapeSolo(index)}
-                  tempo={props.tempo} 
-                />
-              )
-            )}
-          </Group>    
-        </Layer>
 
         <Layer>
-          <PhantomShape 
-            mousePos={props.mousePos} 
+          <PhantomShape
+            mousePos={props.mousePos}
             points={props.currPoints}
             activeTool={props.activeTool}
             color={props.colorsList[props.colorIndex]}
@@ -103,7 +101,7 @@ function ShapeCanvasComponent (props) {
           />
         </Layer>
       </Stage>
-    </div>  
+    </div>
   );
 }
 

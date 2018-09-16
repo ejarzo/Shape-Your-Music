@@ -1,7 +1,7 @@
 import React from 'react';
 import ColorPickerContainer from './Container';
 
-function ColorPicker (props) {
+function ColorPicker(props) {
   return <ColorPickerContainer {...props} />;
 }
 

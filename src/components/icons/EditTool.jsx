@@ -1,12 +1,22 @@
 import React from 'react';
 
-function EditToolIcon (props) {
+function EditToolIcon(props) {
   return (
-   <svg version="1.1" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 50 50" enableBackground="new 0 0 50 50">
-   <g id="Layer_1" display="none">
-    <g id="rEw2ek.tif" display="inline">
-      <g>
-        <path fill={props.fill} d="M15.538,41.333c-0.192,0.769-0.5,1.456-0.957,2.069c-1.04,1.396-2.424,2.209-4.159,2.396
+    <svg
+      version="1.1"
+      x="0px"
+      y="0px"
+      width="100%"
+      height="100%"
+      viewBox="0 0 50 50"
+      enableBackground="new 0 0 50 50"
+    >
+      <g id="Layer_1" display="none">
+        <g id="rEw2ek.tif" display="inline">
+          <g>
+            <path
+              fill={props.fill}
+              d="M15.538,41.333c-0.192,0.769-0.5,1.456-0.957,2.069c-1.04,1.396-2.424,2.209-4.159,2.396
           c-2.7,0.29-5.277-1.358-6.159-3.978c-1.016-3.016,0.604-6.342,3.611-7.385c0.152-0.054,0.212-0.131,0.24-0.281
           c0.518-2.84,1.041-5.678,1.561-8.519c0.053-0.287,0.102-0.575,0.156-0.874c-1.561-1.129-2.453-2.645-2.56-4.577
           c-0.083-1.5,0.376-2.842,1.326-4.009c2.038-2.506,5.895-2.934,8.433-0.68c3.937-1.812,7.878-3.627,11.822-5.441
@@ -23,29 +33,117 @@ function EditToolIcon (props) {
           c-1.888,0.002-3.425,1.545-3.425,3.428c0.003,1.885,1.539,3.42,3.43,3.419C42.057,36.243,43.584,34.712,43.584,32.818z
            M9.833,43.387c1.891-0.005,3.417-1.535,3.417-3.427c-0.001-1.892-1.531-3.416-3.424-3.414c-1.888,0.001-3.423,1.537-3.421,3.425
           C6.407,41.854,7.951,43.393,9.833,43.387z M16.549,19.911c0.007-1.881-1.515-3.423-3.39-3.432
-          c-1.905-0.009-3.442,1.512-3.449,3.411c-0.005,1.881,1.516,3.423,3.39,3.434C15,23.336,16.542,21.81,16.549,19.911z"/>
+          c-1.905-0.009-3.442,1.512-3.449,3.411c-0.005,1.881,1.516,3.423,3.39,3.434C15,23.336,16.542,21.81,16.549,19.911z"
+            />
+          </g>
+        </g>
       </g>
-    </g>
-   </g>
-   <g id="Layer_2">
-    <g>
-      <line fill="none" stroke={props.fill} strokeWidth="2" strokeMiterlimit="10" x1="37.445" y1="13.838" x2="40.558" y2="28.771"/>
-      <line fill="none" stroke={props.fill} strokeWidth="2" strokeMiterlimit="10" x1="16.751" y1="17.172" x2="31.5" y2="10.731"/>
-      <line fill="none" stroke={props.fill} strokeWidth="2" strokeMiterlimit="10" x1="8.894" y1="36.509" x2="10.979" y2="24.547"/>
-      <line fill="none" stroke={props.fill} strokeWidth="2" strokeMiterlimit="10" x1="13.135" y1="40.573" x2="36.356" y2="35.216"/>
-    </g>
-    <path display="none" fill="none" stroke={props.fill} strokeWidth="3" strokeMiterlimit="10" d="M12.224,24.645l-1.891,10.744
-      c0.477,0.076,3.7,3.227,3.801,3.677l21.349-4.879c-0.375-2.452,0.841-5.191,3.653-5.765l-2.843-13.511"/>
-    <path display="none" fill="none" stroke={props.fill} strokeWidth="3" strokeMiterlimit="10" d="M30.87,12.172l-13.307,5.756"/>
-    <g>
-      <ellipse fill="none" stroke={props.fill} strokeWidth="2" strokeMiterlimit="10" cx="11.895" cy="19.292" rx="5.291" ry="5.34"/>
-      
-        <ellipse id="XMLID_2_" fill="none" stroke={props.fill} strokeWidth="2" strokeMiterlimit="10" cx="36.356" cy="8.611" rx="5.291" ry="5.34"/>
-      <ellipse fill="none" stroke={props.fill} strokeWidth="2" strokeMiterlimit="10" cx="41.647" cy="33.996" rx="5.291" ry="5.34"/>
-      <ellipse fill="none" stroke={props.fill} strokeWidth="2" strokeMiterlimit="10" cx="7.978" cy="41.764" rx="5.291" ry="5.34"/>
-    </g>
-   </g>
-   </svg>
+      <g id="Layer_2">
+        <g>
+          <line
+            fill="none"
+            stroke={props.fill}
+            strokeWidth="2"
+            strokeMiterlimit="10"
+            x1="37.445"
+            y1="13.838"
+            x2="40.558"
+            y2="28.771"
+          />
+          <line
+            fill="none"
+            stroke={props.fill}
+            strokeWidth="2"
+            strokeMiterlimit="10"
+            x1="16.751"
+            y1="17.172"
+            x2="31.5"
+            y2="10.731"
+          />
+          <line
+            fill="none"
+            stroke={props.fill}
+            strokeWidth="2"
+            strokeMiterlimit="10"
+            x1="8.894"
+            y1="36.509"
+            x2="10.979"
+            y2="24.547"
+          />
+          <line
+            fill="none"
+            stroke={props.fill}
+            strokeWidth="2"
+            strokeMiterlimit="10"
+            x1="13.135"
+            y1="40.573"
+            x2="36.356"
+            y2="35.216"
+          />
+        </g>
+        <path
+          display="none"
+          fill="none"
+          stroke={props.fill}
+          strokeWidth="3"
+          strokeMiterlimit="10"
+          d="M12.224,24.645l-1.891,10.744
+      c0.477,0.076,3.7,3.227,3.801,3.677l21.349-4.879c-0.375-2.452,0.841-5.191,3.653-5.765l-2.843-13.511"
+        />
+        <path
+          display="none"
+          fill="none"
+          stroke={props.fill}
+          strokeWidth="3"
+          strokeMiterlimit="10"
+          d="M30.87,12.172l-13.307,5.756"
+        />
+        <g>
+          <ellipse
+            fill="none"
+            stroke={props.fill}
+            strokeWidth="2"
+            strokeMiterlimit="10"
+            cx="11.895"
+            cy="19.292"
+            rx="5.291"
+            ry="5.34"
+          />
+
+          <ellipse
+            id="XMLID_2_"
+            fill="none"
+            stroke={props.fill}
+            strokeWidth="2"
+            strokeMiterlimit="10"
+            cx="36.356"
+            cy="8.611"
+            rx="5.291"
+            ry="5.34"
+          />
+          <ellipse
+            fill="none"
+            stroke={props.fill}
+            strokeWidth="2"
+            strokeMiterlimit="10"
+            cx="41.647"
+            cy="33.996"
+            rx="5.291"
+            ry="5.34"
+          />
+          <ellipse
+            fill="none"
+            stroke={props.fill}
+            strokeWidth="2"
+            strokeMiterlimit="10"
+            cx="7.978"
+            cy="41.764"
+            rx="5.291"
+            ry="5.34"
+          />
+        </g>
+      </g>
+    </svg>
   );
 }
 

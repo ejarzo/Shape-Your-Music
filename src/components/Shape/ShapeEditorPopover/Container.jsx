@@ -14,7 +14,7 @@ const propTypes = {
   Used to adjust/mix the shape
 */
 class ShapeEditorPopover extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     const width = 225;
@@ -53,11 +53,11 @@ class ShapeEditorPopover extends Component {
       caretPosition: {
         top: caretTop,
         isLeft: isCaretLeft,
-      }
+      },
     };
   }
 
-  render () {
+  render() {
     return (
       <ShapeEditorPopoverComponent
         {...this.props}

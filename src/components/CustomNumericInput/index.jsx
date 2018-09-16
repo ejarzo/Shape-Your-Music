@@ -10,14 +10,14 @@ const propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function CustomNumericInput (props) {
+function CustomNumericInput(props) {
   // TODO theme
   const backgroundColor = '#f1f1f1';
   return (
     <div className={styles.wrapper}>
       <NumericInput
         {...props}
-        min={1} 
+        min={1}
         max={100}
         style={{
           input: {
@@ -29,10 +29,10 @@ function CustomNumericInput (props) {
           },
           'input:focus': {
             background: ColorUtils.getDarker(backgroundColor),
-            outline: 'none'
+            outline: 'none',
           },
           btn: {
-            boxShadow: 'none'
+            boxShadow: 'none',
           },
           btnUp: {
             color: '#222',
@@ -49,12 +49,12 @@ function CustomNumericInput (props) {
             border: 'none',
           },
           arrowUp: {
-            borderBottomColor: '#222'
+            borderBottomColor: '#222',
           },
           arrowDown: {
-            borderTopColor: '#222'
-          }
-        }} 
+            borderTopColor: '#222',
+          },
+        }}
       />
     </div>
   );

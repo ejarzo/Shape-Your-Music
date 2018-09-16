@@ -26,17 +26,14 @@ const propTypes = {
   onIncrementClick: PropTypes.func.isRequired,
 };
 
-function ColorControllerComponent (props) {
+function ColorControllerComponent(props) {
   const darkerColor = ColorUtils.getDarker(props.color);
   return (
     <div
       className={styles.colorController}
       style={{ backgroundColor: darkerColor }}
     >
-      <div
-        className={styles.titleBar}
-        style={{ backgroundColor: darkerColor }}
-      >
+      <div className={styles.titleBar} style={{ backgroundColor: darkerColor }}>
         <CustomSelect
           menuTop
           dropDownAlign="BottomLeft"
@@ -48,16 +45,10 @@ function ColorControllerComponent (props) {
           synthParams={props.synthParams}
           instNamesList={props.instNamesList}
         />
-        <Button 
-          color={props.color}
-          onClick={props.onIncrementClick(-1)}
-        >
+        <Button color={props.color} onClick={props.onIncrementClick(-1)}>
           <i className="ion-chevron-left" />
         </Button>
-        <Button 
-          color={props.color}
-          onClick={props.onIncrementClick(1)}
-        >
+        <Button color={props.color} onClick={props.onIncrementClick(1)}>
           <i className="ion-chevron-right" />
         </Button>
       </div>
@@ -66,7 +57,7 @@ function ColorControllerComponent (props) {
         style={{ backgroundColor: props.color }}
       >
         {props.synthParams.dynamicParams.map((effect, i) => (
-          <div key={`${props.color}-knob-${i}`} >
+          <div key={`${props.color}-knob-${i}`}>
             <Knob
               paramName={effect.name}
               value={props.knobVals[i]}

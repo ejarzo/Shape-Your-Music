@@ -37,39 +37,38 @@ const propTypes = {
   handleClearButtonClick: PropTypes.func.isRequired,
 };
 
-
-function ControlsComponent (props) {
+function ControlsComponent(props) {
   const playButtonClass = props.isPlaying ? 'ion-stop' : 'ion-play';
-  const fullscreenButtonClass = props.isFullscreenEnabled ? 'ion-arrow-shrink' : 'ion-arrow-expand';
+  const fullscreenButtonClass = props.isFullscreenEnabled
+    ? 'ion-arrow-shrink'
+    : 'ion-arrow-expand';
 
   return (
     <div className="controls">
-     
       {/* Transport Controls */}
       <div className="controls-section transport-controls">
         <div className="ctrl-elem">
-          <button 
-              className="icon-button" 
-              onClick={props.handlePlayClick} 
-              title="Play project (SPACE)"
+          <button
+            className="icon-button"
+            onClick={props.handlePlayClick}
+            title="Play project (SPACE)"
           >
-            <i className={playButtonClass}></i>
+            <i className={playButtonClass} />
           </button>
         </div>
         <div className="ctrl-elem">
           <button className="icon-button" title="Record to audio file">
-            <i className="ion-record"></i>
+            <i className="ion-record" />
           </button>
         </div>
       </div>
 
       {/* Drawing Controls*/}
       <div className="controls-section">
-          
         {/* Color Select */}
         <div className="ctrl-elem">
-          <ColorPicker 
-            ref={(c) => this.colorPicker = c}
+          <ColorPicker
+            ref={c => (this.colorPicker = c)}
             colorsList={props.colorsList}
             activeColorIndex={props.activeColorIndex}
             onColorChange={props.handleColorChange}
@@ -79,19 +78,29 @@ function ControlsComponent (props) {
         {/* Tool Select */}
         <div className="ctrl-elem">
           <span
-            className={'tool-button ' + (props.activeTool === 'draw' ? 'selected' : '')}
+            className={
+              'tool-button ' + (props.activeTool === 'draw' ? 'selected' : '')
+            }
             onClick={props.handleDrawToolClick}
-            title="Draw Tool (TAB to toggle)">
-            <DrawToolIcon fill={props.activeTool === 'draw' ? '#FFFFFF' : '#242424'}/>
+            title="Draw Tool (TAB to toggle)"
+          >
+            <DrawToolIcon
+              fill={props.activeTool === 'draw' ? '#FFFFFF' : '#242424'}
+            />
           </span>
         </div>
         <div className="ctrl-elem no-margin">
-          <span 
-            className={'tool-button ' + (props.activeTool === 'edit' ? 'selected' : '')}
+          <span
+            className={
+              'tool-button ' + (props.activeTool === 'edit' ? 'selected' : '')
+            }
             onClick={props.handleEditToolClick}
-            title="Edit Tool (TAB to toggle)">
-            <EditToolIcon fill={props.activeTool === 'edit' ? '#FFFFFF' : '#242424'}/>
-          </span>                        
+            title="Edit Tool (TAB to toggle)"
+          >
+            <EditToolIcon
+              fill={props.activeTool === 'edit' ? '#FFFFFF' : '#242424'}
+            />
+          </span>
         </div>
       </div>
 
@@ -99,42 +108,49 @@ function ControlsComponent (props) {
       <div className="controls-section">
         <div className="ctrl-elem no-margin">
           {/* Grid */}
-          <input 
-            id="grid-toggle" 
+          <input
+            id="grid-toggle"
             type="checkbox"
             checked={props.isGridActive}
-            onChange={props.handleGridToggleChange}/>
-          <label 
-            className="checkbox-label" 
+            onChange={props.handleGridToggleChange}
+          />
+          <label
+            className="checkbox-label"
             htmlFor="grid-toggle"
             style={{
-              borderTopLeftRadius: '3px', 
-              borderBottomLeftRadius: '3px'
-            }}>
+              borderTopLeftRadius: '3px',
+              borderBottomLeftRadius: '3px',
+            }}
+          >
             Grid
           </label>
-          
+
           {/* Snap To Grid */}
-          <input 
-            id="snap-to-grid-toggle" 
-            type="checkbox" 
+          <input
+            id="snap-to-grid-toggle"
+            type="checkbox"
             checked={props.isSnapToGridActive}
-            onChange={props.handleSnapToGridToggleChange}/>
-          <label className="checkbox-label" htmlFor="snap-to-grid-toggle">Snap</label>
-          
+            onChange={props.handleSnapToGridToggleChange}
+          />
+          <label className="checkbox-label" htmlFor="snap-to-grid-toggle">
+            Snap
+          </label>
+
           {/* Toggle Auto Quantize*/}
-          <input 
-            id="auto-quantize-toggle" 
-            type="checkbox" 
+          <input
+            id="auto-quantize-toggle"
+            type="checkbox"
             checked={props.isAutoQuantizeActive}
-            onChange={props.handleAutoQuantizeChange}/>
-          <label 
-            className="checkbox-label" 
+            onChange={props.handleAutoQuantizeChange}
+          />
+          <label
+            className="checkbox-label"
             style={{
-              borderTopRightRadius: '3px', 
-              borderBottomRightRadius: '3px'
+              borderTopRightRadius: '3px',
+              borderBottomRightRadius: '3px',
             }}
-            htmlFor="auto-quantize-toggle">
+            htmlFor="auto-quantize-toggle"
+          >
             Sync
           </label>
         </div>
@@ -145,23 +161,23 @@ function ControlsComponent (props) {
         <span className="ctrl-elem small">
           <div className="full-width">
             <label>Tempo</label>
-            <NumericInput 
-              className="numeric-input" 
-              min={1} 
+            <NumericInput
+              className="numeric-input"
+              min={1}
               max={100}
               onChange={props.handleTempoChange}
               value={props.tempo}
               style={{
                 input: {
                   lineHeight: '10',
-                  padding: 'none'
+                  padding: 'none',
                 },
-                'input:focus' : {
+                'input:focus': {
                   border: '1px inset #222',
-                  outline: 'none'
+                  outline: 'none',
                 },
                 btn: {
-                  boxShadow: 'none'
+                  boxShadow: 'none',
                 },
                 btnUp: {
                   color: '#ddd',
@@ -176,12 +192,12 @@ function ControlsComponent (props) {
                   border: 'none',
                 },
                 arrowUp: {
-                  borderBottomColor: 'rgba(102, 102, 102, 1)'
+                  borderBottomColor: 'rgba(102, 102, 102, 1)',
                 },
                 arrowDown: {
-                  borderTopColor: 'rgba(102, 102, 102, 1)'
-                }
-              }} 
+                  borderTopColor: 'rgba(102, 102, 102, 1)',
+                },
+              }}
             />
           </div>
         </span>
@@ -189,12 +205,13 @@ function ControlsComponent (props) {
           <div className="full-width">
             <label>Key</label>
             <Select
-                searchable={false}
-                clearable={false}
-                name="Key Select"
-                value={props.scaleObj.tonic.toString(true)}
-                options={props.tonicsList}
-                onChange={props.handleTonicChange}/>
+              searchable={false}
+              clearable={false}
+              name="Key Select"
+              value={props.scaleObj.tonic.toString(true)}
+              options={props.tonicsList}
+              onChange={props.handleTonicChange}
+            />
           </div>
         </span>
         <span className="ctrl-elem large">
@@ -207,7 +224,8 @@ function ControlsComponent (props) {
               name="Key Select"
               value={props.scaleObj.name}
               options={props.scalesList}
-              onChange={props.handleScaleChange}/>
+              onChange={props.handleScaleChange}
+            />
           </div>
         </span>
       </div>
@@ -215,17 +233,17 @@ function ControlsComponent (props) {
       {/* Canvas Controls */}
       <div className="controls-section canvas-controls">
         <div className="ctrl-elem">
-          <button className="icon-button" onClick={props.handleFullscreenButtonClick}>
-            <i className={fullscreenButtonClass}></i>
+          <button
+            className="icon-button"
+            onClick={props.handleFullscreenButtonClick}
+          >
+            <i className={fullscreenButtonClass} />
           </button>
         </div>
         <div className="ctrl-elem">
-          <button onClick={props.handleClearButtonClick}>
-            Clear
-          </button>
+          <button onClick={props.handleClearButtonClick}>Clear</button>
         </div>
       </div>
-
     </div>
   );
 }

@@ -23,15 +23,17 @@ const propTypes = {
 
 const knobIndexChanged = (currVals, nextVals) => {
   for (var i = 0; i < currVals.length; i++) {
-    if (currVals[i] !== nextVals[i]) { return i; }
+    if (currVals[i] !== nextVals[i]) {
+      return i;
+    }
   }
   return -1;
 };
 
 class ColorController extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
-    
+
     this.fxList = [];
     this.fxBus = new Tone.Gain(0.8);
     this.fxBus.receive(this.props.receiveChannel);
@@ -44,15 +46,17 @@ class ColorController extends Component {
     this.handleIncrementClick = this.handleIncrementClick.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.knobVals.forEach((val, i) => {
       this.triggerEffectCallback(this.props.synthParams, i, val);
     });
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     // Change instrument
-    if (nextProps.synthParams.name.value !== this.props.synthParams.name.value) {
+    if (
+      nextProps.synthParams.name.value !== this.props.synthParams.name.value
+    ) {
       this.connectEffects(nextProps.synthParams.effects);
       nextProps.knobVals.forEach((val, i) => {
         this.triggerEffectCallback(nextProps.synthParams, i, val);
@@ -60,14 +64,17 @@ class ColorController extends Component {
     }
 
     // change knob effect
-    const changedKnobIndex = knobIndexChanged(this.props.knobVals, nextProps.knobVals);
+    const changedKnobIndex = knobIndexChanged(
+      this.props.knobVals,
+      nextProps.knobVals
+    );
     if (!this.props.knobVals || changedKnobIndex >= 0) {
       const val = nextProps.knobVals[changedKnobIndex];
       this.triggerEffectCallback(nextProps.synthParams, changedKnobIndex, val);
     }
   }
 
-  triggerEffectCallback (synthParams, knobIndex, val) {
+  triggerEffectCallback(synthParams, knobIndex, val) {
     const targetParam = synthParams.dynamicParams[knobIndex];
     // change effect amount
     // synth parameters are handled by shapes
@@ -78,13 +85,13 @@ class ColorController extends Component {
 
   // called by the callbacks in the synthParams object
   // TODO figure out better way?
-  setEffectAmount (effectIndex, val, parameter) {
+  setEffectAmount(effectIndex, val, parameter) {
     this.fxList[effectIndex].set(parameter, val);
   }
 
-  connectEffects (fxConstructors) {
+  connectEffects(fxConstructors) {
     if (this.fxList) {
-      this.fxList.forEach((effect) => {
+      this.fxList.forEach(effect => {
         effect.dispose();
       });
       this.fxList = [];
@@ -95,7 +102,7 @@ class ColorController extends Component {
     this.fxBus = new Tone.Gain(0.8);
     this.fxBus.receive(this.props.receiveChannel);
 
-    fxConstructors.forEach((fxObj) => {
+    fxConstructors.forEach(fxObj => {
       const newEffect = new fxObj.type(fxObj.params);
       this.fxList.push(newEffect);
     });
@@ -110,26 +117,30 @@ class ColorController extends Component {
     }
   }
 
-  handleInstChange (option) {
+  handleInstChange(option) {
     if (option) {
       this.props.onInstChange(option.value);
     }
   }
 
-  handleIncrementClick (difference) {
+  handleIncrementClick(difference) {
     return () => {
       const currentVal = this.props.synthParams.name.value;
       const numOptions = this.props.instNamesList.length - 1;
       let nextVal = currentVal + difference;
 
-      if (nextVal > numOptions) { nextVal = 0; }
-      if (nextVal < 0) { nextVal = numOptions; }
+      if (nextVal > numOptions) {
+        nextVal = 0;
+      }
+      if (nextVal < 0) {
+        nextVal = numOptions;
+      }
 
       this.props.onInstChange(nextVal);
     };
   }
 
-  render () {
+  render() {
     return (
       <ColorControllerComponent
         {...this.props}

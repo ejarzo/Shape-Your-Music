@@ -15,9 +15,8 @@ const propTypes = {
   onKnobChange: PropTypes.func.isRequired,
 };
 
-
 class ColorControllerPanel extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       isCollapsed: false,
@@ -25,11 +24,11 @@ class ColorControllerPanel extends Component {
     this.handleToggleCollapseClick = this.handleToggleCollapseClick.bind(this);
   }
 
-  handleToggleCollapseClick () {
+  handleToggleCollapseClick() {
     this.setState({ isCollapsed: !this.state.isCollapsed });
   }
 
-  render () {
+  render() {
     const {
       colorsList,
       instNamesList,

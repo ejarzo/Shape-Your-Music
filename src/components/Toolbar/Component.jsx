@@ -52,7 +52,7 @@ const propTypes = {
 
 /* ---------------------- Transport ---------------------- */
 
-function TransportControls (props) {
+function TransportControls(props) {
   const playButtonClass = props.isPlaying ? 'ion-stop' : 'ion-play';
   return (
     <div className={styles.toolbarSection}>
@@ -81,7 +81,7 @@ TransportControls.propTypes = {
 
 /* ---------------------- Tool Select ---------------------- */
 
-function ToolSelect (props) {
+function ToolSelect(props) {
   const isDrawTool = props.activeTool === 'draw';
   const activeColor = props.colorsList[props.activeColorIndex];
   return (
@@ -90,19 +90,17 @@ function ToolSelect (props) {
         hasBorder
         color={activeColor}
         onClick={props.onColorSelectClick}
-      >
-      </Button>
-      <Portal
-        closeOnOutsideClick
-        isOpened={props.isColorPickerOpen}
-      >
-        <div style={{
-          width: 140,
-          left: 100,
-          top: 55,
-          height: 50,
-          position: 'absolute',
-        }}>
+      />
+      <Portal closeOnOutsideClick isOpened={props.isColorPickerOpen}>
+        <div
+          style={{
+            width: 140,
+            left: 100,
+            top: 55,
+            height: 50,
+            position: 'absolute',
+          }}
+        >
           <ColorPicker
             colors={props.colorsList}
             color={props.colorsList[props.activeColorIndex]}
@@ -115,21 +113,19 @@ function ToolSelect (props) {
         hasBorder
         color={isDrawTool ? '#242424' : '#f1f1f1'}
         onClick={props.handleDrawToolClick}
-        title="Draw Tool (TAB to toggle)">
-        <DrawToolIcon
-          fill={isDrawTool ? '#f1f1f1' : '#242424'}
-        />
+        title="Draw Tool (TAB to toggle)"
+      >
+        <DrawToolIcon fill={isDrawTool ? '#f1f1f1' : '#242424'} />
       </Button>
       <Button
         darkHover
         hasBorder
         color={!isDrawTool ? '#242424' : '#f1f1f1'}
         onClick={props.handleEditToolClick}
-        title="Edit Tool (TAB to toggle)">
-        <EditToolIcon
-          fill={!isDrawTool ? '#f1f1f1' : '#242424'}
-        />
-      </Button>                        
+        title="Edit Tool (TAB to toggle)"
+      >
+        <EditToolIcon fill={!isDrawTool ? '#f1f1f1' : '#242424'} />
+      </Button>
     </div>
   );
 }
@@ -147,7 +143,7 @@ ToolSelect.propTypes = {
 
 /* ---------------------- Canvas ---------------------- */
 
-function CanvasControls (props) {
+function CanvasControls(props) {
   // TODO theme
   const lightGray = ColorUtils.getDarker('#f1f1f1');
   return (
@@ -198,7 +194,7 @@ CanvasControls.propTypes = {
 
 /* ---------------------- Musical ---------------------- */
 
-function MusicalControls (props) {
+function MusicalControls(props) {
   return (
     <div className={cx(styles.toolbarSection, styles.musicalControls)}>
       <CustomNumericInput
@@ -234,11 +230,10 @@ MusicalControls.propTypes = {
 
 /* ---------------------- Other ---------------------- */
 
-function OtherControls (props) {
-  const fullscreenButtonClass =
-    props.isFullscreenEnabled
-      ? 'ion-arrow-shrink'
-      : 'ion-arrow-expand';
+function OtherControls(props) {
+  const fullscreenButtonClass = props.isFullscreenEnabled
+    ? 'ion-arrow-shrink'
+    : 'ion-arrow-expand';
 
   return (
     <div className={cx(styles.toolbarSection, styles.OtherControls)}>
@@ -271,7 +266,7 @@ OtherControls.propTypes = {
 };
 
 /* ================================ Toolbar ================================ */
-function ToolbarComponent (props) {
+function ToolbarComponent(props) {
   return (
     <div className={styles.toolbar}>
       <TransportControls
@@ -314,14 +309,11 @@ function ToolbarComponent (props) {
       />
     </div>
   );
-
-
 }
 
 ToolbarComponent.propTypes = propTypes;
 
 export default ToolbarComponent;
-
 
 /*
 

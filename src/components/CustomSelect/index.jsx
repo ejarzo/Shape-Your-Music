@@ -14,13 +14,11 @@ const propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-function CustomSelect (props) {
+function CustomSelect(props) {
   const backgroundColor = props.color || '#f1f1f1';
 
-  const borderColor = props.color 
-    ? ColorUtils.getDarker(props.color)
-    : '#fff';
-  
+  const borderColor = props.color ? ColorUtils.getDarker(props.color) : '#fff';
+
   // TODO theme colors
   const foreground = props.color ? '#fff' : '#242424';
 
@@ -31,21 +29,24 @@ function CustomSelect (props) {
         fontSize: 15,
       }}
     >
-      {isOpen
-        ? <i className="ion-chevron-up" />
-        : <i className="ion-chevron-down" />
-      }
+      {isOpen ? (
+        <i className="ion-chevron-up" />
+      ) : (
+        <i className="ion-chevron-down" />
+      )}
     </div>
   );
   arrowRenderer.propTypes = { isOpen: PropTypes.bool };
 
-  const position = props.menuTop ? {
-    top: 'auto',
-    bottom: 'calc(100% + 2px)',
-  } : {
-    bottom: 'auto',
-    top: 'calc(100% + 3px)',
-  };
+  const position = props.menuTop
+    ? {
+        top: 'auto',
+        bottom: 'calc(100% + 2px)',
+      }
+    : {
+        bottom: 'auto',
+        top: 'calc(100% + 3px)',
+      };
 
   return (
     <Select
@@ -70,7 +71,9 @@ function CustomSelect (props) {
             paddingLeft: 6,
             display: 'grid',
             alignItems: 'center',
-            border: !props.color && `1px solid ${ColorUtils.getDarker(backgroundColor)}`,
+            border:
+              !props.color &&
+              `1px solid ${ColorUtils.getDarker(backgroundColor)}`,
             borderRadius: !props.color && 1,
           }}
         >
@@ -83,7 +86,7 @@ function CustomSelect (props) {
         background: backgroundColor,
         color: 'red',
         margin: -3,
-        boxShadow: '-5px 0 12px 0 rgba(0,0,0,0.11)'
+        boxShadow: '-5px 0 12px 0 rgba(0,0,0,0.11)',
       }}
       searchable={false}
       clearable={false}

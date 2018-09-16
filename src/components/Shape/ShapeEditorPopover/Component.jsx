@@ -11,7 +11,6 @@ import ColorPicker from 'components/ColorPicker';
 
 import styles from './styles.module.css';
 
-
 const propTypes = {
   panelStyle: PropTypes.shape({
     width: PropTypes.number.isRequired,
@@ -26,22 +25,21 @@ const propTypes = {
   colorsList: PropTypes.array.isRequired,
   colorIndex: PropTypes.number.isRequired,
   volume: PropTypes.number.isRequired,
-  
+
   isMuted: PropTypes.bool.isRequired,
   isSoloed: PropTypes.bool.isRequired,
-  
-  
+
   onColorChange: PropTypes.func.isRequired,
   onVolumeChange: PropTypes.func.isRequired,
   onMuteChange: PropTypes.func.isRequired,
   onSoloChange: PropTypes.func.isRequired,
   onQuantizeFactorChange: PropTypes.func.isRequired,
-  
+
   // onQuantizeClick: PropTypes.func.isRequired,
   onToTopClick: PropTypes.func.isRequired,
   onToBottomClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
-  
+
   // perimeter: PropTypes.number.isRequired,
 };
 
@@ -54,10 +52,14 @@ const Caret = props => (
     })}
     style={{
       top: props.caretPosition.top,
-      borderRightColor: props.caretPosition.isLeft ? props.color : 'transparent',
-      borderLeftColor: !props.caretPosition.isLeft ? props.color : 'transparent',
-    }}>
-  </div>
+      borderRightColor: props.caretPosition.isLeft
+        ? props.color
+        : 'transparent',
+      borderLeftColor: !props.caretPosition.isLeft
+        ? props.color
+        : 'transparent',
+    }}
+  />
 );
 
 Caret.propTypes = {
@@ -69,22 +71,24 @@ Caret.propTypes = {
 };
 
 class ShapeEditorPopoverComponent extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       isColorPickerOpen: false,
     };
 
-    this.handleToggleColorPickerClick = this.handleToggleColorPickerClick.bind(this);
+    this.handleToggleColorPickerClick = this.handleToggleColorPickerClick.bind(
+      this
+    );
   }
 
-  handleToggleColorPickerClick () {
+  handleToggleColorPickerClick() {
     this.setState({
-      isColorPickerOpen: !this.state.isColorPickerOpen
+      isColorPickerOpen: !this.state.isColorPickerOpen,
     });
   }
 
-  render () {
+  render() {
     const colorString = this.props.colorsList[this.props.colorIndex];
     const darkColor = ColorUtils.getDarker(colorString, 0.2);
     const medColor = ColorUtils.getDarker(colorString);
@@ -111,7 +115,7 @@ class ShapeEditorPopoverComponent extends Component {
         </div>
         <div className={styles.buttonShort}>
           <CheckboxButton
-            label="Mute" 
+            label="Mute"
             checked={this.props.isMuted}
             onChange={this.props.onMuteChange}
             color={colorString}
@@ -136,9 +140,13 @@ class ShapeEditorPopoverComponent extends Component {
             color={colorString}
             onClick={this.handleToggleColorPickerClick}
           >
-            Color <i className={this.state.isColorPickerOpen
-              ? 'ion-arrow-up-b'
-              : 'ion-arrow-down-b'}
+            Color{' '}
+            <i
+              className={
+                this.state.isColorPickerOpen
+                  ? 'ion-arrow-up-b'
+                  : 'ion-arrow-down-b'
+              }
             />
           </Button>
           <ColorPicker
@@ -161,20 +169,14 @@ class ShapeEditorPopoverComponent extends Component {
         >
           {'/2'}
         </Button>
-        <Button
-          color={colorString}
-          onClick={this.props.onToTopClick}
-        >
+        <Button color={colorString} onClick={this.props.onToTopClick}>
           To Front
         </Button>
-        <Button
-          color={colorString}
-          onClick={this.props.onToBottomClick}
-        >
+        <Button color={colorString} onClick={this.props.onToBottomClick}>
           To Back
         </Button>
         <Button
-          className={styles.deleteButton}  
+          className={styles.deleteButton}
           color={medColor}
           onClick={this.props.onDeleteClick}
         >

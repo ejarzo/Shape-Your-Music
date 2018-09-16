@@ -7,7 +7,7 @@ const propTypes = {
   children: PropTypes.node,
 };
 
-function Button (props) {
+function Button(props) {
   const style = {
     backgroundColor: 'transparent',
     transform: 'scale3d(1,1,1)',
@@ -22,18 +22,12 @@ function Button (props) {
   };
 
   return (
-    <button
-      onClick={props.onClick}
-      style={style}
-    >
-      {props.iconClassName
-        ?
-        <i
-          style={{ fontSize: '1.6em' }}
-          className={props.iconClassName}
-        />
-        : props.children
-      }
+    <button onClick={props.onClick} style={style}>
+      {props.iconClassName ? (
+        <i style={{ fontSize: '1.6em' }} className={props.iconClassName} />
+      ) : (
+        props.children
+      )}
     </button>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import ControlsContainer from './Container';
 
-function Controls (props) {
+function Controls(props) {
   return <ControlsContainer {...props} />;
 }
 

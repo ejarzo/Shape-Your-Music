@@ -17,22 +17,22 @@ const colorsList = [
   '#f4b549', // yellow
   '#2a548e', // blue
   '#705498', // purple
-  '#33936b'  // green
+  '#33936b', // green
 ];
 
 const tonicsList = [
-  { value: 'a',  label: 'A' },
+  { value: 'a', label: 'A' },
   { value: 'a#', label: 'A#' },
-  { value: 'b',  label: 'B' },
-  { value: 'c',  label: 'C' },
+  { value: 'b', label: 'B' },
+  { value: 'c', label: 'C' },
   { value: 'c#', label: 'C#' },
-  { value: 'd',  label: 'D' },
+  { value: 'd', label: 'D' },
   { value: 'd#', label: 'D#' },
-  { value: 'e',  label: 'E' },
-  { value: 'f',  label: 'F' },
+  { value: 'e', label: 'E' },
+  { value: 'f', label: 'F' },
   { value: 'f#', label: 'F#' },
-  { value: 'g',  label: 'G' },
-  { value: 'g#', label: 'G#' }
+  { value: 'g', label: 'G' },
+  { value: 'g#', label: 'G#' },
 ];
 
 const scalesList = [
@@ -51,7 +51,7 @@ const scalesList = [
   { value: 'flamenco', label: 'Flamenco' },
   { value: 'harmonicminor', label: 'Harmonic Minor' },
   { value: 'melodicminor', label: 'Melodic Minor' },
-  { value: 'wholetone', label: 'Wholetone' }
+  { value: 'wholetone', label: 'Wholetone' },
 ];
 
 const instNamesList = InstrumentPresets.map(preset => ({
@@ -65,13 +65,12 @@ const masterCompressor = new Tone.Compressor({
   threshold: -30,
   release: 0.25,
   attack: 0.003,
-  knee: 30
+  knee: 30,
 });
 const masterLimiter = new Tone.Limiter(-2);
 const masterOutput = new Tone.Gain(0.9).receive('masterOutput');
 
 masterOutput.chain(masterCompressor, masterLimiter, Tone.Master);
-
 
 /* ========================================================================== */
 
@@ -85,15 +84,16 @@ const propTypes = {
 };
 
 class Project extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     // indeces of default instruments
-    const selectedInstruments = [0,1,2,1,0];
+    const selectedInstruments = [0, 1, 2, 1, 0];
     const knobVals = [];
     selectedInstruments.forEach(instrumentIndex => {
-      const instrumentDefaults = InstrumentPresets[instrumentIndex]
-        .dynamicParams.map(param => param.default);
+      const instrumentDefaults = InstrumentPresets[
+        instrumentIndex
+      ].dynamicParams.map(param => param.default);
       knobVals.push(instrumentDefaults);
     });
 
@@ -105,12 +105,10 @@ class Project extends Component {
       isSnapToGridActive: false,
       isAutoQuantizeActive: false,
       isPlaying: false,
-      
+
       quantizeLength: 700,
       tempo: props.initState.tempo,
-      scaleObj: Teoria
-        .note(props.initState.tonic)
-        .scale(props.initState.scale),
+      scaleObj: Teoria.note(props.initState.tonic).scale(props.initState.scale),
 
       activeTool: 'draw',
       activeColorIndex: 0,
@@ -130,7 +128,9 @@ class Project extends Component {
 
     // toggles
     this.handleGridToggleChange = this.handleGridToggleChange.bind(this);
-    this.handleSnapToGridToggleChange = this.handleSnapToGridToggleChange.bind(this);
+    this.handleSnapToGridToggleChange = this.handleSnapToGridToggleChange.bind(
+      this
+    );
     this.handleAutoQuantizeChange = this.handleAutoQuantizeChange.bind(this);
 
     // music options
@@ -144,101 +144,103 @@ class Project extends Component {
 
     // canvas
     this.handleClearButtonClick = this.handleClearButtonClick.bind(this);
-    this.handleFullscreenButtonClick = this.handleFullscreenButtonClick.bind(this);
+    this.handleFullscreenButtonClick = this.handleFullscreenButtonClick.bind(
+      this
+    );
   }
-  
+
   /* ============================= LIFECYCLE ============================== */
 
-  componentWillMount () {
+  componentWillMount() {
     document.addEventListener('keydown', this.handleKeyDown.bind(this));
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown.bind(this));
   }
 
   /* ============================== HANDLERS ============================== */
-  
+
   /* --- Transport -------------------------------------------------------- */
 
-  handlePlayClick () {
+  handlePlayClick() {
     Tone.Transport.toggle();
-    this.setState((prevState) => ({
-      isPlaying: !prevState.isPlaying
+    this.setState(prevState => ({
+      isPlaying: !prevState.isPlaying,
     }));
   }
-  
+
   /* --- Tool ------------------------------------------------------------- */
 
-  toggleActiveTool () {
+  toggleActiveTool() {
     let newTool = 'draw';
-    if(this.shapeCanvas.canChangeTool()) {
+    if (this.shapeCanvas.canChangeTool()) {
       if (this.state.activeTool === 'draw') {
         newTool = 'edit';
       }
       this.setState({
-        activeTool: newTool
+        activeTool: newTool,
       });
     }
   }
 
-  handleDrawToolClick () {
+  handleDrawToolClick() {
     this.setAciveTool('draw');
   }
 
-  handleEditToolClick () {
+  handleEditToolClick() {
     this.setAciveTool('edit');
   }
 
-  setAciveTool (tool) {
-    if(this.shapeCanvas.canChangeTool()) {
+  setAciveTool(tool) {
+    if (this.shapeCanvas.canChangeTool()) {
       this.setState({
-        activeTool: tool
+        activeTool: tool,
       });
     }
   }
-  
-  handleColorChange (colorObj) {
+
+  handleColorChange(colorObj) {
     this.setState({
-      activeColorIndex: colorsList.indexOf(colorObj.hex)
+      activeColorIndex: colorsList.indexOf(colorObj.hex),
     });
   }
-  
+
   /* --- Canvas ----------------------------------------------------------- */
 
-  handleGridToggleChange () {
+  handleGridToggleChange() {
     this.setState({
-      isGridActive: !this.state.isGridActive
+      isGridActive: !this.state.isGridActive,
     });
   }
 
-  handleSnapToGridToggleChange () {
+  handleSnapToGridToggleChange() {
     this.setState({
-      isSnapToGridActive: !this.state.isSnapToGridActive
+      isSnapToGridActive: !this.state.isSnapToGridActive,
     });
   }
 
-  handleAutoQuantizeChange () {
+  handleAutoQuantizeChange() {
     this.setState({
-      isAutoQuantizeActive: !this.state.isAutoQuantizeActive
+      isAutoQuantizeActive: !this.state.isAutoQuantizeActive,
     });
   }
 
   /* --- Musical ---------------------------------------------------------- */
 
-  handleTempoChange (val) {
+  handleTempoChange(val) {
     this.setState({
-      tempo: val
+      tempo: val,
     });
   }
 
-  handleTonicChange (val) {
-    this.setState((prevState) => ({
+  handleTonicChange(val) {
+    this.setState(prevState => ({
       scaleObj: Teoria.note(val.value).scale(prevState.scaleObj.name),
     }));
   }
 
-  handleScaleChange (val) {
+  handleScaleChange(val) {
     if (val) {
       const tonic = this.state.scaleObj.tonic;
       this.setState({
@@ -248,25 +250,26 @@ class Project extends Component {
   }
 
   /* --- Canvas ----------------------------------------------------------- */
-  
-  handleClearButtonClick () {
+
+  handleClearButtonClick() {
     this.shapeCanvas.clearAll();
   }
 
-  handleFullscreenButtonClick () {
+  handleFullscreenButtonClick() {
     this.setState({
-      isFullscreenEnabled: !this.state.isFullscreenEnabled
+      isFullscreenEnabled: !this.state.isFullscreenEnabled,
     });
   }
 
   /* --- Color Controllers ------------------------------------------------ */
 
-  handleInstChange (colorIndex) {
+  handleInstChange(colorIndex) {
     return instrumentIndex => {
       const selectedInstruments = this.state.selectedInstruments.slice();
       selectedInstruments[colorIndex] = instrumentIndex;
-      const defaultKnobvals = InstrumentPresets[instrumentIndex]
-                                .dynamicParams.map(param => param.default);
+      const defaultKnobvals = InstrumentPresets[
+        instrumentIndex
+      ].dynamicParams.map(param => param.default);
 
       const knobVals = this.state.knobVals.slice();
       knobVals[colorIndex] = defaultKnobvals;
@@ -278,81 +281,80 @@ class Project extends Component {
     };
   }
 
-  handleKnobChange (colorIndex) {
-    return effectIndex =>
-      val => {
-        this.setState(
-          (prevState) => {
-            const knobVals = prevState.knobVals.slice();
-            const colorKnobVals = knobVals[colorIndex].slice();
-            colorKnobVals[effectIndex] = val;
-            knobVals[colorIndex] = colorKnobVals;
-            return {
-              knobVals: knobVals,
-            };
-          }
-        );
-      };
+  handleKnobChange(colorIndex) {
+    return effectIndex => val => {
+      this.setState(prevState => {
+        const knobVals = prevState.knobVals.slice();
+        const colorKnobVals = knobVals[colorIndex].slice();
+        colorKnobVals[effectIndex] = val;
+        knobVals[colorIndex] = colorKnobVals;
+        return {
+          knobVals: knobVals,
+        };
+      });
+    };
   }
 
   /* --- Keyboard Shortcuts ----------------------------------------------- */
 
-  handleKeyDown (event) {
+  handleKeyDown(event) {
     console.warn('Keypress:', event.key);
 
     /* Space toggles play */
-    if(event.key === ' ') {
+    if (event.key === ' ') {
       //event.preventDefault(); // stop from clicking focused buttons
       this.handlePlayClick();
     }
 
     /* tab toggles active tool */
-    if(event.key === 'Tab') {
-      event.preventDefault(); 
+    if (event.key === 'Tab') {
+      event.preventDefault();
       this.toggleActiveTool();
     }
-    
+
     /* numbers control draw color */
-    if (event.key === '1' || event.key === '2' || event.key === '3' ||
-        event.key === '4' || event.key === '5') {
+    if (
+      event.key === '1' ||
+      event.key === '2' ||
+      event.key === '3' ||
+      event.key === '4' ||
+      event.key === '5'
+    ) {
       this.setState({
-        activeColorIndex: parseInt(event.key, 10) - 1
+        activeColorIndex: parseInt(event.key, 10) - 1,
       });
     }
 
     /* backspace deletes the selected shape */
-    if(event.key === 'Backspace') {
+    if (event.key === 'Backspace') {
       this.shapeCanvas.deleteSelectedShape();
     }
   }
 
   /* =============================== RENDER =============================== */
 
-  render () {    
+  render() {
     return (
       <Fullscreen
         enabled={this.state.isFullscreenEnabled}
-        onChange={isFullscreenEnabled => this.setState({isFullscreenEnabled})}>
-
-        {/* The Controls */}   
+        onChange={isFullscreenEnabled => this.setState({ isFullscreenEnabled })}
+      >
+        {/* The Controls */}
         <Toolbar
           isPlaying={this.state.isPlaying}
           colorsList={colorsList}
           activeColorIndex={this.state.activeColorIndex}
           activeTool={this.state.activeTool}
-
           handlePlayClick={this.handlePlayClick}
           handleColorChange={this.handleColorChange}
           handleDrawToolClick={this.handleDrawToolClick}
           handleEditToolClick={this.handleEditToolClick}
-
           isGridActive={this.state.isGridActive}
           handleGridToggleChange={this.handleGridToggleChange}
           isSnapToGridActive={this.state.isSnapToGridActive}
           handleSnapToGridToggleChange={this.handleSnapToGridToggleChange}
           isAutoQuantizeActive={this.state.isAutoQuantizeActive}
           handleAutoQuantizeChange={this.handleAutoQuantizeChange}
-
           handleTempoChange={this.handleTempoChange}
           tempo={this.state.tempo}
           scaleObj={this.state.scaleObj}
@@ -360,28 +362,24 @@ class Project extends Component {
           handleTonicChange={this.handleTonicChange}
           scalesList={scalesList}
           handleScaleChange={this.handleScaleChange}
-          
           isFullscreenEnabled={this.state.isFullscreenEnabled}
           handleFullscreenButtonClick={this.handleFullscreenButtonClick}
           handleClearButtonClick={this.handleClearButtonClick}
         />
-          
+
         {/* The Canvas */}
         <ShapeCanvas
-          ref={(c) => this.shapeCanvas = c}
+          ref={c => (this.shapeCanvas = c)}
           colorsList={colorsList}
           colorIndex={this.state.activeColorIndex}
           activeTool={this.state.activeTool}
           selectedInstruments={this.state.selectedInstruments}
-          
           knobVals={this.state.knobVals}
-          
           isAutoQuantizeActive={this.state.isAutoQuantizeActive}
           isPlaying={this.state.isPlaying}
           scaleObj={this.state.scaleObj}
           tempo={this.state.tempo}
           quantizeLength={this.state.quantizeLength}
-
           isGridActive={this.state.isGridActive}
           isSnapToGridActive={this.state.isSnapToGridActive}
         />
@@ -396,7 +394,7 @@ class Project extends Component {
           onKnobChange={this.handleKnobChange}
           knobVals={this.state.knobVals}
         />
-      </Fullscreen>        
+      </Fullscreen>
     );
   }
 }

@@ -1,9 +1,17 @@
 # Shape Your Music
-_A web application for drawing music._
+_A geometric sequencer._
 
-Shape Your Music is a program that explores a new way of composing and performing music through geometry.
+[https://ejarzo.github.io/Shape-Your-Music/](https://ejarzo.github.io/Shape-Your-Music/)
 
-Simply put, the idea is to create melodic loops by drawing shapes. When a shape plays, a node traverses the perimeter of the shape at a constant speed, sounding a note at each vertex. The interval between the previous note and the next note is determined by the angle at that vertex - A sharp right turn means that the next note is much higher than the previous, while a shallow left turn means that the next note is a little lower. When the last point is reached, the loop starts again.
+![Project](https://github.com/ejarzo/Shape-Your-Music/blob/master/src/static/img/readme_images/project_screenshot.png)
+
+## About
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Geoboard.JPG/1280px-Geoboard.JPG" alt="drawing" width="100px"/>
+
+Shape Your Music is a musical [geoboard](https://en.wikipedia.org/wiki/Geoboard) that explores a new way of composing and performing music through geometry.
+
+It allows you to create melodic loops by drawing shapes. When a shape plays, a node traverses the perimeter of the shape at a constant speed, sounding a note at each vertex. The interval between the previous note and the next note is determined by the angle at that vertex - A sharp right turn means that the next note is much higher than the previous, while a shallow left turn means that the next note is a little lower. When the last point is reached, the loop starts again.
 
 Draw multiple shapes to generate unique polyrhythms and manipulate shapes in real time to improvise and perform your composition.
 
@@ -37,7 +45,7 @@ M    | Clear         | Delete all shapes |
 
 ## Development
 ### To Run
-Clone this repo and run `npm install` and then `npm start`.
+Clone this repo and run `yarn` and then `yarn start`.
 
 ### To Test
-Testing is handled by Karma. Run `npm test` or `npm test_watch`.
+Run `yarn test`.

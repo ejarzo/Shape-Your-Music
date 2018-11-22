@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
 import { convertValToRange } from 'utils/math';
+import { appColors } from 'utils/color';
 import { describeArc } from './utils';
 import styles from './styles.module.css';
 
@@ -16,7 +17,7 @@ class Knob extends Component {
   constructor(props) {
     super(props);
 
-    this.color = '#fff';
+    this.color = appColors.white;
     this.knobRadius = 15;
     this.knobStrokeWidth = 6;
     this.topArcStrokeWidth = 2;

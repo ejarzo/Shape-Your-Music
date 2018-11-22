@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
 
-import { getDarker } from 'utils/color';
+import { appColors, getDarker } from 'utils/color';
 import styles from './styles.module.css';
 
 const propTypes = {
@@ -15,12 +15,13 @@ const propTypes = {
 };
 
 function CustomSelect(props) {
-  const backgroundColor = props.color || '#f1f1f1';
+  const { white, black, grayLightest } = appColors;
+  const backgroundColor = props.color || grayLightest;
 
-  const borderColor = props.color ? getDarker(props.color) : '#fff';
+  const borderColor = props.color ? getDarker(props.color) : white;
 
   // TODO theme colors
-  const foreground = props.color ? '#fff' : '#242424';
+  const foreground = props.color ? white : black;
 
   const arrowRenderer = ({ isOpen }) => (
     <div

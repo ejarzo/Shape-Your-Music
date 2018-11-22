@@ -4,6 +4,7 @@ import { Circle, Group, Line } from 'react-konva';
 
 import { getPerimeterLength } from 'utils/shape';
 import { convertValToRange } from 'utils/math';
+import { appColors } from 'utils/color';
 
 import ShapeVertex from './ShapeVertex';
 import Portal from 'react-portal';
@@ -154,7 +155,7 @@ class ShapeComponent extends React.Component {
             <div
               style={{
                 textTransform: 'capitalize',
-                color: '#fff',
+                color: appColors.white,
                 backgroundColor: color,
                 padding: '5px',
                 position: 'absolute',

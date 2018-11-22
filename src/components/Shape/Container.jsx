@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Color from 'color';
 import Tone from 'tone';
+import { appColors } from 'utils/color';
 
 import { convertValToRange, isEquivalent, dist } from 'utils/math';
 import {
@@ -224,7 +225,7 @@ class ShapeContainer extends Component {
 
           const shapeFill = this.getFillColor();
           shapeElement.setAttrs({
-            fill: '#FFF',
+            fill: appColors.white,
           });
           shapeElement.to({
             fill: shapeFill,
@@ -234,7 +235,7 @@ class ShapeContainer extends Component {
           animCircle.setAttrs({
             x: xFrom,
             y: yFrom,
-            fill: '#FFF',
+            fill: appColors.white,
             radius: 8,
           });
           animCircle.to({

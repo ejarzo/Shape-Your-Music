@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getDarker } from 'utils/color';
+import { getDarker, appColors } from 'utils/color';
 import 'rc-slider/assets/index.css';
 import Slider from 'rc-slider';
 
@@ -29,7 +29,7 @@ function CustomSlider(props) {
         borderRadius: 0,
         height: 3,
         width: '100%',
-        backgroundColor: '#fff',
+        backgroundColor: appColors.white,
         margin: 0,
         padding: 0,
         // transition: 'all 0.1s'

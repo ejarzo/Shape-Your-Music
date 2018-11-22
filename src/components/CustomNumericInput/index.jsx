@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NumericInput from 'react-numeric-input';
 
-import { getDarker } from 'utils/color';
+import { appColors, getDarker } from 'utils/color';
 import styles from './styles.module.css';
 
 const propTypes = {
@@ -11,8 +11,8 @@ const propTypes = {
 };
 
 function CustomNumericInput(props) {
-  // TODO theme
-  const backgroundColor = '#f1f1f1';
+  const { grayLightest, grayMedium } = appColors;
+  const backgroundColor = grayLightest;
   return (
     <div className={styles.wrapper}>
       <NumericInput
@@ -35,24 +35,24 @@ function CustomNumericInput(props) {
             boxShadow: 'none',
           },
           btnUp: {
-            color: '#222',
+            color: grayMedium,
             width: 20,
             borderRadius: 'none',
             background: 'none',
             border: 'none',
           },
           btnDown: {
-            color: '#222',
+            color: grayMedium,
             width: 20,
             borderRadius: 'none',
             background: 'none',
             border: 'none',
           },
           arrowUp: {
-            borderBottomColor: '#222',
+            borderBottomColor: grayMedium,
           },
           arrowDown: {
-            borderTopColor: '#222',
+            borderTopColor: grayMedium,
           },
         }}
       />

@@ -13,10 +13,11 @@ import CustomNumericInput from 'components/CustomNumericInput';
 import ColorPicker from 'components/ColorPicker';
 import DrawToolIcon from 'components/icons/DrawTool';
 import EditToolIcon from 'components/icons/EditTool';
-import { getDarker } from 'utils/color';
+import { appColors, getDarker } from 'utils/color';
 
 import styles from './styles.module.css';
 
+const { black, grayLightest, red } = appColors;
 const propTypes = {
   isColorPickerOpen: PropTypes.bool.isRequired,
   onColorSelectClick: PropTypes.func.isRequired,
@@ -68,7 +69,7 @@ function TransportControls(props) {
       </div>
       <div
         className={props.isRecording && styles.pulse}
-        style={{ color: (props.isArmed || props.isRecording) && 'red' }}
+        style={{ color: (props.isArmed || props.isRecording) && red }}
       >
         <IconButton
           iconClassName={'ion-record'}
@@ -120,20 +121,20 @@ function ToolSelect(props) {
       <Button
         darkHover
         hasBorder
-        color={isDrawTool ? '#242424' : '#f1f1f1'}
+        color={isDrawTool ? black : grayLightest}
         onClick={props.handleDrawToolClick}
         title="Draw Tool (TAB to toggle)"
       >
-        <DrawToolIcon fill={isDrawTool ? '#f1f1f1' : '#242424'} />
+        <DrawToolIcon fill={isDrawTool ? grayLightest : black} />
       </Button>
       <Button
         darkHover
         hasBorder
-        color={!isDrawTool ? '#242424' : '#f1f1f1'}
+        color={!isDrawTool ? black : grayLightest}
         onClick={props.handleEditToolClick}
         title="Edit Tool (TAB to toggle)"
       >
-        <EditToolIcon fill={!isDrawTool ? '#f1f1f1' : '#242424'} />
+        <EditToolIcon fill={!isDrawTool ? grayLightest : black} />
       </Button>
     </div>
   );
@@ -154,7 +155,7 @@ ToolSelect.propTypes = {
 
 function CanvasControls(props) {
   // TODO theme
-  const lightGray = getDarker('#f1f1f1');
+  const lightGray = getDarker(grayLightest);
   return (
     <div
       className={cx(styles.toolbarSection, styles.canvasControls)}
@@ -250,7 +251,7 @@ function OtherControls(props) {
         <Button
           hasBorder
           darkHover
-          color={'#f1f1f1'}
+          color={grayLightest}
           onClick={props.handleClearButtonClick}
           title="Clear all shapes (CANNOT UNDO)"
         >
@@ -327,111 +328,3 @@ function ToolbarComponent(props) {
 ToolbarComponent.propTypes = propTypes;
 
 export default ToolbarComponent;
-
-/*
-
-  return (
-    <div className="controls">
-     
-
-      <div className="controls-section">
-          
-        <div className="ctrl-elem">
-          <ColorPicker 
-            ref={(c) => this.colorPicker = c}
-            colorsList={props.colorsList}
-            activeColorIndex={props.activeColorIndex}
-            onColorChange={props.handleColorChange}
-          />
-        </div>
-
-      
-      <div className="controls-section music-controls">
-        <span className="ctrl-elem small">
-          <div className="full-width">
-            <label>Tempo</label>
-            <NumericInput 
-              className="numeric-input" 
-              min={1} 
-              max={100}
-              onChange={props.handleTempoChange}
-              value={props.tempo}
-              style={{
-                input: {
-                  lineHeight: '10',
-                  padding: 'none'
-                },
-                'input:focus' : {
-                  border: '1px inset #222',
-                  outline: 'none'
-                },
-                btn: {
-                  boxShadow: 'none'
-                },
-                btnUp: {
-                  color: '#ddd',
-                  borderRadius: 'none',
-                  background: 'none',
-                  border: 'none',
-                },
-                btnDown: {
-                  color: '#ddd',
-                  borderRadius: 'none',
-                  background: 'none',
-                  border: 'none',
-                },
-                arrowUp: {
-                  borderBottomColor: 'rgba(102, 102, 102, 1)'
-                },
-                arrowDown: {
-                  borderTopColor: 'rgba(102, 102, 102, 1)'
-                }
-              }} 
-            />
-          </div>
-        </span>
-        <span className="ctrl-elem small">
-          <div className="full-width">
-            <label>Key</label>
-            <Select
-                searchable={false}
-                clearable={false}
-                name="Key Select"
-                value={props.scaleObj.tonic.toString(true)}
-                options={props.tonicsList}
-                onChange={props.handleTonicChange}/>
-          </div>
-        </span>
-        <span className="ctrl-elem large">
-          <div className="full-width">
-            <label>Scale</label>
-            <Select
-              color="red"
-              searchable={false}
-              clearable={false}
-              name="Key Select"
-              value={props.scaleObj.name}
-              options={props.scalesList}
-              onChange={props.handleScaleChange}/>
-          </div>
-        </span>
-      </div>
-
-      <div className="controls-section canvas-controls">
-        <div className="ctrl-elem">
-          <button className="icon-button" onClick={props.handleFullscreenButtonClick}>
-            <i className={fullscreenButtonClass}></i>
-          </button>
-        </div>
-        <div className="ctrl-elem">
-          <button onClick={props.handleClearButtonClick}>
-            Clear
-          </button>
-        </div>
-      </div>
-
-    </div>
-    </div>
-  );
-
-*/

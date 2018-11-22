@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
-
+import { appColors } from 'utils/color';
 import styles from './styles.module.css';
 
 const propTypes = {
@@ -27,7 +27,7 @@ function Downloads(props) {
               download={url}
               hasBorder
               darkHover
-              color={'#f1f1f1'}
+              color={appColors.grayLightest}
               title={`download-${i}`}
             >
               <i className="ion-android-download" /> {`download ${i}`}

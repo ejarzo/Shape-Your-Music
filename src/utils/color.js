@@ -1,5 +1,14 @@
 import Color from 'color';
 
+export const appColors = {
+  black: '#242424',
+  white: '#fff',
+  grayLightest: '#f1f1f1',
+  grayMedium: '#ddd',
+  grayDark: '#999',
+  red: 'red',
+};
+
 export const getDarker = (color, amount = 0.1) =>
   Color(color)
     .darken(amount)

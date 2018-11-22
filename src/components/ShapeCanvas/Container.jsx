@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Circle } from 'react-konva';
 
 import { dist } from 'utils/math';
+import { appColors } from 'utils/color';
 import ShapeCanvasComponent from './Component';
 
 const propTypes = {
@@ -201,7 +202,7 @@ class ShapeCanvas extends Component {
   // TODO move grid to component
   createGrid() {
     const gridDots = [];
-    const color = '#999';
+    const color = appColors.grayDark;
     const radius = 1;
 
     for (

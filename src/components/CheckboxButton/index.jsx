@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getDarker } from 'utils/color';
+import { appColors, getDarker } from 'utils/color';
 import styles from './styles.module.css';
 
+const { black, grayLightest } = appColors;
 const propTypes = {
   label: PropTypes.string.isRequired,
   checked: PropTypes.bool.isRequired,
@@ -12,15 +13,15 @@ const propTypes = {
 
 function CheckboxButton(props) {
   const defaultStyle = {
-    background: props.checked ? '#242424' : '#f1f1f1',
-    color: props.checked ? '#f1f1f1' : '#242424',
+    background: props.checked ? black : grayLightest,
+    color: props.checked ? grayLightest : black,
     // border: '1px solid #eee',
   };
 
   const labelStyle = props.color
     ? {
-        background: props.checked ? '#f1f1f1' : getDarker(props.color),
-        color: props.checked ? props.color : '#f1f1f1',
+        background: props.checked ? grayLightest : getDarker(props.color),
+        color: props.checked ? props.color : grayLightest,
         // border: '1px solid props.color',
       }
     : defaultStyle;

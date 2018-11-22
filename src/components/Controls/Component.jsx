@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NumericInput from 'react-numeric-input';
 import Select from 'react-select';
-
+import { appColors } from 'utils/color';
 import ColorPicker from 'components/ColorPicker';
 import DrawToolIcon from 'components/icons/DrawTool';
 import EditToolIcon from 'components/icons/EditTool';
 
+const { black, white, grayMedium } = appColors;
 const propTypes = {
   isPlaying: PropTypes.bool.isRquired,
   activeTool: PropTypes.string.isRquired,
@@ -84,9 +85,7 @@ function ControlsComponent(props) {
             onClick={props.handleDrawToolClick}
             title="Draw Tool (TAB to toggle)"
           >
-            <DrawToolIcon
-              fill={props.activeTool === 'draw' ? '#FFFFFF' : '#242424'}
-            />
+            <DrawToolIcon fill={props.activeTool === 'draw' ? white : black} />
           </span>
         </div>
         <div className="ctrl-elem no-margin">
@@ -97,9 +96,7 @@ function ControlsComponent(props) {
             onClick={props.handleEditToolClick}
             title="Edit Tool (TAB to toggle)"
           >
-            <EditToolIcon
-              fill={props.activeTool === 'edit' ? '#FFFFFF' : '#242424'}
-            />
+            <EditToolIcon fill={props.activeTool === 'edit' ? white : black} />
           </span>
         </div>
       </div>
@@ -180,13 +177,13 @@ function ControlsComponent(props) {
                   boxShadow: 'none',
                 },
                 btnUp: {
-                  color: '#ddd',
+                  color: grayMedium,
                   borderRadius: 'none',
                   background: 'none',
                   border: 'none',
                 },
                 btnDown: {
-                  color: '#ddd',
+                  color: grayMedium,
                   borderRadius: 'none',
                   background: 'none',
                   border: 'none',

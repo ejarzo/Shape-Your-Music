@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Stage, Layer, Group } from 'react-konva';
 import Shape from 'components/Shape';
 import PhantomShape from './PhantomShape';
+import { themeColors } from 'utils/color';
 
 const propTypes = {
   height: PropTypes.number.isRequired,
@@ -19,7 +20,6 @@ const propTypes = {
   soloedShapeIndex: PropTypes.number.isRequired,
   deletedShapeIndeces: PropTypes.array.isRequired,
 
-  colorsList: PropTypes.array.isRequired,
   colorIndex: PropTypes.number.isRequired,
 
   mousePos: PropTypes.object.isRequired,
@@ -77,7 +77,6 @@ function ShapeCanvasComponent(props) {
                     isAutoQuantizeActive={props.isAutoQuantizeActive}
                     isSelected={index === props.selectedShapeIndex}
                     soloedShapeIndex={props.soloedShapeIndex}
-                    colorsList={props.colorsList}
                     colorIndex={props.colorIndex}
                     selectedInstruments={props.selectedInstruments}
                     knobVals={props.knobVals}
@@ -96,7 +95,7 @@ function ShapeCanvasComponent(props) {
             mousePos={props.mousePos}
             points={props.currPoints}
             activeTool={props.activeTool}
-            color={props.colorsList[props.colorIndex]}
+            color={themeColors[props.colorIndex]}
             drawingState={props.drawingState}
           />
         </Layer>

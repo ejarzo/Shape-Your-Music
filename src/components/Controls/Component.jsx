@@ -12,7 +12,6 @@ const propTypes = {
   isPlaying: PropTypes.bool.isRquired,
   activeTool: PropTypes.string.isRquired,
   handlePlayClick: PropTypes.func.isRquired,
-  colorsList: PropTypes.array.isRquired,
   activeColorIndex: PropTypes.number.isRquired,
   handleColorChange: PropTypes.func.isRquired,
   handleDrawToolClick: PropTypes.func.isRquired,
@@ -70,7 +69,6 @@ function ControlsComponent(props) {
         <div className="ctrl-elem">
           <ColorPicker
             ref={c => (this.colorPicker = c)}
-            colorsList={props.colorsList}
             activeColorIndex={props.activeColorIndex}
             onColorChange={props.handleColorChange}
           />

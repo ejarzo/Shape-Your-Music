@@ -4,7 +4,7 @@ import { Circle, Group, Line } from 'react-konva';
 
 import { getPerimeterLength } from 'utils/shape';
 import { convertValToRange } from 'utils/math';
-import { appColors } from 'utils/color';
+import { themeColors, appColors } from 'utils/color';
 
 import ShapeVertex from './ShapeVertex';
 import Portal from 'react-portal';
@@ -13,7 +13,6 @@ import ShapeEditorPopover from './ShapeEditorPopover';
 const propTypes = {
   project: PropTypes.shape({
     scaleObj: PropTypes.object.isRequired,
-    colorsList: PropTypes.array.isRequired,
     isEditMode: PropTypes.bool.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     tempo: PropTypes.number.isRequired,
@@ -72,7 +71,7 @@ class ShapeComponent extends React.Component {
   }
 
   render() {
-    const color = this.props.project.colorsList[this.props.colorIndex];
+    const color = themeColors[this.props.colorIndex];
     let panningVal = parseInt(
       convertValToRange(
         this.props.averagePoint.x,
@@ -187,7 +186,6 @@ class ShapeComponent extends React.Component {
               isSoloed={this.props.soloedShapeIndex === this.props.index}
               onSoloChange={this.props.handleSoloChange}
               colorIndex={this.props.colorIndex}
-              colorsList={this.props.project.colorsList}
               onColorChange={this.props.handleColorChange}
               onQuantizeClick={this.props.handleQuantizeClick}
               onDeleteClick={this.props.handleDelete}

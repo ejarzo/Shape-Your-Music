@@ -11,16 +11,9 @@ import Sidebar from 'components/Sidebar';
 import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
 import InstrumentPresets from 'presets';
+import { themeColors } from 'utils/color';
 
 /* ========================================================================== */
-
-const colorsList = [
-  '#c9563c', // red
-  '#f4b549', // yellow
-  '#2a548e', // blue
-  '#705498', // purple
-  '#33936b', // green
-];
 
 const tonicsList = [
   { value: 'a', label: 'A' },
@@ -258,7 +251,7 @@ class Project extends Component {
 
   handleColorChange(colorObj) {
     this.setState({
-      activeColorIndex: colorsList.indexOf(colorObj.hex),
+      activeColorIndex: themeColors.indexOf(colorObj.hex),
     });
   }
 
@@ -400,7 +393,6 @@ class Project extends Component {
           isPlaying={this.state.isPlaying}
           isRecording={this.state.isRecording}
           isArmed={this.state.isArmed}
-          colorsList={colorsList}
           activeColorIndex={this.state.activeColorIndex}
           activeTool={this.state.activeTool}
           handlePlayClick={this.handlePlayClick}
@@ -429,7 +421,6 @@ class Project extends Component {
         {/* The Canvas */}
         <ShapeCanvas
           ref={c => (this.shapeCanvas = c)}
-          colorsList={colorsList}
           colorIndex={this.state.activeColorIndex}
           activeTool={this.state.activeTool}
           selectedInstruments={this.state.selectedInstruments}
@@ -445,7 +436,6 @@ class Project extends Component {
 
         {/* Instrument controller panels */}
         <ColorControllerPanel
-          colorsList={colorsList}
           selectedInstruments={this.state.selectedInstruments}
           instNamesList={instNamesList}
           instrumentPresets={InstrumentPresets}

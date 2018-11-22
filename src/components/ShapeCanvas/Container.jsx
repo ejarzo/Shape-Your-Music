@@ -19,7 +19,6 @@ const propTypes = {
   quantizeLength: PropTypes.number.isRequired,
 
   colorIndex: PropTypes.number.isRequired,
-  colorsList: PropTypes.array.isRequired,
 
   knobVals: PropTypes.array.isRequired,
 };
@@ -278,7 +277,6 @@ class ShapeCanvas extends Component {
         selectedShapeIndex={this.state.selectedShapeIndex}
         soloedShapeIndex={this.state.soloedShapeIndex}
         deletedShapeIndeces={this.state.deletedShapeIndeces}
-        colorsList={this.props.colorsList}
         colorIndex={this.props.colorIndex}
         mousePos={this.state.mousePos}
         currPoints={this.state.currPoints}

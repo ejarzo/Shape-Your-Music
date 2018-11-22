@@ -13,7 +13,7 @@ import CustomNumericInput from 'components/CustomNumericInput';
 import ColorPicker from 'components/ColorPicker';
 import DrawToolIcon from 'components/icons/DrawTool';
 import EditToolIcon from 'components/icons/EditTool';
-import { appColors, getDarker } from 'utils/color';
+import { themeColors, appColors, getDarker } from 'utils/color';
 
 import styles from './styles.module.css';
 
@@ -28,7 +28,6 @@ const propTypes = {
   activeTool: PropTypes.string.isRequired,
   handlePlayClick: PropTypes.func.isRequired,
   handleRecordClick: PropTypes.func.isRequired,
-  colorsList: PropTypes.array.isRequired,
   activeColorIndex: PropTypes.number.isRequired,
   handleColorChange: PropTypes.func.isRequired,
   handleDrawToolClick: PropTypes.func.isRequired,
@@ -93,7 +92,7 @@ TransportControls.propTypes = {
 
 function ToolSelect(props) {
   const isDrawTool = props.activeTool === 'draw';
-  const activeColor = props.colorsList[props.activeColorIndex];
+  const activeColor = themeColors[props.activeColorIndex];
   return (
     <div className={cx(styles.toolbarSection, styles.toolSelect)}>
       <Button
@@ -112,8 +111,7 @@ function ToolSelect(props) {
           }}
         >
           <ColorPicker
-            colors={props.colorsList}
-            color={props.colorsList[props.activeColorIndex]}
+            color={themeColors[props.activeColorIndex]}
             onChange={props.onColorChange}
           />
         </div>
@@ -144,7 +142,6 @@ ToolSelect.propTypes = {
   activeTool: PropTypes.string.isRequired,
   handleDrawToolClick: PropTypes.func.isRequired,
   handleEditToolClick: PropTypes.func.isRequired,
-  colorsList: PropTypes.array.isRequired,
   activeColorIndex: PropTypes.number.isRequired,
   onColorChange: PropTypes.func.isRequired,
   onColorSelectClick: PropTypes.func.isRequired,
@@ -292,7 +289,6 @@ function ToolbarComponent(props) {
         handleDrawToolClick={props.handleDrawToolClick}
         activeTool={props.activeTool}
         handleEditToolClick={props.handleEditToolClick}
-        colorsList={props.colorsList}
         activeColorIndex={props.activeColorIndex}
         onColorChange={props.handleColorChange}
         onColorSelectClick={props.onColorSelectClick}

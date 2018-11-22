@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Color from 'color';
 import Tone from 'tone';
-import { appColors } from 'utils/color';
+import { themeColors, appColors } from 'utils/color';
 
 import { convertValToRange, isEquivalent, dist } from 'utils/math';
 import {
@@ -25,7 +25,6 @@ const propTypes = {
   soloedShapeIndex: PropTypes.number.isRequired,
 
   isPlaying: PropTypes.bool.isRequired,
-  colorsList: PropTypes.array.isRequired,
   selectedInstruments: PropTypes.array.isRequired,
   knobVals: PropTypes.array.isRequired,
 
@@ -245,7 +244,7 @@ class ShapeContainer extends Component {
           });
           animCircle.to({
             radius: 5,
-            fill: this.props.colorsList[this.state.colorIndex],
+            fill: themeColors[this.state.colorIndex],
             duration: 0.3,
           });
         }
@@ -471,7 +470,7 @@ class ShapeContainer extends Component {
   /* --- Color --- */
   handleColorChange(colorObj) {
     this.setState({
-      colorIndex: this.props.colorsList.indexOf(colorObj.hex),
+      colorIndex: themeColors.indexOf(colorObj.hex),
     });
   }
 
@@ -579,7 +578,7 @@ class ShapeContainer extends Component {
   /* --- Helper ----------------------------------------------------------- */
 
   getFillColor() {
-    const color = this.props.colorsList[this.state.colorIndex];
+    const color = themeColors[this.state.colorIndex];
     const alphaAmount = this.props.isSelected ? 0.8 : 0.4;
     return Color(color)
       .alpha(alphaAmount)
@@ -605,7 +604,7 @@ class ShapeContainer extends Component {
 
   render() {
     // console.log('shape render');
-    const color = this.props.colorsList[this.state.colorIndex];
+    const color = themeColors[this.state.colorIndex];
     const isEditMode = this.props.activeTool === 'edit';
     let opacity = 1;
 
@@ -631,7 +630,6 @@ class ShapeContainer extends Component {
         ref={c => (this.shapeComponentElement = c)}
         project={{
           scaleObj: this.props.scaleObj,
-          colorsList: this.props.colorsList,
           isEditMode: isEditMode,
           isPlaying: this.props.isPlaying,
           tempo: this.props.tempo,

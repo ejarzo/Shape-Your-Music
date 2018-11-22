@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ColorController from './ColorController';
 import cx from 'classnames';
-
+import { themeColors } from 'utils/color';
 import styles from './styles.module.css';
 
 const propTypes = {
   instrumentPresets: PropTypes.array.isRequired,
   selectedInstruments: PropTypes.array.isRequired,
-  colorsList: PropTypes.array.isRequired,
   instNamesList: PropTypes.array.isRequired,
   knobVals: PropTypes.array.isRequired,
   onInstChange: PropTypes.func.isRequired,
@@ -30,7 +29,6 @@ class ColorControllerPanel extends Component {
 
   render() {
     const {
-      colorsList,
       instNamesList,
       onInstChange,
       onKnobChange,
@@ -52,7 +50,7 @@ class ColorControllerPanel extends Component {
             onClick={this.handleToggleCollapseClick}
           />
           <div className={styles.colorControllers}>
-            {colorsList.map((color, colorIndex) => {
+            {themeColors.map((color, colorIndex) => {
               // TODO added just for testing
               // if (colorIndex !== 0) return null;
               const selectedInstrumentIndex = selectedInstruments[colorIndex];
@@ -62,7 +60,7 @@ class ColorControllerPanel extends Component {
                   key={`colorController-${colorIndex}`}
                 >
                   <ColorController
-                    color={colorsList[colorIndex]}
+                    color={themeColors[colorIndex]}
                     receiveChannel={`colorFx-${colorIndex}`}
                     instNamesList={instNamesList}
                     onInstChange={onInstChange(colorIndex)}

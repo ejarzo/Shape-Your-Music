@@ -1,5 +1,13 @@
 import Color from 'color';
 
+export const themeColors = [
+  '#c9563c', // red
+  '#f4b549', // yellow
+  '#2a548e', // blue
+  '#705498', // purple
+  '#33936b', // green
+];
+
 export const appColors = {
   black: '#242424',
   white: '#fff',

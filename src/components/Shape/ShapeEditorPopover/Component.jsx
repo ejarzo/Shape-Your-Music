@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { getDarker } from 'utils/color';
+import { themeColors, getDarker } from 'utils/color';
 
 import CheckboxButton from 'components/CheckboxButton';
 import CustomSlider from 'components/Slider';
@@ -22,7 +22,6 @@ const propTypes = {
     top: PropTypes.number.isRequired,
     isLeft: PropTypes.bool.isRequired,
   }),
-  colorsList: PropTypes.array.isRequired,
   colorIndex: PropTypes.number.isRequired,
   volume: PropTypes.number.isRequired,
 
@@ -89,7 +88,7 @@ class ShapeEditorPopoverComponent extends Component {
   }
 
   render() {
-    const colorString = this.props.colorsList[this.props.colorIndex];
+    const colorString = themeColors[this.props.colorIndex];
     const darkColor = getDarker(colorString, 0.2);
     const medColor = getDarker(colorString);
     const { width, height, top, left } = this.props.panelStyle;
@@ -152,7 +151,6 @@ class ShapeEditorPopoverComponent extends Component {
           <ColorPicker
             triangle="hide"
             color={colorString}
-            colors={this.props.colorsList}
             onChange={this.props.onColorChange}
           />
         </div>

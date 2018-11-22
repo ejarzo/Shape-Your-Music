@@ -7,7 +7,7 @@ import Tone from 'tone';
 import Recorder from 'record-audio-js';
 
 import Toolbar from 'components/Toolbar';
-import Downloads from 'components/Downloads';
+import Sidebar from 'components/Sidebar';
 import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
 import InstrumentPresets from 'presets/InstrumentPresets';
@@ -108,10 +108,11 @@ class Project extends Component {
       isAutoQuantizeActive: false,
       isPlaying: false,
       isRecording: false,
+      isArmed: false,
+
       quantizeLength: 700,
       tempo: props.initState.tempo,
       scaleObj: Teoria.note(props.initState.tonic).scale(props.initState.scale),
-
       activeTool: 'draw',
       activeColorIndex: 0,
 
@@ -154,6 +155,8 @@ class Project extends Component {
 
     // recorder
     this.recorder = new Recorder(Tone.Master);
+    this.beginRecording = this.beginRecording.bind(this);
+    this.stopRecording = this.stopRecording.bind(this);
   }
 
   /* ============================= LIFECYCLE ============================== */
@@ -170,8 +173,36 @@ class Project extends Component {
 
   /* --- Transport -------------------------------------------------------- */
 
+  beginRecording() {
+    this.recorder.record();
+    this.setState({ isRecording: true });
+  }
+
+  stopRecording() {
+    this.recorder.exportWAV(blob => {
+      const url = URL.createObjectURL(blob);
+      const downloadUrls = this.state.downloadUrls.slice();
+      downloadUrls.push(url);
+      this.setState({
+        downloadUrls,
+      });
+      this.recorder.stop();
+      this.recorder.clear();
+    });
+    this.setState({
+      isRecording: false,
+      isArmed: false,
+    });
+  }
+
   handlePlayClick() {
     Tone.Transport.toggle();
+    if (this.state.isArmed) {
+      this.beginRecording();
+    }
+    if (this.state.isRecording) {
+      this.stopRecording();
+    }
     this.setState(prevState => ({
       isPlaying: !prevState.isPlaying,
     }));
@@ -179,24 +210,20 @@ class Project extends Component {
 
   handleRecordClick() {
     if (this.state.isRecording) {
-      // this.recorder.stop();
-      console.log('stopping');
-      this.recorder.exportWAV(blob => {
-        const url = URL.createObjectURL(blob);
-        const downloadUrls = this.state.downloadUrls.slice();
-        console.log(url);
-        downloadUrls.push(url);
-        this.setState({
-          downloadUrls,
-        });
-        // Recorder.forceDownload(blob);
-      });
+      this.stopRecording();
     } else {
-      this.recorder.record();
+      if (this.state.isPlaying) {
+        this.beginRecording();
+      } else {
+        this.setState({
+          isArmed: !this.state.isArmed,
+        });
+      }
     }
-    this.setState({
-      isRecording: !this.state.isRecording,
-    });
+    // this.setState({
+    //   isArmed: !this.state.isArmed,
+    //   isRecording: !this.state.isRecording,
+    // });
   }
 
   /* --- Tool ------------------------------------------------------------- */
@@ -372,6 +399,7 @@ class Project extends Component {
         <Toolbar
           isPlaying={this.state.isPlaying}
           isRecording={this.state.isRecording}
+          isArmed={this.state.isArmed}
           colorsList={colorsList}
           activeColorIndex={this.state.activeColorIndex}
           activeTool={this.state.activeTool}
@@ -425,8 +453,7 @@ class Project extends Component {
           onKnobChange={this.handleKnobChange}
           knobVals={this.state.knobVals}
         />
-
-        <Downloads downloadUrls={this.state.downloadUrls} />
+        <Sidebar downloadUrls={this.state.downloadUrls} />
       </Fullscreen>
     );
   }

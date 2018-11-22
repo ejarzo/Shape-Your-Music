@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import Portal from 'react-portal';
-import styles from './styles.module.css';
-
 import Button from 'components/Button';
+
+import styles from './styles.module.css';
 
 const propTypes = {
   downloadUrls: PropTypes.array.isRequired,
@@ -16,6 +14,9 @@ function Downloads(props) {
   return (
     <div className={styles.downloads}>
       <h2>Downloads</h2>
+      {downloadUrls.length === 0 && (
+        <div style={{ paddingBottom: 20 }}>No recordings yet</div>
+      )}
       <ul>
         {downloadUrls.map((url, i) => (
           <li>
@@ -29,7 +30,7 @@ function Downloads(props) {
               color={'#f1f1f1'}
               title={`download-${i}`}
             >
-              {`download-${i}`}
+              <i className="ion-android-download" /> {`download ${i}`}
             </Button>
           </li>
         ))}

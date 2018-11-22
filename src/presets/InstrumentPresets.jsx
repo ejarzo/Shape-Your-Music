@@ -46,7 +46,7 @@ const InstrumentPresets = [
         volume: -6,
       },
       envelope: {
-        attack: 0.005,
+        attack: 0.01,
         decay: 0.3,
         sustain: 0.2,
         release: 1,

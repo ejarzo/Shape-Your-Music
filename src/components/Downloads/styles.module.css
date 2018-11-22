@@ -1,14 +1,13 @@
-.downloads {
-  position: absolute;
-  z-index: 200;
-  left: 0;
-  padding: 20px;
-  top: 100px;
-  background: white;
+.downloads li {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
 }
 
+.downloads audio {
+  display: block;
+  margin-bottom: 10px;
+}
 .downloads a {
   display: block;
-  margin: 10px 0;
-  border: 1px solid #ddd;
 }

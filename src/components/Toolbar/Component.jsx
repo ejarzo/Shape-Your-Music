@@ -23,6 +23,7 @@ const propTypes = {
 
   isPlaying: PropTypes.bool.isRequired,
   isRecording: PropTypes.bool.isRequired,
+  isArmed: PropTypes.bool.isRequired,
   activeTool: PropTypes.string.isRequired,
   handlePlayClick: PropTypes.func.isRequired,
   handleRecordClick: PropTypes.func.isRequired,
@@ -65,7 +66,7 @@ function TransportControls(props) {
           title="Play project (SPACE)"
         />
       </div>
-      <div style={{ color: props.isRecording && 'red' }}>
+      <div style={{ color: (props.isArmed || props.isRecording) && 'red' }}>
         <IconButton
           iconClassName={'ion-record'}
           onClick={props.handleRecordClick}
@@ -78,6 +79,7 @@ function TransportControls(props) {
 
 TransportControls.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
+  isArmed: PropTypes.bool.isRequired,
   isRecording: PropTypes.bool.isRequired,
   handlePlayClick: PropTypes.func.isRequired,
   handleRecordClick: PropTypes.func.isRequired,
@@ -276,6 +278,7 @@ function ToolbarComponent(props) {
       <TransportControls
         isPlaying={props.isPlaying}
         isRecording={props.isRecording}
+        isArmed={props.isArmed}
         handlePlayClick={props.handlePlayClick}
         handleRecordClick={props.handleRecordClick}
       />

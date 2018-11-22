@@ -4,7 +4,7 @@
   box-sizing: border-box; }
 
 html {
-  color: #222;
+  color: #222222;
   font-size: 1em;
   line-height: 1.4;
   -webkit-font-smoothing: antialiased;
@@ -26,7 +26,7 @@ button {
 
 a {
   text-decoration: none;
-  color: #222; }
+  color: #222222; }
 
 ul {
   list-style: none;
@@ -45,14 +45,14 @@ ul {
   text-shadow: none; }
 
 #holder {
-  background-color: #EEE;
+  background-color: #eeeeee;
   height: 100vh;
   width: 100%; }
 
 .icon-button {
   background: none;
   border: none;
-  color: #444;
+  color: #444444;
   font-size: 1.8em;
   width: 30px;
   height: 100%; }
@@ -86,5 +86,3 @@ ul {
     height: 100% !important; }
     .github-picker span div {
       width: 100% !important; }
-
-/*# sourceMappingURL=main.css.map */

@@ -1,8 +1,8 @@
 import React from 'react';
-import ControlsComponent from './Component';
+import DownloadsComponent from './Component';
 
 class ControlsContainer extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       isColorPickerOpen: false,
@@ -11,15 +11,15 @@ class ControlsContainer extends React.Component {
     this.handleColorSelectClick = this.handleColorSelectClick.bind(this);
   }
 
-  handleColorSelectClick () {
+  handleColorSelectClick() {
     this.setState({
       isColorPickerOpen: !this.state.isColorPickerOpen,
     });
   }
 
-  render () {
+  render() {
     return (
-      <ControlsComponent
+      <DownloadsComponent
         onColorSelectClick={this.handleColorSelectClick}
         isColorPickerOpen={this.state.isColorPickerOpen}
         {...this.props}

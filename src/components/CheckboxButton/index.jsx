@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ColorUtils } from 'utils/Utils';
+import { getDarker } from 'utils/color';
 import styles from './styles.module.css';
 
 const propTypes = {
@@ -19,9 +19,7 @@ function CheckboxButton(props) {
 
   const labelStyle = props.color
     ? {
-        background: props.checked
-          ? '#f1f1f1'
-          : ColorUtils.getDarker(props.color),
+        background: props.checked ? '#f1f1f1' : getDarker(props.color),
         color: props.checked ? props.color : '#f1f1f1',
         // border: '1px solid props.color',
       }

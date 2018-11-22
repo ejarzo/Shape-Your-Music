@@ -10,7 +10,7 @@ import Toolbar from 'components/Toolbar';
 import Sidebar from 'components/Sidebar';
 import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
-import InstrumentPresets from 'presets/InstrumentPresets';
+import InstrumentPresets from 'presets';
 
 /* ========================================================================== */
 

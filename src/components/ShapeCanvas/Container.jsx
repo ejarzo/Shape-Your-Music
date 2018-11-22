@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Circle } from 'react-konva';
 
-import Utils from 'utils/Utils';
+import { dist } from 'utils/math';
 import ShapeCanvasComponent from './Component';
 
 const propTypes = {
@@ -158,7 +158,7 @@ class ShapeCanvas extends Component {
       // snap to origin if within radius
       if (
         this.state.currPoints.length > 2 &&
-        (Utils.dist(e.evt.offsetX, e.evt.offsetY, originX, originY) <
+        (dist(e.evt.offsetX, e.evt.offsetY, originX, originY) <
           this.originLockRadius ||
           (x === originX && y === originY))
       ) {

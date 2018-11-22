@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
-import Utils from 'utils/Utils';
+import { convertValToRange } from 'utils/math';
+import { describeArc } from './utils';
 import styles from './styles.module.css';
 
 const propTypes = {
@@ -78,7 +79,7 @@ class Knob extends Component {
                 fill="none"
                 stroke={this.color}
                 strokeWidth={this.topArcStrokeWidth}
-                d={Utils.describeArc(
+                d={describeArc(
                   this.knobRadius + this.knobStrokeWidth,
                   this.knobRadius + this.knobStrokeWidth,
                   this.topArcRadius,
@@ -92,12 +93,12 @@ class Knob extends Component {
                 fill="none"
                 stroke={this.color}
                 strokeWidth={this.knobStrokeWidth}
-                d={Utils.describeArc(
+                d={describeArc(
                   this.knobRadius + this.knobStrokeWidth,
                   this.knobRadius + this.knobStrokeWidth,
                   this.knobRadius,
                   this.startAngle,
-                  Utils.convertValToRange(
+                  convertValToRange(
                     this.props.value,
                     0,
                     100,

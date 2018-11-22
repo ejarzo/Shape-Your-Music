@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NumericInput from 'react-numeric-input';
 
-import { ColorUtils } from 'utils/Utils';
+import { getDarker } from 'utils/color';
 import styles from './styles.module.css';
 
 const propTypes = {
@@ -28,7 +28,7 @@ function CustomNumericInput(props) {
             background: backgroundColor,
           },
           'input:focus': {
-            background: ColorUtils.getDarker(backgroundColor),
+            background: getDarker(backgroundColor),
             outline: 'none',
           },
           btn: {

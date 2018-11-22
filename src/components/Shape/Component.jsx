@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Circle, Group, Line } from 'react-konva';
 
-import Utils from 'utils/Utils';
+import { getPerimeterLength } from 'utils/shape';
+import { convertValToRange } from 'utils/math';
+
 import ShapeVertex from './ShapeVertex';
 import Portal from 'react-portal';
 import ShapeEditorPopover from './ShapeEditorPopover';
@@ -71,7 +73,7 @@ class ShapeComponent extends React.Component {
   render() {
     const color = this.props.project.colorsList[this.props.colorIndex];
     let panningVal = parseInt(
-      Utils.convertValToRange(
+      convertValToRange(
         this.props.averagePoint.x,
         0,
         window.innerWidth,
@@ -99,7 +101,7 @@ class ShapeComponent extends React.Component {
       />
     );
 
-    const perimeter = Utils.getTotalLength(this.props.points);
+    const perimeter = getPerimeterLength(this.props.points);
     if (this.props.project.isEditMode) {
       return (
         <Group

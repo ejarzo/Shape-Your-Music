@@ -4,8 +4,16 @@ import PropTypes from 'prop-types';
 import Color from 'color';
 import Tone from 'tone';
 
-import Utils from 'utils/Utils';
-import InstrumentPresets from 'presets/InstrumentPresets';
+import { convertValToRange, isEquivalent, dist } from 'utils/math';
+import {
+  getAngle,
+  thetaToScaleDegree,
+  getPerimeterLength,
+  getAveragePoint,
+  forEachPoint,
+} from 'utils/shape';
+
+import InstrumentPresets from 'presets';
 import ShapeComponent from './Component';
 
 const propTypes = {
@@ -185,8 +193,7 @@ class ShapeContainer extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return !(
-      Utils.isEquivalent(this.props, nextProps) &&
-      Utils.isEquivalent(this.state, nextState)
+      isEquivalent(this.props, nextProps) && isEquivalent(this.state, nextState)
     );
   }
 
@@ -272,9 +279,9 @@ class ShapeContainer extends Component {
       y: points[iPrevPrev + 1],
     };
 
-    const edgeLength = Utils.dist(p.x, p.y, prev.x, prev.y) / tempoModifier;
-    const theta = Utils.getAngle(p, prev, prevPrev);
-    const degreeDiff = Utils.thetaToScaleDegree(theta, scaleObj);
+    const edgeLength = dist(p.x, p.y, prev.x, prev.y) / tempoModifier;
+    const theta = getAngle(p, prev, prevPrev);
+    const degreeDiff = thetaToScaleDegree(theta, scaleObj);
 
     const noteIndex = prevNoteIndex + degreeDiff;
 
@@ -340,7 +347,7 @@ class ShapeContainer extends Component {
     let delay = 0;
     let prevNoteIndex = this.state.firstNoteIndex;
 
-    Utils.forEachPoint(points, (p, i) => {
+    forEachPoint(points, (p, i) => {
       if (i >= 2) {
         const noteInfo = this.getNoteInfo(
           points,
@@ -417,14 +424,14 @@ class ShapeContainer extends Component {
   handleDrag() {
     const shapeElement = this.shapeComponentElement.getShapeElement();
     const absPos = shapeElement.getAbsolutePosition();
-    const avgPoint = Utils.getAveragePoint(this.state.points);
+    const avgPoint = getAveragePoint(this.state.points);
 
     const x = parseInt(absPos.x + avgPoint.x, 10);
     const y = parseInt(absPos.y + avgPoint.y, 10);
 
-    const panVal = Utils.convertValToRange(x, 0, window.innerWidth, -1, 1);
+    const panVal = convertValToRange(x, 0, window.innerWidth, -1, 1);
     const noteIndexVal = parseInt(
-      Utils.convertValToRange(y, 0, window.innerHeight, 5, -7),
+      convertValToRange(y, 0, window.innerHeight, 5, -7),
       10
     );
 
@@ -503,7 +510,7 @@ class ShapeContainer extends Component {
       ) {
         const newPerim = this.props.isAutoQuantizeActive
           ? factor * this.state.quantizeFactor * this.quantizeLength
-          : Utils.getTotalLength(this.state.points) * factor;
+          : getPerimeterLength(this.state.points) * factor;
         const newPoints = this.getPointsForFixedPerimeterLength(
           this.state.points,
           newPerim
@@ -579,13 +586,13 @@ class ShapeContainer extends Component {
   }
 
   getPointsForFixedPerimeterLength(points, length) {
-    const currLen = Utils.getTotalLength(points);
-    const avgPoint = Utils.getAveragePoint(points);
+    const currLen = getPerimeterLength(points);
+    const avgPoint = getAveragePoint(points);
     const ratio = length / currLen;
 
     const newPoints = points.slice();
 
-    Utils.forEachPoint(points, (p, i) => {
+    forEachPoint(points, (p, i) => {
       newPoints[i] = p.x * ratio + (1 - ratio) * avgPoint.x;
       newPoints[i + 1] = p.y * ratio + (1 - ratio) * avgPoint.y;
     });

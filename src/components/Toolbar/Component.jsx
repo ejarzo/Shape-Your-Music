@@ -13,7 +13,7 @@ import CustomNumericInput from 'components/CustomNumericInput';
 import ColorPicker from 'components/ColorPicker';
 import DrawToolIcon from 'components/icons/DrawTool';
 import EditToolIcon from 'components/icons/EditTool';
-import { ColorUtils } from 'utils/Utils';
+import { getDarker } from 'utils/color';
 
 import styles from './styles.module.css';
 
@@ -154,7 +154,7 @@ ToolSelect.propTypes = {
 
 function CanvasControls(props) {
   // TODO theme
-  const lightGray = ColorUtils.getDarker('#f1f1f1');
+  const lightGray = getDarker('#f1f1f1');
   return (
     <div
       className={cx(styles.toolbarSection, styles.canvasControls)}

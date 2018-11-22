@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ColorUtils } from 'utils/Utils';
+import { getDarker, getLighter } from 'utils/color';
 import Radium from 'radium';
 
 const propTypes = {
@@ -19,16 +19,16 @@ function Button(props) {
     backgroundColor: props.color,
     ':hover': {
       backgroundColor: props.darkHover
-        ? ColorUtils.getDarker(props.color)
-        : ColorUtils.getLighter(props.color),
+        ? getDarker(props.color)
+        : getLighter(props.color),
     },
     ':active': {
       backgroundColor: props.darkHover
-        ? ColorUtils.getDarker(props.color, 0.2)
-        : ColorUtils.getDarker(props.color),
+        ? getDarker(props.color, 0.2)
+        : getDarker(props.color),
     },
     padding: 6,
-    borderColor: ColorUtils.getDarker(props.color),
+    borderColor: getDarker(props.color),
     borderStyle: 'solid',
     borderWidth: props.hasBorder ? 1 : 0,
     borderBottomWidth: props.hasBorder ? 2 : 0,

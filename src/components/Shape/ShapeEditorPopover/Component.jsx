@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { ColorUtils } from 'utils/Utils';
+import { getDarker } from 'utils/color';
 
 import CheckboxButton from 'components/CheckboxButton';
 import CustomSlider from 'components/Slider';
@@ -90,8 +90,8 @@ class ShapeEditorPopoverComponent extends Component {
 
   render() {
     const colorString = this.props.colorsList[this.props.colorIndex];
-    const darkColor = ColorUtils.getDarker(colorString, 0.2);
-    const medColor = ColorUtils.getDarker(colorString);
+    const darkColor = getDarker(colorString, 0.2);
+    const medColor = getDarker(colorString);
     const { width, height, top, left } = this.props.panelStyle;
     return (
       <div

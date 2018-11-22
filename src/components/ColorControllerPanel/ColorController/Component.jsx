@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Knob from 'components/Knob';
 import Button from 'components/Button';
 
-import { ColorUtils } from 'utils/Utils';
+import { getDarker } from 'utils/color';
 
 import styles from './styles.module.css';
 
@@ -27,7 +27,7 @@ const propTypes = {
 };
 
 function ColorControllerComponent(props) {
-  const darkerColor = ColorUtils.getDarker(props.color);
+  const darkerColor = getDarker(props.color);
   return (
     <div
       className={styles.colorController}

@@ -8,19 +8,30 @@ class ControlsContainer extends React.Component {
       isColorPickerOpen: false,
     };
 
-    this.handleColorSelectClick = this.handleColorSelectClick.bind(this);
+    this.handleColorMouseEnter = this.handleColorMouseEnter.bind(this);
+    this.handleColorMouseLeave = this.handleColorMouseLeave.bind(this);
   }
 
-  handleColorSelectClick() {
+  handleColorMouseEnter() {
+    this.timeout && window.clearTimeout(this.timeout);
     this.setState({
-      isColorPickerOpen: !this.state.isColorPickerOpen,
+      isColorPickerOpen: true,
     });
+  }
+
+  handleColorMouseLeave() {
+    this.timeout = setTimeout(() => {
+      this.setState({
+        isColorPickerOpen: false,
+      });
+    }, 100);
   }
 
   render() {
     return (
       <ControlsComponent
-        onColorSelectClick={this.handleColorSelectClick}
+        handleColorMouseEnter={this.handleColorMouseEnter}
+        handleColorMouseLeave={this.handleColorMouseLeave}
         isColorPickerOpen={this.state.isColorPickerOpen}
         {...this.props}
       />

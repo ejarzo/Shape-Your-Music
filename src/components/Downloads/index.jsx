@@ -1,8 +1,8 @@
 import React from 'react';
-import ControlsContainer from './Container';
+import DownloadsContainer from './Container';
 
-function Controls(props) {
-  return <ControlsContainer {...props} />;
+function Downloads(props) {
+  return <DownloadsContainer {...props} />;
 }
 
-export default Controls;
+export default Downloads;

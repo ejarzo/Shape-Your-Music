@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import Portal from 'react-portal';
-
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
 import CheckboxButton from 'components/CheckboxButton';
@@ -95,27 +93,33 @@ function ToolSelect(props) {
   const activeColor = themeColors[props.activeColorIndex];
   return (
     <div className={cx(styles.toolbarSection, styles.toolSelect)}>
-      <Button
-        hasBorder
-        color={activeColor}
-        onClick={props.onColorSelectClick}
-      />
-      <Portal closeOnOutsideClick isOpened={props.isColorPickerOpen}>
-        <div
-          style={{
-            width: 140,
-            left: 100,
-            top: 55,
-            height: 50,
-            position: 'absolute',
-          }}
-        >
-          <ColorPicker
-            color={themeColors[props.activeColorIndex]}
-            onChange={props.onColorChange}
-          />
-        </div>
-      </Portal>
+      <div
+        onMouseEnter={props.handleColorMouseEnter}
+        onMouseLeave={props.handleColorMouseLeave}
+        style={{ position: 'relative' }}
+      >
+        <Button
+          hasBorder
+          color={activeColor}
+          onClick={props.onColorSelectClick}
+        />
+        {props.isColorPickerOpen && (
+          <div
+            style={{
+              width: 140,
+              left: 0,
+              top: 45,
+              height: 50,
+              position: 'absolute',
+            }}
+          >
+            <ColorPicker
+              color={themeColors[props.activeColorIndex]}
+              onChange={props.onColorChange}
+            />
+          </div>
+        )}
+      </div>
       <Button
         darkHover
         hasBorder
@@ -144,7 +148,8 @@ ToolSelect.propTypes = {
   handleEditToolClick: PropTypes.func.isRequired,
   activeColorIndex: PropTypes.number.isRequired,
   onColorChange: PropTypes.func.isRequired,
-  onColorSelectClick: PropTypes.func.isRequired,
+  handleColorMouseEnter: PropTypes.func.isRequired,
+  handleColorMouseLeave: PropTypes.func.isRequired,
   isColorPickerOpen: PropTypes.bool.isRequired,
 };
 
@@ -291,7 +296,8 @@ function ToolbarComponent(props) {
         handleEditToolClick={props.handleEditToolClick}
         activeColorIndex={props.activeColorIndex}
         onColorChange={props.handleColorChange}
-        onColorSelectClick={props.onColorSelectClick}
+        handleColorMouseEnter={props.handleColorMouseEnter}
+        handleColorMouseLeave={props.handleColorMouseLeave}
         isColorPickerOpen={props.isColorPickerOpen}
       />
       <CanvasControls

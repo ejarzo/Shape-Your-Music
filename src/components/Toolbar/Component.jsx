@@ -66,7 +66,10 @@ function TransportControls(props) {
           title="Play project (SPACE)"
         />
       </div>
-      <div style={{ color: (props.isArmed || props.isRecording) && 'red' }}>
+      <div
+        className={props.isRecording && styles.pulse}
+        style={{ color: (props.isArmed || props.isRecording) && 'red' }}
+      >
         <IconButton
           iconClassName={'ion-record'}
           onClick={props.handleRecordClick}

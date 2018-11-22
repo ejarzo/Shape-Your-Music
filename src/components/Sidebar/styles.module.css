@@ -20,6 +20,10 @@
   font-size: 1.5em;
 }
 
+.tabButton:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
 .content {
   background: rgba(255, 255, 255, 0.8);
   max-height: calc(100vh - 200px);

@@ -20,7 +20,7 @@ class Sidebar extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.downloadUrls.length !== this.props.downloadUrls.length) {
       this.setState({
-        iconScale: 1.7,
+        iconScale: 1.8,
       });
       setTimeout(() => {
         this.setState({

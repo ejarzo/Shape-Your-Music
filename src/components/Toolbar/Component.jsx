@@ -6,7 +6,7 @@ import Button from 'components/Button';
 import IconButton from 'components/IconButton';
 import CheckboxButton from 'components/CheckboxButton';
 import CustomSelect from 'components/CustomSelect';
-import CustomNumericInput from 'components/CustomNumericInput';
+import TempoInput from 'components/TempoInput';
 
 import ColorPicker from 'components/ColorPicker';
 import DrawToolIcon from 'components/icons/DrawTool';
@@ -18,7 +18,6 @@ import styles from './styles.module.css';
 const { black, grayLightest, red } = appColors;
 const propTypes = {
   isColorPickerOpen: PropTypes.bool.isRequired,
-  onColorSelectClick: PropTypes.func.isRequired,
 
   isPlaying: PropTypes.bool.isRequired,
   isRecording: PropTypes.bool.isRequired,
@@ -65,7 +64,7 @@ function TransportControls(props) {
         />
       </div>
       <div
-        className={props.isRecording && styles.pulse}
+        className={props.isRecording ? styles.pulse : undefined}
         style={{ color: (props.isArmed || props.isRecording) && red }}
       >
         <IconButton
@@ -98,11 +97,7 @@ function ToolSelect(props) {
         onMouseLeave={props.handleColorMouseLeave}
         style={{ position: 'relative' }}
       >
-        <Button
-          hasBorder
-          color={activeColor}
-          onClick={props.onColorSelectClick}
-        />
+        <Button hasBorder color={activeColor} />
         {props.isColorPickerOpen && (
           <div
             style={{
@@ -209,11 +204,7 @@ CanvasControls.propTypes = {
 function MusicalControls(props) {
   return (
     <div className={cx(styles.toolbarSection, styles.musicalControls)}>
-      <CustomNumericInput
-        onChange={props.handleTempoChange}
-        value={props.tempo}
-        title="Tempo"
-      />
+      <TempoInput onChange={props.handleTempoChange} value={props.tempo} />
       <CustomSelect
         value={props.scaleObj.tonic.toString(true)}
         options={props.tonicsList}

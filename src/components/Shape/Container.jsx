@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import _ from 'lodash';
 import Color from 'color';
 import Tone from 'tone';
 import { themeColors, appColors } from 'utils/color';
 
-import { convertValToRange, isEquivalent, dist } from 'utils/math';
+import { convertValToRange, dist } from 'utils/math';
 import {
   getAngle,
   thetaToScaleDegree,
@@ -193,7 +193,7 @@ class ShapeContainer extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return !(
-      isEquivalent(this.props, nextProps) && isEquivalent(this.state, nextState)
+      _.isEqual(this.props, nextProps) && _.isEqual(this.state, nextState)
     );
   }
 
@@ -603,7 +603,6 @@ class ShapeContainer extends Component {
   /* =============================== RENDER =============================== */
 
   render() {
-    // console.log('shape render');
     const color = themeColors[this.state.colorIndex];
     const isEditMode = this.props.activeTool === 'edit';
     let opacity = 1;
@@ -666,7 +665,7 @@ class ShapeContainer extends Component {
         handleQuantizeFactorChange={this.handleQuantizeFactorChange}
         handleVolumeChange={this.handleVolumeChange}
         handleMuteChange={this.handleMuteChange}
-        handleSoloChange={this.props.onSoloChange}
+        handleSoloChange={() => this.props.onSoloChange(this.props.index)}
         handleToTopClick={this.handleToTopClick}
         handleToBottomClick={this.handleToBottomClick}
       />

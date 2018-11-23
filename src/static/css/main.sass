@@ -1,23 +1,12 @@
 $font-stack: 'Inconsolata', monospace
-
-$color-white: #fff
-$color-grey-lighter: #eee
-$color-grey-light: #bbb
-$color-grey-med: #777
-$color-grey-dark: #444
-
-$color-black: #222
-
-$color-mute: rgba(110,110,250,1) 
-$color-solo: #eda128
-
-$color-warning-red: rgba(255,100,100,1)
-
-/* ========================================================================== */
-/* ================================ GENERAL ================================== */
+$color-black: #242424
 
 *
     box-sizing: border-box
+
+*:focus
+    outline-offset: 2px
+    outline: 1px dashed rgba(255,255,255,0.4)
 
 html 
     color: $color-black
@@ -25,7 +14,7 @@ html
     line-height: 1.4
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
-    font-weight: 700
+    // font-weight: 700
 
 body 
     margin: auto
@@ -36,7 +25,7 @@ body
     font-size: .8em
 
 button
-    outline: none !important
+    outline: none
     background: none
     border: none
 
@@ -52,37 +41,12 @@ ul
     li
         font-size: 12px
 
-::-moz-selection 
-    background: #b3d4fc
-    text-shadow: none
-
-::selection 
-    background: #b3d4fc
-    text-shadow: none
-
 #holder 
     background-color: #EEE
     height: 100vh
     width: 100%
 
-.icon-button
-    background: none
-    border: none
-    color: $color-grey-dark
-    font-size: 1.8em
-    width: 30px
-    height: 100%
-    &:active
-        background: none
-    i
-        position: relative
-        top: 1px
-
 /* ========================================================================== */
-
-
-
-/* ---------------------------------------- */
 
 .rc-slider-vertical
     width: 100%

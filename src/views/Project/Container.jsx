@@ -278,8 +278,10 @@ class Project extends Component {
   /* --- Musical ---------------------------------------------------------- */
 
   handleTempoChange(val) {
+    const min = 1;
+    const max = 100;
     this.setState({
-      tempo: val,
+      tempo: Math.max(Math.min(val, max), min),
     });
   }
 

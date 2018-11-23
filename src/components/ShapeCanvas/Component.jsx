@@ -82,7 +82,7 @@ function ShapeCanvasComponent(props) {
                     knobVals={props.knobVals}
                     onShapeClick={props.handleShapeClick}
                     onDelete={props.handleShapeDelete} // TODO
-                    onSoloChange={props.handleShapeSolo(index)}
+                    onSoloChange={props.handleShapeSolo}
                     tempo={props.tempo}
                   />
                 )

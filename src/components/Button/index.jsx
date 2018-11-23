@@ -11,7 +11,7 @@ const propTypes = {
   hasBorder: PropTypes.bool,
   href: PropTypes.bool,
   download: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
 
 function Button(props) {

@@ -1,15 +1,16 @@
-/* ========================================================================== */
-/* ================================ GENERAL ================================== */
 * {
   box-sizing: border-box; }
 
+*:focus {
+  outline-offset: 2px;
+  outline: 1px dashed rgba(255, 255, 255, 0.4); }
+
 html {
-  color: #222222;
+  color: #242424;
   font-size: 1em;
   line-height: 1.4;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 700; }
+  -moz-osx-font-smoothing: grayscale; }
 
 body {
   margin: auto;
@@ -20,13 +21,13 @@ body {
   font-size: 0.8em; }
 
 button {
-  outline: none !important;
+  outline: none;
   background: none;
   border: none; }
 
 a {
   text-decoration: none;
-  color: #222222; }
+  color: #242424; }
 
 ul {
   list-style: none;
@@ -36,34 +37,12 @@ ul {
   ul li {
     font-size: 12px; }
 
-::-moz-selection {
-  background: #b3d4fc;
-  text-shadow: none; }
-
-::selection {
-  background: #b3d4fc;
-  text-shadow: none; }
-
 #holder {
   background-color: #eeeeee;
   height: 100vh;
   width: 100%; }
 
-.icon-button {
-  background: none;
-  border: none;
-  color: #444444;
-  font-size: 1.8em;
-  width: 30px;
-  height: 100%; }
-  .icon-button:active {
-    background: none; }
-  .icon-button i {
-    position: relative;
-    top: 1px; }
-
 /* ========================================================================== */
-/* ---------------------------------------- */
 .rc-slider-vertical {
   width: 100%;
   height: 100%;

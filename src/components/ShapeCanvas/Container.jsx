@@ -190,11 +190,8 @@ class ShapeCanvas extends Component {
   }
 
   handleShapeSolo(index) {
-    return () => {
-      const soloedShapeIndex =
-        index === this.state.soloedShapeIndex ? -1 : index;
-      this.setState({ soloedShapeIndex });
-    };
+    const soloedShapeIndex = index === this.state.soloedShapeIndex ? -1 : index;
+    this.setState({ soloedShapeIndex });
   }
 
   /* ================================ GRID ================================ */

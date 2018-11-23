@@ -1,7 +1,9 @@
-import keysPreset from './keys';
-import duoPreset from './duo';
-import jarzoPreset from './jarzo';
+import keys from './keys';
+import duo from './duo';
+import jarzo from './jarzo';
+import blip from './blip';
+import cello from './cello';
 
-const InstrumentPresets = [keysPreset, jarzoPreset, duoPreset];
+const instrumentPresets = [keys, jarzo, duo, blip, cello];
 
-export default InstrumentPresets;
+export default instrumentPresets;

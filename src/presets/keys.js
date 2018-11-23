@@ -17,7 +17,7 @@ export default {
       volume: -6,
     },
     envelope: {
-      attack: 0.01,
+      attack: 0.05,
       decay: 0.3,
       sustain: 0.2,
       release: 1,
@@ -50,9 +50,9 @@ export default {
     },
     {
       name: 'attack',
-      default: 0.1,
+      default: 0.05,
       target: 'instrument',
-      func: setSynthEnvelopeParam('attack', 0.001, 1),
+      func: setSynthEnvelopeParam('attack', 0.05, 1),
     },
     {
       name: 'space',

@@ -304,7 +304,7 @@ class ShapeContainer extends Component {
     const selectedInstrumentIndex = props.selectedInstruments[colorIndex];
     const knobVals = props.knobVals[colorIndex];
     const synthObj = InstrumentPresets[selectedInstrumentIndex];
-
+    console.log(this.synth);
     // console.log('__SETTING SYNTH___');
     // console.log('new instrument:', selectedInstrumentIndex);
     // console.log('new color:', colorIndex);
@@ -329,7 +329,7 @@ class ShapeContainer extends Component {
       this.synth.disconnect();
       this.synth.dispose();
     }
-
+    console.log(synthObj);
     this.synth = new synthObj.baseSynth(synthObj.params);
     this.synth.volume.exponentialRampToValueAtTime(
       this.state.volume,
@@ -391,10 +391,9 @@ class ShapeContainer extends Component {
   }
 
   setEffectVal(val, i) {
-    const synthParamsIndex = this.props.selectedInstruments[
-      this.state.colorIndex
-    ];
-    const synthParams = InstrumentPresets[synthParamsIndex];
+    const presetIndex = this.props.selectedInstruments[this.state.colorIndex];
+    const synthParams = InstrumentPresets[presetIndex];
+
     // set synth value when knobs are changed
     // values for connected effects are set with the colorController
     if (synthParams.dynamicParams[i].target === 'instrument') {

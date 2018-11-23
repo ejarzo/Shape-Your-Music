@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Color from 'color';
-import { Circle } from 'react-konva';
-
+import { useStrictMode, Circle } from 'react-konva';
+useStrictMode(true);
 /*
   The shape's vertecies. Can be dragged to edit the shape.
 */
@@ -54,7 +54,8 @@ class ShapeVertex extends Component {
         fill={fillColor}
         stroke={this.props.color}
         strokeWidth={this.strokeWidth}
-        draggable={true}
+        draggable
+        dragBoundFunc={this.props.dragBoundFunc}
         onDragMove={this.props.onVertexDragMove}
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseOut}

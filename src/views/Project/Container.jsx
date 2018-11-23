@@ -15,6 +15,11 @@ import { themeColors } from 'utils/color';
 
 /* ========================================================================== */
 
+export const TOOL_TYPES = {
+  EDIT: 'edit',
+  DRAW: 'draw',
+};
+
 const tonicsList = [
   { value: 'a', label: 'A' },
   { value: 'a#', label: 'A#' },
@@ -106,7 +111,7 @@ class Project extends Component {
       quantizeLength: 700,
       tempo: props.initState.tempo,
       scaleObj: Teoria.note(props.initState.tonic).scale(props.initState.scale),
-      activeTool: 'draw',
+      activeTool: TOOL_TYPES.DRAW,
       activeColorIndex: 0,
 
       downloadUrls: [],
@@ -218,10 +223,10 @@ class Project extends Component {
   /* --- Tool ------------------------------------------------------------- */
 
   toggleActiveTool() {
-    let newTool = 'draw';
+    let newTool = TOOL_TYPES.DRAW;
     if (this.shapeCanvas.canChangeTool()) {
-      if (this.state.activeTool === 'draw') {
-        newTool = 'edit';
+      if (this.state.activeTool === TOOL_TYPES.DRAW) {
+        newTool = TOOL_TYPES.EDIT;
       }
       this.setState({
         activeTool: newTool,
@@ -230,11 +235,11 @@ class Project extends Component {
   }
 
   handleDrawToolClick() {
-    this.setAciveTool('draw');
+    this.setAciveTool(TOOL_TYPES.DRAW);
   }
 
   handleEditToolClick() {
-    this.setAciveTool('edit');
+    this.setAciveTool(TOOL_TYPES.EDIT);
   }
 
   setAciveTool(tool) {

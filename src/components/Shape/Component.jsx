@@ -71,15 +71,43 @@ class ShapeComponent extends React.Component {
   }
 
   render() {
-    const color = themeColors[this.props.colorIndex];
+    const {
+      index,
+      editorPosition,
+      project,
+      volume,
+      handleVolumeChange,
+      isMuted,
+      handleMuteChange,
+      soloedShapeIndex,
+      handleSoloChange,
+      colorIndex,
+      handleColorChange,
+      handleQuantizeClick,
+      handleDelete,
+      handleQuantizeFactorChange,
+      handleToTopClick,
+      handleToBottomClick,
+      averagePoint,
+      points,
+      dragBoundFunc,
+      handleDrag,
+      handleDragStart,
+      handleDragEnd,
+      attrs,
+      handleClick,
+      handleMouseDown,
+      handleMouseOver,
+      handleMouseOut,
+      handleVertexDragMove,
+      isDragging,
+      noteIndexModifier,
+      isSelected,
+    } = this.props;
+
+    const color = themeColors[colorIndex];
     let panningVal = parseInt(
-      convertValToRange(
-        this.props.averagePoint.x,
-        0,
-        window.innerWidth,
-        -50,
-        50
-      ),
+      convertValToRange(averagePoint.x, 0, window.innerWidth, -50, 50),
       10
     );
     if (panningVal > 0) {
@@ -88,7 +116,7 @@ class ShapeComponent extends React.Component {
       panningVal = `${Math.abs(panningVal)} L`;
     }
 
-    const animCircle = this.props.project.isPlaying && (
+    const animCircle = project.isPlaying && (
       <Circle
         ref={c => (this.animCircle = c)}
         hitGraphEnabled={false}
@@ -101,46 +129,47 @@ class ShapeComponent extends React.Component {
       />
     );
 
-    const perimeter = getPerimeterLength(this.props.points);
-    if (this.props.project.isEditMode) {
+    const perimeter = getPerimeterLength(points);
+    if (project.isEditMode) {
       return (
         <Group
           ref={c => (this.groupElement = c)}
           draggable
-          dragBoundFunc={this.props.dragBoundFunc}
-          onDragMove={this.props.handleDrag}
-          onDragStart={this.props.handleDragStart}
-          onDragEnd={this.props.handleDragEnd}
-          opacity={this.props.attrs.opacity}
+          dragBoundFunc={dragBoundFunc}
+          onDragMove={handleDrag}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          opacity={attrs.opacity}
         >
           {/* shape perimeter */}
           <Line
             ref={c => (this.shapeElement = c)}
-            points={this.props.points}
-            fill={this.props.attrs.fill}
+            points={points}
+            fill={attrs.fill}
             lineJoin="bevel"
-            stroke={this.props.attrs.stroke}
-            strokeWidth={this.props.attrs.strokeWidth}
+            stroke={attrs.stroke}
+            strokeWidth={attrs.strokeWidth}
             closed
             strokeScaleEnabled={false}
-            onClick={this.props.handleClick}
-            onMouseDown={this.props.handleMouseDown}
-            onMouseOver={this.props.handleMouseOver}
-            onMouseOut={this.props.handleMouseOut}
+            onClick={handleClick}
+            onMouseDown={handleMouseDown}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
           />
 
           {/* shape verteces */}
-          {this.props.points.map(
+          {points.map(
             (p, i, arr) =>
               !(i % 2) && (
                 <ShapeVertex
+                  dragBoundFunc={dragBoundFunc}
                   key={i}
                   index={i}
                   p={{
                     x: p,
                     y: arr[i + 1],
                   }}
-                  onVertexDragMove={this.props.handleVertexDragMove(i)}
+                  onVertexDragMove={handleVertexDragMove(i)}
                   color={color}
                 />
               )
@@ -150,7 +179,7 @@ class ShapeComponent extends React.Component {
           {animCircle}
 
           {/* tooltip that appears on drag */}
-          <Portal isOpened={this.props.isDragging}>
+          <Portal isOpened={isDragging}>
             <div
               style={{
                 textTransform: 'capitalize',
@@ -159,40 +188,37 @@ class ShapeComponent extends React.Component {
                 padding: '5px',
                 position: 'absolute',
                 opacity: 0.8,
-                top: this.props.averagePoint.y + 20,
-                left: this.props.averagePoint.x - 20,
+                top: averagePoint.y + 20,
+                left: averagePoint.x - 20,
                 fontSize: '0.8em',
               }}
             >
               PAN: {panningVal}
               <br />
-              NOTE:{' '}
-              {this.props.project.scaleObj
-                .get(this.props.noteIndexModifier)
-                .toString()}
+              NOTE: {project.scaleObj.get(noteIndexModifier).toString()}
             </div>
           </Portal>
 
           {/* editor panel that opens on shape click */}
-          <Portal isOpened={this.props.isSelected}>
+          <Portal isOpened={isSelected}>
             <ShapeEditorPopover
-              index={this.props.index}
-              position={this.props.editorPosition}
-              tempo={this.props.project.tempo}
-              volume={this.props.volume}
-              onVolumeChange={this.props.handleVolumeChange}
-              isMuted={this.props.isMuted}
-              onMuteChange={this.props.handleMuteChange}
-              isSoloed={this.props.soloedShapeIndex === this.props.index}
-              onSoloChange={this.props.handleSoloChange}
-              colorIndex={this.props.colorIndex}
-              onColorChange={this.props.handleColorChange}
-              onQuantizeClick={this.props.handleQuantizeClick}
-              onDeleteClick={this.props.handleDelete}
-              onQuantizeFactorChange={this.props.handleQuantizeFactorChange}
+              index={index}
+              position={editorPosition}
+              tempo={project.tempo}
+              volume={volume}
+              onVolumeChange={handleVolumeChange}
+              isMuted={isMuted}
+              onMuteChange={handleMuteChange}
+              isSoloed={soloedShapeIndex === index}
+              onSoloChange={handleSoloChange}
+              colorIndex={colorIndex}
+              onColorChange={handleColorChange}
+              onQuantizeClick={handleQuantizeClick}
+              onDeleteClick={handleDelete}
+              onQuantizeFactorChange={handleQuantizeFactorChange}
               perimeter={perimeter}
-              onToTopClick={this.props.handleToTopClick}
-              onToBottomClick={this.props.handleToBottomClick}
+              onToTopClick={handleToTopClick}
+              onToBottomClick={handleToBottomClick}
             />
           </Portal>
         </Group>
@@ -203,16 +229,16 @@ class ShapeComponent extends React.Component {
           ref={c => (this.groupElement = c)}
           hitGraphEnabled={false}
           draggable={false}
-          opacity={this.props.attrs.opacity}
+          opacity={attrs.opacity}
         >
           <Line
             ref={c => (this.shapeElement = c)}
             strokeScaleEnabled={false}
-            points={this.props.points}
-            fill={this.props.attrs.fill}
+            points={points}
+            fill={attrs.fill}
             lineJoin="miter"
             stroke={color}
-            strokeWidth={this.props.attrs.strokeWidth}
+            strokeWidth={attrs.strokeWidth}
             closed
           />
 
@@ -220,10 +246,10 @@ class ShapeComponent extends React.Component {
             index={0}
             color={color}
             p={{
-              x: this.props.points[0],
-              y: this.props.points[1],
+              x: points[0],
+              y: points[1],
             }}
-            onVertexDragMove={this.props.handleVertexDragMove(0)}
+            onVertexDragMove={handleVertexDragMove(0)}
           />
 
           {animCircle}

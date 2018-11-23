@@ -15,6 +15,8 @@ import { themeColors, appColors, getDarker } from 'utils/color';
 
 import styles from './styles.module.css';
 
+import { TOOL_TYPES } from 'views/Project/Container';
+
 const { black, grayLightest, red } = appColors;
 const propTypes = {
   isColorPickerOpen: PropTypes.bool.isRequired,
@@ -88,8 +90,10 @@ TransportControls.propTypes = {
 /* ---------------------- Tool Select ---------------------- */
 
 function ToolSelect(props) {
-  const isDrawTool = props.activeTool === 'draw';
+  const isDrawTool = props.activeTool === TOOL_TYPES.DRAW;
+  const isEditTool = props.activeTool === TOOL_TYPES.EDIT;
   const activeColor = themeColors[props.activeColorIndex];
+
   return (
     <div className={cx(styles.toolbarSection, styles.toolSelect)}>
       <div
@@ -127,7 +131,7 @@ function ToolSelect(props) {
       <Button
         darkHover
         hasBorder
-        color={!isDrawTool ? black : grayLightest}
+        color={isEditTool ? black : grayLightest}
         onClick={props.handleEditToolClick}
         title="Edit Tool (TAB to toggle)"
       >

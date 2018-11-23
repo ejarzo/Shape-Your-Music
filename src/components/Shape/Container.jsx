@@ -4,6 +4,7 @@ import _ from 'lodash';
 import Color from 'color';
 import Tone from 'tone';
 import { themeColors, appColors } from 'utils/color';
+import { TOOL_TYPES } from 'views/Project/Container';
 
 import { convertValToRange, dist } from 'utils/math';
 import {
@@ -137,11 +138,18 @@ class ShapeContainer extends Component {
     ) {
       this.setSynth(nextProps, nextState.colorIndex);
     }
+
+    if (!nextProps.isPlaying && this.props.isPlaying) {
+      this.synth.triggerRelease();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     /* remove hover styles when switching to draw mode */
-    if (nextProps.activeTool === 'draw' && this.props.activeTool === 'edit') {
+    if (
+      nextProps.activeTool === TOOL_TYPES.DRAW &&
+      this.props.activeTool === TOOL_TYPES.EDIT
+    ) {
       this.setState({
         isHoveredOver: false,
       });
@@ -254,7 +262,7 @@ class ShapeContainer extends Component {
       const noteString = this.props.scaleObj.get(noteIndex).toString();
 
       // trigger synth
-      this.synth.triggerAttackRelease(noteString, dur, time);
+      this.synth.triggerAttackRelease(noteString, dur - 50, time);
     }, []).start(0);
 
     part.loop = true;
@@ -422,6 +430,7 @@ class ShapeContainer extends Component {
   }
 
   handleDrag() {
+    console.log('handle shape drag');
     const shapeElement = this.shapeComponentElement.getShapeElement();
     const absPos = shapeElement.getAbsolutePosition();
     const avgPoint = getAveragePoint(this.state.points);
@@ -450,9 +459,10 @@ class ShapeContainer extends Component {
   }
 
   dragBoundFunc(pos) {
+    const { snapToGrid } = this.props;
     return {
-      x: this.props.snapToGrid(pos.x),
-      y: this.props.snapToGrid(pos.y),
+      x: snapToGrid(pos.x),
+      y: snapToGrid(pos.y),
     };
   }
 
@@ -483,10 +493,9 @@ class ShapeContainer extends Component {
   }
 
   handleMuteChange() {
-    this.part.mute = !this.state.isMuted;
-    this.setState({
-      isMuted: !this.state.isMuted,
-    });
+    const isMuted = !this.state.isMuted;
+    this.part.mute = isMuted;
+    this.setState({ isMuted });
   }
 
   /* --- Quantization --- */
@@ -555,20 +564,23 @@ class ShapeContainer extends Component {
 
   handleVertexDragMove(i) {
     return e => {
+      console.log(e);
+      const { snapToGrid, isAutoQuantizeActive, scaleObj } = this.props;
       const pos = e.target.position();
-      let points = this.state.points.slice();
-      points[i] = this.props.snapToGrid(pos.x);
-      points[i + 1] = this.props.snapToGrid(pos.y);
 
-      if (this.props.isAutoQuantizeActive) {
+      let points = this.state.points.slice();
+      points[i] = snapToGrid(pos.x);
+      points[i + 1] = snapToGrid(pos.y);
+
+      if (isAutoQuantizeActive) {
         points = this.getPointsForFixedPerimeterLength(
           points,
           this.quantizeLength * this.state.quantizeFactor
         );
       }
 
-      this.setNoteEvents(this.props.scaleObj, points);
-
+      this.setNoteEvents(scaleObj, points);
+      console.log(points[0]);
       this.setState({
         points: points,
       });
@@ -604,7 +616,7 @@ class ShapeContainer extends Component {
 
   render() {
     const color = themeColors[this.state.colorIndex];
-    const isEditMode = this.props.activeTool === 'edit';
+    const isEditMode = this.props.activeTool === TOOL_TYPES.EDIT;
     let opacity = 1;
 
     if (

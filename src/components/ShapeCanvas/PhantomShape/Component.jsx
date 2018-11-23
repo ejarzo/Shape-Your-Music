@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Color from 'color';
 import { Group, Circle, Line } from 'react-konva';
+import { TOOL_TYPES } from 'views/Project/Container';
 
 const propTypes = {
   points: PropTypes.array.isRequired,
@@ -34,7 +35,7 @@ function PhantomShapeComponent(props) {
   );
 
   return (
-    props.activeTool === 'draw' && (
+    props.activeTool === TOOL_TYPES.DRAW && (
       <Group>
         <Circle // circle beneath cursor
           x={props.mousePos.x}

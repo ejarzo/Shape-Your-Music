@@ -5,6 +5,7 @@ import { Circle } from 'react-konva';
 import { dist } from 'utils/math';
 import { appColors } from 'utils/color';
 import ShapeCanvasComponent from './Component';
+import { TOOL_TYPES } from 'views/Project/Container';
 
 const propTypes = {
   activeTool: PropTypes.string.isRequired,
@@ -65,7 +66,7 @@ class ShapeCanvas extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.activeTool === 'draw') {
+    if (nextProps.activeTool === TOOL_TYPES.DRAW) {
       this.setState({
         selectedShapeIndex: -1,
       });
@@ -113,7 +114,7 @@ class ShapeCanvas extends Component {
   handleClick(e) {
     // left click
     if (e.evt.which === 1) {
-      if (this.props.activeTool === 'draw') {
+      if (this.props.activeTool === TOOL_TYPES.DRAW) {
         // hovering over first point
         if (this.state.drawingState === 'preview') {
           this.appendShape();
@@ -154,7 +155,7 @@ class ShapeCanvas extends Component {
     x = this.snapToGrid(x);
     y = this.snapToGrid(y);
 
-    if (this.props.activeTool === 'draw') {
+    if (this.props.activeTool === TOOL_TYPES.DRAW) {
       // snap to origin if within radius
       if (
         this.state.currPoints.length > 2 &&

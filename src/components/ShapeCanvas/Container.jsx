@@ -122,12 +122,23 @@ class ShapeCanvas extends Component {
             drawingState: 'pending',
           });
         } else {
-          const newPoints = this.state.currPoints.slice();
-          newPoints.push(this.state.mousePos.x, this.state.mousePos.y);
-          this.setState({
-            currPoints: newPoints,
-            drawingState: 'drawing',
-          });
+          const {
+            currPoints,
+            mousePos: { x, y },
+          } = this.state;
+          // only add point if the mouse has moved
+          if (
+            x !== currPoints[currPoints.length - 2] &&
+            y !== currPoints[currPoints.length - 1]
+          ) {
+            const newPoints = this.state.currPoints.slice();
+
+            newPoints.push(x, y);
+            this.setState({
+              currPoints: newPoints,
+              drawingState: 'drawing',
+            });
+          }
         }
       }
     }

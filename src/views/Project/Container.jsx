@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Fullscreen from 'react-full-screen';
 import Teoria from 'teoria';
 import Tone from 'tone';
-import Recorder from 'record-audio-js';
+import Recorder from 'utils/Recorder';
 
 import Toolbar from 'components/Toolbar';
 import Sidebar from 'components/Sidebar';
@@ -213,10 +213,6 @@ class Project extends Component {
         });
       }
     }
-    // this.setState({
-    //   isArmed: !this.state.isArmed,
-    //   isRecording: !this.state.isRecording,
-    // });
   }
 
   /* --- Tool ------------------------------------------------------------- */

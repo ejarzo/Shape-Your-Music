@@ -3693,9 +3693,10 @@ inline-style-prefixer@^4.0.0:
     bowser "^1.7.3"
     css-in-js-utils "^2.0.0"
 
-inline-worker@^1.1.0:
+inline-worker@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/inline-worker/-/inline-worker-1.1.0.tgz#55e96f54915a642b00872a2daa6fe832b424c98d"
+  integrity sha1-VelvVJFaZCsAhyotqm/oMrQkyY0=
 
 inquirer@3.3.0, inquirer@^3.0.6:
   version "3.3.0"
@@ -6230,10 +6231,6 @@ react-konva@^1.7.6:
     fbjs "^0.8.17"
     react-reconciler "^0.12.0"
 
-react-numeric-input@^2.2.0:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/react-numeric-input/-/react-numeric-input-2.2.3.tgz#4bf5918c3eafed851a80df1eb992d941002bb552"
-
 react-portal@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-portal/-/react-portal-3.2.0.tgz#4224e19b2b05d5cbe730a7ba0e34ec7585de0043"
@@ -6394,12 +6391,6 @@ readdirp@^2.0.0:
     minimatch "^3.0.2"
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
-
-record-audio-js@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/record-audio-js/-/record-audio-js-0.0.4.tgz#3b5a95500b01577d77e0f001cbe33386c167627b"
-  dependencies:
-    inline-worker "^1.1.0"
 
 recursive-readdir@2.2.1:
   version "2.2.1"

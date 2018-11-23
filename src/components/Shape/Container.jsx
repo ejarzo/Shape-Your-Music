@@ -430,7 +430,6 @@ class ShapeContainer extends Component {
   }
 
   handleDrag() {
-    console.log('handle shape drag');
     const shapeElement = this.shapeComponentElement.getShapeElement();
     const absPos = shapeElement.getAbsolutePosition();
     const avgPoint = getAveragePoint(this.state.points);
@@ -564,7 +563,6 @@ class ShapeContainer extends Component {
 
   handleVertexDragMove(i) {
     return e => {
-      console.log(e);
       const { snapToGrid, isAutoQuantizeActive, scaleObj } = this.props;
       const pos = e.target.position();
 
@@ -580,7 +578,6 @@ class ShapeContainer extends Component {
       }
 
       this.setNoteEvents(scaleObj, points);
-      console.log(points[0]);
       this.setState({
         points: points,
       });

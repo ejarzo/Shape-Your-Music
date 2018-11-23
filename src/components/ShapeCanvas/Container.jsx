@@ -126,11 +126,9 @@ class ShapeCanvas extends Component {
             currPoints,
             mousePos: { x, y },
           } = this.state;
+          const len = currPoints.length;
           // only add point if the mouse has moved
-          if (
-            x !== currPoints[currPoints.length - 2] &&
-            y !== currPoints[currPoints.length - 1]
-          ) {
+          if (!(x === currPoints[len - 2] && y === currPoints[len - 1])) {
             const newPoints = this.state.currPoints.slice();
 
             newPoints.push(x, y);

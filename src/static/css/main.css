@@ -1,10 +1,6 @@
 * {
   box-sizing: border-box; }
 
-*:focus {
-  outline-offset: 2px;
-  outline: 1px dashed rgba(255, 255, 255, 0.4); }
-
 html {
   color: #242424;
   font-size: 1em;

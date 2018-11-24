@@ -83,7 +83,7 @@ class Project extends Component {
     super(props);
 
     // indeces of default instruments
-    const selectedInstruments = [0, 1, 2, 1, 0];
+    const selectedInstruments = [0, 1, 4, 3, 2];
     const knobVals = [];
     selectedInstruments.forEach(instrumentIndex => {
       const instrumentDefaults = InstrumentPresets[
@@ -352,8 +352,7 @@ class Project extends Component {
 
     /* Space toggles play */
     if (event.key === ' ') {
-      event.stopPropagation();
-      event.preventDefault(); // stop from clicking focused buttons
+      // event.preventDefault(); // stop from clicking focused buttons
       this.handlePlayClick();
     }
 

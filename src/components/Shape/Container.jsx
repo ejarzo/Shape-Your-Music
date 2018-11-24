@@ -304,12 +304,6 @@ class ShapeContainer extends Component {
     const selectedInstrumentIndex = props.selectedInstruments[colorIndex];
     const knobVals = props.knobVals[colorIndex];
     const synthObj = InstrumentPresets[selectedInstrumentIndex];
-    console.log(this.synth);
-    // console.log('__SETTING SYNTH___');
-    // console.log('new instrument:', selectedInstrumentIndex);
-    // console.log('new color:', colorIndex);
-    // console.log('knob vals:', knobVals);
-    // console.log('sending', `colorFx-${colorIndex}`);
 
     if (this.synth) {
       this.synth.triggerRelease();

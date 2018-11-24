@@ -115,7 +115,6 @@ class ColorController extends Component {
 
   handleInstChange(option) {
     if (option) {
-      console.log(option);
       this.props.onInstChange(option.value);
     }
   }

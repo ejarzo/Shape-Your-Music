@@ -2,9 +2,7 @@ import Tone from 'tone';
 import { setSynthParam, setSynthEnvelopeParam } from './utils';
 
 export default {
-  name: {
-    label: 'Blip',
-  },
+  name: 'Blip',
   baseSynth: Tone.Synth,
   params: {
     portamento: 0,

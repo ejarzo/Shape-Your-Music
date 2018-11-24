@@ -27,10 +27,10 @@ const propTypes = {
 function ColorControllerComponent(props) {
   const darkerColor = getDarker(props.color);
   const dropdownOptions = InstrumentPresets.map(({ name }) => ({
-    label: name.label,
-    value: name.label,
+    label: name,
+    value: name,
   }));
-  const synthName = props.synthParams.name.label;
+  const synthName = props.synthParams.name;
   return (
     <div
       className={styles.colorController}

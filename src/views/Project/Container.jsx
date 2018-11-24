@@ -313,7 +313,7 @@ class Project extends Component {
   handleInstChange(colorIndex) {
     return instrumentName => {
       const instrumentIndex = InstrumentPresets.findIndex(
-        ({ name }) => name.label === instrumentName
+        ({ name }) => name === instrumentName
       );
       const selectedInstruments = this.state.selectedInstruments.slice();
       selectedInstruments[colorIndex] = instrumentIndex;
@@ -352,7 +352,8 @@ class Project extends Component {
 
     /* Space toggles play */
     if (event.key === ' ') {
-      //event.preventDefault(); // stop from clicking focused buttons
+      event.stopPropagation();
+      event.preventDefault(); // stop from clicking focused buttons
       this.handlePlayClick();
     }
 

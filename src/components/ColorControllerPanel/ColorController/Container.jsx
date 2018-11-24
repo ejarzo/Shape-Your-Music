@@ -10,7 +10,6 @@ const propTypes = {
   synthParams: PropTypes.shape({
     name: PropTypes.shape({
       label: PropTypes.string.isRequired,
-      value: PropTypes.number.isRequired,
     }),
     baseSynth: PropTypes.func.isRequired,
     dynamicParams: PropTypes.array.isRequired,
@@ -53,9 +52,7 @@ class ColorController extends Component {
 
   componentWillReceiveProps(nextProps) {
     // Change instrument
-    if (
-      nextProps.synthParams.name.label !== this.props.synthParams.name.label
-    ) {
+    if (nextProps.synthParams.name !== this.props.synthParams.name) {
       this.connectEffects(nextProps.synthParams.effects);
       nextProps.knobVals.forEach((val, i) => {
         this.triggerEffectCallback(nextProps.synthParams, i, val);
@@ -127,9 +124,9 @@ class ColorController extends Component {
     return () => {
       const { synthParams, onInstChange } = this.props;
 
-      const currentVal = synthParams.name.label;
+      const currentVal = synthParams.name;
       const currentIndex = InstrumentPresets.findIndex(
-        preset => preset.name.label === currentVal
+        preset => preset.name === currentVal
       );
       const numOptions = InstrumentPresets.length - 1;
 
@@ -142,7 +139,7 @@ class ColorController extends Component {
         nextVal = numOptions;
       }
 
-      onInstChange(InstrumentPresets[nextVal].name.label);
+      onInstChange(InstrumentPresets[nextVal].name);
     };
   }
 

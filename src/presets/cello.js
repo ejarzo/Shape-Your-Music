@@ -2,9 +2,7 @@ import Tone from 'tone';
 import { setSynthEnvelopeParam, setEffectWet } from './utils';
 
 export default {
-  name: {
-    label: 'Cello',
-  },
+  name: 'Cello',
   baseSynth: Tone.FMSynth,
   params: {
     harmonicity: 3.01,

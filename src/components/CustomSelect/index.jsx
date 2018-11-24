@@ -20,7 +20,7 @@ function CustomSelect(props) {
 
   const borderColor = props.color ? getDarker(props.color) : white;
   const foreground = props.color ? white : black;
-
+  const fontWeight = props.color ? 'bold' : 'normal';
   const arrowRenderer = ({ isOpen }) => (
     <div
       style={{
@@ -51,7 +51,7 @@ function CustomSelect(props) {
     <Select
       {...props}
       className={styles.customSelect}
-      wrapperStyle={{ height: '100%' }}
+      wrapperStyle={{ height: '100%', fontWeight }}
       menuContainerStyle={{
         marginBottom: 'none',
         ...position,

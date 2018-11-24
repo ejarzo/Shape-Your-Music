@@ -2,9 +2,7 @@ import Tone from 'tone';
 import { setSynthParam, setSynthEnvelopeParam, setEffectWet } from './utils';
 
 export default {
-  name: {
-    label: 'Keys',
-  },
+  name: 'Keys',
   baseSynth: Tone.Synth,
   params: {
     portamento: 0,

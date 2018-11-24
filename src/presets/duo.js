@@ -2,9 +2,7 @@ import Tone from 'tone';
 import { setSynthParam, setEffectWet } from './utils';
 
 export default {
-  name: {
-    label: 'Duo',
-  },
+  name: 'Duo',
   baseSynth: Tone.DuoSynth,
   params: {},
   effects: [

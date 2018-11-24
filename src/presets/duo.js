@@ -4,7 +4,6 @@ import { setSynthParam, setEffectWet } from './utils';
 export default {
   name: {
     label: 'Duo',
-    value: 2,
   },
   baseSynth: Tone.DuoSynth,
   params: {},

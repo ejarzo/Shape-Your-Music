@@ -19,8 +19,6 @@ function CustomSelect(props) {
   const backgroundColor = props.color || grayLightest;
 
   const borderColor = props.color ? getDarker(props.color) : white;
-
-  // TODO theme colors
   const foreground = props.color ? white : black;
 
   const arrowRenderer = ({ isOpen }) => (
@@ -83,13 +81,12 @@ function CustomSelect(props) {
       menuStyle={{
         border: `2px solid ${borderColor}`,
         background: backgroundColor,
-        color: 'red',
         margin: -3,
         boxShadow: '-5px 0 12px 0 rgba(0,0,0,0.11)',
       }}
       searchable={false}
       clearable={false}
-      value={props.value}
+      value={props.options.find(({ value }) => value === props.value)}
       options={props.options}
       onChange={props.onChange}
     />

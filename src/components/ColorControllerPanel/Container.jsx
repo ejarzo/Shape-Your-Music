@@ -8,7 +8,6 @@ import styles from './styles.module.css';
 const propTypes = {
   instrumentPresets: PropTypes.array.isRequired,
   selectedInstruments: PropTypes.array.isRequired,
-  instNamesList: PropTypes.array.isRequired,
   knobVals: PropTypes.array.isRequired,
   onInstChange: PropTypes.func.isRequired,
   onKnobChange: PropTypes.func.isRequired,
@@ -29,7 +28,6 @@ class ColorControllerPanel extends Component {
 
   render() {
     const {
-      instNamesList,
       onInstChange,
       onKnobChange,
       knobVals,
@@ -62,7 +60,6 @@ class ColorControllerPanel extends Component {
                   <ColorController
                     color={themeColors[colorIndex]}
                     receiveChannel={`colorFx-${colorIndex}`}
-                    instNamesList={instNamesList}
                     onInstChange={onInstChange(colorIndex)}
                     onKnobChange={onKnobChange(colorIndex)}
                     knobVals={knobVals[colorIndex]}

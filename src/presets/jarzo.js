@@ -5,7 +5,6 @@ import { setEffectWet } from './utils';
 export default {
   name: {
     label: 'jarz01',
-    value: 1,
   },
   baseSynth: Tone.DuoSynth,
   params: {

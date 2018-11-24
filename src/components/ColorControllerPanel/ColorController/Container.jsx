@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Tone from 'tone';
 import ColorControllerComponent from './Component';
-
+import InstrumentPresets from 'presets';
 const propTypes = {
   color: PropTypes.string.isRequired,
   receiveChannel: PropTypes.string.isRequired,
-  instNamesList: PropTypes.array.isRequired,
   knobVals: PropTypes.array.isRequired,
   synthParams: PropTypes.shape({
     name: PropTypes.shape({
@@ -55,7 +54,7 @@ class ColorController extends Component {
   componentWillReceiveProps(nextProps) {
     // Change instrument
     if (
-      nextProps.synthParams.name.value !== this.props.synthParams.name.value
+      nextProps.synthParams.name.label !== this.props.synthParams.name.label
     ) {
       this.connectEffects(nextProps.synthParams.effects);
       nextProps.knobVals.forEach((val, i) => {
@@ -119,15 +118,22 @@ class ColorController extends Component {
 
   handleInstChange(option) {
     if (option) {
+      console.log(option);
       this.props.onInstChange(option.value);
     }
   }
 
   handleIncrementClick(difference) {
     return () => {
-      const currentVal = this.props.synthParams.name.value;
-      const numOptions = this.props.instNamesList.length - 1;
-      let nextVal = currentVal + difference;
+      const { synthParams, onInstChange } = this.props;
+
+      const currentVal = synthParams.name.label;
+      const currentIndex = InstrumentPresets.findIndex(
+        preset => preset.name.label === currentVal
+      );
+      const numOptions = InstrumentPresets.length - 1;
+
+      let nextVal = currentIndex + difference;
 
       if (nextVal > numOptions) {
         nextVal = 0;
@@ -136,7 +142,7 @@ class ColorController extends Component {
         nextVal = numOptions;
       }
 
-      this.props.onInstChange(nextVal);
+      onInstChange(InstrumentPresets[nextVal].name.label);
     };
   }
 

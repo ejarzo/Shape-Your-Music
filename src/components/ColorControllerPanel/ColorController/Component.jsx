@@ -7,14 +7,12 @@ import Button from 'components/Button';
 import { getDarker } from 'utils/color';
 
 import styles from './styles.module.css';
-
+import InstrumentPresets from 'presets';
 const propTypes = {
   color: PropTypes.string.isRequired,
-  instNamesList: PropTypes.array.isRequired,
   synthParams: PropTypes.shape({
     name: PropTypes.shape({
       label: PropTypes.string.isRequired,
-      value: PropTypes.number.isRequired,
     }),
     baseSynth: PropTypes.func.isRequired,
     dynamicParams: PropTypes.array.isRequired,
@@ -28,6 +26,11 @@ const propTypes = {
 
 function ColorControllerComponent(props) {
   const darkerColor = getDarker(props.color);
+  const dropdownOptions = InstrumentPresets.map(({ name }) => ({
+    label: name.label,
+    value: name.label,
+  }));
+  const synthName = props.synthParams.name.label;
   return (
     <div
       className={styles.colorController}
@@ -39,11 +42,10 @@ function ColorControllerComponent(props) {
           dropDownAlign="BottomLeft"
           color={props.color}
           name="Instrument Select"
-          value={props.synthParams.name.value.toString()}
-          options={props.instNamesList}
+          value={synthName}
+          options={dropdownOptions}
           onChange={props.onInstChange}
           synthParams={props.synthParams}
-          instNamesList={props.instNamesList}
         />
         <Button color={props.color} onClick={props.onIncrementClick(-1)}>
           <i className="ion-chevron-left" />

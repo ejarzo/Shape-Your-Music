@@ -4,7 +4,6 @@ import { setSynthParam, setSynthEnvelopeParam, setEffectWet } from './utils';
 export default {
   name: {
     label: 'Keys',
-    value: 0,
   },
   baseSynth: Tone.Synth,
   params: {

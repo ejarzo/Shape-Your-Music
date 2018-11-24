@@ -4,7 +4,6 @@ import { setSynthEnvelopeParam, setEffectWet } from './utils';
 export default {
   name: {
     label: 'Cello',
-    value: 4,
   },
   baseSynth: Tone.FMSynth,
   params: {

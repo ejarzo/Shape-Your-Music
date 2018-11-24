@@ -54,11 +54,6 @@ const scalesList = [
   { value: 'wholetone', label: 'Wholetone' },
 ];
 
-const instNamesList = InstrumentPresets.map(preset => ({
-  label: preset.name.label,
-  value: preset.name.value,
-}));
-
 /* master output */
 const masterCompressor = new Tone.Compressor({
   ratio: 16,
@@ -316,7 +311,10 @@ class Project extends Component {
   /* --- Color Controllers ------------------------------------------------ */
 
   handleInstChange(colorIndex) {
-    return instrumentIndex => {
+    return instrumentName => {
+      const instrumentIndex = InstrumentPresets.findIndex(
+        ({ name }) => name.label === instrumentName
+      );
       const selectedInstruments = this.state.selectedInstruments.slice();
       selectedInstruments[colorIndex] = instrumentIndex;
       const defaultKnobvals = InstrumentPresets[
@@ -440,7 +438,6 @@ class Project extends Component {
         {/* Instrument controller panels */}
         <ColorControllerPanel
           selectedInstruments={this.state.selectedInstruments}
-          instNamesList={instNamesList}
           instrumentPresets={InstrumentPresets}
           onInstChange={this.handleInstChange}
           onKnobChange={this.handleKnobChange}

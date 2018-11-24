@@ -4,7 +4,6 @@ import { setSynthParam, setSynthEnvelopeParam } from './utils';
 export default {
   name: {
     label: 'Blip',
-    value: 3,
   },
   baseSynth: Tone.Synth,
   params: {

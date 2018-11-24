@@ -329,7 +329,7 @@ class ShapeContainer extends Component {
       this.synth.disconnect();
       this.synth.dispose();
     }
-    console.log(synthObj);
+
     this.synth = new synthObj.baseSynth(synthObj.params);
     this.synth.volume.exponentialRampToValueAtTime(
       this.state.volume,

@@ -11,9 +11,7 @@ import InstrumentPresets from 'presets';
 const propTypes = {
   color: PropTypes.string.isRequired,
   synthParams: PropTypes.shape({
-    name: PropTypes.shape({
-      label: PropTypes.string.isRequired,
-    }),
+    name: PropTypes.string.isRequired,
     baseSynth: PropTypes.func.isRequired,
     dynamicParams: PropTypes.array.isRequired,
     effects: PropTypes.array,

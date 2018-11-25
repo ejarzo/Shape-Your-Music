@@ -8,9 +8,7 @@ const propTypes = {
   receiveChannel: PropTypes.string.isRequired,
   knobVals: PropTypes.array.isRequired,
   synthParams: PropTypes.shape({
-    name: PropTypes.shape({
-      label: PropTypes.string.isRequired,
-    }),
+    name: PropTypes.string.isRequired,
     baseSynth: PropTypes.func.isRequired,
     dynamicParams: PropTypes.array.isRequired,
     effects: PropTypes.array,

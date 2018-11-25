@@ -187,12 +187,15 @@ class ShapeComponent extends React.Component {
                 textTransform: 'capitalize',
                 color: appColors.white,
                 backgroundColor: color,
+                fontWeight: 'bold',
                 padding: '5px',
                 position: 'absolute',
                 opacity: 0.8,
                 top: averagePoint.y + 20,
                 left: averagePoint.x - 20,
                 fontSize: '0.8em',
+                borderRadius: 2,
+                boxShadow: '0 0 10px rgba(0,0,0,0.2)',
               }}
             >
               PAN: {panningVal}

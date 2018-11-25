@@ -159,31 +159,45 @@ function CanvasControls(props) {
   const lightGray = getDarker(grayLightest);
   return (
     <div
-      className={cx(styles.toolbarSection, styles.canvasControls)}
-      style={{
-        borderRadius: 3,
-        padding: 0,
-        border: `1px solid ${lightGray}`,
-        background: lightGray,
-        gridGap: 1,
-        overflow: 'hidden',
-      }}
+      style={{ display: 'grid', gridTemplateColumns: '66% 34%', gridGap: 3 }}
     >
-      <div>
-        <CheckboxButton
-          checked={props.isGridActive}
-          onChange={props.handleGridToggleChange}
-          label={'Grid'}
-        />
+      <div
+        className={cx(styles.toolbarSection, styles.canvasControls)}
+        style={{
+          borderRadius: 3,
+          padding: 0,
+          border: `1px solid ${lightGray}`,
+          background: lightGray,
+          gridGap: 1,
+          overflow: 'hidden',
+        }}
+      >
+        <div>
+          <CheckboxButton
+            checked={props.isGridActive}
+            onChange={props.handleGridToggleChange}
+            label={'Grid'}
+          />
+        </div>
+        <div>
+          <CheckboxButton
+            checked={props.isSnapToGridActive}
+            onChange={props.handleSnapToGridToggleChange}
+            label={'Snap'}
+          />
+        </div>
       </div>
-      <div>
-        <CheckboxButton
-          checked={props.isSnapToGridActive}
-          onChange={props.handleSnapToGridToggleChange}
-          label={'Snap'}
-        />
-      </div>
-      <div>
+
+      <div
+        style={{
+          borderRadius: 3,
+          padding: 0,
+          border: `1px solid ${lightGray}`,
+          background: lightGray,
+          gridGap: 1,
+          overflow: 'hidden',
+        }}
+      >
         <CheckboxButton
           checked={props.isAutoQuantizeActive}
           onChange={props.handleAutoQuantizeChange}

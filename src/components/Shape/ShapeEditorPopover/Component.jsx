@@ -155,18 +155,27 @@ class ShapeEditorPopoverComponent extends Component {
           />
         </div>
         {/*<button onClick={this.props.onQuantizeClick}>Quantize</button>*/}
-        <Button
-          color={colorString}
-          onClick={this.props.onQuantizeFactorChange(2)}
-        >
-          {'*2'}
-        </Button>
-        <Button
-          color={colorString}
-          onClick={this.props.onQuantizeFactorChange(0.5)}
-        >
-          {'/2'}
-        </Button>
+        <div className={styles.thirds}>
+          <Button
+            color={colorString}
+            onClick={this.props.onQuantizeFactorChange(2)}
+          >
+            {'*2'}
+          </Button>
+          <Button
+            color={colorString}
+            onClick={this.props.onQuantizeFactorChange(0.5)}
+          >
+            {'/2'}
+          </Button>
+          <Button
+            title="Reverse Direction"
+            color={colorString}
+            onClick={this.props.onReverseClick}
+          >
+            <i className="ion-arrow-swap" />
+          </Button>
+        </div>
         <Button color={colorString} onClick={this.props.onToTopClick}>
           To Front
         </Button>

@@ -37,6 +37,7 @@ function Button(props) {
 
   return props.href ? (
     <a
+      title={props.title}
       href={props.href}
       download={props.download}
       className={props.className}
@@ -46,7 +47,12 @@ function Button(props) {
       {props.children}
     </a>
   ) : (
-    <button className={props.className} onClick={props.onClick} style={style}>
+    <button
+      title={props.title}
+      className={props.className}
+      onClick={props.onClick}
+      style={style}
+    >
       {props.children}
     </button>
   );

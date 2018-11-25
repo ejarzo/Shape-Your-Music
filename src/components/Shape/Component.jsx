@@ -52,6 +52,7 @@ const propTypes = {
   handleQuantizeFactorChange: PropTypes.func.isRequired,
   handleToTopClick: PropTypes.func.isRequired,
   handleToBottomClick: PropTypes.func.isRequired,
+  handleReverseClick: PropTypes.func.isRequired,
 
   averagePoint: PropTypes.object.isRequired,
   editorPosition: PropTypes.object.isRequired,
@@ -103,6 +104,7 @@ class ShapeComponent extends React.Component {
       isDragging,
       noteIndexModifier,
       isSelected,
+      handleReverseClick,
     } = this.props;
 
     const color = themeColors[colorIndex];
@@ -219,6 +221,7 @@ class ShapeComponent extends React.Component {
               perimeter={perimeter}
               onToTopClick={handleToTopClick}
               onToBottomClick={handleToBottomClick}
+              onReverseClick={handleReverseClick}
             />
           </Portal>
         </Group>

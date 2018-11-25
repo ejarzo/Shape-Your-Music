@@ -7,7 +7,16 @@
   grid-gap: 2px;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 30px auto 1fr 1fr 30px;
-  box-shadow: 1px 2px 19px rgba(0,0,0,0.3);
+  box-shadow: 1px 2px 19px rgba(0, 0, 0, 0.3);
+}
+
+.thirds {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-gap: 2px;
+
+  grid-template-columns: repeat(3, 1fr);
+  grid-column: 2 / 4;
 }
 
 .sliderContainer {
@@ -26,7 +35,7 @@
   display: block;
   position: absolute;
   top: 40px;
-  content: " ";
+  content: ' ';
   height: 0;
   width: 0;
   pointer-events: none;
@@ -38,7 +47,8 @@
   height: 30px;
 }
 
-.deleteButton, .colorPickerContainer {
+.deleteButton,
+.colorPickerContainer {
   grid-column: 2 / 4;
   text-align: center;
   color: #fff;

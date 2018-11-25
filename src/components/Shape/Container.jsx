@@ -98,6 +98,7 @@ class ShapeContainer extends Component {
     );
     this.handleToTopClick = this.handleToTopClick.bind(this);
     this.handleToBottomClick = this.handleToBottomClick.bind(this);
+    this.handleReverseClick = this.handleReverseClick.bind(this);
   }
 
   componentWillMount() {
@@ -552,6 +553,18 @@ class ShapeContainer extends Component {
     });
   }
 
+  handleReverseClick() {
+    const { scaleObj } = this.props;
+    const { points } = this.state;
+    const reversed = [points[0], points[1]];
+    for (let i = points.length - 2; i >= 2; i -= 2) {
+      reversed.push(points[i]);
+      reversed.push(points[i + 1]);
+    }
+    this.setNoteEvents(scaleObj, reversed);
+    this.setState({ points: reversed });
+  }
+
   /* --- Vertices --------------------------------------------------------- */
 
   handleVertexDragMove(i) {
@@ -670,6 +683,7 @@ class ShapeContainer extends Component {
         handleSoloChange={() => this.props.onSoloChange(this.props.index)}
         handleToTopClick={this.handleToTopClick}
         handleToBottomClick={this.handleToBottomClick}
+        handleReverseClick={this.handleReverseClick}
       />
     );
   }

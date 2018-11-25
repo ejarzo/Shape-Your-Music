@@ -15,7 +15,7 @@ import {
   forEachPoint,
 } from 'utils/shape';
 
-import InstrumentPresets from 'presets';
+import PRESETS from 'presets';
 import ShapeComponent from './Component';
 
 const propTypes = {
@@ -304,7 +304,7 @@ class ShapeContainer extends Component {
   setSynth(props, colorIndex) {
     const selectedInstrumentIndex = props.selectedInstruments[colorIndex];
     const knobVals = props.knobVals[colorIndex];
-    const synthObj = InstrumentPresets[selectedInstrumentIndex];
+    const synthObj = PRESETS[selectedInstrumentIndex];
 
     if (this.synth) {
       this.synth.triggerRelease();
@@ -387,7 +387,7 @@ class ShapeContainer extends Component {
 
   setEffectVal(val, i) {
     const presetIndex = this.props.selectedInstruments[this.state.colorIndex];
-    const synthParams = InstrumentPresets[presetIndex];
+    const synthParams = PRESETS[presetIndex];
 
     // set synth value when knobs are changed
     // values for connected effects are set with the colorController

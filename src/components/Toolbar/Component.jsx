@@ -16,6 +16,7 @@ import { themeColors, appColors, getDarker } from 'utils/color';
 import styles from './styles.module.css';
 
 import { TOOL_TYPES } from 'views/Project/Container';
+import { SCALES, TONICS } from 'utils/music';
 
 const { black, grayLightest, red } = appColors;
 const propTypes = {
@@ -42,8 +43,6 @@ const propTypes = {
   handleTempoChange: PropTypes.func.isRequired,
   tempo: PropTypes.number.isRequired,
   scaleObj: PropTypes.object.isRequired,
-  tonicsList: PropTypes.array.isRequired,
-  scalesList: PropTypes.array.isRequired,
   handleTonicChange: PropTypes.func.isRequired,
   handleScaleChange: PropTypes.func.isRequired,
 
@@ -225,13 +224,13 @@ function MusicalControls(props) {
       <TempoInput onChange={props.handleTempoChange} value={props.tempo} />
       <CustomSelect
         value={props.scaleObj.tonic.toString(true)}
-        options={props.tonicsList}
+        options={TONICS}
         onChange={props.handleTonicChange}
         title="Key Root"
       />
       <CustomSelect
         value={props.scaleObj.name}
-        options={props.scalesList}
+        options={SCALES}
         onChange={props.handleScaleChange}
         title="Key Mode"
       />
@@ -241,8 +240,6 @@ function MusicalControls(props) {
 
 MusicalControls.propTypes = {
   scaleObj: PropTypes.object.isRequired,
-  scalesList: PropTypes.array.isRequired,
-  tonicsList: PropTypes.array.isRequired,
   handleScaleChange: PropTypes.func.isRequired,
   handleTonicChange: PropTypes.func.isRequired,
   handleTempoChange: PropTypes.func.isRequired,
@@ -317,11 +314,8 @@ function ToolbarComponent(props) {
         isAutoQuantizeActive={props.isAutoQuantizeActive}
         handleAutoQuantizeChange={props.handleAutoQuantizeChange}
       />
-      {/* TODO tempo */}
       <MusicalControls
         scaleObj={props.scaleObj}
-        scalesList={props.scalesList}
-        tonicsList={props.tonicsList}
         handleTonicChange={props.handleTonicChange}
         handleScaleChange={props.handleScaleChange}
         handleTempoChange={props.handleTempoChange}

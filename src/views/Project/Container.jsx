@@ -10,7 +10,7 @@ import Toolbar from 'components/Toolbar';
 import Sidebar from 'components/Sidebar';
 import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
-import InstrumentPresets from 'presets';
+import PRESETS from 'presets';
 import { themeColors } from 'utils/color';
 
 /* ========================================================================== */
@@ -19,40 +19,6 @@ export const TOOL_TYPES = {
   EDIT: 'edit',
   DRAW: 'draw',
 };
-
-const tonicsList = [
-  { value: 'a', label: 'A' },
-  { value: 'a#', label: 'A#' },
-  { value: 'b', label: 'B' },
-  { value: 'c', label: 'C' },
-  { value: 'c#', label: 'C#' },
-  { value: 'd', label: 'D' },
-  { value: 'd#', label: 'D#' },
-  { value: 'e', label: 'E' },
-  { value: 'f', label: 'F' },
-  { value: 'f#', label: 'F#' },
-  { value: 'g', label: 'G' },
-  { value: 'g#', label: 'G#' },
-];
-
-const scalesList = [
-  { value: 'major', label: 'Major' },
-  { value: 'minor', label: 'Minor' },
-  { value: 'dorian', label: 'Dorian' },
-  { value: 'phrygian', label: 'Phrygian' },
-  { value: 'lydian', label: 'Lydian' },
-  { value: 'mixolydian', label: 'Mixolydian' },
-  { value: 'locrian', label: 'Locrian' },
-  { value: 'majorpentatonic', label: 'Major Pentatonic' },
-  { value: 'minorpentatonic', label: 'Minor Pentatonic' },
-  { value: 'chromatic', label: 'Chromatic' },
-  { value: 'blues', label: 'Blues' },
-  { value: 'doubleharmonic', label: 'Double Harmonic' },
-  { value: 'flamenco', label: 'Flamenco' },
-  { value: 'harmonicminor', label: 'Harmonic Minor' },
-  { value: 'melodicminor', label: 'Melodic Minor' },
-  { value: 'wholetone', label: 'Wholetone' },
-];
 
 /* master output */
 const masterCompressor = new Tone.Compressor({
@@ -86,9 +52,9 @@ class Project extends Component {
     const selectedInstruments = [0, 1, 4, 3, 2];
     const knobVals = [];
     selectedInstruments.forEach(instrumentIndex => {
-      const instrumentDefaults = InstrumentPresets[
-        instrumentIndex
-      ].dynamicParams.map(param => param.default);
+      const instrumentDefaults = PRESETS[instrumentIndex].dynamicParams.map(
+        param => param.default
+      );
       knobVals.push(instrumentDefaults);
     });
 
@@ -312,14 +278,14 @@ class Project extends Component {
 
   handleInstChange(colorIndex) {
     return instrumentName => {
-      const instrumentIndex = InstrumentPresets.findIndex(
+      const instrumentIndex = PRESETS.findIndex(
         ({ name }) => name === instrumentName
       );
       const selectedInstruments = this.state.selectedInstruments.slice();
       selectedInstruments[colorIndex] = instrumentIndex;
-      const defaultKnobvals = InstrumentPresets[
-        instrumentIndex
-      ].dynamicParams.map(param => param.default);
+      const defaultKnobvals = PRESETS[instrumentIndex].dynamicParams.map(
+        param => param.default
+      );
 
       const knobVals = this.state.knobVals.slice();
       knobVals[colorIndex] = defaultKnobvals;
@@ -384,37 +350,53 @@ class Project extends Component {
   /* =============================== RENDER =============================== */
 
   render() {
+    const {
+      isPlaying,
+      isRecording,
+      isArmed,
+      activeColorIndex,
+      activeTool,
+      isGridActive,
+      isSnapToGridActive,
+      isAutoQuantizeActive,
+      tempo,
+      scaleObj,
+      isFullscreenEnabled,
+      selectedInstruments,
+      knobVals,
+      quantizeLength,
+      downloadUrls,
+    } = this.state;
+
     return (
       <Fullscreen
-        enabled={this.state.isFullscreenEnabled}
+        enabled={isFullscreenEnabled}
         onChange={isFullscreenEnabled => this.setState({ isFullscreenEnabled })}
       >
         {/* The Controls */}
         <Toolbar
-          isPlaying={this.state.isPlaying}
-          isRecording={this.state.isRecording}
-          isArmed={this.state.isArmed}
-          activeColorIndex={this.state.activeColorIndex}
-          activeTool={this.state.activeTool}
+          isPlaying={isPlaying}
+          isRecording={isRecording}
+          isArmed={isArmed}
+          activeColorIndex={activeColorIndex}
+          activeTool={activeTool}
           handlePlayClick={this.handlePlayClick}
           handleRecordClick={this.handleRecordClick}
           handleColorChange={this.handleColorChange}
           handleDrawToolClick={this.handleDrawToolClick}
           handleEditToolClick={this.handleEditToolClick}
-          isGridActive={this.state.isGridActive}
+          isGridActive={isGridActive}
           handleGridToggleChange={this.handleGridToggleChange}
-          isSnapToGridActive={this.state.isSnapToGridActive}
+          isSnapToGridActive={isSnapToGridActive}
           handleSnapToGridToggleChange={this.handleSnapToGridToggleChange}
-          isAutoQuantizeActive={this.state.isAutoQuantizeActive}
+          isAutoQuantizeActive={isAutoQuantizeActive}
           handleAutoQuantizeChange={this.handleAutoQuantizeChange}
           handleTempoChange={this.handleTempoChange}
-          tempo={this.state.tempo}
-          scaleObj={this.state.scaleObj}
-          tonicsList={tonicsList}
+          tempo={tempo}
+          scaleObj={scaleObj}
           handleTonicChange={this.handleTonicChange}
-          scalesList={scalesList}
           handleScaleChange={this.handleScaleChange}
-          isFullscreenEnabled={this.state.isFullscreenEnabled}
+          isFullscreenEnabled={isFullscreenEnabled}
           handleFullscreenButtonClick={this.handleFullscreenButtonClick}
           handleClearButtonClick={this.handleClearButtonClick}
         />
@@ -422,28 +404,29 @@ class Project extends Component {
         {/* The Canvas */}
         <ShapeCanvas
           ref={c => (this.shapeCanvas = c)}
-          colorIndex={this.state.activeColorIndex}
-          activeTool={this.state.activeTool}
-          selectedInstruments={this.state.selectedInstruments}
-          knobVals={this.state.knobVals}
-          isAutoQuantizeActive={this.state.isAutoQuantizeActive}
-          isPlaying={this.state.isPlaying}
-          scaleObj={this.state.scaleObj}
-          tempo={this.state.tempo}
-          quantizeLength={this.state.quantizeLength}
-          isGridActive={this.state.isGridActive}
-          isSnapToGridActive={this.state.isSnapToGridActive}
+          colorIndex={activeColorIndex}
+          activeTool={activeTool}
+          selectedInstruments={selectedInstruments}
+          knobVals={knobVals}
+          isAutoQuantizeActive={isAutoQuantizeActive}
+          isPlaying={isPlaying}
+          scaleObj={scaleObj}
+          tempo={tempo}
+          quantizeLength={quantizeLength}
+          isGridActive={isGridActive}
+          isSnapToGridActive={isSnapToGridActive}
         />
 
         {/* Instrument controller panels */}
         <ColorControllerPanel
-          selectedInstruments={this.state.selectedInstruments}
-          instrumentPresets={InstrumentPresets}
+          selectedInstruments={selectedInstruments}
           onInstChange={this.handleInstChange}
           onKnobChange={this.handleKnobChange}
-          knobVals={this.state.knobVals}
+          knobVals={knobVals}
         />
-        <Sidebar downloadUrls={this.state.downloadUrls} />
+
+        {/* Sidebar */}
+        <Sidebar downloadUrls={downloadUrls} />
       </Fullscreen>
     );
   }

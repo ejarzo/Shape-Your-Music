@@ -4,9 +4,9 @@ import ColorController from './ColorController';
 import cx from 'classnames';
 import { themeColors } from 'utils/color';
 import styles from './styles.module.css';
+import PRESETS from 'presets';
 
 const propTypes = {
-  instrumentPresets: PropTypes.array.isRequired,
   selectedInstruments: PropTypes.array.isRequired,
   knobVals: PropTypes.array.isRequired,
   onInstChange: PropTypes.func.isRequired,
@@ -31,7 +31,6 @@ class ColorControllerPanel extends Component {
       onInstChange,
       onKnobChange,
       knobVals,
-      instrumentPresets,
       selectedInstruments,
     } = this.props;
 
@@ -63,7 +62,7 @@ class ColorControllerPanel extends Component {
                     onInstChange={onInstChange(colorIndex)}
                     onKnobChange={onKnobChange(colorIndex)}
                     knobVals={knobVals[colorIndex]}
-                    synthParams={instrumentPresets[selectedInstrumentIndex]}
+                    synthParams={PRESETS[selectedInstrumentIndex]}
                   />
                 </div>
               );

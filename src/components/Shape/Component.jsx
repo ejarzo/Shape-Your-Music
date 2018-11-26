@@ -47,7 +47,6 @@ const propTypes = {
   handleMuteChange: PropTypes.func.isRequired,
   handleSoloChange: PropTypes.func.isRequired,
   handleColorChange: PropTypes.func.isRequired,
-  handleQuantizeClick: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
   handleQuantizeFactorChange: PropTypes.func.isRequired,
   handleToTopClick: PropTypes.func.isRequired,
@@ -72,6 +71,7 @@ class ShapeComponent extends React.Component {
   }
 
   render() {
+    console.log('shape render');
     const {
       index,
       editorPosition,
@@ -84,7 +84,6 @@ class ShapeComponent extends React.Component {
       handleSoloChange,
       colorIndex,
       handleColorChange,
-      handleQuantizeClick,
       handleDelete,
       handleQuantizeFactorChange,
       handleToTopClick,
@@ -209,22 +208,21 @@ class ShapeComponent extends React.Component {
             <ShapeEditorPopover
               index={index}
               position={editorPosition}
-              tempo={project.tempo}
-              volume={volume}
-              onVolumeChange={handleVolumeChange}
-              isMuted={isMuted}
-              onMuteChange={handleMuteChange}
-              isSoloed={soloedShapeIndex === index}
-              onSoloChange={handleSoloChange}
               colorIndex={colorIndex}
-              onColorChange={handleColorChange}
-              onQuantizeClick={handleQuantizeClick}
-              onDeleteClick={handleDelete}
-              onQuantizeFactorChange={handleQuantizeFactorChange}
+              volume={volume}
               perimeter={perimeter}
+              isMuted={isMuted}
+              isSoloed={soloedShapeIndex === index}
+              // handlers
+              onSoloChange={handleSoloChange}
+              onMuteChange={handleMuteChange}
+              onVolumeChange={handleVolumeChange}
+              onColorChange={handleColorChange(index)}
+              onQuantizeFactorChange={handleQuantizeFactorChange}
+              onReverseClick={handleReverseClick}
               onToTopClick={handleToTopClick}
               onToBottomClick={handleToBottomClick}
-              onReverseClick={handleReverseClick}
+              onDeleteClick={() => handleDelete(index)}
             />
           </Portal>
         </Group>

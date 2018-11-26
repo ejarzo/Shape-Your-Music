@@ -1,5 +1,2 @@
 import ShapeCanvasContainer from './Container';
-
-const ShapeCanvas = ShapeCanvasContainer;
-
-export default ShapeCanvas;
+export default ShapeCanvasContainer;

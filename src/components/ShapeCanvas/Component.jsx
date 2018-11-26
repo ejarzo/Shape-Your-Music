@@ -63,8 +63,8 @@ function ShapeCanvasComponent(props) {
 
         <Layer>
           <Group>
-            {props.shapesList.map(
-              (points, index) =>
+            {props.shapesList.map(({ points, colorIndex }, index) => {
+              return (
                 !props.deletedShapeIndeces[index] && (
                   <Shape
                     key={index}
@@ -77,16 +77,18 @@ function ShapeCanvasComponent(props) {
                     isAutoQuantizeActive={props.isAutoQuantizeActive}
                     isSelected={index === props.selectedShapeIndex}
                     soloedShapeIndex={props.soloedShapeIndex}
-                    colorIndex={props.colorIndex}
+                    colorIndex={colorIndex}
                     selectedInstruments={props.selectedInstruments}
                     knobVals={props.knobVals}
-                    onShapeClick={props.handleShapeClick}
-                    onDelete={props.handleShapeDelete} // TODO
+                    handleClick={props.handleShapeClick}
+                    handleDelete={props.handleShapeDelete}
+                    handleColorChange={props.handleShapeColorChange}
                     onSoloChange={props.handleShapeSolo}
                     tempo={props.tempo}
                   />
                 )
-            )}
+              );
+            })}
           </Group>
         </Layer>
 

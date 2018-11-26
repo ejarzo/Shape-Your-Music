@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Color from 'color';
@@ -37,17 +37,16 @@ const propTypes = {
   snapToGrid: PropTypes.func.isRequired,
 
   onShapeClick: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
   onSoloChange: PropTypes.func.isRequired,
 };
 
-class ShapeContainer extends Component {
+class ShapeContainer extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
       points: props.points,
-      colorIndex: props.colorIndex,
+      // colorIndex: props.colorIndex,
 
       volume: -5,
       isMuted: false,
@@ -69,12 +68,10 @@ class ShapeContainer extends Component {
 
     // shape attribute changes
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
-    this.handleColorChange = this.handleColorChange.bind(this);
     this.handleMuteChange = this.handleMuteChange.bind(this);
 
     // shape events
     this.handleMouseDown = this.handleMouseDown.bind(this);
-    this.handleClick = this.handleClick.bind(this);
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleMouseOut = this.handleMouseOut.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
@@ -91,7 +88,6 @@ class ShapeContainer extends Component {
     );
 
     // shape editor handlers
-    this.handleDelete = this.handleDelete.bind(this);
     this.handleQuantizeClick = this.handleQuantizeClick.bind(this);
     this.handleQuantizeFactorChange = this.handleQuantizeFactorChange.bind(
       this
@@ -102,21 +98,25 @@ class ShapeContainer extends Component {
   }
 
   componentWillMount() {
-    this.setSynth(this.props, this.state.colorIndex);
+    const { colorIndex } = this.props;
+    console.log(colorIndex);
+    const { points, quantizeFactor } = this.state;
+
+    this.setSynth(this.props, colorIndex);
     this.part = this.getPart();
 
     // TODO ugly
     if (this.props.isAutoQuantizeActive) {
       const newPoints = this.getPointsForFixedPerimeterLength(
-        this.state.points,
-        this.quantizeLength * this.state.quantizeFactor
+        points,
+        this.quantizeLength * quantizeFactor
       );
       this.setNoteEvents(this.props.scaleObj, newPoints);
       this.setState({
         points: newPoints,
       });
     } else {
-      this.setNoteEvents(this.props.scaleObj, this.state.points);
+      this.setNoteEvents(this.props.scaleObj, points);
     }
   }
 
@@ -133,11 +133,11 @@ class ShapeContainer extends Component {
   componentWillUpdate(nextProps, nextState) {
     /* change instrument when color's instrument changes, or when shape's color changes */
     if (
-      nextProps.selectedInstruments[nextState.colorIndex] !==
-        this.props.selectedInstruments[nextState.colorIndex] ||
-      nextState.colorIndex !== this.state.colorIndex
+      nextProps.selectedInstruments[nextProps.colorIndex] !==
+        this.props.selectedInstruments[nextProps.colorIndex] ||
+      nextProps.colorIndex !== this.props.colorIndex
     ) {
-      this.setSynth(nextProps, nextState.colorIndex);
+      this.setSynth(nextProps, nextProps.colorIndex);
     }
 
     if (!nextProps.isPlaying && this.props.isPlaying) {
@@ -186,9 +186,9 @@ class ShapeContainer extends Component {
     }
 
     /* update effect values (knobs) */
-    nextProps.knobVals[this.state.colorIndex].forEach((val, i) => {
+    nextProps.knobVals[this.props.colorIndex].forEach((val, i) => {
       // TODO
-      if (this.props.knobVals[this.state.colorIndex][i] !== val) {
+      if (this.props.knobVals[this.props.colorIndex][i] !== val) {
         this.setEffectVal(val, i);
       }
     });
@@ -198,12 +198,6 @@ class ShapeContainer extends Component {
       const isSoloed = nextProps.soloedShapeIndex === nextProps.index;
       this.solo.solo = isSoloed;
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return !(
-      _.isEqual(this.props, nextProps) && _.isEqual(this.state, nextState)
-    );
   }
 
   /* ================================ AUDIO =============================== */
@@ -253,7 +247,7 @@ class ShapeContainer extends Component {
           });
           animCircle.to({
             radius: 5,
-            fill: themeColors[this.state.colorIndex],
+            fill: themeColors[this.props.colorIndex],
             duration: 0.3,
           });
         }
@@ -386,7 +380,8 @@ class ShapeContainer extends Component {
   }
 
   setEffectVal(val, i) {
-    const presetIndex = this.props.selectedInstruments[this.state.colorIndex];
+    const { colorIndex } = this.props;
+    const presetIndex = this.props.selectedInstruments[colorIndex];
     const synthParams = PRESETS[presetIndex];
 
     // set synth value when knobs are changed
@@ -406,14 +401,6 @@ class ShapeContainer extends Component {
       editorX: e.evt.offsetX,
       editorY: e.evt.offsetY,
     });
-  }
-
-  handleClick() {
-    this.props.onShapeClick(this.props.index);
-  }
-
-  handleDelete() {
-    this.props.onDelete(this.props.index);
   }
 
   /* Drag */
@@ -469,13 +456,6 @@ class ShapeContainer extends Component {
   }
 
   /* --- Editor Panel ----------------------------------------------------- */
-
-  /* --- Color --- */
-  handleColorChange(colorObj) {
-    this.setState({
-      colorIndex: themeColors.indexOf(colorObj.hex),
-    });
-  }
 
   /* --- Volume --- */
   handleVolumeChange(val) {
@@ -593,7 +573,7 @@ class ShapeContainer extends Component {
   /* --- Helper ----------------------------------------------------------- */
 
   getFillColor() {
-    const color = themeColors[this.state.colorIndex];
+    const color = themeColors[this.props.colorIndex];
     const alphaAmount = this.props.isSelected ? 0.8 : 0.4;
     return Color(color)
       .alpha(alphaAmount)
@@ -618,22 +598,46 @@ class ShapeContainer extends Component {
   /* =============================== RENDER =============================== */
 
   render() {
-    const color = themeColors[this.state.colorIndex];
-    const isEditMode = this.props.activeTool === TOOL_TYPES.EDIT;
+    const {
+      index,
+      colorIndex,
+      activeTool,
+      soloedShapeIndex,
+      scaleObj,
+      isPlaying,
+      tempo,
+      isSelected,
+      handleClick,
+      handleColorChange,
+      handleDelete,
+      onSoloChange,
+    } = this.props;
+
+    const {
+      isMuted,
+      isHoveredOver,
+      points,
+      volume,
+      noteIndexModifier,
+      isDragging,
+      averagePoint,
+      editorX,
+      editorY,
+    } = this.state;
+
+    const color = themeColors[colorIndex];
+    const isEditMode = activeTool === TOOL_TYPES.EDIT;
     let opacity = 1;
 
-    if (
-      this.props.soloedShapeIndex >= 0 &&
-      this.props.soloedShapeIndex !== this.props.index
-    ) {
+    if (soloedShapeIndex >= 0 && soloedShapeIndex !== index) {
       opacity = 0.4;
     }
-    if (this.state.isMuted) {
+    if (isMuted) {
       opacity = 0.2;
     }
 
     const attrs = {
-      strokeWidth: isEditMode ? (this.state.isHoveredOver ? 4 : 2) : 2,
+      strokeWidth: isEditMode ? (isHoveredOver ? 4 : 2) : 2,
       stroke: color,
       fill: this.getFillColor(),
       opacity,
@@ -643,44 +647,44 @@ class ShapeContainer extends Component {
       <ShapeComponent
         ref={c => (this.shapeComponentElement = c)}
         project={{
-          scaleObj: this.props.scaleObj,
+          scaleObj: scaleObj,
           isEditMode: isEditMode,
-          isPlaying: this.props.isPlaying,
-          tempo: this.props.tempo,
+          isPlaying: isPlaying,
+          tempo: tempo,
         }}
-        index={this.props.index}
-        points={this.state.points}
+        index={index}
+        points={points}
         attrs={attrs}
-        volume={this.state.volume}
-        colorIndex={this.state.colorIndex}
-        noteIndexModifier={this.state.noteIndexModifier}
-        isDragging={this.state.isDragging}
-        isSelected={this.props.isSelected}
-        isMuted={this.state.isMuted}
-        soloedShapeIndex={this.props.soloedShapeIndex}
-        averagePoint={this.state.averagePoint}
+        volume={volume}
+        colorIndex={colorIndex}
+        noteIndexModifier={noteIndexModifier}
+        isDragging={isDragging}
+        isSelected={isSelected}
+        isMuted={isMuted}
+        soloedShapeIndex={soloedShapeIndex}
+        averagePoint={averagePoint}
         editorPosition={{
-          x: this.state.editorX,
-          y: this.state.editorY,
+          x: editorX,
+          y: editorY,
         }}
         // shape event handlers
         dragBoundFunc={this.dragBoundFunc}
         handleDrag={this.handleDrag}
         handleDragStart={this.handleDragStart}
         handleDragEnd={this.handleDragEnd}
-        handleClick={this.handleClick}
+        handleClick={() => handleClick(index)}
         handleMouseDown={this.handleMouseDown}
         handleMouseOver={this.handleMouseOver}
         handleMouseOut={this.handleMouseOut}
         handleVertexDragMove={this.handleVertexDragMove}
         // editor panel handlers
-        handleColorChange={this.handleColorChange}
+        handleColorChange={handleColorChange}
         handleQuantizeClick={this.handleQuantizeClick}
-        handleDelete={this.handleDelete}
+        handleDelete={handleDelete}
         handleQuantizeFactorChange={this.handleQuantizeFactorChange}
         handleVolumeChange={this.handleVolumeChange}
         handleMuteChange={this.handleMuteChange}
-        handleSoloChange={() => this.props.onSoloChange(this.props.index)}
+        handleSoloChange={() => onSoloChange(index)}
         handleToTopClick={this.handleToTopClick}
         handleToBottomClick={this.handleToBottomClick}
         handleReverseClick={this.handleReverseClick}

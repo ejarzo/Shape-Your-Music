@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Circle } from 'react-konva';
 
 import { dist } from 'utils/math';
-import { appColors } from 'utils/color';
+import { themeColors, appColors } from 'utils/color';
 import ShapeCanvasComponent from './Component';
 import { TOOL_TYPES } from 'views/Project/Container';
 
@@ -54,6 +54,7 @@ class ShapeCanvas extends Component {
     this.handleShapeClick = this.handleShapeClick.bind(this);
     this.handleShapeDelete = this.handleShapeDelete.bind(this);
     this.handleShapeSolo = this.handleShapeSolo.bind(this);
+    this.handleShapeColorChange = this.handleShapeColorChange.bind(this);
     this.snapToGrid = this.snapToGrid.bind(this);
 
     this.clearAll = this.clearAll.bind(this);
@@ -76,7 +77,7 @@ class ShapeCanvas extends Component {
   appendShape() {
     const shapesList = this.state.shapesList.slice();
     const points = this.state.currPoints.slice();
-    shapesList.push(points);
+    shapesList.push({ points, colorIndex: this.props.colorIndex });
 
     const deletedShapeIndeces = this.state.deletedShapeIndeces.slice();
     deletedShapeIndeces.push(0);
@@ -204,6 +205,19 @@ class ShapeCanvas extends Component {
     this.setState({ soloedShapeIndex });
   }
 
+  handleShapeColorChange(index) {
+    return colorObj => {
+      const shapes = this.state.shapesList.slice();
+      const shape = shapes[index];
+      shape.colorIndex = themeColors.indexOf(colorObj.hex);
+      shapes[index] = shape;
+
+      this.setState({
+        shapesList: shapes,
+      });
+    };
+  }
+
   /* ================================ GRID ================================ */
   // TODO move grid to component
   createGrid() {
@@ -260,7 +274,7 @@ class ShapeCanvas extends Component {
           );
         }
       }
-      shapesList.push(pointsList);
+      shapesList.push({ points: pointsList, colorIndex: 0 });
     }
 
     return shapesList;
@@ -299,6 +313,7 @@ class ShapeCanvas extends Component {
         handleShapeClick={this.handleShapeClick}
         handleShapeDelete={this.handleShapeDelete}
         handleShapeSolo={this.handleShapeSolo}
+        handleShapeColorChange={this.handleShapeColorChange}
       />
     );
   }

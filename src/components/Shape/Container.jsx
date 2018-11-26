@@ -626,10 +626,11 @@ class ShapeContainer extends PureComponent {
     } = this.state;
 
     const color = themeColors[colorIndex];
+    const isSoloed = soloedShapeIndex === index;
     const isEditMode = activeTool === TOOL_TYPES.EDIT;
     let opacity = 1;
 
-    if (soloedShapeIndex >= 0 && soloedShapeIndex !== index) {
+    if (soloedShapeIndex >= 0 && !isSoloed) {
       opacity = 0.4;
     }
     if (isMuted) {
@@ -661,7 +662,7 @@ class ShapeContainer extends PureComponent {
         isDragging={isDragging}
         isSelected={isSelected}
         isMuted={isMuted}
-        soloedShapeIndex={soloedShapeIndex}
+        isSoloed={isSoloed}
         averagePoint={averagePoint}
         editorPosition={{
           x: editorX,

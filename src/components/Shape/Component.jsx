@@ -30,7 +30,7 @@ const propTypes = {
   isSelected: PropTypes.bool.isRequired,
   isMuted: PropTypes.bool.isRequired,
   isDragging: PropTypes.bool.isRequired,
-  soloedShapeIndex: PropTypes.number.isRequired,
+  isSoloed: PropTypes.bool.isRequired,
 
   dragBoundFunc: PropTypes.func.isRequired,
   handleDrag: PropTypes.func.isRequired,
@@ -77,32 +77,33 @@ class ShapeComponent extends React.Component {
       editorPosition,
       project,
       volume,
-      handleVolumeChange,
       isMuted,
-      handleMuteChange,
-      soloedShapeIndex,
-      handleSoloChange,
+      isSoloed,
       colorIndex,
+      averagePoint,
+      points,
+      dragBoundFunc,
+      attrs,
+      isDragging,
+      noteIndexModifier,
+      isSelected,
+      // handlers
+      handleVolumeChange,
+      handleMuteChange,
+      handleSoloChange,
       handleColorChange,
       handleDelete,
       handleQuantizeFactorChange,
       handleToTopClick,
       handleToBottomClick,
-      averagePoint,
-      points,
-      dragBoundFunc,
-      handleDrag,
-      handleDragStart,
-      handleDragEnd,
-      attrs,
       handleClick,
+      handleDragStart,
+      handleDrag,
+      handleDragEnd,
       handleMouseDown,
       handleMouseOver,
       handleMouseOut,
       handleVertexDragMove,
-      isDragging,
-      noteIndexModifier,
-      isSelected,
       handleReverseClick,
     } = this.props;
 
@@ -212,7 +213,7 @@ class ShapeComponent extends React.Component {
               volume={volume}
               perimeter={perimeter}
               isMuted={isMuted}
-              isSoloed={soloedShapeIndex === index}
+              isSoloed={isSoloed}
               // handlers
               onSoloChange={handleSoloChange}
               onMuteChange={handleMuteChange}

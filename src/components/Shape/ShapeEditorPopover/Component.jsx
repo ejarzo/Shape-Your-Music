@@ -101,6 +101,7 @@ class ShapeEditorPopoverComponent extends Component {
           top,
           left,
           backgroundColor: darkColor,
+          fontWeight: 'bold',
         }}
       >
         <div className={styles.sliderContainer}>

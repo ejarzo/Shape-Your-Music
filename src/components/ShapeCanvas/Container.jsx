@@ -43,21 +43,26 @@ class ShapeCanvas extends Component {
       gridSize: 50,
     };
 
+    this.defaultVolume = -5;
+
     this.state = this.initState;
 
     this.originLockRadius = 15;
     this.gridDots = this.createGrid();
+
+    this.snapToGrid = this.snapToGrid.bind(this);
+    this.clearAll = this.clearAll.bind(this);
 
     this.handleClick = this.handleClick.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleShapeClick = this.handleShapeClick.bind(this);
     this.handleShapeDelete = this.handleShapeDelete.bind(this);
-    this.handleShapeSolo = this.handleShapeSolo.bind(this);
-    this.handleShapeColorChange = this.handleShapeColorChange.bind(this);
-    this.snapToGrid = this.snapToGrid.bind(this);
 
-    this.clearAll = this.clearAll.bind(this);
+    this.handleShapeColorChange = this.handleShapeColorChange.bind(this);
+    this.handleShapeVolumeChange = this.handleShapeVolumeChange.bind(this);
+    this.handleShapeSoloChange = this.handleShapeSoloChange.bind(this);
+    this.handleShapeMuteChange = this.handleShapeMuteChange.bind(this);
   }
 
   componentDidMount() {
@@ -75,9 +80,15 @@ class ShapeCanvas extends Component {
   }
 
   appendShape() {
+    const { colorIndex } = this.props;
     const shapesList = this.state.shapesList.slice();
     const points = this.state.currPoints.slice();
-    shapesList.push({ points, colorIndex: this.props.colorIndex });
+    shapesList.push({
+      points,
+      colorIndex,
+      volume: this.defaultVolume,
+      isMuted: false,
+    });
 
     const deletedShapeIndeces = this.state.deletedShapeIndeces.slice();
     deletedShapeIndeces.push(0);
@@ -200,9 +211,23 @@ class ShapeCanvas extends Component {
     });
   }
 
-  handleShapeSolo(index) {
+  handleShapeSoloChange(index) {
     const soloedShapeIndex = index === this.state.soloedShapeIndex ? -1 : index;
     this.setState({ soloedShapeIndex });
+  }
+
+  handleShapeMuteChange(index) {
+    return () => {
+      console.log(index);
+      const shapes = this.state.shapesList.slice();
+      const shape = shapes[index];
+      shape.isMuted = !shape.isMuted;
+      shapes[index] = shape;
+
+      this.setState({
+        shapesList: shapes,
+      });
+    };
   }
 
   handleShapeColorChange(index) {
@@ -210,6 +235,20 @@ class ShapeCanvas extends Component {
       const shapes = this.state.shapesList.slice();
       const shape = shapes[index];
       shape.colorIndex = themeColors.indexOf(colorObj.hex);
+      shapes[index] = shape;
+
+      this.setState({
+        shapesList: shapes,
+      });
+    };
+  }
+
+  handleShapeVolumeChange(index) {
+    return volume => {
+      console.log('asdasdasd');
+      const shapes = this.state.shapesList.slice();
+      const shape = shapes[index];
+      shape.volume = volume;
       shapes[index] = shape;
 
       this.setState({
@@ -274,7 +313,12 @@ class ShapeCanvas extends Component {
           );
         }
       }
-      shapesList.push({ points: pointsList, colorIndex: 0 });
+      shapesList.push({
+        points: pointsList,
+        colorIndex: 0,
+        volume: this.defaultVolume,
+        isMuted: false,
+      });
     }
 
     return shapesList;
@@ -312,8 +356,10 @@ class ShapeCanvas extends Component {
         knobVals={this.props.knobVals}
         handleShapeClick={this.handleShapeClick}
         handleShapeDelete={this.handleShapeDelete}
-        handleShapeSolo={this.handleShapeSolo}
+        handleShapeSoloChange={this.handleShapeSoloChange}
         handleShapeColorChange={this.handleShapeColorChange}
+        handleShapeVolumeChange={this.handleShapeVolumeChange}
+        handleShapeMuteChange={this.handleShapeMuteChange}
       />
     );
   }

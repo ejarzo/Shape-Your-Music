@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import Color from 'color';
 import Tone from 'tone';
 import { themeColors, appColors } from 'utils/color';
@@ -37,7 +36,7 @@ const propTypes = {
   snapToGrid: PropTypes.func.isRequired,
 
   onShapeClick: PropTypes.func.isRequired,
-  onSoloChange: PropTypes.func.isRequired,
+  handleSoloChange: PropTypes.func.isRequired,
 };
 
 class ShapeContainer extends PureComponent {
@@ -46,10 +45,8 @@ class ShapeContainer extends PureComponent {
 
     this.state = {
       points: props.points,
-      // colorIndex: props.colorIndex,
 
-      volume: -5,
-      isMuted: false,
+      // isMuted: false,
       quantizeFactor: 1,
 
       averagePoint: { x: 0, y: 0 },
@@ -64,11 +61,8 @@ class ShapeContainer extends PureComponent {
       animCircleX: 0,
       animCircleY: 0,
     };
-    this.quantizeLength = 500;
 
-    // shape attribute changes
-    this.handleVolumeChange = this.handleVolumeChange.bind(this);
-    this.handleMuteChange = this.handleMuteChange.bind(this);
+    this.quantizeLength = 500;
 
     // shape events
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -88,7 +82,6 @@ class ShapeContainer extends PureComponent {
     );
 
     // shape editor handlers
-    this.handleQuantizeClick = this.handleQuantizeClick.bind(this);
     this.handleQuantizeFactorChange = this.handleQuantizeFactorChange.bind(
       this
     );
@@ -154,6 +147,18 @@ class ShapeContainer extends PureComponent {
       this.setState({
         isHoveredOver: false,
       });
+    }
+
+    /* set volume */
+    if (nextProps.volume !== this.props.volume) {
+      this.synth.volume.exponentialRampToValueAtTime(
+        nextProps.volume,
+        Tone.now() + 0.2
+      );
+    }
+    /* set mute */
+    if (nextProps.isMuted !== this.props.isMuted) {
+      this.part.mute = nextProps.isMuted;
     }
 
     /* set to fixed perimeter */
@@ -321,7 +326,7 @@ class ShapeContainer extends PureComponent {
 
     this.synth = new synthObj.baseSynth(synthObj.params);
     this.synth.volume.exponentialRampToValueAtTime(
-      this.state.volume,
+      this.props.volume,
       Tone.now() + 0.2
     );
 
@@ -456,34 +461,6 @@ class ShapeContainer extends PureComponent {
   }
 
   /* --- Editor Panel ----------------------------------------------------- */
-
-  /* --- Volume --- */
-  handleVolumeChange(val) {
-    this.synth.volume.exponentialRampToValueAtTime(val, Tone.now() + 0.2);
-    this.setState({
-      volume: val,
-    });
-  }
-
-  handleMuteChange() {
-    const isMuted = !this.state.isMuted;
-    this.part.mute = isMuted;
-    this.setState({ isMuted });
-  }
-
-  /* --- Quantization --- */
-  handleQuantizeClick() {
-    const newPoints = this.getPointsForFixedPerimeterLength(
-      this.state.points,
-      this.quantizeLength * this.state.quantizeFactor
-    );
-
-    this.setNoteEvents(this.props.scaleObj, newPoints);
-    this.setState({
-      points: newPoints,
-    });
-  }
-
   handleQuantizeFactorChange(factor) {
     return () => {
       if (
@@ -564,9 +541,7 @@ class ShapeContainer extends PureComponent {
       }
 
       this.setNoteEvents(scaleObj, points);
-      this.setState({
-        points: points,
-      });
+      this.setState({ points });
     };
   }
 
@@ -600,24 +575,26 @@ class ShapeContainer extends PureComponent {
   render() {
     const {
       index,
+      volume,
       colorIndex,
       activeTool,
       soloedShapeIndex,
+      isMuted,
       scaleObj,
       isPlaying,
       tempo,
       isSelected,
       handleClick,
       handleColorChange,
+      handleVolumeChange,
       handleDelete,
-      onSoloChange,
+      handleSoloChange,
+      handleMuteChange,
     } = this.props;
 
     const {
-      isMuted,
       isHoveredOver,
       points,
-      volume,
       noteIndexModifier,
       isDragging,
       averagePoint,
@@ -683,9 +660,9 @@ class ShapeContainer extends PureComponent {
         handleQuantizeClick={this.handleQuantizeClick}
         handleDelete={handleDelete}
         handleQuantizeFactorChange={this.handleQuantizeFactorChange}
-        handleVolumeChange={this.handleVolumeChange}
-        handleMuteChange={this.handleMuteChange}
-        handleSoloChange={() => onSoloChange(index)}
+        handleVolumeChange={handleVolumeChange(index)}
+        handleMuteChange={handleMuteChange(index)}
+        handleSoloChange={() => handleSoloChange(index)}
         handleToTopClick={this.handleToTopClick}
         handleToBottomClick={this.handleToBottomClick}
         handleReverseClick={this.handleReverseClick}

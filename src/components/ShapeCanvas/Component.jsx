@@ -42,6 +42,26 @@ const propTypes = {
 };
 
 function ShapeCanvasComponent(props) {
+  const {
+    snapToGrid,
+    activeTool,
+    scaleObj,
+    isPlaying,
+    isAutoQuantizeActive,
+    selectedShapeIndex,
+    soloedShapeIndex,
+    selectedInstruments,
+    knobVals,
+    tempo,
+    // handlers
+    handleShapeClick,
+    handleShapeDelete,
+    handleShapeColorChange,
+    handleShapeVolumeChange,
+    handleShapeSoloChange,
+    handleShapeMuteChange,
+  } = props;
+
   return (
     <div
       id="holder"
@@ -63,28 +83,33 @@ function ShapeCanvasComponent(props) {
 
         <Layer>
           <Group>
-            {props.shapesList.map(({ points, colorIndex }, index) => {
+            {props.shapesList.map((shape, index) => {
+              const { points, colorIndex, volume, isMuted } = shape;
               return (
                 !props.deletedShapeIndeces[index] && (
                   <Shape
                     key={index}
                     index={index}
+                    volume={volume}
+                    isMuted={isMuted}
                     points={points}
-                    snapToGrid={props.snapToGrid}
-                    activeTool={props.activeTool}
-                    scaleObj={props.scaleObj}
-                    isPlaying={props.isPlaying}
-                    isAutoQuantizeActive={props.isAutoQuantizeActive}
-                    isSelected={index === props.selectedShapeIndex}
-                    soloedShapeIndex={props.soloedShapeIndex}
+                    snapToGrid={snapToGrid}
+                    activeTool={activeTool}
+                    scaleObj={scaleObj}
+                    isPlaying={isPlaying}
+                    isAutoQuantizeActive={isAutoQuantizeActive}
+                    isSelected={index === selectedShapeIndex}
+                    soloedShapeIndex={soloedShapeIndex}
                     colorIndex={colorIndex}
-                    selectedInstruments={props.selectedInstruments}
-                    knobVals={props.knobVals}
-                    handleClick={props.handleShapeClick}
-                    handleDelete={props.handleShapeDelete}
-                    handleColorChange={props.handleShapeColorChange}
-                    onSoloChange={props.handleShapeSolo}
-                    tempo={props.tempo}
+                    selectedInstruments={selectedInstruments}
+                    knobVals={knobVals}
+                    handleClick={handleShapeClick}
+                    handleDelete={handleShapeDelete}
+                    handleColorChange={handleShapeColorChange}
+                    handleVolumeChange={handleShapeVolumeChange}
+                    handleSoloChange={handleShapeSoloChange}
+                    handleMuteChange={handleShapeMuteChange}
+                    tempo={tempo}
                   />
                 )
               );

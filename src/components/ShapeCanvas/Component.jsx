@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Stage, Layer, Group } from 'react-konva';
 import Shape from 'components/Shape';
 import PhantomShape from './PhantomShape';
+import Grid from './Grid';
 import { themeColors } from 'utils/color';
 
 const propTypes = {
@@ -77,9 +78,18 @@ function ShapeCanvasComponent(props) {
         onContentMouseDown={props.onContentMouseDown}
         quantizeLength={props.quantizeLength}
       >
-        <Layer>
-          <Group>{props.gridDots}</Group>
-        </Layer>
+        {props.isGridActive && (
+          <Layer>
+            <Group>
+              <Grid
+                width={props.width}
+                height={props.height}
+                gridSize={props.gridSize}
+                isGridActive={props.isGridActive}
+              />
+            </Group>
+          </Layer>
+        )}
 
         <Layer>
           <Group>

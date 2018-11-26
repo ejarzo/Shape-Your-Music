@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Circle } from 'react-konva';
 
 import { dist } from 'utils/math';
-import { themeColors, appColors } from 'utils/color';
+import { themeColors } from 'utils/color';
 import ShapeCanvasComponent from './Component';
 import { TOOL_TYPES } from 'views/Project/Container';
 
@@ -43,12 +42,10 @@ class ShapeCanvas extends Component {
       gridSize: 50,
     };
 
-    this.defaultVolume = -5;
-
     this.state = this.initState;
 
+    this.defaultVolume = -5;
     this.originLockRadius = 15;
-    this.gridDots = this.createGrid();
 
     this.snapToGrid = this.snapToGrid.bind(this);
     this.clearAll = this.clearAll.bind(this);
@@ -196,6 +193,8 @@ class ShapeCanvas extends Component {
     }
   }
 
+  /* ====================== Shape handlers ====================== */
+
   handleShapeClick(index) {
     this.setState({
       selectedShapeIndex: index,
@@ -212,8 +211,10 @@ class ShapeCanvas extends Component {
   }
 
   handleShapeSoloChange(index) {
-    const soloedShapeIndex = index === this.state.soloedShapeIndex ? -1 : index;
-    this.setState({ soloedShapeIndex });
+    const { soloedShapeIndex } = this.state;
+    this.setState({
+      soloedShapeIndex: index === soloedShapeIndex ? -1 : index,
+    });
   }
 
   handleShapeMuteChange(index) {
@@ -258,40 +259,12 @@ class ShapeCanvas extends Component {
   }
 
   /* ================================ GRID ================================ */
-  // TODO move grid to component
-  createGrid() {
-    const gridDots = [];
-    const color = appColors.grayDark;
-    const radius = 1;
-
-    for (
-      let x = this.state.gridSize;
-      x < window.innerWidth;
-      x += this.state.gridSize
-    ) {
-      for (
-        let y = this.state.gridSize;
-        y < window.innerHeight;
-        y += this.state.gridSize
-      ) {
-        const gridDot = (
-          <Circle
-            key={'dot' + x + y}
-            x={x}
-            y={y}
-            radius={radius}
-            fill={color}
-          />
-        );
-        gridDots.push(gridDot);
-      }
-    }
-    return gridDots;
-  }
 
   snapToGrid(point) {
-    return this.props.isSnapToGridActive
-      ? Math.round(point / this.state.gridSize) * this.state.gridSize
+    const { isSnapToGridActive } = this.props;
+    const { gridSize } = this.state;
+    return isSnapToGridActive
+      ? Math.round(point / gridSize) * gridSize
       : Math.round(point / 1) * 1;
   }
 
@@ -327,16 +300,15 @@ class ShapeCanvas extends Component {
   /* =============================== RENDER =============================== */
 
   render() {
-    const gridDots = this.props.isGridActive ? this.gridDots : null;
-
     return (
       <ShapeCanvasComponent
         height={window.innerHeight}
         width={window.innerWidth}
+        gridSize={this.state.gridSize}
+        isGridActive={this.props.isGridActive}
         onContentClick={this.handleClick}
         onContentMouseMove={this.handleMouseMove}
         onContentMouseDown={this.handleMouseDown}
-        gridDots={gridDots}
         quantizeLength={this.props.quantizeLength}
         shapesList={this.state.shapesList}
         selectedShapeIndex={this.state.selectedShapeIndex}

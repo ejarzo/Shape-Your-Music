@@ -156,16 +156,14 @@ class ShapeContainer extends PureComponent {
         Tone.now() + 0.2
       );
     }
+
     /* set mute */
     if (nextProps.isMuted !== this.props.isMuted) {
       this.part.mute = nextProps.isMuted;
     }
 
     /* set to fixed perimeter */
-    if (
-      nextProps.isAutoQuantizeActive &&
-      nextProps.isAutoQuantizeActive !== this.props.isAutoQuantizeActive
-    ) {
+    if (nextProps.isAutoQuantizeActive && !this.props.isAutoQuantizeActive) {
       const newPoints = this.getPointsForFixedPerimeterLength(
         this.state.points,
         this.quantizeLength * this.state.quantizeFactor

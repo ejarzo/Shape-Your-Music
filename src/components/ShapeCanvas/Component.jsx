@@ -39,7 +39,7 @@ const propTypes = {
 
   handleShapeClick: PropTypes.func.isRequired,
   handleShapeDelete: PropTypes.func.isRequired,
-  handleShapeSolo: PropTypes.func.isRequired,
+  handleShapeSoloChange: PropTypes.func.isRequired,
 };
 
 function ShapeCanvasComponent(props) {
@@ -61,11 +61,13 @@ function ShapeCanvasComponent(props) {
     handleShapeVolumeChange,
     handleShapeSoloChange,
     handleShapeMuteChange,
+    isAltPressed,
   } = props;
 
   return (
     <div
       id="holder"
+      style={{ cursor: activeTool === 'edit' && isAltPressed && 'copy' }}
       onContextMenu={e => {
         e.preventDefault();
       }}

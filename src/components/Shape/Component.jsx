@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { number, shape, bool, object, func, array } from 'prop-types';
 import { Circle, Group, Line } from 'react-konva';
 
 import { getPerimeterLength } from 'utils/shape';
@@ -11,50 +11,50 @@ import Portal from 'react-portal';
 import ShapeEditorPopover from './ShapeEditorPopover';
 
 const propTypes = {
-  project: PropTypes.shape({
-    scaleObj: PropTypes.object.isRequired,
-    isEditMode: PropTypes.bool.isRequired,
-    isPlaying: PropTypes.bool.isRequired,
-    tempo: PropTypes.number.isRequired,
+  project: shape({
+    scaleObj: object.isRequired,
+    isEditMode: bool.isRequired,
+    isPlaying: bool.isRequired,
+    tempo: number.isRequired,
   }).isRequired,
 
-  points: PropTypes.array.isRequired,
-  attrs: PropTypes.object.isRequired,
+  points: array.isRequired,
+  attrs: object.isRequired,
 
-  noteIndexModifier: PropTypes.number.isRequired,
+  noteIndexModifier: number.isRequired,
 
-  colorIndex: PropTypes.number.isRequired,
-  index: PropTypes.number.isRequired,
-  volume: PropTypes.number.isRequired,
+  colorIndex: number.isRequired,
+  index: number.isRequired,
+  volume: number.isRequired,
 
-  isSelected: PropTypes.bool.isRequired,
-  isMuted: PropTypes.bool.isRequired,
-  isDragging: PropTypes.bool.isRequired,
-  isSoloed: PropTypes.bool.isRequired,
+  isSelected: bool.isRequired,
+  isMuted: bool.isRequired,
+  isDragging: bool.isRequired,
+  isSoloed: bool.isRequired,
 
-  dragBoundFunc: PropTypes.func.isRequired,
-  handleDrag: PropTypes.func.isRequired,
-  handleDragStart: PropTypes.func.isRequired,
-  handleDragEnd: PropTypes.func.isRequired,
+  dragBoundFunc: func.isRequired,
+  handleDrag: func.isRequired,
+  handleDragStart: func.isRequired,
+  handleDragEnd: func.isRequired,
 
-  handleClick: PropTypes.func.isRequired,
-  handleMouseDown: PropTypes.func.isRequired,
-  handleMouseOver: PropTypes.func.isRequired,
-  handleMouseOut: PropTypes.func.isRequired,
-  handleVertexDragMove: PropTypes.func.isRequired,
+  handleClick: func.isRequired,
+  handleMouseDown: func.isRequired,
+  handleMouseOver: func.isRequired,
+  handleMouseOut: func.isRequired,
+  handleVertexDragMove: func.isRequired,
 
-  handleVolumeChange: PropTypes.func.isRequired,
-  handleMuteChange: PropTypes.func.isRequired,
-  handleSoloChange: PropTypes.func.isRequired,
-  handleColorChange: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
-  handleQuantizeFactorChange: PropTypes.func.isRequired,
-  handleToTopClick: PropTypes.func.isRequired,
-  handleToBottomClick: PropTypes.func.isRequired,
-  handleReverseClick: PropTypes.func.isRequired,
+  handleVolumeChange: func.isRequired,
+  handleMuteChange: func.isRequired,
+  handleSoloChange: func.isRequired,
+  handleColorChange: func.isRequired,
+  handleDelete: func.isRequired,
+  handleQuantizeFactorChange: func.isRequired,
+  handleToTopClick: func.isRequired,
+  handleToBottomClick: func.isRequired,
+  handleReverseClick: func.isRequired,
 
-  averagePoint: PropTypes.object.isRequired,
-  editorPosition: PropTypes.object.isRequired,
+  averagePoint: object.isRequired,
+  editorPosition: object.isRequired,
 };
 
 class ShapeComponent extends React.Component {

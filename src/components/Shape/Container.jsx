@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import { number, string, array, bool, object, func } from 'prop-types';
 import Color from 'color';
 import Tone from 'tone';
 import { themeColors, appColors } from 'utils/color';
@@ -18,35 +18,32 @@ import PRESETS from 'presets';
 import ShapeComponent from './Component';
 
 const propTypes = {
-  index: PropTypes.number.isRequired,
-  colorIndex: PropTypes.number.isRequired,
-  points: PropTypes.array.isRequired,
-  isSelected: PropTypes.bool.isRequired,
-  soloedShapeIndex: PropTypes.number.isRequired,
+  index: number.isRequired,
+  colorIndex: number.isRequired,
+  points: array.isRequired,
+  isSelected: bool.isRequired,
+  soloedShapeIndex: number.isRequired,
 
-  isPlaying: PropTypes.bool.isRequired,
-  selectedInstruments: PropTypes.array.isRequired,
-  knobVals: PropTypes.array.isRequired,
+  isPlaying: bool.isRequired,
+  selectedInstruments: array.isRequired,
+  knobVals: array.isRequired,
 
-  isAutoQuantizeActive: PropTypes.bool.isRequired,
-  activeTool: PropTypes.string.isRequired,
-  tempo: PropTypes.number.isRequired,
-  scaleObj: PropTypes.object.isRequired,
+  isAutoQuantizeActive: bool.isRequired,
+  activeTool: string.isRequired,
+  tempo: number.isRequired,
+  scaleObj: object.isRequired,
 
-  snapToGrid: PropTypes.func.isRequired,
+  snapToGrid: func.isRequired,
 
-  onShapeClick: PropTypes.func.isRequired,
-  handleSoloChange: PropTypes.func.isRequired,
+  handleSoloChange: func.isRequired,
 };
 
 class ShapeContainer extends PureComponent {
   constructor(props) {
     super(props);
-
+    const { points } = props;
     this.state = {
-      points: props.points,
-
-      // isMuted: false,
+      points,
       quantizeFactor: 1,
 
       averagePoint: { x: 0, y: 0 },
@@ -92,7 +89,6 @@ class ShapeContainer extends PureComponent {
 
   componentWillMount() {
     const { colorIndex } = this.props;
-    console.log(colorIndex);
     const { points, quantizeFactor } = this.state;
 
     this.setSynth(this.props, colorIndex);
@@ -414,9 +410,10 @@ class ShapeContainer extends PureComponent {
   }
 
   handleDrag() {
+    const { points } = this.state;
     const shapeElement = this.shapeComponentElement.getShapeElement();
     const absPos = shapeElement.getAbsolutePosition();
-    const avgPoint = getAveragePoint(this.state.points);
+    const avgPoint = getAveragePoint(points);
 
     const x = parseInt(absPos.x + avgPoint.x, 10);
     const y = parseInt(absPos.y + avgPoint.y, 10);
@@ -461,23 +458,26 @@ class ShapeContainer extends PureComponent {
   /* --- Editor Panel ----------------------------------------------------- */
   handleQuantizeFactorChange(factor) {
     return () => {
+      const { points, quantizeFactor } = this.state;
+      const { scaleObj, isAutoQuantizeActive } = this.props;
+
       if (
-        (factor < 1 && this.state.quantizeFactor >= 0.25) ||
-        (factor > 1 && this.state.quantizeFactor <= 4)
+        (factor < 1 && quantizeFactor >= 0.25) ||
+        (factor > 1 && quantizeFactor <= 4)
       ) {
-        const newPerim = this.props.isAutoQuantizeActive
-          ? factor * this.state.quantizeFactor * this.quantizeLength
-          : getPerimeterLength(this.state.points) * factor;
+        const newPerim = isAutoQuantizeActive
+          ? factor * quantizeFactor * this.quantizeLength
+          : getPerimeterLength(points) * factor;
         const newPoints = this.getPointsForFixedPerimeterLength(
-          this.state.points,
+          points,
           newPerim
         );
 
-        this.setNoteEvents(this.props.scaleObj, newPoints);
+        this.setNoteEvents(scaleObj, newPoints);
 
         this.setState({
           points: newPoints,
-          quantizeFactor: factor * this.state.quantizeFactor,
+          quantizeFactor: factor * quantizeFactor,
         });
       }
     };
@@ -648,7 +648,14 @@ class ShapeContainer extends PureComponent {
         handleDrag={this.handleDrag}
         handleDragStart={this.handleDragStart}
         handleDragEnd={this.handleDragEnd}
-        handleClick={() => handleClick(index)}
+        handleClick={() => {
+          const shapeElement = this.shapeComponentElement.getShapeElement();
+          const { x, y } = shapeElement.getAbsolutePosition();
+          const absolutePoints = points.map(
+            (p, i) => (i % 2 === 0 ? p + x : p + y)
+          );
+          handleClick(index, absolutePoints);
+        }}
         handleMouseDown={this.handleMouseDown}
         handleMouseOver={this.handleMouseOver}
         handleMouseOut={this.handleMouseOut}

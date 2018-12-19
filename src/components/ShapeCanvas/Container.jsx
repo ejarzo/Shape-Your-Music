@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { object, string, number, array, bool } from 'prop-types';
 
 import { dist } from 'utils/math';
 import { themeColors } from 'utils/color';
@@ -7,20 +7,20 @@ import ShapeCanvasComponent from './Component';
 import { TOOL_TYPES } from 'views/Project/Container';
 
 const propTypes = {
-  activeTool: PropTypes.string.isRequired,
-  tempo: PropTypes.number.isRequired,
-  selectedInstruments: PropTypes.array.isRequired,
-  scaleObj: PropTypes.object.isRequired,
+  activeTool: string.isRequired,
+  tempo: number.isRequired,
+  selectedInstruments: array.isRequired,
+  scaleObj: object.isRequired,
 
-  isPlaying: PropTypes.bool.isRequired,
-  isGridActive: PropTypes.bool.isRequired,
-  isSnapToGridActive: PropTypes.bool.isRequired,
-  isAutoQuantizeActive: PropTypes.bool.isRequired,
-  quantizeLength: PropTypes.number.isRequired,
+  isPlaying: bool.isRequired,
+  isGridActive: bool.isRequired,
+  isSnapToGridActive: bool.isRequired,
+  isAutoQuantizeActive: bool.isRequired,
+  quantizeLength: number.isRequired,
 
-  colorIndex: PropTypes.number.isRequired,
+  colorIndex: number.isRequired,
 
-  knobVals: PropTypes.array.isRequired,
+  knobVals: array.isRequired,
 };
 
 /*
@@ -102,8 +102,9 @@ class ShapeCanvas extends Component {
   }
 
   deleteSelectedShape() {
-    if (this.state.selectedShapeIndex >= 0) {
-      this.handleShapeDelete(this.state.selectedShapeIndex);
+    const { selectedShapeIndex } = this.state;
+    if (selectedShapeIndex >= 0) {
+      this.handleShapeDelete(selectedShapeIndex);
     }
   }
 
@@ -160,9 +161,9 @@ class ShapeCanvas extends Component {
     }
   }
 
-  handleMouseMove(e) {
-    let x = e.evt.offsetX;
-    let y = e.evt.offsetY;
+  handleMouseMove({ evt: { offsetX, offsetY } }) {
+    let x = offsetX;
+    let y = offsetY;
     const originX = this.state.currPoints[0];
     const originY = this.state.currPoints[1];
 
@@ -177,8 +178,7 @@ class ShapeCanvas extends Component {
       // snap to origin if within radius
       if (
         this.state.currPoints.length > 2 &&
-        (dist(e.evt.offsetX, e.evt.offsetY, originX, originY) <
-          this.originLockRadius ||
+        (dist(offsetX, offsetY, originX, originY) < this.originLockRadius ||
           (x === originX && y === originY))
       ) {
         x = originX;
@@ -195,19 +195,31 @@ class ShapeCanvas extends Component {
 
   /* ====================== Shape handlers ====================== */
 
-  handleShapeClick(index) {
-    this.setState({
-      selectedShapeIndex: index,
-    });
+  handleShapeClick(index, points) {
+    const { isAltPressed } = this.props;
+    if (isAltPressed) {
+      const newShapesList = this.state.shapesList.slice();
+      const { colorIndex } = newShapesList[index];
+      const newShape = {
+        points: points.map(p => p + 20),
+        colorIndex,
+        volume: this.defaultVolume,
+        isMuted: false,
+      };
+      newShapesList.push(newShape);
+      this.setState({ shapesList: newShapesList });
+    } else {
+      this.setState({
+        selectedShapeIndex: index,
+      });
+    }
   }
 
   handleShapeDelete(index) {
     const deletedShapeIndeces = this.state.deletedShapeIndeces.slice();
     deletedShapeIndeces[index] = true;
 
-    this.setState({
-      deletedShapeIndeces: deletedShapeIndeces,
-    });
+    this.setState({ deletedShapeIndeces });
   }
 
   handleShapeSoloChange(index) {
@@ -219,15 +231,12 @@ class ShapeCanvas extends Component {
 
   handleShapeMuteChange(index) {
     return () => {
-      console.log(index);
       const shapes = this.state.shapesList.slice();
       const shape = shapes[index];
       shape.isMuted = !shape.isMuted;
       shapes[index] = shape;
 
-      this.setState({
-        shapesList: shapes,
-      });
+      this.setState({ shapesList: shapes });
     };
   }
 
@@ -246,7 +255,6 @@ class ShapeCanvas extends Component {
 
   handleShapeVolumeChange(index) {
     return volume => {
-      console.log('asdasdasd');
       const shapes = this.state.shapesList.slice();
       const shape = shapes[index];
       shape.volume = volume;
@@ -332,6 +340,7 @@ class ShapeCanvas extends Component {
         handleShapeColorChange={this.handleShapeColorChange}
         handleShapeVolumeChange={this.handleShapeVolumeChange}
         handleShapeMuteChange={this.handleShapeMuteChange}
+        isAltPressed={this.props.isAltPressed}
       />
     );
   }

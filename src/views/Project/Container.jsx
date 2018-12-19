@@ -68,6 +68,7 @@ class Project extends Component {
       isPlaying: false,
       isRecording: false,
       isArmed: false,
+      isAltPressed: false,
 
       quantizeLength: 700,
       tempo: props.initState.tempo,
@@ -122,10 +123,12 @@ class Project extends Component {
 
   componentWillMount() {
     document.addEventListener('keydown', this.handleKeyDown.bind(this));
+    document.addEventListener('keyup', this.handleKeyUp.bind(this));
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown.bind(this));
+    document.removeEventListener('keyup', this.handleKeyUp.bind(this));
   }
 
   /* ============================== HANDLERS ============================== */
@@ -314,39 +317,52 @@ class Project extends Component {
   /* --- Keyboard Shortcuts ----------------------------------------------- */
 
   handleKeyDown(event) {
-    console.warn('Keypress:', event.key);
+    const { key } = event;
+    console.warn('Keypress:', key);
 
     /* Space toggles play */
-    if (event.key === ' ') {
+    if (key === ' ') {
       // event.preventDefault(); // stop from clicking focused buttons
       this.handlePlayClick();
     }
 
     /* tab toggles active tool */
-    if (event.key === 'Tab') {
+    if (key === 'Tab') {
       event.preventDefault();
       this.toggleActiveTool();
     }
 
     /* numbers control draw color */
     if (
-      event.key === '1' ||
-      event.key === '2' ||
-      event.key === '3' ||
-      event.key === '4' ||
-      event.key === '5'
+      key === '1' ||
+      key === '2' ||
+      key === '3' ||
+      key === '4' ||
+      key === '5'
     ) {
       this.setState({
-        activeColorIndex: parseInt(event.key, 10) - 1,
+        activeColorIndex: parseInt(key, 10) - 1,
       });
     }
 
     /* backspace deletes the selected shape */
-    if (event.key === 'Backspace') {
+    if (key === 'Backspace') {
       this.shapeCanvas.deleteSelectedShape();
+    }
+
+    /* Alt/option allows duplication */
+    if (key === 'Alt') {
+      this.setState({ isAltPressed: true });
     }
   }
 
+  handleKeyUp(event) {
+    const { key } = event;
+    /* Alt/option allows duplication */
+    if (key === 'Alt') {
+      this.setState({ isAltPressed: false });
+    }
+  }
   /* =============================== RENDER =============================== */
 
   render() {
@@ -366,8 +382,9 @@ class Project extends Component {
       knobVals,
       quantizeLength,
       downloadUrls,
+      isAltPressed,
     } = this.state;
-
+    console.log(isAltPressed);
     return (
       <Fullscreen
         enabled={isFullscreenEnabled}
@@ -415,6 +432,7 @@ class Project extends Component {
           quantizeLength={quantizeLength}
           isGridActive={isGridActive}
           isSnapToGridActive={isSnapToGridActive}
+          isAltPressed={isAltPressed}
         />
 
         {/* Instrument controller panels */}

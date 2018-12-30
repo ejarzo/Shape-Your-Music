@@ -3,7 +3,7 @@ import { number, string, array, bool, object, func } from 'prop-types';
 import Color from 'color';
 import Tone from 'tone';
 import { themeColors, appColors } from 'utils/color';
-import { TOOL_TYPES } from 'views/Project/Container';
+import { TOOL_TYPES, ProjectContext } from 'views/Project/Container';
 
 import { convertValToRange, dist } from 'utils/math';
 import {
@@ -120,6 +120,7 @@ class ShapeContainer extends PureComponent {
   }
 
   componentWillUpdate(nextProps, nextState) {
+    console.log(nextProps.project);
     /* change instrument when color's instrument changes, or when shape's color changes */
     if (
       nextProps.selectedInstruments[nextProps.colorIndex] !==
@@ -677,5 +678,6 @@ class ShapeContainer extends PureComponent {
 }
 
 ShapeContainer.propTypes = propTypes;
+ShapeContainer.contextType = ProjectContext;
 
 export default ShapeContainer;

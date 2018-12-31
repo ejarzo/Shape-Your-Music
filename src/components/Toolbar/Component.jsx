@@ -49,6 +49,7 @@ const propTypes = {
   isFullscreenEnabled: PropTypes.bool.isRequired,
   handleFullscreenButtonClick: PropTypes.func.isRequired,
   handleClearButtonClick: PropTypes.func.isRequired,
+  handleExportToMIDIClick: PropTypes.func.isRequired,
 };
 
 /* ---------------------- Transport ---------------------- */
@@ -326,6 +327,19 @@ function ToolbarComponent(props) {
         handleFullscreenButtonClick={props.handleFullscreenButtonClick}
         handleClearButtonClick={props.handleClearButtonClick}
       />
+      <div className={cx(styles.toolbarSection)}>
+        <div>
+          <Button
+            hasBorder
+            darkHover
+            color={grayLightest}
+            onClick={props.handleExportToMIDIClick}
+            title="Export and download MIDI file"
+          >
+            Export To MIDI
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

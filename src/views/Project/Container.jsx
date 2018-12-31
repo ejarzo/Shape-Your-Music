@@ -117,6 +117,9 @@ class Project extends Component {
     this.recorder = new Recorder(Tone.Master);
     this.beginRecording = this.beginRecording.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
+
+    // export
+    this.handleExportToMIDIClick = this.handleExportToMIDIClick.bind(this);
   }
 
   /* ============================= LIFECYCLE ============================== */
@@ -240,6 +243,16 @@ class Project extends Component {
     });
   }
 
+  handleClearButtonClick() {
+    this.shapeCanvas.clearAll();
+  }
+
+  handleFullscreenButtonClick() {
+    this.setState({
+      isFullscreenEnabled: !this.state.isFullscreenEnabled,
+    });
+  }
+
   /* --- Musical ---------------------------------------------------------- */
 
   handleTempoChange(val) {
@@ -265,16 +278,9 @@ class Project extends Component {
     }
   }
 
-  /* --- Canvas ----------------------------------------------------------- */
-
-  handleClearButtonClick() {
-    this.shapeCanvas.clearAll();
-  }
-
-  handleFullscreenButtonClick() {
-    this.setState({
-      isFullscreenEnabled: !this.state.isFullscreenEnabled,
-    });
+  /* --- Export ----------------------- */
+  handleExportToMIDIClick() {
+    console.log('export to midi');
   }
 
   /* --- Color Controllers ------------------------------------------------ */
@@ -416,6 +422,7 @@ class Project extends Component {
           isFullscreenEnabled={isFullscreenEnabled}
           handleFullscreenButtonClick={this.handleFullscreenButtonClick}
           handleClearButtonClick={this.handleClearButtonClick}
+          handleExportToMIDIClick={this.handleExportToMIDIClick}
         />
 
         {/* The Canvas */}

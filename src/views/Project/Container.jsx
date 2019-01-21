@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+// import MidiWriter from 'midi-writer-js';
 import Fullscreen from 'react-full-screen';
 import Teoria from 'teoria';
 import Tone from 'tone';
@@ -12,9 +12,10 @@ import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
 import PRESETS from 'presets';
 import { themeColors } from 'utils/color';
-
+import { downloadFile } from 'utils/file';
 /* ========================================================================== */
 
+var MidiWriter = require('midi-writer-js');
 export const TOOL_TYPES = {
   EDIT: 'edit',
   DRAW: 'draw',
@@ -280,7 +281,22 @@ class Project extends Component {
 
   /* --- Export ----------------------- */
   handleExportToMIDIClick() {
-    console.log('export to midi');
+    console.log(MidiWriter);
+    const midiSequences = this.shapeCanvas.getMIDISequences();
+
+    midiSequences.forEach(sequence => {
+      var track = new MidiWriter.Track();
+      track.addEvent(new MidiWriter.ProgramChangeEvent({ instrument: 1 }));
+      track.addTrackName('Shape 1');
+
+      sequence.noteEvents.forEach(noteEvent => {
+        var note = new MidiWriter.NoteEvent(noteEvent);
+        track.addEvent(note);
+      });
+
+      var write = new MidiWriter.Writer([track]);
+      downloadFile('midi-download.mid', write.dataUri());
+    });
   }
 
   /* --- Color Controllers ------------------------------------------------ */

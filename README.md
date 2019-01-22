@@ -30,6 +30,11 @@ This is the third iteration of this project. The [original](https://github.com/e
 
 ## User Manual
 
+### Overview
+Sound is created by drawing shapes on the canvas and clicking PLAY. There are two modes: DRAW and EDIT. While in DRAW mode, clicking on the canvas allows you to draw polygons by placing vertices. Each polygon represents a musical melody. In EDIT mode, you can adjust each polygon by dragging its vertices, or by dragging the entire polygon to a new position. Shapes higher up on the canvas start at higher notes than shapes lower down. Moving shapes left or right places them in stereo space (left/right on your speakers or headphones). Also in EDIT mode, you can click on a shape to display a context menu with more options. This menu allows you to change the color, reverse the playback direction, double or half the size, and control the volume of the shape. You can also solo, mute, or delete the shape from this menu.
+
+Each shape is a certain color. The current color with which you are drawing is controlled with the color palette in the toolbar. A shape's color determines which instrument it uses to produce sound. The sounds for each color can be controlled with the colored panels at the bottom of the screen; if the red panel is set to the "Cello" instrument, every red shape will make a cello sound. These panels allow you to select a sound for each color and fine-tune that sound using the four knobs.
+
 ### Toolbar ![Toolbar](https://github.com/ejarzo/Shape-Your-Music/blob/master/src/static/img/readme_images/toolbar.png)
 The toolbar allows you to adjust various aspects of your project.
 

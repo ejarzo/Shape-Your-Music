@@ -33,20 +33,20 @@ This is the third iteration of this project. The [original](https://github.com/e
 ### Toolbar ![Toolbar](https://github.com/ejarzo/Shape-Your-Music/blob/master/src/static/img/readme_images/toolbar.png)
 The toolbar allows you to adjust various aspects of your project.
 
-### Transport
+#### Transport
 | Name          | Description       |
 | ------------- | ----------------- |
 | Play/Stop     | Pressing play starts all shapes at their origin point. A shape plays in the order that it was drawn. |
 | Record        | Pressing record allows you to download your project as an audio file (.wav). If playback is stopped when you click record, recording will begin when you begin playback. If the project is playing when you click record, the recording will start instantly. Pressing stop or record again will end the recording and show a window where you can listen and download the file that was generated. |
 
-### Drawing
+#### Drawing
 | Name          | Description       |
 | ------------- | ----------------- |
 | Color         | Select the color of the shapes you are drawing. Different colored shapes produce different sounds. |
 | Draw          | Draw mode allows you to create shapes. Click to place vertices. Click on the origin point to complete a shape. Right click to cancel. |
 | Edit          | Edit mode allows you to adjust your shapes. Drag vertices to edit the perimeter of your shape. Drag the whole shape to move it. Click on a shape to show more detailed options (see shape controls). |
 
-### Canvas
+#### Canvas
 | Name          | Description       |
 | ------------- | ----------------- |
 | Grid          | When selected, the grid is shown |
@@ -55,7 +55,7 @@ The toolbar allows you to adjust various aspects of your project.
 | Fullscreen    | Toggle Fullscreen |
 | Clear         | Delete all shapes |
 
-### Music
+#### Music
 | Name          | Description       |
 | ------------- | ----------------- |
 | Tempo         | Change the speed of playback |

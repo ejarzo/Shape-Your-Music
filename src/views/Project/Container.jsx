@@ -281,21 +281,26 @@ class Project extends Component {
 
   /* --- Export ----------------------- */
   handleExportToMIDIClick() {
-    console.log(MidiWriter);
-    const midiSequences = this.shapeCanvas.getMIDISequences();
+    const shapeNoteEventsList = this.shapeCanvas.getShapeMIDINoteEvents();
+    console.log('shapeNoteEventsList', shapeNoteEventsList);
 
-    midiSequences.forEach(sequence => {
-      var track = new MidiWriter.Track();
+    shapeNoteEventsList.forEach((noteEvents, i) => {
+      const track = new MidiWriter.Track();
+      track.setTempo(60);
       track.addEvent(new MidiWriter.ProgramChangeEvent({ instrument: 1 }));
-      track.addTrackName('Shape 1');
+      track.addTrackName(`Shape ${i}`);
 
-      sequence.noteEvents.forEach(noteEvent => {
-        var note = new MidiWriter.NoteEvent(noteEvent);
-        track.addEvent(note);
+      noteEvents.forEach(({ note, duration }) => {
+        const midiNoteEvent = {
+          pitch: [note],
+          duration: `T${duration * 60 * (100 / this.state.tempo)}`,
+        };
+        const midiNote = new MidiWriter.NoteEvent(midiNoteEvent);
+        track.addEvent(midiNote);
       });
 
-      var write = new MidiWriter.Writer([track]);
-      downloadFile('midi-download.mid', write.dataUri());
+      const write = new MidiWriter.Writer([track]);
+      downloadFile(`shape-${i}.mid`, write.dataUri());
     });
   }
 

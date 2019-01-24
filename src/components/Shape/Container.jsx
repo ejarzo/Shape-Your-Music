@@ -41,9 +41,9 @@ const propTypes = {
 class ShapeContainer extends PureComponent {
   constructor(props) {
     super(props);
-    const { points } = props;
+    const { initialPoints } = props;
     this.state = {
-      points,
+      points: initialPoints,
       quantizeFactor: 1,
 
       averagePoint: { x: 0, y: 0 },
@@ -111,6 +111,8 @@ class ShapeContainer extends PureComponent {
 
   componentDidMount() {
     this.handleDrag();
+    const { addShapeRef } = this.props;
+    addShapeRef(this);
   }
 
   componentWillUnmount() {
@@ -335,6 +337,51 @@ class ShapeContainer extends PureComponent {
     this.gain = new Tone.Gain().send(`colorFx-${colorIndex}`, 0);
 
     this.synth.chain(this.panner, this.solo, this.gain);
+  }
+
+  getMIDINoteEvents() {
+    const { points } = this.state;
+    const { scaleObj } = this.props;
+    let delay = 0;
+    let prevNoteIndex = this.state.firstNoteIndex;
+
+    const noteEvents = [];
+    forEachPoint(points, (p, i) => {
+      if (i >= 2) {
+        const noteInfo = this.getNoteInfo(
+          points,
+          scaleObj,
+          i,
+          i - 2,
+          i - 4,
+          prevNoteIndex
+        );
+
+        const noteIndex = noteInfo.noteIndex + this.state.noteIndexModifier;
+        const noteString = scaleObj.get(noteIndex).toString();
+        noteEvents.push({ note: noteString, duration: noteInfo.duration });
+
+        delay += noteInfo.duration;
+        prevNoteIndex = noteInfo.noteIndex;
+      }
+    });
+
+    // last edge
+    const n = points.length;
+    const lastNoteInfo = this.getNoteInfo(
+      points,
+      scaleObj,
+      0,
+      n - 2,
+      n - 4,
+      prevNoteIndex
+    );
+
+    const noteIndex = lastNoteInfo.noteIndex + this.state.noteIndexModifier;
+    const noteString = scaleObj.get(noteIndex).toString();
+    noteEvents.push({ note: noteString, duration: lastNoteInfo.duration });
+
+    return noteEvents;
   }
 
   setNoteEvents(scaleObj, points) {

@@ -100,11 +100,12 @@ function ShapeCanvasComponent(props) {
               return (
                 !props.deletedShapeIndeces[index] && (
                   <Shape
+                    addShapeRef={props.addShapeRef}
                     key={index}
                     index={index}
                     volume={volume}
                     isMuted={isMuted}
-                    points={points}
+                    initialPoints={points}
                     snapToGrid={snapToGrid}
                     activeTool={activeTool}
                     scaleObj={scaleObj}

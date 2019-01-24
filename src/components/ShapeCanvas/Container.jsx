@@ -42,6 +42,8 @@ class ShapeCanvas extends Component {
       gridSize: 50,
     };
 
+    this.shapeRefs = [];
+
     this.state = this.initState;
 
     this.defaultVolume = -5;
@@ -64,7 +66,7 @@ class ShapeCanvas extends Component {
 
   componentDidMount() {
     this.setState({
-      shapesList: this.generateRandomShapes(2, 3),
+      shapesList: this.generateRandomShapes(1, 4),
     });
   }
 
@@ -91,14 +93,30 @@ class ShapeCanvas extends Component {
     deletedShapeIndeces.push(0);
 
     this.setState({
-      shapesList: shapesList,
-      deletedShapeIndeces: deletedShapeIndeces,
+      shapesList,
+      deletedShapeIndeces,
       currPoints: [],
     });
   }
 
   canChangeTool() {
     return this.state.drawingState === 'pending';
+  }
+
+  getShapeMIDINoteEvents() {
+    console.log('shape canvas getting MIDI sequences');
+    const midiSequences = [];
+    console.log(this.shapeRefs);
+    this.shapeRefs.forEach((shape, i) => {
+      console.log('getting shape midi notes for shape', i);
+      if (!shape) {
+        return;
+      }
+      const midiSequence = shape.getMIDINoteEvents();
+      midiSequences.push(midiSequence);
+    });
+
+    return midiSequences;
   }
 
   deleteSelectedShape() {
@@ -308,39 +326,65 @@ class ShapeCanvas extends Component {
   /* =============================== RENDER =============================== */
 
   render() {
+    const {
+      gridSize,
+      shapesList,
+      selectedShapeIndex,
+      soloedShapeIndex,
+      deletedShapeIndeces,
+      mousePos,
+      currPoints,
+      drawingState,
+    } = this.state;
+
+    const {
+      isGridActive,
+      quantizeLength,
+      colorIndex,
+      activeTool,
+      tempo,
+      scaleObj,
+      isPlaying,
+      isAutoQuantizeActive,
+      selectedInstruments,
+      knobVals,
+      isAltPressed,
+    } = this.props;
+
     return (
       <ShapeCanvasComponent
+        addShapeRef={c => this.shapeRefs.push(c)}
         height={window.innerHeight}
         width={window.innerWidth}
-        gridSize={this.state.gridSize}
-        isGridActive={this.props.isGridActive}
+        gridSize={gridSize}
+        isGridActive={isGridActive}
         onContentClick={this.handleClick}
         onContentMouseMove={this.handleMouseMove}
         onContentMouseDown={this.handleMouseDown}
-        quantizeLength={this.props.quantizeLength}
-        shapesList={this.state.shapesList}
-        selectedShapeIndex={this.state.selectedShapeIndex}
-        soloedShapeIndex={this.state.soloedShapeIndex}
-        deletedShapeIndeces={this.state.deletedShapeIndeces}
-        colorIndex={this.props.colorIndex}
-        mousePos={this.state.mousePos}
-        currPoints={this.state.currPoints}
-        activeTool={this.props.activeTool}
-        drawingState={this.state.drawingState}
+        quantizeLength={quantizeLength}
+        shapesList={shapesList}
+        selectedShapeIndex={selectedShapeIndex}
+        soloedShapeIndex={soloedShapeIndex}
+        deletedShapeIndeces={deletedShapeIndeces}
+        colorIndex={colorIndex}
+        mousePos={mousePos}
+        currPoints={currPoints}
+        activeTool={activeTool}
+        drawingState={drawingState}
         snapToGrid={this.snapToGrid}
-        tempo={this.props.tempo}
-        scaleObj={this.props.scaleObj}
-        isPlaying={this.props.isPlaying}
-        isAutoQuantizeActive={this.props.isAutoQuantizeActive}
-        selectedInstruments={this.props.selectedInstruments}
-        knobVals={this.props.knobVals}
+        tempo={tempo}
+        scaleObj={scaleObj}
+        isPlaying={isPlaying}
+        isAutoQuantizeActive={isAutoQuantizeActive}
+        selectedInstruments={selectedInstruments}
+        knobVals={knobVals}
         handleShapeClick={this.handleShapeClick}
         handleShapeDelete={this.handleShapeDelete}
         handleShapeSoloChange={this.handleShapeSoloChange}
         handleShapeColorChange={this.handleShapeColorChange}
         handleShapeVolumeChange={this.handleShapeVolumeChange}
         handleShapeMuteChange={this.handleShapeMuteChange}
-        isAltPressed={this.props.isAltPressed}
+        isAltPressed={isAltPressed}
       />
     );
   }

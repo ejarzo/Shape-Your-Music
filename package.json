@@ -49,6 +49,6 @@
     "eslint-plugin-jasmine": "^2.10.1",
     "eslint-plugin-prettier": "^2.6.2",
     "gh-pages": "^1.2.0",
-    "prettier": "^1.14.2"
+    "prettier": "^1.16.1"
   }
 }

@@ -88,7 +88,7 @@ class ShapeContainer extends PureComponent {
   }
 
   componentWillMount() {
-    const { colorIndex } = this.props;
+    const { colorIndex, scaleObj } = this.props;
     const { points, quantizeFactor } = this.state;
 
     this.setSynth(this.props, colorIndex);
@@ -100,12 +100,12 @@ class ShapeContainer extends PureComponent {
         points,
         this.quantizeLength * quantizeFactor
       );
-      this.setNoteEvents(this.props.scaleObj, newPoints);
+      this.setNoteEvents(scaleObj, newPoints);
       this.setState({
         points: newPoints,
       });
     } else {
-      this.setNoteEvents(this.props.scaleObj, points);
+      this.setNoteEvents(scaleObj, points);
     }
   }
 
@@ -117,6 +117,7 @@ class ShapeContainer extends PureComponent {
 
   componentWillUnmount() {
     // this.shapeElement.destroy();
+    this.props.removeShapeRef();
     this.part.dispose();
     this.synth.dispose();
   }
@@ -698,8 +699,8 @@ class ShapeContainer extends PureComponent {
         handleClick={() => {
           const shapeElement = this.shapeComponentElement.getShapeElement();
           const { x, y } = shapeElement.getAbsolutePosition();
-          const absolutePoints = points.map(
-            (p, i) => (i % 2 === 0 ? p + x : p + y)
+          const absolutePoints = points.map((p, i) =>
+            i % 2 === 0 ? p + x : p + y
           );
           handleClick(index, absolutePoints);
         }}

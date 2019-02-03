@@ -104,11 +104,10 @@ class ShapeCanvas extends Component {
   }
 
   getShapeMIDINoteEvents() {
-    console.log('shape canvas getting MIDI sequences');
     const midiSequences = [];
-    console.log(this.shapeRefs);
+    const { deletedShapeIndeces } = this.state;
     this.shapeRefs.forEach((shape, i) => {
-      console.log('getting shape midi notes for shape', i);
+      console.log(shape);
       if (!shape) {
         return;
       }
@@ -354,6 +353,7 @@ class ShapeCanvas extends Component {
     return (
       <ShapeCanvasComponent
         addShapeRef={c => this.shapeRefs.push(c)}
+        removeShapeRef={i => (this.shapeRefs[i] = null)}
         height={window.innerHeight}
         width={window.innerWidth}
         gridSize={gridSize}

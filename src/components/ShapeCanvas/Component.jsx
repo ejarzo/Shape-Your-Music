@@ -101,6 +101,7 @@ function ShapeCanvasComponent(props) {
                 !props.deletedShapeIndeces[index] && (
                   <Shape
                     addShapeRef={props.addShapeRef}
+                    removeShapeRef={() => props.removeShapeRef(index)}
                     key={index}
                     index={index}
                     volume={volume}

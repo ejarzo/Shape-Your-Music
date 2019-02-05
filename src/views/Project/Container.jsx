@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import MidiWriter from 'midi-writer-js';
 import Fullscreen from 'react-full-screen';
 import Teoria from 'teoria';
 import Tone from 'tone';
-import Recorder from 'utils/Recorder';
 
 import Toolbar from 'components/Toolbar';
 import Sidebar from 'components/Sidebar';
 import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
-import PRESETS from 'presets';
+
+import Recorder from 'utils/Recorder';
 import { themeColors } from 'utils/color';
 import { downloadFile } from 'utils/file';
+import PRESETS from 'presets';
+
+const MidiWriter = require('midi-writer-js');
+
 /* ========================================================================== */
 
-var MidiWriter = require('midi-writer-js');
 export const TOOL_TYPES = {
   EDIT: 'edit',
   DRAW: 'draw',
@@ -29,6 +31,7 @@ const masterCompressor = new Tone.Compressor({
   attack: 0.003,
   knee: 30,
 });
+
 const masterLimiter = new Tone.Limiter(-2);
 const masterOutput = new Tone.Gain(0.9).receive('masterOutput');
 
@@ -162,27 +165,31 @@ class Project extends Component {
   }
 
   handlePlayClick() {
+    const { isArmed, isRecording } = this.state;
     Tone.Transport.toggle();
-    if (this.state.isArmed) {
+
+    if (isArmed) {
       this.beginRecording();
     }
-    if (this.state.isRecording) {
+    if (isRecording) {
       this.stopRecording();
     }
+
     this.setState(prevState => ({
       isPlaying: !prevState.isPlaying,
     }));
   }
 
   handleRecordClick() {
-    if (this.state.isRecording) {
+    const { isArmed, isPlaying, isRecording } = this.state;
+    if (isRecording) {
       this.stopRecording();
     } else {
-      if (this.state.isPlaying) {
+      if (isPlaying) {
         this.beginRecording();
       } else {
         this.setState({
-          isArmed: !this.state.isArmed,
+          isArmed: !isArmed,
         });
       }
     }
@@ -191,9 +198,10 @@ class Project extends Component {
   /* --- Tool ------------------------------------------------------------- */
 
   toggleActiveTool() {
+    const { activeTool } = this.state;
     let newTool = TOOL_TYPES.DRAW;
     if (this.shapeCanvas.canChangeTool()) {
-      if (this.state.activeTool === TOOL_TYPES.DRAW) {
+      if (activeTool === TOOL_TYPES.DRAW) {
         newTool = TOOL_TYPES.EDIT;
       }
       this.setState({
@@ -203,14 +211,14 @@ class Project extends Component {
   }
 
   handleDrawToolClick() {
-    this.setAciveTool(TOOL_TYPES.DRAW);
+    this.setActiveTool(TOOL_TYPES.DRAW);
   }
 
   handleEditToolClick() {
-    this.setAciveTool(TOOL_TYPES.EDIT);
+    this.setActiveTool(TOOL_TYPES.EDIT);
   }
 
-  setAciveTool(tool) {
+  setActiveTool(tool) {
     if (this.shapeCanvas.canChangeTool()) {
       this.setState({
         activeTool: tool,
@@ -257,11 +265,11 @@ class Project extends Component {
   /* --- Musical ---------------------------------------------------------- */
 
   handleTempoChange(val) {
+    // TODO: move to class variables
     const min = 1;
     const max = 100;
-    this.setState({
-      tempo: Math.max(Math.min(val, max), min),
-    });
+    const tempo = Math.max(Math.min(val, max), min);
+    this.setState({ tempo });
   }
 
   handleTonicChange(val) {
@@ -272,7 +280,9 @@ class Project extends Component {
 
   handleScaleChange(val) {
     if (val) {
-      const tonic = this.state.scaleObj.tonic;
+      const {
+        scaleObj: { tonic },
+      } = this.state;
       this.setState({
         scaleObj: tonic.scale(val.value),
       });
@@ -280,16 +290,21 @@ class Project extends Component {
   }
 
   /* --- Export ----------------------- */
+
+  /* Exports (downloads) all shapes as individual MIDI files */
   handleExportToMIDIClick() {
+    // get list of MIDI events from the shape canvas
     const shapeNoteEventsList = this.shapeCanvas.getShapeMIDINoteEvents();
-    console.log('shapeNoteEventsList', shapeNoteEventsList);
 
     shapeNoteEventsList.forEach((noteEvents, i) => {
+      // create MIDI track for each shape
       const track = new MidiWriter.Track();
+      // TODO: confirm what the MIDI tempo should be
       track.setTempo(60);
       track.addEvent(new MidiWriter.ProgramChangeEvent({ instrument: 1 }));
-      track.addTrackName(`Shape ${i}`);
+      track.addTrackName(`Shape ${i + 1}`);
 
+      // TODO: confirm Tick duration calculation
       noteEvents.forEach(({ note, duration }) => {
         const midiNoteEvent = {
           pitch: [note],
@@ -300,7 +315,10 @@ class Project extends Component {
       });
 
       const write = new MidiWriter.Writer([track]);
-      downloadFile(`shape-${i}.mid`, write.dataUri());
+
+      // downloads each shape as it's own MIDI file.
+      // TODO: zip these files
+      downloadFile(`shape-${i + 1}.mid`, write.dataUri());
     });
   }
 
@@ -411,7 +429,7 @@ class Project extends Component {
       downloadUrls,
       isAltPressed,
     } = this.state;
-    console.log(isAltPressed);
+
     return (
       <Fullscreen
         enabled={isFullscreenEnabled}

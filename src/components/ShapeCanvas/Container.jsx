@@ -105,12 +105,9 @@ class ShapeCanvas extends Component {
 
   getShapeMIDINoteEvents() {
     const midiSequences = [];
-    const { deletedShapeIndeces } = this.state;
     this.shapeRefs.forEach((shape, i) => {
-      console.log(shape);
-      if (!shape) {
-        return;
-      }
+      if (!shape) return;
+
       const midiSequence = shape.getMIDINoteEvents();
       midiSequences.push(midiSequence);
     });
@@ -298,9 +295,9 @@ class ShapeCanvas extends Component {
   generateRandomShapes(nShapes, nPoints) {
     const shapesList = [];
 
-    for (var i = 0; i < nShapes; i++) {
+    for (let i = 0; i < nShapes; i++) {
       const pointsList = [];
-      for (var j = 0; j < nPoints * 2; j++) {
+      for (let j = 0; j < nPoints * 2; j++) {
         if (j % 2) {
           pointsList.push(
             parseInt(Math.random() * (window.innerHeight - 100), 10)
@@ -352,6 +349,7 @@ class ShapeCanvas extends Component {
 
     return (
       <ShapeCanvasComponent
+        // TODO: revisit shape refs
         addShapeRef={c => this.shapeRefs.push(c)}
         removeShapeRef={i => (this.shapeRefs[i] = null)}
         height={window.innerHeight}

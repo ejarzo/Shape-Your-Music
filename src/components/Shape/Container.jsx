@@ -343,9 +343,9 @@ class ShapeContainer extends PureComponent {
   getMIDINoteEvents() {
     const { points } = this.state;
     const { scaleObj } = this.props;
-    let delay = 0;
     let prevNoteIndex = this.state.firstNoteIndex;
 
+    // TODO: clean this up
     const noteEvents = [];
     forEachPoint(points, (p, i) => {
       if (i >= 2) {
@@ -362,7 +362,6 @@ class ShapeContainer extends PureComponent {
         const noteString = scaleObj.get(noteIndex).toString();
         noteEvents.push({ note: noteString, duration: noteInfo.duration });
 
-        delay += noteInfo.duration;
         prevNoteIndex = noteInfo.noteIndex;
       }
     });

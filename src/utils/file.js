@@ -1,12 +1,17 @@
-export const downloadFile = (filename, dataFile) => {
-  const element = document.createElement('a');
-  element.setAttribute('href', dataFile);
-  element.setAttribute('download', filename);
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
-  element.style.display = 'none';
-  document.body.appendChild(element);
+export const ZipFile = name => {
+  const zip = new JSZip();
+  const folder = zip.folder(name);
 
-  element.click();
-
-  document.body.removeChild(element);
+  return {
+    add: (name, data) => {
+      folder.file(`${name}`, data);
+    },
+    download: async () => {
+      const content = await zip.generateAsync({ type: 'blob' });
+      saveAs(content, `${name}.zip`);
+    },
+  };
 };

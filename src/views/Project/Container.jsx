@@ -11,7 +11,7 @@ import ColorControllerPanel from 'components/ColorControllerPanel';
 
 import Recorder from 'utils/Recorder';
 import { themeColors } from 'utils/color';
-import { downloadFile } from 'utils/file';
+import { ZipFile } from 'utils/file';
 import PRESETS from 'presets';
 
 const MidiWriter = require('midi-writer-js');
@@ -295,6 +295,7 @@ class Project extends Component {
   handleExportToMIDIClick() {
     // get list of MIDI events from the shape canvas
     const shapeNoteEventsList = this.shapeCanvas.getShapeMIDINoteEvents();
+    const zip = ZipFile('Shape Your Music Project');
 
     shapeNoteEventsList.forEach((noteEvents, i) => {
       // create MIDI track for each shape
@@ -315,11 +316,10 @@ class Project extends Component {
       });
 
       const write = new MidiWriter.Writer([track]);
-
-      // downloads each shape as it's own MIDI file.
-      // TODO: zip these files
-      downloadFile(`shape-${i + 1}.mid`, write.dataUri());
+      zip.add(`shape-${i + 1}.mid`, write.dataUri());
     });
+
+    zip.download();
   }
 
   /* --- Color Controllers ------------------------------------------------ */

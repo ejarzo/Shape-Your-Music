@@ -75,6 +75,12 @@ The toolbar allows you to adjust various aspects of your project.
 | Key   | Select the root note            |
 | Scale | Select the musical scale (mode) |
 
+### Exporting
+
+There are two ways to export your project: as audio or as MIDI.
+1. **Audio**: Recording audio works like many DAWs. Click the record button to begin recording. Recording will begin when playback starts and captures the audio output of the project. Clicking record again or stopping playback will stop the current recording, which can then be downloaded as a `.wav` file from the Downloads section in the sidebar.
+2. **MIDI**: Click `Export to MIDI` to download the project as a folder of MIDI files, one for each shape. Since the tempo is not synced to any real BPM, the melodies may sound slower or faster when loaded into another program, but all shapes will maintain their relative lengths.
+
 ### Shape Menu
 
 ![Shape Menu](readme-images/shape-context-menu.png)

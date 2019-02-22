@@ -4,7 +4,7 @@ _A geometric sequencer._
 
 [https://ejarzo.github.io/Shape-Your-Music/](https://ejarzo.github.io/Shape-Your-Music/)
 
-![Project](https://github.com/ejarzo/Shape-Your-Music/blob/master/src/static/img/readme_images/project_screenshot.png)
+![Project](readme-images/project_screenshot.png)
 
 ## About
 

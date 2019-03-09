@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { bool, func, string, number, object } from 'prop-types';
 import cx from 'classnames';
 
 import Button from 'components/Button';
@@ -18,38 +18,26 @@ import styles from './styles.module.css';
 import { TOOL_TYPES } from 'views/Project/Container';
 import { SCALES, TONICS } from 'utils/music';
 
+import ProjectContextConsumer from 'views/Project/ProjectContextConsumer';
+
 const { black, grayLightest, red } = appColors;
+
 const propTypes = {
-  isColorPickerOpen: PropTypes.bool.isRequired,
-
-  isPlaying: PropTypes.bool.isRequired,
-  isRecording: PropTypes.bool.isRequired,
-  isArmed: PropTypes.bool.isRequired,
-  activeTool: PropTypes.string.isRequired,
-  handlePlayClick: PropTypes.func.isRequired,
-  handleRecordClick: PropTypes.func.isRequired,
-  activeColorIndex: PropTypes.number.isRequired,
-  handleColorChange: PropTypes.func.isRequired,
-  handleDrawToolClick: PropTypes.func.isRequired,
-  handleEditToolClick: PropTypes.func.isRequired,
-
-  isGridActive: PropTypes.bool.isRequired,
-  isSnapToGridActive: PropTypes.bool.isRequired,
-  isAutoQuantizeActive: PropTypes.bool.isRequired,
-  handleGridToggleChange: PropTypes.func.isRequired,
-  handleSnapToGridToggleChange: PropTypes.func.isRequired,
-  handleAutoQuantizeChange: PropTypes.func.isRequired,
-
-  handleTempoChange: PropTypes.func.isRequired,
-  tempo: PropTypes.number.isRequired,
-  scaleObj: PropTypes.object.isRequired,
-  handleTonicChange: PropTypes.func.isRequired,
-  handleScaleChange: PropTypes.func.isRequired,
-
-  isFullscreenEnabled: PropTypes.bool.isRequired,
-  handleFullscreenButtonClick: PropTypes.func.isRequired,
-  handleClearButtonClick: PropTypes.func.isRequired,
-  handleExportToMIDIClick: PropTypes.func.isRequired,
+  isColorPickerOpen: bool.isRequired,
+  handlePlayClick: func.isRequired,
+  handleRecordClick: func.isRequired,
+  handleColorChange: func.isRequired,
+  handleDrawToolClick: func.isRequired,
+  handleEditToolClick: func.isRequired,
+  handleGridToggleChange: func.isRequired,
+  handleSnapToGridToggleChange: func.isRequired,
+  handleAutoQuantizeChange: func.isRequired,
+  handleTempoChange: func.isRequired,
+  handleTonicChange: func.isRequired,
+  handleScaleChange: func.isRequired,
+  handleFullscreenButtonClick: func.isRequired,
+  handleClearButtonClick: func.isRequired,
+  handleExportToMIDIClick: func.isRequired,
 };
 
 /* ---------------------- Transport ---------------------- */
@@ -80,29 +68,40 @@ function TransportControls(props) {
 }
 
 TransportControls.propTypes = {
-  isPlaying: PropTypes.bool.isRequired,
-  isArmed: PropTypes.bool.isRequired,
-  isRecording: PropTypes.bool.isRequired,
-  handlePlayClick: PropTypes.func.isRequired,
-  handleRecordClick: PropTypes.func.isRequired,
+  isPlaying: bool.isRequired,
+  isArmed: bool.isRequired,
+  isRecording: bool.isRequired,
+  handlePlayClick: func.isRequired,
+  handleRecordClick: func.isRequired,
 };
 
 /* ---------------------- Tool Select ---------------------- */
 
 function ToolSelect(props) {
-  const isDrawTool = props.activeTool === TOOL_TYPES.DRAW;
-  const isEditTool = props.activeTool === TOOL_TYPES.EDIT;
-  const activeColor = themeColors[props.activeColorIndex];
+  const {
+    activeTool,
+    isColorPickerOpen,
+    handleColorMouseEnter,
+    handleColorMouseLeave,
+    activeColorIndex,
+    onColorChange,
+    handleDrawToolClick,
+    handleEditToolClick,
+  } = props;
+
+  const isDrawTool = activeTool === TOOL_TYPES.DRAW;
+  const isEditTool = activeTool === TOOL_TYPES.EDIT;
+  const activeColor = themeColors[activeColorIndex];
 
   return (
     <div className={cx(styles.toolbarSection, styles.toolSelect)}>
       <div
-        onMouseEnter={props.handleColorMouseEnter}
-        onMouseLeave={props.handleColorMouseLeave}
+        onMouseEnter={handleColorMouseEnter}
+        onMouseLeave={handleColorMouseLeave}
         style={{ position: 'relative' }}
       >
         <Button hasBorder color={activeColor} />
-        {props.isColorPickerOpen && (
+        {isColorPickerOpen && (
           <div
             style={{
               width: 140,
@@ -113,8 +112,8 @@ function ToolSelect(props) {
             }}
           >
             <ColorPicker
-              color={themeColors[props.activeColorIndex]}
-              onChange={props.onColorChange}
+              color={themeColors[activeColorIndex]}
+              onChange={onColorChange}
             />
           </div>
         )}
@@ -123,7 +122,7 @@ function ToolSelect(props) {
         darkHover
         hasBorder
         color={isDrawTool ? black : grayLightest}
-        onClick={props.handleDrawToolClick}
+        onClick={handleDrawToolClick}
         title="Draw Tool (TAB to toggle)"
       >
         <DrawToolIcon fill={isDrawTool ? grayLightest : black} />
@@ -132,7 +131,7 @@ function ToolSelect(props) {
         darkHover
         hasBorder
         color={isEditTool ? black : grayLightest}
-        onClick={props.handleEditToolClick}
+        onClick={handleEditToolClick}
         title="Edit Tool (TAB to toggle)"
       >
         <EditToolIcon fill={!isDrawTool ? grayLightest : black} />
@@ -142,14 +141,14 @@ function ToolSelect(props) {
 }
 
 ToolSelect.propTypes = {
-  activeTool: PropTypes.string.isRequired,
-  handleDrawToolClick: PropTypes.func.isRequired,
-  handleEditToolClick: PropTypes.func.isRequired,
-  activeColorIndex: PropTypes.number.isRequired,
-  onColorChange: PropTypes.func.isRequired,
-  handleColorMouseEnter: PropTypes.func.isRequired,
-  handleColorMouseLeave: PropTypes.func.isRequired,
-  isColorPickerOpen: PropTypes.bool.isRequired,
+  activeTool: string.isRequired,
+  handleDrawToolClick: func.isRequired,
+  handleEditToolClick: func.isRequired,
+  activeColorIndex: number.isRequired,
+  onColorChange: func.isRequired,
+  handleColorMouseEnter: func.isRequired,
+  handleColorMouseLeave: func.isRequired,
+  isColorPickerOpen: bool.isRequired,
 };
 
 /* ---------------------- Canvas ---------------------- */
@@ -209,12 +208,12 @@ function CanvasControls(props) {
 }
 
 CanvasControls.propTypes = {
-  isGridActive: PropTypes.bool.isRequired,
-  isSnapToGridActive: PropTypes.bool.isRequired,
-  isAutoQuantizeActive: PropTypes.bool.isRequired,
-  handleGridToggleChange: PropTypes.func.isRequired,
-  handleSnapToGridToggleChange: PropTypes.func.isRequired,
-  handleAutoQuantizeChange: PropTypes.func.isRequired,
+  isGridActive: bool.isRequired,
+  isSnapToGridActive: bool.isRequired,
+  isAutoQuantizeActive: bool.isRequired,
+  handleGridToggleChange: func.isRequired,
+  handleSnapToGridToggleChange: func.isRequired,
+  handleAutoQuantizeChange: func.isRequired,
 };
 
 /* ---------------------- Musical ---------------------- */
@@ -240,11 +239,11 @@ function MusicalControls(props) {
 }
 
 MusicalControls.propTypes = {
-  scaleObj: PropTypes.object.isRequired,
-  handleScaleChange: PropTypes.func.isRequired,
-  handleTonicChange: PropTypes.func.isRequired,
-  handleTempoChange: PropTypes.func.isRequired,
-  tempo: PropTypes.number.isRequired,
+  scaleObj: object.isRequired,
+  handleScaleChange: func.isRequired,
+  handleTonicChange: func.isRequired,
+  handleTempoChange: func.isRequired,
+  tempo: number.isRequired,
 };
 
 /* ---------------------- Other ---------------------- */
@@ -279,68 +278,108 @@ function OtherControls(props) {
 }
 
 OtherControls.propTypes = {
-  isFullscreenEnabled: PropTypes.bool.isRequired,
-  handleFullscreenButtonClick: PropTypes.func.isRequired,
-  handleClearButtonClick: PropTypes.func.isRequired,
+  isFullscreenEnabled: bool.isRequired,
+  handleFullscreenButtonClick: func.isRequired,
+  handleClearButtonClick: func.isRequired,
 };
 
 /* ================================ Toolbar ================================ */
 function ToolbarComponent(props) {
-  return (
-    <div className={styles.toolbar}>
-      <TransportControls
-        isPlaying={props.isPlaying}
-        isRecording={props.isRecording}
-        isArmed={props.isArmed}
-        handlePlayClick={props.handlePlayClick}
-        handleRecordClick={props.handleRecordClick}
-      />
+  const {
+    handlePlayClick,
+    handleRecordClick,
+    handleDrawToolClick,
+    handleEditToolClick,
+    handleGridToggleChange,
+    handleSnapToGridToggleChange,
+    handleAutoQuantizeChange,
+    handleTonicChange,
+    handleScaleChange,
+    handleTempoChange,
+    handleFullscreenButtonClick,
+    handleClearButtonClick,
+    handleExportToMIDIClick,
+    handleColorChange,
+    handleColorMouseEnter,
+    handleColorMouseLeave,
+    isColorPickerOpen,
+  } = props;
 
-      {/* TODO Color */}
-      <ToolSelect
-        handleDrawToolClick={props.handleDrawToolClick}
-        activeTool={props.activeTool}
-        handleEditToolClick={props.handleEditToolClick}
-        activeColorIndex={props.activeColorIndex}
-        onColorChange={props.handleColorChange}
-        handleColorMouseEnter={props.handleColorMouseEnter}
-        handleColorMouseLeave={props.handleColorMouseLeave}
-        isColorPickerOpen={props.isColorPickerOpen}
-      />
-      <CanvasControls
-        isGridActive={props.isGridActive}
-        handleGridToggleChange={props.handleGridToggleChange}
-        isSnapToGridActive={props.isSnapToGridActive}
-        handleSnapToGridToggleChange={props.handleSnapToGridToggleChange}
-        isAutoQuantizeActive={props.isAutoQuantizeActive}
-        handleAutoQuantizeChange={props.handleAutoQuantizeChange}
-      />
-      <MusicalControls
-        scaleObj={props.scaleObj}
-        handleTonicChange={props.handleTonicChange}
-        handleScaleChange={props.handleScaleChange}
-        handleTempoChange={props.handleTempoChange}
-        tempo={props.tempo}
-      />
-      <OtherControls
-        isFullscreenEnabled={props.isFullscreenEnabled}
-        handleFullscreenButtonClick={props.handleFullscreenButtonClick}
-        handleClearButtonClick={props.handleClearButtonClick}
-      />
-      <div className={cx(styles.toolbarSection)}>
-        <div>
-          <Button
-            hasBorder
-            darkHover
-            color={grayLightest}
-            onClick={props.handleExportToMIDIClick}
-            title="Export and download MIDI file"
-          >
-            Export To MIDI
-          </Button>
-        </div>
-      </div>
-    </div>
+  return (
+    <ProjectContextConsumer>
+      {projectContext => {
+        const {
+          isPlaying,
+          isArmed,
+          isRecording,
+          activeTool,
+          scaleObj,
+          tempo,
+          isFullscreenEnabled,
+          isGridActive,
+          isSnapToGridActive,
+          isAutoQuantizeActive,
+          activeColorIndex,
+        } = projectContext;
+
+        return (
+          <div className={styles.toolbar}>
+            <TransportControls
+              isPlaying={isPlaying}
+              isRecording={isRecording}
+              isArmed={isArmed}
+              handlePlayClick={handlePlayClick}
+              handleRecordClick={handleRecordClick}
+            />
+
+            {/* TODO Color */}
+            <ToolSelect
+              activeTool={activeTool}
+              activeColorIndex={activeColorIndex}
+              handleDrawToolClick={handleDrawToolClick}
+              handleEditToolClick={handleEditToolClick}
+              onColorChange={handleColorChange}
+              handleColorMouseEnter={handleColorMouseEnter}
+              handleColorMouseLeave={handleColorMouseLeave}
+              isColorPickerOpen={isColorPickerOpen}
+            />
+            <CanvasControls
+              isGridActive={isGridActive}
+              handleGridToggleChange={handleGridToggleChange}
+              isSnapToGridActive={isSnapToGridActive}
+              handleSnapToGridToggleChange={handleSnapToGridToggleChange}
+              isAutoQuantizeActive={isAutoQuantizeActive}
+              handleAutoQuantizeChange={handleAutoQuantizeChange}
+            />
+            <MusicalControls
+              scaleObj={scaleObj}
+              handleTonicChange={handleTonicChange}
+              handleScaleChange={handleScaleChange}
+              handleTempoChange={handleTempoChange}
+              tempo={tempo}
+            />
+            <OtherControls
+              isFullscreenEnabled={isFullscreenEnabled}
+              handleFullscreenButtonClick={handleFullscreenButtonClick}
+              handleClearButtonClick={handleClearButtonClick}
+            />
+            <div className={cx(styles.toolbarSection)}>
+              <div>
+                <Button
+                  hasBorder
+                  darkHover
+                  color={grayLightest}
+                  onClick={handleExportToMIDIClick}
+                  title="Export and download MIDI file"
+                >
+                  Export To MIDI
+                </Button>
+              </div>
+            </div>
+          </div>
+        );
+      }}
+    </ProjectContextConsumer>
   );
 }
 

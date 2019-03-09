@@ -16,6 +16,7 @@ import {
 
 import PRESETS from 'presets';
 import ShapeComponent from './Component';
+import ProjectContextConsumer from 'views/Project/ProjectContextConsumer';
 
 const propTypes = {
   index: number.isRequired,
@@ -667,58 +668,65 @@ class ShapeContainer extends PureComponent {
     };
 
     return (
-      <ShapeComponent
-        ref={c => (this.shapeComponentElement = c)}
-        project={{
-          scaleObj: scaleObj,
-          isEditMode: isEditMode,
-          isPlaying: isPlaying,
-          tempo: tempo,
-        }}
-        index={index}
-        points={points}
-        attrs={attrs}
-        volume={volume}
-        colorIndex={colorIndex}
-        noteIndexModifier={noteIndexModifier}
-        isDragging={isDragging}
-        isSelected={isSelected}
-        isMuted={isMuted}
-        isSoloed={isSoloed}
-        averagePoint={averagePoint}
-        editorPosition={{
-          x: editorX,
-          y: editorY,
-        }}
-        // shape event handlers
-        dragBoundFunc={this.dragBoundFunc}
-        handleDrag={this.handleDrag}
-        handleDragStart={this.handleDragStart}
-        handleDragEnd={this.handleDragEnd}
-        handleClick={() => {
-          const shapeElement = this.shapeComponentElement.getShapeElement();
-          const { x, y } = shapeElement.getAbsolutePosition();
-          const absolutePoints = points.map((p, i) =>
-            i % 2 === 0 ? p + x : p + y
+      <ProjectContextConsumer>
+        {projectContext => {
+          console.log('shape:', projectContext);
+          return (
+            <ShapeComponent
+              ref={c => (this.shapeComponentElement = c)}
+              project={{
+                scaleObj: scaleObj,
+                isEditMode: isEditMode,
+                isPlaying: isPlaying,
+                tempo: tempo,
+              }}
+              index={index}
+              points={points}
+              attrs={attrs}
+              volume={volume}
+              colorIndex={colorIndex}
+              noteIndexModifier={noteIndexModifier}
+              isDragging={isDragging}
+              isSelected={isSelected}
+              isMuted={isMuted}
+              isSoloed={isSoloed}
+              averagePoint={averagePoint}
+              editorPosition={{
+                x: editorX,
+                y: editorY,
+              }}
+              // shape event handlers
+              dragBoundFunc={this.dragBoundFunc}
+              handleDrag={this.handleDrag}
+              handleDragStart={this.handleDragStart}
+              handleDragEnd={this.handleDragEnd}
+              handleClick={() => {
+                const shapeElement = this.shapeComponentElement.getShapeElement();
+                const { x, y } = shapeElement.getAbsolutePosition();
+                const absolutePoints = points.map((p, i) =>
+                  i % 2 === 0 ? p + x : p + y
+                );
+                handleClick(index, absolutePoints);
+              }}
+              handleMouseDown={this.handleMouseDown}
+              handleMouseOver={this.handleMouseOver}
+              handleMouseOut={this.handleMouseOut}
+              handleVertexDragMove={this.handleVertexDragMove}
+              // editor panel handlers
+              handleColorChange={handleColorChange}
+              handleQuantizeClick={this.handleQuantizeClick}
+              handleDelete={handleDelete}
+              handleQuantizeFactorChange={this.handleQuantizeFactorChange}
+              handleVolumeChange={handleVolumeChange(index)}
+              handleMuteChange={handleMuteChange(index)}
+              handleSoloChange={() => handleSoloChange(index)}
+              handleToTopClick={this.handleToTopClick}
+              handleToBottomClick={this.handleToBottomClick}
+              handleReverseClick={this.handleReverseClick}
+            />
           );
-          handleClick(index, absolutePoints);
         }}
-        handleMouseDown={this.handleMouseDown}
-        handleMouseOver={this.handleMouseOver}
-        handleMouseOut={this.handleMouseOut}
-        handleVertexDragMove={this.handleVertexDragMove}
-        // editor panel handlers
-        handleColorChange={handleColorChange}
-        handleQuantizeClick={this.handleQuantizeClick}
-        handleDelete={handleDelete}
-        handleQuantizeFactorChange={this.handleQuantizeFactorChange}
-        handleVolumeChange={handleVolumeChange(index)}
-        handleMuteChange={handleMuteChange(index)}
-        handleSoloChange={() => handleSoloChange(index)}
-        handleToTopClick={this.handleToTopClick}
-        handleToBottomClick={this.handleToBottomClick}
-        handleReverseClick={this.handleReverseClick}
-      />
+      </ProjectContextConsumer>
     );
   }
 }

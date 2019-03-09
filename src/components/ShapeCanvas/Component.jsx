@@ -6,6 +6,9 @@ import PhantomShape from './PhantomShape';
 import Grid from './Grid';
 import { themeColors } from 'utils/color';
 
+import ProjectContextConsumer from 'views/Project/ProjectContextConsumer';
+import ProjectContextProvider from 'views/Project/ProjectContextProvider';
+
 const propTypes = {
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
@@ -65,83 +68,89 @@ function ShapeCanvasComponent(props) {
   } = props;
 
   return (
-    <div
-      id="holder"
-      style={{ cursor: activeTool === 'edit' && isAltPressed && 'copy' }}
-      onContextMenu={e => {
-        e.preventDefault();
-      }}
-    >
-      <Stage
-        width={props.width}
-        height={props.height}
-        onContentClick={props.onContentClick}
-        onContentMouseMove={props.onContentMouseMove}
-        onContentMouseDown={props.onContentMouseDown}
-        quantizeLength={props.quantizeLength}
-      >
-        {props.isGridActive && (
-          <Layer>
-            <Group>
-              <Grid
-                width={props.width}
-                height={props.height}
-                gridSize={props.gridSize}
-                isGridActive={props.isGridActive}
-              />
-            </Group>
-          </Layer>
-        )}
+    <ProjectContextConsumer>
+      {projectContext => (
+        <div
+          id="holder"
+          style={{ cursor: activeTool === 'edit' && isAltPressed && 'copy' }}
+          onContextMenu={e => {
+            e.preventDefault();
+          }}
+        >
+          <Stage
+            width={props.width}
+            height={props.height}
+            onContentClick={props.onContentClick}
+            onContentMouseMove={props.onContentMouseMove}
+            onContentMouseDown={props.onContentMouseDown}
+            quantizeLength={props.quantizeLength}
+          >
+            <ProjectContextProvider value={projectContext}>
+              {props.isGridActive && (
+                <Layer>
+                  <Group>
+                    <Grid
+                      width={props.width}
+                      height={props.height}
+                      gridSize={props.gridSize}
+                      isGridActive={props.isGridActive}
+                    />
+                  </Group>
+                </Layer>
+              )}
 
-        <Layer>
-          <Group>
-            {props.shapesList.map((shape, index) => {
-              const { points, colorIndex, volume, isMuted } = shape;
-              return (
-                !props.deletedShapeIndeces[index] && (
-                  <Shape
-                    addShapeRef={props.addShapeRef}
-                    removeShapeRef={() => props.removeShapeRef(index)}
-                    key={index}
-                    index={index}
-                    volume={volume}
-                    isMuted={isMuted}
-                    initialPoints={points}
-                    snapToGrid={snapToGrid}
-                    activeTool={activeTool}
-                    scaleObj={scaleObj}
-                    isPlaying={isPlaying}
-                    isAutoQuantizeActive={isAutoQuantizeActive}
-                    isSelected={index === selectedShapeIndex}
-                    soloedShapeIndex={soloedShapeIndex}
-                    colorIndex={colorIndex}
-                    selectedInstruments={selectedInstruments}
-                    knobVals={knobVals}
-                    handleClick={handleShapeClick}
-                    handleDelete={handleShapeDelete}
-                    handleColorChange={handleShapeColorChange}
-                    handleVolumeChange={handleShapeVolumeChange}
-                    handleSoloChange={handleShapeSoloChange}
-                    handleMuteChange={handleShapeMuteChange}
-                    tempo={tempo}
-                  />
-                )
-              );
-            })}
-          </Group>
-        </Layer>
+              <Layer>
+                <Group>
+                  {props.shapesList.map((shape, index) => {
+                    const { points, colorIndex, volume, isMuted } = shape;
+                    return (
+                      !props.deletedShapeIndeces[index] && (
+                        <Shape
+                          addShapeRef={props.addShapeRef}
+                          removeShapeRef={() => props.removeShapeRef(index)}
+                          key={index}
+                          index={index}
+                          volume={volume}
+                          isMuted={isMuted}
+                          initialPoints={points}
+                          snapToGrid={snapToGrid}
+                          activeTool={activeTool}
+                          scaleObj={scaleObj}
+                          isPlaying={isPlaying}
+                          isAutoQuantizeActive={isAutoQuantizeActive}
+                          isSelected={index === selectedShapeIndex}
+                          soloedShapeIndex={soloedShapeIndex}
+                          colorIndex={colorIndex}
+                          selectedInstruments={selectedInstruments}
+                          knobVals={knobVals}
+                          handleClick={handleShapeClick}
+                          handleDelete={handleShapeDelete}
+                          handleColorChange={handleShapeColorChange}
+                          handleVolumeChange={handleShapeVolumeChange}
+                          handleSoloChange={handleShapeSoloChange}
+                          handleMuteChange={handleShapeMuteChange}
+                          tempo={tempo}
+                        />
+                      )
+                    );
+                  })}
+                </Group>
+              </Layer>
 
-        <Layer>
-          <PhantomShape
-            mousePos={props.mousePos}
-            points={props.currPoints}
-            activeTool={props.activeTool}
-            color={themeColors[props.colorIndex]}
-            drawingState={props.drawingState}
-          />
-        </Layer>
-      </Stage>
-    </div>
+              <Layer>
+                <PhantomShape
+                  mousePos={props.mousePos}
+                  points={props.currPoints}
+                  activeTool={props.activeTool}
+                  color={themeColors[props.colorIndex]}
+                  drawingState={props.drawingState}
+                />
+              </Layer>
+            </ProjectContextProvider>
+          </Stage>
+        </div>
+      )}
+    </ProjectContextConsumer>
   );
 }
 

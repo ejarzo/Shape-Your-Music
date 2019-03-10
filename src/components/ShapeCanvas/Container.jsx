@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
-import { object, string, number, array, bool } from 'prop-types';
+import { object, string, number, array, bool, func } from 'prop-types';
 
 import { dist } from 'utils/math';
 import { themeColors } from 'utils/color';
 import ShapeCanvasComponent from './Component';
 import { TOOL_TYPES } from 'views/Project/Container';
 
+import withProjectContext from 'views/Project/withProjectContext';
+
+const DRAWING_STATES = {
+  PENDING: 'pending',
+  DRAWING: 'drawing',
+};
+
 const propTypes = {
+  onMount: func.isRequired,
+  // Context
   activeTool: string.isRequired,
   tempo: number.isRequired,
   selectedInstruments: array.isRequired,
   scaleObj: object.isRequired,
-
   isPlaying: bool.isRequired,
   isGridActive: bool.isRequired,
   isSnapToGridActive: bool.isRequired,
   isAutoQuantizeActive: bool.isRequired,
   quantizeLength: number.isRequired,
-
-  colorIndex: number.isRequired,
-
+  activeColorIndex: number.isRequired,
   knobVals: array.isRequired,
 };
 
@@ -35,9 +41,8 @@ class ShapeCanvas extends Component {
       deletedShapeIndeces: [],
       selectedShapeIndex: -1,
       soloedShapeIndex: -1,
-
       currPoints: [],
-      drawingState: 'pending',
+      drawingState: DRAWING_STATES.PENDING,
       mousePos: { x: -10, y: -10 },
       gridSize: 50,
     };
@@ -52,6 +57,9 @@ class ShapeCanvas extends Component {
     this.snapToGrid = this.snapToGrid.bind(this);
     this.clearAll = this.clearAll.bind(this);
 
+    this.getShapeRef = this.getShapeRef.bind(this);
+    this.removeShapeRef = this.removeShapeRef.bind(this);
+
     this.handleClick = this.handleClick.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -65,6 +73,8 @@ class ShapeCanvas extends Component {
   }
 
   componentDidMount() {
+    const { onMount } = this.props;
+    onMount(this);
     this.setState({
       shapesList: this.generateRandomShapes(1, 4),
     });
@@ -78,13 +88,25 @@ class ShapeCanvas extends Component {
     }
   }
 
+  getShapeRef() {
+    return c => {
+      console.log('adding shape ref', c);
+      this.shapeRefs.push(c);
+    };
+  }
+
+  removeShapeRef(i) {
+    console.log('removing shape ref', i);
+    this.shapeRefs[i] = null;
+  }
+
   appendShape() {
-    const { colorIndex } = this.props;
+    const { activeColorIndex } = this.props;
     const shapesList = this.state.shapesList.slice();
     const points = this.state.currPoints.slice();
     shapesList.push({
       points,
-      colorIndex,
+      colorIndex: activeColorIndex,
       volume: this.defaultVolume,
       isMuted: false,
     });
@@ -100,7 +122,7 @@ class ShapeCanvas extends Component {
   }
 
   canChangeTool() {
-    return this.state.drawingState === 'pending';
+    return this.state.drawingState === DRAWING_STATES.PENDING;
   }
 
   getShapeMIDINoteEvents() {
@@ -136,14 +158,17 @@ class ShapeCanvas extends Component {
   }
 
   handleClick(e) {
+    const { activeTool } = this.props;
+    const { drawingState } = this.state;
+
     // left click
     if (e.evt.which === 1) {
-      if (this.props.activeTool === TOOL_TYPES.DRAW) {
+      if (activeTool === TOOL_TYPES.DRAW) {
         // hovering over first point
-        if (this.state.drawingState === 'preview') {
+        if (drawingState === 'preview') {
           this.appendShape();
           this.setState({
-            drawingState: 'pending',
+            drawingState: DRAWING_STATES.PENDING,
           });
         } else {
           const {
@@ -153,12 +178,12 @@ class ShapeCanvas extends Component {
           const len = currPoints.length;
           // only add point if the mouse has moved
           if (!(x === currPoints[len - 2] && y === currPoints[len - 1])) {
-            const newPoints = this.state.currPoints.slice();
+            const newPoints = currPoints.slice();
 
             newPoints.push(x, y);
             this.setState({
               currPoints: newPoints,
-              drawingState: 'drawing',
+              drawingState: DRAWING_STATES.DRAWING,
             });
           }
         }
@@ -166,43 +191,48 @@ class ShapeCanvas extends Component {
     }
     // right click to cancel shape mid-draw
     else if (e.evt.which === 3) {
-      if (this.state.drawingState !== 'pending') {
+      if (drawingState !== DRAWING_STATES.PENDING) {
         this.setState({
           currPoints: [],
-          drawingState: 'pending',
+          drawingState: DRAWING_STATES.PENDING,
         });
       }
     }
   }
 
   handleMouseMove({ evt: { offsetX, offsetY } }) {
+    const { activeTool } = this.props;
+    const { drawingState, currPoints } = this.state;
+
     let x = offsetX;
     let y = offsetY;
     const originX = this.state.currPoints[0];
     const originY = this.state.currPoints[1];
 
-    let drawingState =
-      this.state.drawingState === 'pending' ? 'pending' : 'drawing';
+    let newDrawingState =
+      drawingState === DRAWING_STATES.PENDING
+        ? DRAWING_STATES.PENDING
+        : DRAWING_STATES.DRAWING;
 
     // snap to grid
     x = this.snapToGrid(x);
     y = this.snapToGrid(y);
 
-    if (this.props.activeTool === TOOL_TYPES.DRAW) {
+    if (activeTool === TOOL_TYPES.DRAW) {
       // snap to origin if within radius
       if (
-        this.state.currPoints.length > 2 &&
+        currPoints.length > 2 &&
         (dist(offsetX, offsetY, originX, originY) < this.originLockRadius ||
           (x === originX && y === originY))
       ) {
         x = originX;
         y = originY;
-        drawingState = 'preview';
+        newDrawingState = 'preview';
       }
 
       this.setState({
         mousePos: { x: x, y: y },
-        drawingState: drawingState,
+        drawingState: newDrawingState,
       });
     }
   }
@@ -211,8 +241,10 @@ class ShapeCanvas extends Component {
 
   handleShapeClick(index, points) {
     const { isAltPressed } = this.props;
+    const { shapesList } = this.state;
+
     if (isAltPressed) {
-      const newShapesList = this.state.shapesList.slice();
+      const newShapesList = shapesList.slice();
       const { colorIndex } = newShapesList[index];
       const newShape = {
         points: points.map(p => p + 20),
@@ -333,56 +365,31 @@ class ShapeCanvas extends Component {
       drawingState,
     } = this.state;
 
-    const {
-      isGridActive,
-      quantizeLength,
-      colorIndex,
-      activeTool,
-      tempo,
-      scaleObj,
-      isPlaying,
-      isAutoQuantizeActive,
-      selectedInstruments,
-      knobVals,
-      isAltPressed,
-    } = this.props;
-
     return (
       <ShapeCanvasComponent
         // TODO: revisit shape refs
-        addShapeRef={c => this.shapeRefs.push(c)}
-        removeShapeRef={i => (this.shapeRefs[i] = null)}
+        getShapeRef={this.getShapeRef}
+        removeShapeRef={this.removeShapeRef}
         height={window.innerHeight}
         width={window.innerWidth}
         gridSize={gridSize}
-        isGridActive={isGridActive}
         onContentClick={this.handleClick}
         onContentMouseMove={this.handleMouseMove}
         onContentMouseDown={this.handleMouseDown}
-        quantizeLength={quantizeLength}
         shapesList={shapesList}
         selectedShapeIndex={selectedShapeIndex}
         soloedShapeIndex={soloedShapeIndex}
         deletedShapeIndeces={deletedShapeIndeces}
-        colorIndex={colorIndex}
         mousePos={mousePos}
         currPoints={currPoints}
-        activeTool={activeTool}
         drawingState={drawingState}
         snapToGrid={this.snapToGrid}
-        tempo={tempo}
-        scaleObj={scaleObj}
-        isPlaying={isPlaying}
-        isAutoQuantizeActive={isAutoQuantizeActive}
-        selectedInstruments={selectedInstruments}
-        knobVals={knobVals}
         handleShapeClick={this.handleShapeClick}
         handleShapeDelete={this.handleShapeDelete}
         handleShapeSoloChange={this.handleShapeSoloChange}
         handleShapeColorChange={this.handleShapeColorChange}
         handleShapeVolumeChange={this.handleShapeVolumeChange}
         handleShapeMuteChange={this.handleShapeMuteChange}
-        isAltPressed={isAltPressed}
       />
     );
   }
@@ -390,4 +397,4 @@ class ShapeCanvas extends Component {
 
 ShapeCanvas.propTypes = propTypes;
 
-export default ShapeCanvas;
+export default withProjectContext(ShapeCanvas);

@@ -462,27 +462,14 @@ class Project extends Component {
 
           {/* The Canvas */}
           <ShapeCanvas
-            ref={c => (this.shapeCanvas = c)}
-            colorIndex={activeColorIndex}
-            activeTool={activeTool}
-            selectedInstruments={selectedInstruments}
-            knobVals={knobVals}
-            isAutoQuantizeActive={isAutoQuantizeActive}
-            isPlaying={isPlaying}
-            scaleObj={scaleObj}
-            tempo={tempo}
-            quantizeLength={quantizeLength}
-            isGridActive={isGridActive}
-            isSnapToGridActive={isSnapToGridActive}
-            isAltPressed={isAltPressed}
+            // TODO: revisit: do we need to do this?
+            onMount={c => (this.shapeCanvas = c)}
           />
 
           {/* Instrument controller panels */}
           <ColorControllerPanel
-            selectedInstruments={selectedInstruments}
             onInstChange={this.handleInstChange}
             onKnobChange={this.handleKnobChange}
-            knobVals={knobVals}
           />
 
           {/* Sidebar */}

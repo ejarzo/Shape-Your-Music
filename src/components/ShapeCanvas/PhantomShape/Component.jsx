@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Color from 'color';
 import { Group, Circle, Line } from 'react-konva';
 import { TOOL_TYPES } from 'views/Project/Container';
+import withProjectContext from 'views/Project/withProjectContext';
 
 const propTypes = {
   points: PropTypes.array.isRequired,
@@ -72,4 +73,4 @@ function PhantomShapeComponent(props) {
 
 PhantomShapeComponent.propTypes = propTypes;
 
-export default PhantomShapeComponent;
+export default withProjectContext(PhantomShapeComponent);

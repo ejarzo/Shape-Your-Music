@@ -18,7 +18,7 @@ import styles from './styles.module.css';
 import { TOOL_TYPES } from 'views/Project/Container';
 import { SCALES, TONICS } from 'utils/music';
 
-import ProjectContextConsumer from 'views/Project/ProjectContextConsumer';
+import withProjectContext from 'views/Project/withProjectContext';
 
 const { black, grayLightest, red } = appColors;
 
@@ -303,86 +303,78 @@ function ToolbarComponent(props) {
     handleColorMouseEnter,
     handleColorMouseLeave,
     isColorPickerOpen,
+    // Context
+    isPlaying,
+    isArmed,
+    isRecording,
+    activeTool,
+    scaleObj,
+    tempo,
+    isFullscreenEnabled,
+    isGridActive,
+    isSnapToGridActive,
+    isAutoQuantizeActive,
+    activeColorIndex,
   } = props;
 
   return (
-    <ProjectContextConsumer>
-      {projectContext => {
-        const {
-          isPlaying,
-          isArmed,
-          isRecording,
-          activeTool,
-          scaleObj,
-          tempo,
-          isFullscreenEnabled,
-          isGridActive,
-          isSnapToGridActive,
-          isAutoQuantizeActive,
-          activeColorIndex,
-        } = projectContext;
+    <div className={styles.toolbar}>
+      <TransportControls
+        isPlaying={isPlaying}
+        isRecording={isRecording}
+        isArmed={isArmed}
+        handlePlayClick={handlePlayClick}
+        handleRecordClick={handleRecordClick}
+      />
 
-        return (
-          <div className={styles.toolbar}>
-            <TransportControls
-              isPlaying={isPlaying}
-              isRecording={isRecording}
-              isArmed={isArmed}
-              handlePlayClick={handlePlayClick}
-              handleRecordClick={handleRecordClick}
-            />
-
-            {/* TODO Color */}
-            <ToolSelect
-              activeTool={activeTool}
-              activeColorIndex={activeColorIndex}
-              handleDrawToolClick={handleDrawToolClick}
-              handleEditToolClick={handleEditToolClick}
-              onColorChange={handleColorChange}
-              handleColorMouseEnter={handleColorMouseEnter}
-              handleColorMouseLeave={handleColorMouseLeave}
-              isColorPickerOpen={isColorPickerOpen}
-            />
-            <CanvasControls
-              isGridActive={isGridActive}
-              handleGridToggleChange={handleGridToggleChange}
-              isSnapToGridActive={isSnapToGridActive}
-              handleSnapToGridToggleChange={handleSnapToGridToggleChange}
-              isAutoQuantizeActive={isAutoQuantizeActive}
-              handleAutoQuantizeChange={handleAutoQuantizeChange}
-            />
-            <MusicalControls
-              scaleObj={scaleObj}
-              handleTonicChange={handleTonicChange}
-              handleScaleChange={handleScaleChange}
-              handleTempoChange={handleTempoChange}
-              tempo={tempo}
-            />
-            <OtherControls
-              isFullscreenEnabled={isFullscreenEnabled}
-              handleFullscreenButtonClick={handleFullscreenButtonClick}
-              handleClearButtonClick={handleClearButtonClick}
-            />
-            <div className={cx(styles.toolbarSection)}>
-              <div>
-                <Button
-                  hasBorder
-                  darkHover
-                  color={grayLightest}
-                  onClick={handleExportToMIDIClick}
-                  title="Export and download MIDI file"
-                >
-                  Export To MIDI
-                </Button>
-              </div>
-            </div>
-          </div>
-        );
-      }}
-    </ProjectContextConsumer>
+      {/* TODO Color */}
+      <ToolSelect
+        activeTool={activeTool}
+        activeColorIndex={activeColorIndex}
+        handleDrawToolClick={handleDrawToolClick}
+        handleEditToolClick={handleEditToolClick}
+        onColorChange={handleColorChange}
+        handleColorMouseEnter={handleColorMouseEnter}
+        handleColorMouseLeave={handleColorMouseLeave}
+        isColorPickerOpen={isColorPickerOpen}
+      />
+      <CanvasControls
+        isGridActive={isGridActive}
+        handleGridToggleChange={handleGridToggleChange}
+        isSnapToGridActive={isSnapToGridActive}
+        handleSnapToGridToggleChange={handleSnapToGridToggleChange}
+        isAutoQuantizeActive={isAutoQuantizeActive}
+        handleAutoQuantizeChange={handleAutoQuantizeChange}
+      />
+      <MusicalControls
+        scaleObj={scaleObj}
+        handleTonicChange={handleTonicChange}
+        handleScaleChange={handleScaleChange}
+        handleTempoChange={handleTempoChange}
+        tempo={tempo}
+      />
+      <OtherControls
+        isFullscreenEnabled={isFullscreenEnabled}
+        handleFullscreenButtonClick={handleFullscreenButtonClick}
+        handleClearButtonClick={handleClearButtonClick}
+      />
+      <div className={cx(styles.toolbarSection)}>
+        <div>
+          <Button
+            hasBorder
+            darkHover
+            color={grayLightest}
+            onClick={handleExportToMIDIClick}
+            title="Export and download MIDI file"
+          >
+            Export To MIDI
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 }
 
 ToolbarComponent.propTypes = propTypes;
 
-export default ToolbarComponent;
+export default withProjectContext(ToolbarComponent);

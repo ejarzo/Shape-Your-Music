@@ -26,7 +26,7 @@ Using this app, one can:
 
 [Read more](https://ejarzo.github.io/#sym)
 
-This is the third iteration of this project. The [original](https://github.com/ejarzo/sym_v2), was written in vanilla JS/jQuery!
+This is the third iteration of this project. I wrote the [original](https://github.com/ejarzo/sym_v2) in vanilla JS/jQuery 😬!
 
 ---
 

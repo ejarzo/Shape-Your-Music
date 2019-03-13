@@ -1,6 +1,6 @@
 # Shape Your Music
 
-_A geometric sequencer._
+_A geometric sequencer that provides one answer to the question "What does a shape sound like?"._
 
 [https://ejarzo.github.io/Shape-Your-Music/](https://ejarzo.github.io/Shape-Your-Music/)
 

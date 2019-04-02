@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Color from 'color';
 import { Group, Circle, Line } from 'react-konva';
 import { TOOL_TYPES } from 'views/Project/Container';
+import withProjectContext from 'views/Project/withProjectContext';
 
 const propTypes = {
   points: PropTypes.array.isRequired,
@@ -31,6 +32,7 @@ function PhantomShapeComponent(props) {
       stroke={props.color}
       strokeWidth={strokeWidth}
       fill={props.color}
+      transformsEnabled="position"
     />
   );
 
@@ -39,6 +41,7 @@ function PhantomShapeComponent(props) {
       <Group>
         <Circle // circle beneath cursor
           x={props.mousePos.x}
+          transformsEnabled="position"
           y={props.mousePos.y}
           radius={radius}
           fill={props.color}
@@ -56,6 +59,7 @@ function PhantomShapeComponent(props) {
             .toString()}
           fillEnabled={true}
           closed={props.drawingState === 'preview'}
+          transformsEnabled="position"
         />
         <Line // line from previous point to cursor
           points={props.points
@@ -64,6 +68,7 @@ function PhantomShapeComponent(props) {
           strokeWidth={strokeWidth}
           stroke={props.color}
           opacity={0.5}
+          transformsEnabled="position"
         />
       </Group>
     )
@@ -72,4 +77,4 @@ function PhantomShapeComponent(props) {
 
 PhantomShapeComponent.propTypes = propTypes;
 
-export default PhantomShapeComponent;
+export default withProjectContext(PhantomShapeComponent);

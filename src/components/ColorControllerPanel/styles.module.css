@@ -19,11 +19,11 @@
 }
 
 .colorControllerPanel::-webkit-scrollbar {
-  display: none
+  display: none;
 }
 
 .colorControllerPanel.isCollapsed {
-  bottom: -70px;
+  bottom: -72px;
 }
 
 .toggleCollapseButton {
@@ -48,4 +48,3 @@
   min-width: 20vw;
   /*border: 1px solid #fff;*/
 }
-

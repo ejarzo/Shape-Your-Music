@@ -1,5 +1,5 @@
 import React from 'react';
-import { number, shape, bool, object, func, array } from 'prop-types';
+import { number, bool, string, object, func, array } from 'prop-types';
 import { Circle, Group, Line } from 'react-konva';
 
 import { getPerimeterLength } from 'utils/shape';
@@ -9,14 +9,14 @@ import { themeColors, appColors } from 'utils/color';
 import ShapeVertex from './ShapeVertex';
 import Portal from 'react-portal';
 import ShapeEditorPopover from './ShapeEditorPopover';
+import withProjectContext from 'views/Project/withProjectContext';
+import { TOOL_TYPES } from 'views/Project/Container';
 
 const propTypes = {
-  project: shape({
-    scaleObj: object.isRequired,
-    isEditMode: bool.isRequired,
-    isPlaying: bool.isRequired,
-    tempo: number.isRequired,
-  }).isRequired,
+  scaleObj: object.isRequired,
+  activeTool: string.isRequired,
+  isPlaying: bool.isRequired,
+  tempo: number.isRequired,
 
   points: array.isRequired,
   attrs: object.isRequired,
@@ -58,6 +58,11 @@ const propTypes = {
 };
 
 class ShapeComponent extends React.Component {
+  componentDidMount() {
+    const { onMount } = this.props;
+    onMount(this);
+  }
+
   getShapeElement() {
     return this.shapeElement;
   }
@@ -71,11 +76,14 @@ class ShapeComponent extends React.Component {
   }
 
   render() {
-    console.log('shape render');
     const {
+      // project context
+      scaleObj,
+      isPlaying,
+      activeTool,
+      // shape
       index,
       editorPosition,
-      project,
       volume,
       isMuted,
       isSoloed,
@@ -112,16 +120,18 @@ class ShapeComponent extends React.Component {
       convertValToRange(averagePoint.x, 0, window.innerWidth, -50, 50),
       10
     );
+
     if (panningVal > 0) {
       panningVal = `${panningVal} R`;
     } else if (panningVal < 0) {
       panningVal = `${Math.abs(panningVal)} L`;
     }
 
-    const animCircle = project.isPlaying && (
+    const animCircle = isPlaying && (
       <Circle
         ref={c => (this.animCircle = c)}
         hitGraphEnabled={false}
+        transformsEnabled="position"
         x={-999}
         y={-999}
         radius={6}
@@ -131,8 +141,10 @@ class ShapeComponent extends React.Component {
       />
     );
 
+    const isEditMode = activeTool === TOOL_TYPES.EDIT;
     const perimeter = getPerimeterLength(points);
-    if (project.isEditMode) {
+
+    if (isEditMode) {
       return (
         <Group
           ref={c => (this.groupElement = c)}
@@ -142,6 +154,7 @@ class ShapeComponent extends React.Component {
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
           opacity={attrs.opacity}
+          transformsEnabled="position"
         >
           {/* shape perimeter */}
           <Line
@@ -157,6 +170,7 @@ class ShapeComponent extends React.Component {
             onMouseDown={handleMouseDown}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
+            transformsEnabled="position"
           />
 
           {/* shape verteces */}
@@ -200,7 +214,7 @@ class ShapeComponent extends React.Component {
             >
               PAN: {panningVal}
               <br />
-              NOTE: {project.scaleObj.get(noteIndexModifier).toString()}
+              NOTE: {scaleObj.get(noteIndexModifier).toString()}
             </div>
           </Portal>
 
@@ -235,10 +249,12 @@ class ShapeComponent extends React.Component {
           hitGraphEnabled={false}
           draggable={false}
           opacity={attrs.opacity}
+          transformsEnabled="position"
         >
           <Line
             ref={c => (this.shapeElement = c)}
             strokeScaleEnabled={false}
+            transformsEnabled="position"
             points={points}
             fill={attrs.fill}
             lineJoin="miter"
@@ -266,4 +282,4 @@ class ShapeComponent extends React.Component {
 
 ShapeComponent.propTypes = propTypes;
 
-export default ShapeComponent;
+export default withProjectContext(ShapeComponent);

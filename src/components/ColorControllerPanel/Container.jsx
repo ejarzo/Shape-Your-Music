@@ -6,11 +6,13 @@ import { themeColors } from 'utils/color';
 import styles from './styles.module.css';
 import PRESETS from 'presets';
 
+import withProjectContext from 'views/Project/withProjectContext';
+
 const propTypes = {
-  selectedInstruments: PropTypes.array.isRequired,
-  knobVals: PropTypes.array.isRequired,
   onInstChange: PropTypes.func.isRequired,
   onKnobChange: PropTypes.func.isRequired,
+  knobVals: PropTypes.array.isRequired,
+  selectedInstruments: PropTypes.array.isRequired,
 };
 
 class ColorControllerPanel extends Component {
@@ -48,8 +50,6 @@ class ColorControllerPanel extends Component {
           />
           <div className={styles.colorControllers}>
             {themeColors.map((color, colorIndex) => {
-              // TODO added just for testing
-              // if (colorIndex !== 0) return null;
               const selectedInstrumentIndex = selectedInstruments[colorIndex];
               return (
                 <div
@@ -76,4 +76,4 @@ class ColorControllerPanel extends Component {
 
 ColorControllerPanel.propTypes = propTypes;
 
-export default ColorControllerPanel;
+export default withProjectContext(ColorControllerPanel);

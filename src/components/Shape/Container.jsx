@@ -16,6 +16,7 @@ import {
 
 import PRESETS from 'presets';
 import ShapeComponent from './Component';
+import withProjectContext from 'views/Project/withProjectContext';
 
 const propTypes = {
   index: number.isRequired,
@@ -45,20 +46,16 @@ class ShapeContainer extends PureComponent {
     this.state = {
       points: initialPoints,
       quantizeFactor: 1,
-
       averagePoint: { x: 0, y: 0 },
       firstNoteIndex: 1,
       noteIndexModifier: 0,
-
       isHoveredOver: false,
       isDragging: false,
       editorX: 0,
       editorY: 0,
-
       animCircleX: 0,
       animCircleY: 0,
     };
-
     this.quantizeLength = 500;
 
     // shape events
@@ -110,14 +107,16 @@ class ShapeContainer extends PureComponent {
   }
 
   componentDidMount() {
+    const { getShapeRef } = this.props;
+    const shapeRef = getShapeRef();
     this.handleDrag();
-    const { addShapeRef } = this.props;
-    addShapeRef(this);
+    shapeRef(this);
   }
 
   componentWillUnmount() {
+    const { removeShapeRef, index } = this.props;
     // this.shapeElement.destroy();
-    this.props.removeShapeRef();
+    removeShapeRef(index);
     this.part.dispose();
     this.synth.dispose();
   }
@@ -615,9 +614,20 @@ class ShapeContainer extends PureComponent {
     return newPoints;
   }
 
+  getAbsolutePoints() {
+    const { points } = this.state;
+    const shapeElement = this.shapeComponentElement.getShapeElement();
+    const { x, y } = shapeElement.getAbsolutePosition();
+    const absolutePoints = points.map((p, i) => (i % 2 === 0 ? p + x : p + y));
+
+    return absolutePoints;
+  }
+
   /* =============================== RENDER =============================== */
 
   render() {
+    console.log('shape render');
+
     const {
       index,
       volume,
@@ -625,9 +635,6 @@ class ShapeContainer extends PureComponent {
       activeTool,
       soloedShapeIndex,
       isMuted,
-      scaleObj,
-      isPlaying,
-      tempo,
       isSelected,
       handleClick,
       handleColorChange,
@@ -668,13 +675,9 @@ class ShapeContainer extends PureComponent {
 
     return (
       <ShapeComponent
-        ref={c => (this.shapeComponentElement = c)}
-        project={{
-          scaleObj: scaleObj,
-          isEditMode: isEditMode,
-          isPlaying: isPlaying,
-          tempo: tempo,
-        }}
+        // NOTE: hack to get around HOC
+        // TODO: revisit ref methods
+        onMount={c => (this.shapeComponentElement = c)}
         index={index}
         points={points}
         attrs={attrs}
@@ -696,11 +699,8 @@ class ShapeContainer extends PureComponent {
         handleDragStart={this.handleDragStart}
         handleDragEnd={this.handleDragEnd}
         handleClick={() => {
-          const shapeElement = this.shapeComponentElement.getShapeElement();
-          const { x, y } = shapeElement.getAbsolutePosition();
-          const absolutePoints = points.map((p, i) =>
-            i % 2 === 0 ? p + x : p + y
-          );
+          // pass points if needed for duplication
+          const absolutePoints = this.getAbsolutePoints();
           handleClick(index, absolutePoints);
         }}
         handleMouseDown={this.handleMouseDown}
@@ -725,4 +725,4 @@ class ShapeContainer extends PureComponent {
 
 ShapeContainer.propTypes = propTypes;
 
-export default ShapeContainer;
+export default withProjectContext(ShapeContainer);

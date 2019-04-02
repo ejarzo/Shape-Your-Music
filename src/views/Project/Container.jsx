@@ -14,6 +14,8 @@ import { themeColors } from 'utils/color';
 import { ZipFile } from 'utils/file';
 import PRESETS from 'presets';
 
+import ProjectContextProvider from './ProjectContextProvider';
+
 const MidiWriter = require('midi-writer-js');
 
 /* ========================================================================== */
@@ -411,87 +413,52 @@ class Project extends Component {
   /* =============================== RENDER =============================== */
 
   render() {
-    const {
-      isPlaying,
-      isRecording,
-      isArmed,
-      activeColorIndex,
-      activeTool,
-      isGridActive,
-      isSnapToGridActive,
-      isAutoQuantizeActive,
-      tempo,
-      scaleObj,
-      isFullscreenEnabled,
-      selectedInstruments,
-      knobVals,
-      quantizeLength,
-      downloadUrls,
-      isAltPressed,
-    } = this.state;
+    const { isFullscreenEnabled, downloadUrls } = this.state;
+
+    const projectContext = this.state;
 
     return (
-      <Fullscreen
-        enabled={isFullscreenEnabled}
-        onChange={isFullscreenEnabled => this.setState({ isFullscreenEnabled })}
-      >
-        {/* The Controls */}
-        <Toolbar
-          isPlaying={isPlaying}
-          isRecording={isRecording}
-          isArmed={isArmed}
-          activeColorIndex={activeColorIndex}
-          activeTool={activeTool}
-          handlePlayClick={this.handlePlayClick}
-          handleRecordClick={this.handleRecordClick}
-          handleColorChange={this.handleColorChange}
-          handleDrawToolClick={this.handleDrawToolClick}
-          handleEditToolClick={this.handleEditToolClick}
-          isGridActive={isGridActive}
-          handleGridToggleChange={this.handleGridToggleChange}
-          isSnapToGridActive={isSnapToGridActive}
-          handleSnapToGridToggleChange={this.handleSnapToGridToggleChange}
-          isAutoQuantizeActive={isAutoQuantizeActive}
-          handleAutoQuantizeChange={this.handleAutoQuantizeChange}
-          handleTempoChange={this.handleTempoChange}
-          tempo={tempo}
-          scaleObj={scaleObj}
-          handleTonicChange={this.handleTonicChange}
-          handleScaleChange={this.handleScaleChange}
-          isFullscreenEnabled={isFullscreenEnabled}
-          handleFullscreenButtonClick={this.handleFullscreenButtonClick}
-          handleClearButtonClick={this.handleClearButtonClick}
-          handleExportToMIDIClick={this.handleExportToMIDIClick}
-        />
+      <ProjectContextProvider value={projectContext}>
+        <Fullscreen
+          enabled={isFullscreenEnabled}
+          onChange={isFullscreenEnabled =>
+            this.setState({ isFullscreenEnabled })
+          }
+        >
+          {/* The Controls */}
+          <Toolbar
+            handlePlayClick={this.handlePlayClick}
+            handleRecordClick={this.handleRecordClick}
+            handleColorChange={this.handleColorChange}
+            handleDrawToolClick={this.handleDrawToolClick}
+            handleEditToolClick={this.handleEditToolClick}
+            handleGridToggleChange={this.handleGridToggleChange}
+            handleSnapToGridToggleChange={this.handleSnapToGridToggleChange}
+            handleAutoQuantizeChange={this.handleAutoQuantizeChange}
+            handleTempoChange={this.handleTempoChange}
+            handleTonicChange={this.handleTonicChange}
+            handleScaleChange={this.handleScaleChange}
+            handleFullscreenButtonClick={this.handleFullscreenButtonClick}
+            handleClearButtonClick={this.handleClearButtonClick}
+            handleExportToMIDIClick={this.handleExportToMIDIClick}
+          />
 
-        {/* The Canvas */}
-        <ShapeCanvas
-          ref={c => (this.shapeCanvas = c)}
-          colorIndex={activeColorIndex}
-          activeTool={activeTool}
-          selectedInstruments={selectedInstruments}
-          knobVals={knobVals}
-          isAutoQuantizeActive={isAutoQuantizeActive}
-          isPlaying={isPlaying}
-          scaleObj={scaleObj}
-          tempo={tempo}
-          quantizeLength={quantizeLength}
-          isGridActive={isGridActive}
-          isSnapToGridActive={isSnapToGridActive}
-          isAltPressed={isAltPressed}
-        />
+          {/* The Canvas */}
+          <ShapeCanvas
+            // TODO: revisit: do we need to do this?
+            onMount={c => (this.shapeCanvas = c)}
+          />
 
-        {/* Instrument controller panels */}
-        <ColorControllerPanel
-          selectedInstruments={selectedInstruments}
-          onInstChange={this.handleInstChange}
-          onKnobChange={this.handleKnobChange}
-          knobVals={knobVals}
-        />
+          {/* Instrument controller panels */}
+          <ColorControllerPanel
+            onInstChange={this.handleInstChange}
+            onKnobChange={this.handleKnobChange}
+          />
 
-        {/* Sidebar */}
-        <Sidebar downloadUrls={downloadUrls} />
-      </Fullscreen>
+          {/* Sidebar */}
+          <Sidebar downloadUrls={downloadUrls} />
+        </Fullscreen>
+      </ProjectContextProvider>
     );
   }
 }

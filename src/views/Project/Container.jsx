@@ -413,24 +413,7 @@ class Project extends Component {
   /* =============================== RENDER =============================== */
 
   render() {
-    const {
-      isPlaying,
-      isRecording,
-      isArmed,
-      activeColorIndex,
-      activeTool,
-      isGridActive,
-      isSnapToGridActive,
-      isAutoQuantizeActive,
-      tempo,
-      scaleObj,
-      isFullscreenEnabled,
-      selectedInstruments,
-      knobVals,
-      quantizeLength,
-      downloadUrls,
-      isAltPressed,
-    } = this.state;
+    const { isFullscreenEnabled, downloadUrls } = this.state;
 
     const projectContext = this.state;
 

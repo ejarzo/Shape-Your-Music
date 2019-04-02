@@ -131,6 +131,7 @@ class ShapeComponent extends React.Component {
       <Circle
         ref={c => (this.animCircle = c)}
         hitGraphEnabled={false}
+        transformsEnabled="position"
         x={-999}
         y={-999}
         radius={6}
@@ -153,6 +154,7 @@ class ShapeComponent extends React.Component {
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
           opacity={attrs.opacity}
+          transformsEnabled="position"
         >
           {/* shape perimeter */}
           <Line
@@ -168,6 +170,7 @@ class ShapeComponent extends React.Component {
             onMouseDown={handleMouseDown}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
+            transformsEnabled="position"
           />
 
           {/* shape verteces */}
@@ -246,10 +249,12 @@ class ShapeComponent extends React.Component {
           hitGraphEnabled={false}
           draggable={false}
           opacity={attrs.opacity}
+          transformsEnabled="position"
         >
           <Line
             ref={c => (this.shapeElement = c)}
             strokeScaleEnabled={false}
+            transformsEnabled="position"
             points={points}
             fill={attrs.fill}
             lineJoin="miter"

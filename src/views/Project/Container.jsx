@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Fullscreen from 'react-full-screen';
 import Teoria from 'teoria';
 import Tone from 'tone';
+import { HotKeys } from 'react-hotkeys';
 
 import Toolbar from 'components/Toolbar';
 import Sidebar from 'components/Sidebar';
@@ -13,6 +14,7 @@ import Recorder from 'utils/Recorder';
 import { themeColors } from 'utils/color';
 import { ZipFile } from 'utils/file';
 import PRESETS from 'presets';
+import { keyMap } from './keyMap';
 
 import ProjectContextProvider from './ProjectContextProvider';
 
@@ -86,10 +88,12 @@ class Project extends Component {
       selectedInstruments,
       knobVals,
     };
-
     // transport
     this.handlePlayClick = this.handlePlayClick.bind(this);
     this.handleRecordClick = this.handleRecordClick.bind(this);
+    this.keyHandlers = {
+      PLAY: this.handlePlayClick,
+    };
 
     // color and tool
     this.handleColorChange = this.handleColorChange.bind(this);
@@ -368,10 +372,10 @@ class Project extends Component {
     console.warn('Keypress:', key);
 
     /* Space toggles play */
-    if (key === ' ') {
-      // event.preventDefault(); // stop from clicking focused buttons
-      this.handlePlayClick();
-    }
+    // if (key === ' ') {
+    //   // event.preventDefault(); // stop from clicking focused buttons
+    //   this.handlePlayClick();
+    // }
 
     /* tab toggles active tool */
     if (key === 'Tab') {
@@ -418,47 +422,49 @@ class Project extends Component {
     const projectContext = this.state;
 
     return (
-      <ProjectContextProvider value={projectContext}>
-        <Fullscreen
-          enabled={isFullscreenEnabled}
-          onChange={isFullscreenEnabled =>
-            this.setState({ isFullscreenEnabled })
-          }
-        >
-          {/* The Controls */}
-          <Toolbar
-            handlePlayClick={this.handlePlayClick}
-            handleRecordClick={this.handleRecordClick}
-            handleColorChange={this.handleColorChange}
-            handleDrawToolClick={this.handleDrawToolClick}
-            handleEditToolClick={this.handleEditToolClick}
-            handleGridToggleChange={this.handleGridToggleChange}
-            handleSnapToGridToggleChange={this.handleSnapToGridToggleChange}
-            handleAutoQuantizeChange={this.handleAutoQuantizeChange}
-            handleTempoChange={this.handleTempoChange}
-            handleTonicChange={this.handleTonicChange}
-            handleScaleChange={this.handleScaleChange}
-            handleFullscreenButtonClick={this.handleFullscreenButtonClick}
-            handleClearButtonClick={this.handleClearButtonClick}
-            handleExportToMIDIClick={this.handleExportToMIDIClick}
-          />
+      <HotKeys keyMap={keyMap} handlers={this.keyHandlers}>
+        <ProjectContextProvider value={projectContext}>
+          <Fullscreen
+            enabled={isFullscreenEnabled}
+            onChange={isFullscreenEnabled =>
+              this.setState({ isFullscreenEnabled })
+            }
+          >
+            {/* The Controls */}
+            <Toolbar
+              handlePlayClick={this.handlePlayClick}
+              handleRecordClick={this.handleRecordClick}
+              handleColorChange={this.handleColorChange}
+              handleDrawToolClick={this.handleDrawToolClick}
+              handleEditToolClick={this.handleEditToolClick}
+              handleGridToggleChange={this.handleGridToggleChange}
+              handleSnapToGridToggleChange={this.handleSnapToGridToggleChange}
+              handleAutoQuantizeChange={this.handleAutoQuantizeChange}
+              handleTempoChange={this.handleTempoChange}
+              handleTonicChange={this.handleTonicChange}
+              handleScaleChange={this.handleScaleChange}
+              handleFullscreenButtonClick={this.handleFullscreenButtonClick}
+              handleClearButtonClick={this.handleClearButtonClick}
+              handleExportToMIDIClick={this.handleExportToMIDIClick}
+            />
 
-          {/* The Canvas */}
-          <ShapeCanvas
-            // TODO: revisit: do we need to do this?
-            onMount={c => (this.shapeCanvas = c)}
-          />
+            {/* The Canvas */}
+            <ShapeCanvas
+              // TODO: revisit: do we need to do this?
+              onMount={c => (this.shapeCanvas = c)}
+            />
 
-          {/* Instrument controller panels */}
-          <ColorControllerPanel
-            onInstChange={this.handleInstChange}
-            onKnobChange={this.handleKnobChange}
-          />
+            {/* Instrument controller panels */}
+            <ColorControllerPanel
+              onInstChange={this.handleInstChange}
+              onKnobChange={this.handleKnobChange}
+            />
 
-          {/* Sidebar */}
-          <Sidebar downloadUrls={downloadUrls} />
-        </Fullscreen>
-      </ProjectContextProvider>
+            {/* Sidebar */}
+            <Sidebar downloadUrls={downloadUrls} />
+          </Fullscreen>
+        </ProjectContextProvider>
+      </HotKeys>
     );
   }
 }

@@ -31,6 +31,7 @@
     "react-draggable": "^3.0.3",
     "react-full-screen": "0.0.2",
     "react-fullscreenable": "^2.5.0",
+    "react-hotkeys": "^1.1.4",
     "react-ionicons": "^2.0.2",
     "react-konva": "^16.6.31",
     "react-portal": "^3.2.0",

@@ -88,12 +88,10 @@ class Project extends Component {
       selectedInstruments,
       knobVals,
     };
+
     // transport
     this.handlePlayClick = this.handlePlayClick.bind(this);
     this.handleRecordClick = this.handleRecordClick.bind(this);
-    this.keyHandlers = {
-      PLAY: this.handlePlayClick,
-    };
 
     // color and tool
     this.handleColorChange = this.handleColorChange.bind(this);
@@ -130,18 +128,26 @@ class Project extends Component {
 
     // export
     this.handleExportToMIDIClick = this.handleExportToMIDIClick.bind(this);
-  }
 
-  /* ============================= LIFECYCLE ============================== */
-
-  componentWillMount() {
-    document.addEventListener('keydown', this.handleKeyDown.bind(this));
-    document.addEventListener('keyup', this.handleKeyUp.bind(this));
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown.bind(this));
-    document.removeEventListener('keyup', this.handleKeyUp.bind(this));
+    // Key handlers
+    this.keyHandlers = {
+      PLAY: this.handlePlayClick,
+      TOGGLE_ACTIVE_TOOL: this.toggleActiveTool,
+      CHANGE_DRAW_COLOR: ({ key }) => {
+        this.setState({
+          activeColorIndex: parseInt(key, 10) - 1,
+        });
+      },
+      ALT_DOWN: () => {
+        this.setState({ isAltPressed: true });
+      },
+      ALT_UP: () => {
+        this.setState({ isAltPressed: false });
+      },
+      DELETE_SHAPE: () => {
+        this.shapeCanvas.deleteSelectedShape();
+      },
+    };
   }
 
   /* ============================== HANDLERS ============================== */
@@ -367,53 +373,27 @@ class Project extends Component {
 
   /* --- Keyboard Shortcuts ----------------------------------------------- */
 
-  handleKeyDown(event) {
-    const { key } = event;
-    console.warn('Keypress:', key);
+  // handleKeyDown(event) {
+  //   const { key } = event;
+  //   console.warn('Keypress:', key);
 
-    /* Space toggles play */
-    // if (key === ' ') {
-    //   // event.preventDefault(); // stop from clicking focused buttons
-    //   this.handlePlayClick();
-    // }
+  //   /* backspace deletes the selected shape */
+  //   if (key === 'Backspace') {
+  //     this.shapeCanvas.deleteSelectedShape();
+  //   }
 
-    /* tab toggles active tool */
-    if (key === 'Tab') {
-      event.preventDefault();
-      this.toggleActiveTool();
-    }
+  //   /* Alt/option allows duplication */
+  //   if (key === 'Alt') {
+  //     this.setState({ isAltPressed: true });
+  //   }
+  // }
 
-    /* numbers control draw color */
-    if (
-      key === '1' ||
-      key === '2' ||
-      key === '3' ||
-      key === '4' ||
-      key === '5'
-    ) {
-      this.setState({
-        activeColorIndex: parseInt(key, 10) - 1,
-      });
-    }
-
-    /* backspace deletes the selected shape */
-    if (key === 'Backspace') {
-      this.shapeCanvas.deleteSelectedShape();
-    }
-
-    /* Alt/option allows duplication */
-    if (key === 'Alt') {
-      this.setState({ isAltPressed: true });
-    }
-  }
-
-  handleKeyUp(event) {
-    const { key } = event;
-    /* Alt/option allows duplication */
-    if (key === 'Alt') {
-      this.setState({ isAltPressed: false });
-    }
-  }
+  // handleKeyUp(event) {
+  //   const { key } = event;
+  //   if (key === 'Alt') {
+  //     this.setState({ isAltPressed: false });
+  //   }
+  // }
   /* =============================== RENDER =============================== */
 
   render() {

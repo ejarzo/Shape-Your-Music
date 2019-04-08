@@ -371,29 +371,6 @@ class Project extends Component {
     };
   }
 
-  /* --- Keyboard Shortcuts ----------------------------------------------- */
-
-  // handleKeyDown(event) {
-  //   const { key } = event;
-  //   console.warn('Keypress:', key);
-
-  //   /* backspace deletes the selected shape */
-  //   if (key === 'Backspace') {
-  //     this.shapeCanvas.deleteSelectedShape();
-  //   }
-
-  //   /* Alt/option allows duplication */
-  //   if (key === 'Alt') {
-  //     this.setState({ isAltPressed: true });
-  //   }
-  // }
-
-  // handleKeyUp(event) {
-  //   const { key } = event;
-  //   if (key === 'Alt') {
-  //     this.setState({ isAltPressed: false });
-  //   }
-  // }
   /* =============================== RENDER =============================== */
 
   render() {

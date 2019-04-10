@@ -2851,7 +2851,7 @@ file-loader@1.1.5:
     loader-utils "^1.0.2"
     schema-utils "^0.3.0"
 
-file-saver@^2.0.0:
+file-saver@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.0.tgz#74eef7748159503b60008a15af2f1930fb5df7ab"
   integrity sha512-cYM1ic5DAkg25pHKgi5f10ziAM7RJU37gaH1XQlyNDrtUnzhC/dfoV9zf2OmF0RMKi42jG5B0JWBnPQqyj/G6g==
@@ -4444,7 +4444,7 @@ jsx-ast-utils@^2.0.0:
   dependencies:
     array-includes "^3.0.3"
 
-jszip@^3.1.5:
+jszip@3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/jszip/-/jszip-3.1.5.tgz#e3c2a6c6d706ac6e603314036d43cd40beefdf37"
   integrity sha512-5W8NUaFRFRqTOL7ZDDrx5qWHJyBXy6velVudIzQUSoqAAYqzSh2Z7/m0Rf1QbmQJccegD0r+YZxBjzqoBiEeJQ==
@@ -4823,7 +4823,7 @@ micromatch@^3.1.4, micromatch@^3.1.8:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-midi-writer-js@^1.5.2:
+midi-writer-js@1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/midi-writer-js/-/midi-writer-js-1.5.2.tgz#e133608b41123bb64cb2f3f1a1065ae069977d69"
   integrity sha512-EZsfEwucw9FDtqwaMW4bCs+tFC4fBuCkOWvseMPX8xYL8Vn9C+LZrc7579zllhw9C0BJiJDddSN+hhytfhlpRg==

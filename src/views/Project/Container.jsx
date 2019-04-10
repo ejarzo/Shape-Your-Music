@@ -92,6 +92,8 @@ class Project extends Component {
     // transport
     this.handlePlayClick = this.handlePlayClick.bind(this);
     this.handleRecordClick = this.handleRecordClick.bind(this);
+    this.handleChangeDrawColor = this.handleChangeDrawColor.bind(this);
+    this.handleAltChange = this.handleAltChange.bind(this);
 
     // color and tool
     this.handleColorChange = this.handleColorChange.bind(this);
@@ -131,49 +133,32 @@ class Project extends Component {
 
     // Key handlers
     this.keyHandlers = {
-      PLAY: this.handlePlayClick,
-      TOGGLE_ACTIVE_TOOL: this.toggleActiveTool,
-      CHANGE_DRAW_COLOR: ({ key }) => {
-        this.setState({
-          activeColorIndex: parseInt(key, 10) - 1,
-        });
+      PLAY: e => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.handlePlayClick();
       },
-      ALT_DOWN: () => {
-        this.setState({ isAltPressed: true });
+      TOGGLE_ACTIVE_TOOL: e => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.toggleActiveTool();
       },
-      ALT_UP: () => {
-        this.setState({ isAltPressed: false });
-      },
-      DELETE_SHAPE: () => {
-        this.shapeCanvas.deleteSelectedShape();
-      },
+      CHANGE_DRAW_COLOR: this.handleChangeDrawColor,
+      ALT_DOWN: () => this.handleAltChange(true),
+      ALT_UP: () => this.handleAltChange(false),
+      DELETE_SHAPE: () => this.shapeCanvas.deleteSelectedShape(),
     };
   }
 
   /* ============================== HANDLERS ============================== */
-
-  /* --- Transport -------------------------------------------------------- */
-
-  beginRecording() {
-    this.recorder.record();
-    this.setState({ isRecording: true });
+  handleChangeDrawColor({ key }) {
+    this.setState({
+      activeColorIndex: parseInt(key, 10) - 1,
+    });
   }
 
-  stopRecording() {
-    this.recorder.exportWAV(blob => {
-      const url = URL.createObjectURL(blob);
-      const downloadUrls = this.state.downloadUrls.slice();
-      downloadUrls.push(url);
-      this.setState({
-        downloadUrls,
-      });
-      this.recorder.stop();
-      this.recorder.clear();
-    });
-    this.setState({
-      isRecording: false,
-      isArmed: false,
-    });
+  handleAltChange(alt) {
+    this.setState({ isAltPressed: alt });
   }
 
   handlePlayClick() {
@@ -205,6 +190,30 @@ class Project extends Component {
         });
       }
     }
+  }
+
+  /* --- Transport -------------------------------------------------------- */
+
+  beginRecording() {
+    this.recorder.record();
+    this.setState({ isRecording: true });
+  }
+
+  stopRecording() {
+    this.recorder.exportWAV(blob => {
+      const url = URL.createObjectURL(blob);
+      const downloadUrls = this.state.downloadUrls.slice();
+      downloadUrls.push(url);
+      this.setState({
+        downloadUrls,
+      });
+      this.recorder.stop();
+      this.recorder.clear();
+    });
+    this.setState({
+      isRecording: false,
+      isArmed: false,
+    });
   }
 
   /* --- Tool ------------------------------------------------------------- */

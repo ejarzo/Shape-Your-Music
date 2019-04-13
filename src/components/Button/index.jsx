@@ -21,6 +21,7 @@ function Button(props) {
       backgroundColor: props.darkHover
         ? getDarker(props.color)
         : getLighter(props.color),
+      color: !props.color && '#FFF',
     },
     ':active': {
       backgroundColor: props.darkHover

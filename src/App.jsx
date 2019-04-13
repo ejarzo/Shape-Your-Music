@@ -1,5 +1,6 @@
 import React from 'react';
 import Project from './views/Project';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const defaultState = {
   name: 'New Project',
@@ -9,7 +10,11 @@ const defaultState = {
 };
 
 function App() {
-  return <Project initState={defaultState} />;
+  return (
+    <ErrorBoundary>
+      <Project initState={defaultState} />
+    </ErrorBoundary>
+  );
 }
 
 export default App;

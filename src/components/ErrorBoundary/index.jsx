@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from 'components/Button';
-import * as Sentry from '@sentry/browser';
+import { captureException } from 'utils/errorTracking';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, info) {
-    Sentry.captureException(error, info);
+    captureException(error, info);
   }
 
   render() {

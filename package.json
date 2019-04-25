@@ -12,6 +12,7 @@
   ],
   "private": false,
   "dependencies": {
+    "@sentry/browser": "^5.0.8",
     "classnames": "^2.2.5",
     "color": "^2.0.1",
     "file-saver": "2.0.0",

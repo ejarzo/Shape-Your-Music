@@ -150,6 +150,23 @@ class Project extends Component {
     };
   }
 
+  componentDidMount() {
+    function createTodo(data) {
+      return fetch('/.netlify/functions/test', {
+        body: JSON.stringify(data),
+        method: 'POST',
+      })
+        .then(response => {
+          console.log('CONNECTED TO FUNCTIONS', response);
+          return response.json();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+
+    createTodo({ test: 'test val' });
+  }
   /* ============================== HANDLERS ============================== */
   handleChangeDrawColor({ key }) {
     this.setState({

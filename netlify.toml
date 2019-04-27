@@ -2,3 +2,6 @@
   command = "yarn start"
   port = 3000
   publish = "dist"
+
+[build]
+  functions = './build/functions'

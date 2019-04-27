@@ -42,7 +42,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:app": "react-scripts start",
+    "start:server": "netlify-lambda serve functions",
     "build": "react-scripts build",
+    "build:app": "react-scripts build",
+    "build:functions": "netlify-lambda build functions",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "yarn build",
@@ -52,6 +56,15 @@
     "eslint-plugin-jasmine": "^2.10.1",
     "eslint-plugin-prettier": "^2.6.2",
     "gh-pages": "^1.2.0",
+    "netlify-lambda": "^1.4.5",
     "prettier": "^1.16.1"
+  },
+  "proxy": {
+    "/.netlify/functions": {
+      "target": "http://localhost:9000",
+      "pathRewrite": {
+        "^/\\.netlify/functions": ""
+      }
+    }
   }
 }

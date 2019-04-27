@@ -15,8 +15,8 @@ import { themeColors } from 'utils/color';
 import { ZipFile } from 'utils/file';
 import PRESETS from 'presets';
 import { keyMap } from './keyMap';
-
 import ProjectContextProvider from './ProjectContextProvider';
+import { testLambdaFunction } from 'middleware/test';
 
 const MidiWriter = require('midi-writer-js');
 
@@ -150,23 +150,11 @@ class Project extends Component {
     };
   }
 
-  componentDidMount() {
-    function createTodo(data) {
-      return fetch('/.netlify/functions/test', {
-        body: JSON.stringify(data),
-        method: 'POST',
-      })
-        .then(response => {
-          console.log('CONNECTED TO FUNCTIONS', response);
-          return response.json();
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-
-    createTodo({ test: 'test val' });
+  async componentDidMount() {
+    const test = await testLambdaFunction({ test: 'test val' });
+    console.log(test);
   }
+
   /* ============================== HANDLERS ============================== */
   handleChangeDrawColor({ key }) {
     this.setState({

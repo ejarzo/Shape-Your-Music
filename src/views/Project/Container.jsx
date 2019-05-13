@@ -16,7 +16,7 @@ import { ZipFile } from 'utils/file';
 import PRESETS from 'presets';
 import { keyMap } from './keyMap';
 import ProjectContextProvider from './ProjectContextProvider';
-import { testLambdaFunction } from 'middleware/test';
+import { createProject, readAllProjects } from 'middleware';
 
 const MidiWriter = require('midi-writer-js');
 
@@ -151,8 +151,11 @@ class Project extends Component {
   }
 
   async componentDidMount() {
-    const test = await testLambdaFunction({ test: 'test val' });
-    console.log(test);
+    const allProjects = await readAllProjects();
+    createProject({
+      name: 'New project',
+    });
+    console.log('All Projects', allProjects);
   }
 
   /* ============================== HANDLERS ============================== */

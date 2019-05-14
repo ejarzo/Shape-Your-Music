@@ -1,8 +1,8 @@
-import { getEndpoint } from './utils';
+import { fetch } from './utils';
 
 export const readAllProjects = async data => {
   try {
-    const response = await fetch(getEndpoint('project-read-all'));
+    const response = await fetch('project-read-all');
     const jsonResponse = await response.json();
     return jsonResponse;
   } catch (e) {

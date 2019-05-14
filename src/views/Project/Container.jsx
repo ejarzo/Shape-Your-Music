@@ -151,11 +151,11 @@ class Project extends Component {
   }
 
   async componentDidMount() {
-    const allProjects = await readAllProjects();
-    createProject({
-      name: 'New project',
-    });
-    console.log('All Projects', allProjects);
+    // const allProjects = await readAllProjects();
+    // createProject({
+    //   name: 'New project',
+    // });
+    // console.log('All Projects', allProjects);
   }
 
   /* ============================== HANDLERS ============================== */

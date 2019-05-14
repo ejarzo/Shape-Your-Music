@@ -3,6 +3,14 @@ const { q, client } = getFauna();
 
 exports.handler = (event, context, callback) => {
   console.log('Function `project-read-all` invoked');
+  console.log('================== EVENT ==================');
+  console.log(event);
+  console.log('================== CONTEXT ==================');
+  console.log(context);
+  console.log('===========================================');
+
+  // const { identity, user } = context.clientContext;
+  // console.log(identity, user);
   return client
     .query(q.Paginate(q.Match(q.Ref('indexes/all_projects'))))
     .then(response => {

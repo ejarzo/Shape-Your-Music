@@ -1,6 +1,6 @@
 .toolbar {
   display: grid;
-  position: absolute;
+  /*position: absolute;*/
   z-index: 2;
   grid-template-rows: 100%;
   grid-column-gap: 15px;

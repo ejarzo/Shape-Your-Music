@@ -1,0 +1,23 @@
+.headerMenu {
+  height: 30px;
+  padding: 5px 8px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+}
+
+.headerMenuLinks {
+  display: flex;
+  flex-grow: 2;
+}
+
+.headerMenuLinks a {
+  margin-right: 10px;
+}
+
+.headerMenu a:hover {
+  font-weight: bold;
+}
+
+.headerMenu button:hover {
+  font-weight: bold;
+}

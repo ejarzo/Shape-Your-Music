@@ -4,6 +4,6 @@
   publish = "dist"
 
 [build]
-  command = "yarn build"
+  command = "yarn run bootstrap && yarn build"
   publish = "build/"
   functions = 'build/functions'

@@ -73,7 +73,7 @@ class ProjectFileManager extends Component {
     }
 
     const { loadedProject } = this.state;
-
+    console.log('loadedProject', loadedProject);
     if (!loadedProject) {
       return <Loading />;
     }

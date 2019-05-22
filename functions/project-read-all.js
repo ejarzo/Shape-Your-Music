@@ -8,6 +8,7 @@ exports.handler = async (event, context) => {
     );
     const getAllprojectDataQuery = projectRefs.map(ref => q.Get(ref));
     const returnData = await client.query(getAllprojectDataQuery);
+    /* TODO: 400 error on client query */
     return {
       statusCode: 200,
       body: JSON.stringify(returnData),

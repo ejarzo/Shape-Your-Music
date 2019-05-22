@@ -1,60 +1,50 @@
 * {
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 html {
   color: #242424;
   font-size: 1em;
   line-height: 1.4;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  -moz-osx-font-smoothing: grayscale; }
 
 body {
   margin: auto;
-  /*overflow: hidden;*/
+  overflow: hidden;
   width: 100%;
   height: 100%;
-  font-family: 'Inconsolata', monospace;
-  font-size: 0.8em;
-}
+  font-family: "Inconsolata", monospace;
+  font-size: 0.8em; }
 
 button {
   outline: none;
   background: none;
-  border: none;
-}
+  border: none; }
 
 a {
   text-decoration: none;
-  color: #242424;
-}
+  color: #242424; }
 
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 0;
-}
-ul li {
-  font-size: 12px;
-}
+  font-size: 0; }
+  ul li {
+    font-size: 12px; }
 
 #holder {
   background-color: #eeeeee;
   height: calc(100vh - 80px);
-  width: 100%;
-}
+  width: 100%; }
 
 /* ========================================================================== */
 .rc-slider-vertical {
   width: 100%;
   height: 100%;
-  padding: 0;
-}
-.rc-slider-vertical .rc-slider-mark {
-  display: none;
-}
+  padding: 0; }
+  .rc-slider-vertical .rc-slider-mark {
+    display: none; }
 
 .github-picker {
   position: static !important;
@@ -64,13 +54,11 @@ ul li {
   width: 100% !important;
   height: 31px !important;
   text-align: center !important;
-  boxshadow: 0 0 12px 0 rgba(0, 0, 0, 0.11) !important;
-  background: white !important;
-}
-.github-picker span {
-  width: 20% !important;
-  height: 100% !important;
-}
-.github-picker span div {
-  width: 100% !important;
-}
+  z-index: 100;
+  boxShadow: 0 0 12px 0 rgba(0, 0, 0, 0.11) !important;
+  background: white !important; }
+  .github-picker span {
+    width: 20% !important;
+    height: 100% !important; }
+    .github-picker span div {
+      width: 100% !important; }

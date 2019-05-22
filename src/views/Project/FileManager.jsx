@@ -2,6 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { createProject, readProject } from 'middleware';
 import Loading from 'components/Loading';
+import { getProjectSaveData } from 'utils/project';
 
 const DEFAULT_PROJECT = {
   name: 'My Project',
@@ -46,25 +47,8 @@ class ProjectFileManager extends Component {
         console.log('updating project', projectId);
       } else {
         console.log('Saving new project');
-        const {
-          name,
-          tempo,
-          scaleObj,
-          isGridActive,
-          isSnapToGridActive,
-          isAutoQuantizeActive,
-        } = project;
-        const projectData = {
-          name,
-          tempo,
-          tonic: scaleObj.tonic.toString(),
-          scale: scaleObj.name.toString(),
-          isGridActive,
-          isSnapToGridActive,
-          isAutoQuantizeActive,
-        };
-        console.log(projectData);
-        createProject(projectData);
+        const projectSaveData = getProjectSaveData(project);
+        createProject(projectSaveData);
       }
     };
   }
@@ -80,7 +64,7 @@ class ProjectFileManager extends Component {
     }
 
     const { loadedProject } = this.state;
-    console.log('loadedProject', loadedProject);
+
     if (!loadedProject) {
       return <Loading />;
     }

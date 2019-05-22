@@ -29,8 +29,9 @@
 .canvasControls {
   grid-template-columns: repeat(2, 1fr);
 }
+
 .toolSelect {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, calc(100% / 3));
 }
 
 .musicalControls {

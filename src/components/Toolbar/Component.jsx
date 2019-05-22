@@ -106,9 +106,10 @@ function ToolSelect(props) {
             style={{
               width: 140,
               left: 0,
-              top: 45,
+              top: 7,
               height: 50,
-              // position: 'relative',
+              position: 'relative',
+              zIndex: 500,
             }}
           >
             <ColorPicker

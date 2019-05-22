@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { netlifyAuth } from 'utils/auth';
-import cx from 'classnames';
 import styles from './styles.module.css';
 import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
+
+const HeaderLink = props => (
+  <NavLink activeStyle={{ fontWeight: 'bold' }} {...props} />
+);
 
 function HeaderMenu(props) {
   const { user } = netlifyAuth;
@@ -13,8 +16,12 @@ function HeaderMenu(props) {
       {({ user, isAuthenticated, authenticate, logout }) => (
         <div className={styles.headerMenu}>
           <div className={styles.headerMenuLinks}>
-            <Link to="/">Create</Link>
-            <Link to="/discover">Discover</Link>
+            <HeaderLink exact to="/">
+              Create
+            </HeaderLink>
+            <HeaderLink exact to="/discover">
+              Discover
+            </HeaderLink>
           </div>
           <div className={styles.headerAccount}>
             {isAuthenticated ? (

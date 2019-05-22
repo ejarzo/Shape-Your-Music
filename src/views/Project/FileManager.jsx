@@ -23,11 +23,18 @@ class ProjectFileManager extends Component {
   async componentDidMount() {
     const { projectId } = this.props;
     if (projectId) {
-      const project = await readProject(projectId);
-      console.log('loaded project', project);
-      this.setState({
-        loadedProject: project && project.data,
-      });
+      const { data, responseCode } = await readProject(projectId);
+      if (responseCode === 200) {
+        console.log('loaded project', data);
+        this.setState({
+          loadedProject: data,
+        });
+      } else {
+        // TODO handle error
+        this.setState({
+          loadedProject: {},
+        });
+      }
     }
   }
 

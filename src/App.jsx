@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ModalContainer } from 'react-router-modal';
-import ModalRoute from 'components/ModalRoute';
 import Project from 'views/Project';
 import Discover from 'views/Discover';
 import PageWrapper from 'components/PageWrapper';

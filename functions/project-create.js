@@ -3,8 +3,8 @@ const { q, client } = getFauna();
 
 exports.handler = async (event, context) => {
   console.log('Function `project-create` invoked');
-
   const { user } = context.clientContext;
+
   if (!user) {
     return {
       statusCode: 403,

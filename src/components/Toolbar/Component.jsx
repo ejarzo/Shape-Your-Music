@@ -372,8 +372,6 @@ function ToolbarComponent(props) {
             Export To MIDI
           </Button>
         </div>
-      </div>
-      <div className={cx(styles.toolbarSection)}>
         <div>
           <Button
             hasBorder

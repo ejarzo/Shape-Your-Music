@@ -4,7 +4,7 @@
   z-index: 2;
   grid-template-rows: 100%;
   grid-column-gap: 15px;
-  grid-template-columns: 80px 120px 180px 250px 120px 280px;
+  grid-template-columns: 80px 120px 180px 250px 120px 250px 120px 1fr;
   /*max-width: 900px;*/
   min-width: 800px;
   top: 0px;

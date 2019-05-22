@@ -27,7 +27,9 @@ function HeaderMenu(props) {
             {isAuthenticated ? (
               <div>
                 {/* <i className="ion-ios-person" /> */}
-                <span>{user.user_metadata.full_name}</span>
+                <span>
+                  <em>{user.user_metadata.full_name}</em>
+                </span>
                 {' |'}
                 <button onClick={logout}>Log out</button>
               </div>

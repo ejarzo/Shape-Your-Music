@@ -1,0 +1,9 @@
+.projectCard {
+  padding: 15px;
+  border: 1px solid #ddd;
+}
+
+.projectCard:hover {
+  border-color: #242424;
+}
+

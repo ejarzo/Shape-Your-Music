@@ -1,0 +1,60 @@
+/* added to the body element when shown; prevent scrolling */
+.react-router-modal__modal-open {
+  overflow: hidden;
+}
+
+/* container that contains all modals and backdrops */
+.react-router-modal__container {
+  position: fixed;
+  z-index: 1000;
+}
+
+/* wrapper that contains backdrop and modal */
+/* setting this to absolute and setting a z-index creates a new stacking context */
+.react-router-modal__wrapper {
+  position: absolute;
+  z-index: 1;
+}
+
+/* backdrop shown behind each modal */
+.react-router-modal__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* modal element for the modal component */
+.react-router-modal__modal {
+  position: fixed;
+  width: 80%;
+  height: 80%;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 2px;
+  /*border: 1px solid #777;*/
+  padding: 25px;
+}
+
+/* mobile devices, particularly iOS, have some quirks to work around */
+@media only screen and (max-device-width: 1024px) {
+  .react-router-modal__modal-open {
+    position: fixed;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  .react-router-modal__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: translate3d(0, 0, 0);
+  }
+}

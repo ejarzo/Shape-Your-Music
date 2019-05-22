@@ -303,6 +303,7 @@ function ToolbarComponent(props) {
     handleColorMouseEnter,
     handleColorMouseLeave,
     isColorPickerOpen,
+    handleSaveClick,
     // Context
     isPlaying,
     isArmed,
@@ -368,6 +369,19 @@ function ToolbarComponent(props) {
             title="Export and download MIDI file"
           >
             Export To MIDI
+          </Button>
+        </div>
+      </div>
+      <div className={cx(styles.toolbarSection)}>
+        <div>
+          <Button
+            hasBorder
+            darkHover
+            color={grayLightest}
+            onClick={handleSaveClick}
+            title="Save project"
+          >
+            Save
           </Button>
         </div>
       </div>

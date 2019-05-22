@@ -16,7 +16,6 @@ import { ZipFile } from 'utils/file';
 import PRESETS from 'presets';
 import { keyMap } from './keyMap';
 import ProjectContextProvider from './ProjectContextProvider';
-import { createProject, readAllProjects } from 'middleware';
 
 const MidiWriter = require('midi-writer-js');
 
@@ -66,13 +65,22 @@ class Project extends Component {
       knobVals.push(instrumentDefaults);
     });
 
+    const { initState } = props;
+
+    const {
+      name = 'New project',
+      isGridActive = false,
+      isSnapToGridActive = false,
+      isAutoQuantizeActive = false,
+    } = initState;
+
     this.state = {
-      name: props.initState.name,
+      name,
+      isGridActive,
+      isSnapToGridActive,
+      isAutoQuantizeActive,
 
       isFullscreenEnabled: false,
-      isGridActive: false,
-      isSnapToGridActive: false,
-      isAutoQuantizeActive: false,
       isPlaying: false,
       isRecording: false,
       isArmed: false,
@@ -150,15 +158,8 @@ class Project extends Component {
     };
   }
 
-  async componentDidMount() {
-    // const allProjects = await readAllProjects();
-    // createProject({
-    //   name: 'New project',
-    // });
-    // console.log('All Projects', allProjects);
-  }
-
   /* ============================== HANDLERS ============================== */
+
   handleChangeDrawColor({ key }) {
     this.setState({
       activeColorIndex: parseInt(key, 10) - 1,
@@ -395,8 +396,10 @@ class Project extends Component {
 
   render() {
     const { isFullscreenEnabled, downloadUrls } = this.state;
+    const { saveProject } = this.props;
 
     const projectContext = this.state;
+    const handleSaveClick = () => saveProject(projectContext);
 
     return (
       <HotKeys keyMap={keyMap} handlers={this.keyHandlers}>
@@ -423,6 +426,7 @@ class Project extends Component {
               handleFullscreenButtonClick={this.handleFullscreenButtonClick}
               handleClearButtonClick={this.handleClearButtonClick}
               handleExportToMIDIClick={this.handleExportToMIDIClick}
+              handleSaveClick={handleSaveClick}
             />
 
             {/* The Canvas */}

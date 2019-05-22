@@ -6,3 +6,5 @@ export const getFauna = () => ({
     secret: process.env.FAUNADB_SERVER_SECRET,
   }),
 });
+
+export const getId = urlPath => urlPath.match(/([^\/]*)\/*$/)[0];

@@ -1,10 +1,16 @@
-import { getEndpoint } from './utils';
+import { fetch } from './utils';
 
 export const createProject = data => {
-  return fetch(getEndpoint('project-create'), {
+  return fetch('project-create', {
     body: JSON.stringify(data),
     method: 'POST',
-  }).then(response => {
-    return response.json();
-  });
+  })
+    .then(response => {
+      console.log(response);
+      return response.json();
+    })
+    .catch(error => {
+      console.log('error!');
+      console.log(error);
+    });
 };

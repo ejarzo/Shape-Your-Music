@@ -1,18 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { ModalContainer } from 'react-router-modal';
+import ModalRoute from 'components/ModalRoute';
 import Project from 'views/Project';
 import Discover from 'views/Discover';
-import Login from 'views/Login';
 import PageWrapper from 'components/PageWrapper';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { CurrentUserContextProvider } from 'context/CurrentUserContext';
-
-const defaultState = {
-  name: 'New Project',
-  tempo: 50,
-  tonic: 'a',
-  scale: 'major',
-};
 
 function App() {
   return (
@@ -21,14 +15,19 @@ function App() {
         <BrowserRouter>
           <PageWrapper>
             <Switch>
+              <Route exact path="/" component={() => <Project />} />
               <Route
                 exact
-                path="/"
-                component={() => <Project initState={defaultState} />}
+                path="/project/:projectId"
+                component={({
+                  match: {
+                    params: { projectId },
+                  },
+                }) => <Project projectId={projectId} />}
               />
               <Route path="/discover" component={Discover} />
-              <Route path="/login" component={Login} />
             </Switch>
+            <ModalContainer />
           </PageWrapper>
         </BrowserRouter>
       </CurrentUserContextProvider>

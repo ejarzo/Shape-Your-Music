@@ -1,4 +1,5 @@
+import { readProject } from './readProject';
 import { createProject } from './createProject';
 import { readAllProjects } from './readAllProjects';
 
-export { createProject, readAllProjects };
+export { readProject, createProject, readAllProjects };

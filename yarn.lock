@@ -7957,6 +7957,11 @@ react-router-dom@^5.0.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-router-modal@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/react-router-modal/-/react-router-modal-1.5.2.tgz#64fa736b0457339415785e086cf3498d5bf61536"
+  integrity sha512-q1a0KJaDI7pJbmMZV/bJYcr2BqsePOAyCgCl8xN7t5IA+3LFQyqFJwvLrMvmPnsjVKR0vaUSrqgObOslgpxs7A==
+
 react-router@5.0.0, react-router@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-5.0.0.tgz#349863f769ffc2fa10ee7331a4296e86bc12879d"
@@ -9582,6 +9587,11 @@ unique-string@^1.0.0:
 universalify@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.1.tgz#fa71badd4437af4c148841e3b3b165f9e9e590b7"
+
+unmute@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/unmute/-/unmute-0.1.3.tgz#aba3b19e9e612350647830249a61395959a3af94"
+  integrity sha512-cx9h46cL3dlrxaLzNPCW1FrmyO/hvl3p9vRfjij3yf/fYfUIdHFdE+kezWpEZ8X+CWGVjBCiOS+9xKiYnUsxXw==
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"

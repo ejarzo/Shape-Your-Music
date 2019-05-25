@@ -8,7 +8,9 @@ export const getProjectSaveData = projectData => {
     isAutoQuantizeActive,
     shapesList,
   } = projectData;
+
   console.log(shapesList);
+
   return {
     name,
     tempo,
@@ -20,3 +22,5 @@ export const getProjectSaveData = projectData => {
     shapesList,
   };
 };
+
+export const getProjectIdFromResponse = project => project.ref['@ref'].id;

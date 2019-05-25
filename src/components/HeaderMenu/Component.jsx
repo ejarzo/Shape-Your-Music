@@ -10,7 +10,7 @@ const HeaderLink = props => (
 function HeaderMenu(props) {
   return (
     <CurrentUserContextConsumer>
-      {({ user, isAuthenticated, authenticate, logout }) => (
+      {({ user, authenticate, logout }) => (
         <div className={styles.headerMenu}>
           <div className={styles.headerMenuLinks}>
             <HeaderLink exact to="/">
@@ -21,7 +21,7 @@ function HeaderMenu(props) {
             </HeaderLink>
           </div>
           <div className={styles.headerAccount}>
-            {isAuthenticated ? (
+            {user ? (
               <div>
                 {/* <i className="ion-ios-person" /> */}
                 <span>

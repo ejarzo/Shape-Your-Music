@@ -93,9 +93,10 @@ class ShapeCanvas extends Component {
   getShapesList() {
     const shapesList = this.state.shapesList.slice();
 
+    /* Get absolute points for each shape */
     this.shapeRefs.forEach((shape, i) => {
       if (!shape) return;
-      const points = shape.getPoints();
+      const points = shape.getAbsolutePoints();
       shapesList[i].points = points;
     });
 

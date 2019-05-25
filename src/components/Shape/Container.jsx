@@ -21,7 +21,7 @@ import withProjectContext from 'views/Project/withProjectContext';
 const propTypes = {
   index: number.isRequired,
   colorIndex: number.isRequired,
-  points: array.isRequired,
+  initialPoints: array.isRequired,
   isSelected: bool.isRequired,
   soloedShapeIndex: number.isRequired,
 
@@ -57,8 +57,6 @@ class ShapeContainer extends PureComponent {
       animCircleY: 0,
     };
     this.quantizeLength = 500;
-
-    this.getPoints = this.getPoints.bind(this);
 
     // shape events
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -267,11 +265,6 @@ class ShapeContainer extends PureComponent {
     part.playbackRate = this.props.tempo / 50;
 
     return part;
-  }
-
-  getPoints() {
-    const { points } = this.state;
-    return points;
   }
 
   getNoteInfo(points, scaleObj, i, iPrev, iPrevPrev, prevNoteIndex) {

@@ -6,28 +6,20 @@ export const CurrentUserContext = React.createContext({});
 
 class CurrentUserContextProvider extends React.Component {
   state = {
-    isAuthenticated: !!netlifyIdentity.currentUser(),
     user: netlifyIdentity.currentUser(),
   };
 
   authenticate = ({ showSignup = false }) => {
     netlifyIdentity.open(showSignup && 'signup');
     netlifyIdentity.on('login', user => {
-      console.log(user);
-      this.setState({
-        user,
-        isAuthenticated: true,
-      });
+      this.setState({ user });
     });
   };
 
   logout = callback => {
     netlifyIdentity.logout();
     netlifyIdentity.on('logout', () => {
-      this.setState({
-        user: null,
-        isAuthenticated: false,
-      });
+      this.setState({ user: null });
     });
   };
 
@@ -40,7 +32,7 @@ class CurrentUserContextProvider extends React.Component {
       authenticate: this.authenticate,
       logout: this.logout,
     };
-    console.log(currentUser);
+
     return (
       <CurrentUserContext.Provider value={currentUser}>
         {children}

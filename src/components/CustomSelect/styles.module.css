@@ -5,7 +5,7 @@
 
 .customSelect :global(.Select-control:hover) {
   box-shadow: none !important;
-} 
+}
 
 .customSelect :global(.Select-value-label) {
   padding: 0 !important;
@@ -17,32 +17,32 @@
 
 .lightText {
   color: #fff !important;
-  background-color: rgba(255,255,255,0) !important;
+  background-color: rgba(255, 255, 255, 0) !important;
 }
 
 .lightText:global(.is-focused) {
-    color: #fff !important;
-    background-color: rgba(255,255,255,0.1) !important;
+  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 .lightText:global(.is-selected) {
   color: #fff !important;
-  background-color: rgba(255,255,255,0.2) !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .darkText {
   color: #242424 !important;
-  background-color: rgba(255,255,255,0) !important;
+  background-color: rgba(255, 255, 255, 0) !important;
 }
 
 .darkText:global(.is-focused) {
-    color: #242424 !important;
-    background-color: rgba(0,0,0,0.05) !important;
+  color: #242424 !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 .darkText:global(.is-selected) {
   color: #242424 !important;
-  background-color: rgba(0,0,0,0.1) !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 .customSelect :global(.Select-control .Select-value) {

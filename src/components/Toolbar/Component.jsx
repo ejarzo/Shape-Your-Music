@@ -120,7 +120,7 @@ function ToolSelect(props) {
         )}
       </div>
       <Button
-        darkHover
+        // darkHover
         hasBorder
         color={isDrawTool ? black : grayLightest}
         onClick={handleDrawToolClick}
@@ -129,7 +129,7 @@ function ToolSelect(props) {
         <DrawToolIcon fill={isDrawTool ? grayLightest : black} />
       </Button>
       <Button
-        darkHover
+        // darkHover
         hasBorder
         color={isEditTool ? black : grayLightest}
         onClick={handleEditToolClick}
@@ -259,7 +259,7 @@ function OtherControls(props) {
       <div>
         <Button
           hasBorder
-          darkHover
+          // darkHover
           color={grayLightest}
           onClick={props.handleClearButtonClick}
           title="Clear all shapes (CANNOT UNDO)"
@@ -364,7 +364,7 @@ function ToolbarComponent(props) {
         <div>
           <Button
             hasBorder
-            darkHover
+            // darkHover
             color={grayLightest}
             onClick={handleExportToMIDIClick}
             title="Export and download MIDI file"
@@ -375,7 +375,7 @@ function ToolbarComponent(props) {
         <div>
           <Button
             hasBorder
-            darkHover
+            // darkHover
             color={grayLightest}
             onClick={handleSaveClick}
             title="Save project"

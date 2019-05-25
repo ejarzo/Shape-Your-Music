@@ -1,18 +1,15 @@
 .toolbar {
   display: grid;
-  /*position: absolute;*/
   z-index: 2;
   grid-template-rows: 100%;
   grid-column-gap: 15px;
   grid-template-columns: 80px 120px 180px 250px 120px 250px 120px 1fr;
-  /*max-width: 900px;*/
   min-width: 800px;
   top: 0px;
   height: 50px;
   padding: 8px 6px;
   width: 100%;
-  background: #fff;
-  /*box-shadow: 0 0 10px rgba(0,0,0,0.1);*/
+  background: #e5e5e5;
 }
 
 .toolbarSection {

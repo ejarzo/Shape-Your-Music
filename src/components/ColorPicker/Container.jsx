@@ -1,22 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func, number, string } from 'prop-types';
 import { GithubPicker } from 'react-color';
 import { themeColors } from 'utils/color';
+import withProjectContext from 'views/Project/withProjectContext';
 
 const propTypes = {
-  onChange: PropTypes.func.isRequired,
-  activeColorIndex: PropTypes.number.isRequired,
-  color: PropTypes.string.isRequired,
-  triangle: PropTypes.string,
+  onChange: func.isRequired,
+  activeColorIndex: number.isRequired,
+  color: string.isRequired,
+  triangle: string,
 };
 
 function ColorPicker(props) {
   return (
     <div>
       <GithubPicker
-        style={{
-          borderRadius: 0,
-        }}
+        style={{ borderRadius: 0 }}
         onChange={props.onChange}
         color={props.color}
         colors={themeColors}
@@ -29,4 +28,4 @@ function ColorPicker(props) {
 
 ColorPicker.propTypes = propTypes;
 
-export default ColorPicker;
+export default withProjectContext(ColorPicker);

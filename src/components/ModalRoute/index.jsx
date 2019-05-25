@@ -5,16 +5,6 @@ import './modal-styles.css';
 import styles from './styles.module.css';
 
 class ModalRoute extends React.Component {
-  constructor(props) {
-    super(props);
-    this.close = this.close.bind(this);
-  }
-
-  close() {
-    const { history } = this.props;
-    history.push('/');
-  }
-
   render() {
     const { component: ChildComponent, path } = this.props;
     return (

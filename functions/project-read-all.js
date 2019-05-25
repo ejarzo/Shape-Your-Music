@@ -1,4 +1,4 @@
-import { getFauna } from './utils';
+import { getFauna, getProjectPreviewData } from './utils';
 const { q, client } = getFauna();
 
 exports.handler = async (event, context) => {
@@ -7,11 +7,16 @@ exports.handler = async (event, context) => {
       q.Paginate(q.Match(q.Ref('indexes/all_projects')))
     );
     const getAllprojectDataQuery = projectRefs.map(ref => q.Get(ref));
-    const returnData = await client.query(getAllprojectDataQuery);
+    const allProjects = await client.query(getAllprojectDataQuery);
     /* TODO: 400 error on client query */
     return {
       statusCode: 200,
-      body: JSON.stringify(returnData),
+      body: JSON.stringify(
+        allProjects.map(({ ref, data }) => ({
+          ref,
+          data: getProjectPreviewData(data),
+        }))
+      ),
     };
   } catch (err) {
     console.log(err);

@@ -24,8 +24,6 @@ const propTypes = {
   soloedShapeIndex: PropTypes.number.isRequired,
   deletedShapeIndeces: PropTypes.array.isRequired,
 
-  colorIndex: PropTypes.number.isRequired,
-
   mousePos: PropTypes.object.isRequired,
   currPoints: PropTypes.array.isRequired,
 
@@ -44,6 +42,7 @@ function ShapeCanvasComponent(props) {
     snapToGrid,
     gridSize,
     mousePos,
+    drawingState,
     shapesList,
     selectedShapeIndex,
     soloedShapeIndex,
@@ -132,6 +131,7 @@ function ShapeCanvasComponent(props) {
                   <PhantomShape
                     mousePos={mousePos}
                     points={currPoints}
+                    drawingState={drawingState}
                     color={themeColors[activeColorIndex]}
                   />
                 </Layer>

@@ -8,3 +8,8 @@ export const getFauna = () => ({
 });
 
 export const getId = urlPath => urlPath.match(/([^\/]*)\/*$/)[0];
+
+export const getProjectPreviewData = ({ name, userName }) => ({
+  name,
+  userName,
+});

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { appColors, getDarker } from 'utils/color';
+import { appColors, getDarker, getLighter } from 'utils/color';
 import styles from './styles.module.css';
+import Radium from 'radium';
 
 const { black, grayLightest } = appColors;
 const propTypes = {
@@ -13,16 +14,17 @@ const propTypes = {
 
 function CheckboxButton(props) {
   const defaultStyle = {
-    background: props.checked ? black : grayLightest,
+    backgroundColor: props.checked ? black : grayLightest,
     color: props.checked ? grayLightest : black,
-    // border: '1px solid #eee',
+    ':hover': {
+      backgroundColor: !props.checked ? getLighter(grayLightest) : black,
+    },
   };
 
   const labelStyle = props.color
     ? {
-        background: props.checked ? grayLightest : getDarker(props.color),
+        backgroundColor: props.checked ? grayLightest : getDarker(props.color),
         color: props.checked ? props.color : grayLightest,
-        // border: '1px solid props.color',
       }
     : defaultStyle;
 
@@ -48,4 +50,4 @@ function CheckboxButton(props) {
 
 CheckboxButton.propTypes = propTypes;
 
-export default CheckboxButton;
+export default Radium(CheckboxButton);

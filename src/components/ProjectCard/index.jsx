@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './styles.module.css';
 import { Link } from 'react-router-dom';
+import { getProjectIdFromResponse } from 'utils/project';
 
 export default props => {
   const { projectPreview } = props;
-  console.log(projectPreview);
-  const id = projectPreview.ref['@ref'].id;
+  const id = getProjectIdFromResponse(projectPreview);
   const {
     data: { name, userName },
   } = projectPreview;

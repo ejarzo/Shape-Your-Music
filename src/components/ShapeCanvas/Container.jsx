@@ -58,6 +58,7 @@ class ShapeCanvas extends Component {
     this.clearAll = this.clearAll.bind(this);
 
     this.getShapesList = this.getShapesList.bind(this);
+    this.getScreenshot = this.getScreenshot.bind(this);
     this.getShapeRef = this.getShapeRef.bind(this);
     this.removeShapeRef = this.removeShapeRef.bind(this);
 
@@ -88,6 +89,23 @@ class ShapeCanvas extends Component {
         selectedShapeIndex: -1,
       });
     }
+  }
+
+  getScreenshot() {
+    const resizedCanvas = document.createElement('canvas');
+    const resizedContext = resizedCanvas.getContext('2d');
+
+    const windowAspectRatio = window.innerHeight / window.innerWidth;
+    const width = 300;
+    const height = width * windowAspectRatio;
+    resizedCanvas.width = `${width}`;
+    resizedCanvas.height = `${height}`;
+
+    const canvas = document.getElementsByTagName('canvas')[0];
+
+    resizedContext.drawImage(canvas, 0, 0, width, height);
+    const myResizedData = resizedCanvas.toDataURL();
+    return myResizedData;
   }
 
   getShapesList() {
@@ -383,6 +401,7 @@ class ShapeCanvas extends Component {
     return (
       <ShapeCanvasComponent
         // TODO: revisit shape refs
+        stageRef={c => (this.stage = c)}
         getShapeRef={this.getShapeRef}
         removeShapeRef={this.removeShapeRef}
         height={window.innerHeight}

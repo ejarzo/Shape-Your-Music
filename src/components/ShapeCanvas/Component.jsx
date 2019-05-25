@@ -56,6 +56,7 @@ function ShapeCanvasComponent(props) {
     handleShapeVolumeChange,
     handleShapeSoloChange,
     handleShapeMuteChange,
+    stageRef,
   } = props;
 
   /* 
@@ -81,6 +82,7 @@ function ShapeCanvasComponent(props) {
             }}
           >
             <Stage
+              ref={stageRef}
               width={width}
               height={height}
               onContentClick={onContentClick}

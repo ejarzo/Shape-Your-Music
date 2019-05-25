@@ -399,11 +399,14 @@ class Project extends Component {
     const { initState, saveProject } = this.props;
     console.log(initState);
     const projectContext = this.state;
-    const handleSaveClick = () =>
+    const handleSaveClick = () => {
+      const screenshot = this.shapeCanvas.getScreenshot();
+      console.log(screenshot);
       saveProject({
         ...projectContext,
         shapesList: this.shapeCanvas.getShapesList(),
       });
+    };
 
     return (
       <HotKeys keyMap={keyMap} handlers={this.keyHandlers}>

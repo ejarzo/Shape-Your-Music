@@ -57,6 +57,7 @@ class ShapeCanvas extends Component {
     this.snapToGrid = this.snapToGrid.bind(this);
     this.clearAll = this.clearAll.bind(this);
 
+    this.getShapesList = this.getShapesList.bind(this);
     this.getShapeRef = this.getShapeRef.bind(this);
     this.removeShapeRef = this.removeShapeRef.bind(this);
 
@@ -73,10 +74,11 @@ class ShapeCanvas extends Component {
   }
 
   componentDidMount() {
-    const { onMount } = this.props;
+    const { onMount, initShapesList } = this.props;
+    console.log('initshapeslist', initShapesList);
     onMount(this);
     this.setState({
-      shapesList: this.generateRandomShapes(1, 4),
+      shapesList: initShapesList || [],
     });
   }
 
@@ -86,6 +88,18 @@ class ShapeCanvas extends Component {
         selectedShapeIndex: -1,
       });
     }
+  }
+
+  getShapesList() {
+    const shapesList = this.state.shapesList.slice();
+
+    this.shapeRefs.forEach((shape, i) => {
+      if (!shape) return;
+      const points = shape.getPoints();
+      shapesList[i].points = points;
+    });
+
+    return shapesList;
   }
 
   getShapeRef() {

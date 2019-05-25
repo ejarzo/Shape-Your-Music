@@ -396,10 +396,14 @@ class Project extends Component {
 
   render() {
     const { isFullscreenEnabled, downloadUrls } = this.state;
-    const { saveProject } = this.props;
-
+    const { initState, saveProject } = this.props;
+    console.log(initState);
     const projectContext = this.state;
-    const handleSaveClick = () => saveProject(projectContext);
+    const handleSaveClick = () =>
+      saveProject({
+        ...projectContext,
+        shapesList: this.shapeCanvas.getShapesList(),
+      });
 
     return (
       <HotKeys keyMap={keyMap} handlers={this.keyHandlers}>
@@ -433,6 +437,7 @@ class Project extends Component {
             <ShapeCanvas
               // TODO: revisit: do we need to do this?
               onMount={c => (this.shapeCanvas = c)}
+              initShapesList={initState.shapesList}
             />
 
             {/* Instrument controller panels */}

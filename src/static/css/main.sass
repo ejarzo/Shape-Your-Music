@@ -45,8 +45,13 @@ ul
     background-color: #EEE
     height: calc(100vh - 80px)
     width: 100%
+    &:focus
+        outline: none
 
 /* ========================================================================== */
+
+div[tabindex="-1"]:focus
+    outline: 0
 
 .rc-slider-vertical
     width: 100%

@@ -58,6 +58,8 @@ class ShapeContainer extends PureComponent {
     };
     this.quantizeLength = 500;
 
+    this.getPoints = this.getPoints.bind(this);
+
     // shape events
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseOver = this.handleMouseOver.bind(this);
@@ -265,6 +267,11 @@ class ShapeContainer extends PureComponent {
     part.playbackRate = this.props.tempo / 50;
 
     return part;
+  }
+
+  getPoints() {
+    const { points } = this.state;
+    return points;
   }
 
   getNoteInfo(points, scaleObj, i, iPrev, iPrevPrev, prevNoteIndex) {

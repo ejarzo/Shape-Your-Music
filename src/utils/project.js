@@ -6,8 +6,9 @@ export const getProjectSaveData = projectData => {
     isGridActive,
     isSnapToGridActive,
     isAutoQuantizeActive,
+    shapesList,
   } = projectData;
-
+  console.log(shapesList);
   return {
     name,
     tempo,
@@ -16,5 +17,6 @@ export const getProjectSaveData = projectData => {
     isGridActive,
     isSnapToGridActive,
     isAutoQuantizeActive,
+    shapesList,
   };
 };

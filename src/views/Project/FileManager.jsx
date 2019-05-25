@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { createProject, readProject } from 'middleware';
+import { createProject, readProject, updateProject } from 'middleware';
 import Loading from 'components/Loading';
 import { getProjectSaveData } from 'utils/project';
 
@@ -24,13 +24,16 @@ class ProjectFileManager extends Component {
   async componentDidMount() {
     const { projectId } = this.props;
     if (projectId) {
-      const { data, responseCode } = await readProject(projectId);
-      if (responseCode === 200) {
+      const result = await readProject(projectId);
+      const { data } = result;
+      if (data) {
         console.log('loaded project', data);
         this.setState({
           loadedProject: data,
         });
       } else {
+        console.log('_______ ERROR _______');
+        console.log(result);
         // TODO handle error
         this.setState({
           loadedProject: {},
@@ -42,12 +45,14 @@ class ProjectFileManager extends Component {
   getSaveProject(projectId) {
     return project => {
       console.log(project);
+      const projectSaveData = getProjectSaveData(project);
       if (projectId) {
         // UPDATE project
         console.log('updating project', projectId);
+        updateProject({ data: projectSaveData, id: projectId });
       } else {
+        // CREATE project
         console.log('Saving new project');
-        const projectSaveData = getProjectSaveData(project);
         createProject(projectSaveData);
       }
     };
@@ -64,7 +69,7 @@ class ProjectFileManager extends Component {
     }
 
     const { loadedProject } = this.state;
-
+    console.log('LOADED PROJECT', loadedProject);
     if (!loadedProject) {
       return <Loading />;
     }

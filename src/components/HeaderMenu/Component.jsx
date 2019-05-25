@@ -1,16 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { netlifyAuth } from 'utils/auth';
-import styles from './styles.module.css';
 import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
+import styles from './styles.module.css';
 
 const HeaderLink = props => (
   <NavLink activeStyle={{ fontWeight: 'bold' }} {...props} />
 );
 
 function HeaderMenu(props) {
-  const { user } = netlifyAuth;
-  console.log(user);
   return (
     <CurrentUserContextConsumer>
       {({ user, isAuthenticated, authenticate, logout }) => (

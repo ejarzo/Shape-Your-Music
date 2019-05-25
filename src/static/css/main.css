@@ -37,8 +37,13 @@ ul {
   background-color: #eeeeee;
   height: calc(100vh - 80px);
   width: 100%; }
+  #holder:focus {
+    outline: none; }
 
 /* ========================================================================== */
+div[tabindex="-1"]:focus {
+  outline: 0; }
+
 .rc-slider-vertical {
   width: 100%;
   height: 100%;

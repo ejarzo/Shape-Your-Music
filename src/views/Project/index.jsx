@@ -11,7 +11,7 @@ class Project extends React.Component {
       <FileManager projectId={projectId}>
         {props => (
           <AudioManager>
-            <ProjectContainer {...props} />
+            {audioProps => <ProjectContainer {...props} {...audioProps} />}
           </AudioManager>
         )}
       </FileManager>

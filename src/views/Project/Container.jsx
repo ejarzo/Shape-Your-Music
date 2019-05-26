@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { shape, string, number } from 'prop-types';
 import Fullscreen from 'react-full-screen';
 import Teoria from 'teoria';
-import Tone from 'tone';
 import { HotKeys } from 'react-hotkeys';
 
 import Toolbar from 'components/Toolbar';
@@ -10,7 +9,6 @@ import Sidebar from 'components/Sidebar';
 import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
 
-import Recorder from 'utils/Recorder';
 import { themeColors } from 'utils/color';
 import { ZipFile } from 'utils/file';
 import PRESETS from 'presets';
@@ -29,11 +27,11 @@ export const TOOL_TYPES = {
 /* ========================================================================== */
 
 const propTypes = {
-  initState: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    tonic: PropTypes.string.isRequired,
-    scale: PropTypes.string.isRequired,
-    tempo: PropTypes.number.isRequired,
+  initState: shape({
+    name: string.isRequired,
+    tonic: string.isRequired,
+    scale: string.isRequired,
+    tempo: number.isRequired,
   }).isRequired,
 };
 
@@ -78,7 +76,6 @@ class Project extends Component {
       activeTool: TOOL_TYPES.DRAW,
       activeColorIndex: 0,
 
-      downloadUrls: [],
       selectedInstruments,
       knobVals,
     };
@@ -118,7 +115,6 @@ class Project extends Component {
     );
 
     // recorder
-    this.recorder = new Recorder(Tone.Master);
     this.beginRecording = this.beginRecording.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
 
@@ -158,7 +154,8 @@ class Project extends Component {
 
   handlePlayClick() {
     const { isArmed, isRecording } = this.state;
-    Tone.Transport.toggle();
+    const { toggleTransport } = this.props;
+    toggleTransport();
 
     if (isArmed) {
       this.beginRecording();
@@ -190,21 +187,12 @@ class Project extends Component {
   /* --- Transport -------------------------------------------------------- */
 
   beginRecording() {
-    this.recorder.record();
+    this.props.beginRecording();
     this.setState({ isRecording: true });
   }
 
   stopRecording() {
-    this.recorder.exportWAV(blob => {
-      const url = URL.createObjectURL(blob);
-      const downloadUrls = this.state.downloadUrls.slice();
-      downloadUrls.push(url);
-      this.setState({
-        downloadUrls,
-      });
-      this.recorder.stop();
-      this.recorder.clear();
-    });
+    this.props.stopRecording();
     this.setState({
       isRecording: false,
       isArmed: false,
@@ -381,8 +369,8 @@ class Project extends Component {
   /* =============================== RENDER =============================== */
 
   render() {
-    const { isFullscreenEnabled, downloadUrls } = this.state;
-    const { initState, saveProject } = this.props;
+    const { isFullscreenEnabled } = this.state;
+    const { initState, saveProject, downloadUrls } = this.props;
     console.log(initState);
     const projectContext = this.state;
     const handleSaveClick = () => {

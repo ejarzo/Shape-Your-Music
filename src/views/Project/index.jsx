@@ -1,5 +1,6 @@
 import React from 'react';
 import FileManager from './FileManager';
+import AudioManager from './AudioManager';
 import ProjectContainer from './Container';
 
 class Project extends React.Component {
@@ -8,7 +9,11 @@ class Project extends React.Component {
     const { projectId } = this.props;
     return (
       <FileManager projectId={projectId}>
-        {props => <ProjectContainer {...props} />}
+        {props => (
+          <AudioManager>
+            <ProjectContainer {...props} />
+          </AudioManager>
+        )}
       </FileManager>
     );
   }

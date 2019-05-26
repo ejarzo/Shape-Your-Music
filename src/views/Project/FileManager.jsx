@@ -1,8 +1,9 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { Component } from 'react';
 import { createProject, readProject, updateProject } from 'middleware';
 import Loading from 'components/Loading';
-import { getProjectSaveData } from 'utils/project';
+import { getProjectSaveData, getProjectIdFromResponse } from 'utils/project';
 
 const DEFAULT_PROJECT = {
   name: 'My Project',
@@ -43,7 +44,8 @@ class ProjectFileManager extends Component {
   }
 
   getSaveProject(projectId) {
-    return project => {
+    const { history } = this.props;
+    return async project => {
       console.log(project);
       const projectSaveData = getProjectSaveData(project);
       if (projectId) {
@@ -53,7 +55,9 @@ class ProjectFileManager extends Component {
       } else {
         // CREATE project
         console.log('Saving new project');
-        createProject(projectSaveData);
+        const newProject = await createProject(projectSaveData);
+        const id = getProjectIdFromResponse(newProject);
+        history.push(`/project/${id}`);
       }
     };
   }
@@ -81,4 +85,4 @@ class ProjectFileManager extends Component {
   }
 }
 
-export default ProjectFileManager;
+export default withRouter(ProjectFileManager);

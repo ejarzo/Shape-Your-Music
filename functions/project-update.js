@@ -15,8 +15,7 @@ exports.handler = async (event, context) => {
 
   const project = await client.query(q.Get(q.Ref(`classes/projects/${id}`)));
   const { userId } = project.data;
-
-  if (userId !== user.id) {
+  if (userId !== user.sub) {
     return {
       statusCode: 403,
     };

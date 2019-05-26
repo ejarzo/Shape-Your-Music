@@ -26,20 +26,6 @@ export const TOOL_TYPES = {
   DRAW: 'draw',
 };
 
-/* master output */
-const masterCompressor = new Tone.Compressor({
-  ratio: 16,
-  threshold: -30,
-  release: 0.25,
-  attack: 0.003,
-  knee: 30,
-});
-
-const masterLimiter = new Tone.Limiter(-2);
-const masterOutput = new Tone.Gain(0.9).receive('masterOutput');
-
-masterOutput.chain(masterCompressor, masterLimiter, Tone.Master);
-
 /* ========================================================================== */
 
 const propTypes = {

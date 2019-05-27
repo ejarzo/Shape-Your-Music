@@ -44,31 +44,41 @@ class ProjectFileManager extends Component {
   }
 
   getSaveProject(projectId) {
-    const { history } = this.props;
     return async project => {
+      const { history, user, authenticate } = this.props;
+
       console.log(project);
       const projectSaveData = getProjectSaveData(project);
+
+      const saveProject = async () => {
+        console.log('Saving new project');
+        const newProject = await createProject(projectSaveData);
+        const id = getProjectIdFromResponse(newProject);
+        history.push(`/project/${id}`);
+      };
+
       if (projectId) {
         // UPDATE project
         console.log('updating project', projectId);
         updateProject({ data: projectSaveData, id: projectId });
       } else {
         // CREATE project
-        console.log('Saving new project');
-        const newProject = await createProject(projectSaveData);
-        const id = getProjectIdFromResponse(newProject);
-        history.push(`/project/${id}`);
+        if (!user) {
+          authenticate({ onSuccess: saveProject });
+        } else {
+          saveProject();
+        }
       }
     };
   }
 
   render() {
-    const { children, projectId } = this.props;
-
+    const { children, projectId, user } = this.props;
     if (!projectId) {
       return children({
         initState: DEFAULT_PROJECT,
         saveProject: this.getSaveProject(),
+        showSaveButton: true,
       });
     }
 
@@ -81,6 +91,7 @@ class ProjectFileManager extends Component {
     return children({
       initState: { ...DEFAULT_PROJECT, ...loadedProject },
       saveProject: this.getSaveProject(projectId),
+      showSaveButton: loadedProject.userId === user.id,
     });
   }
 }

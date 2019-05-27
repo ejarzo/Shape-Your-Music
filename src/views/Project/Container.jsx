@@ -121,6 +121,9 @@ class Project extends Component {
     // export
     this.handleExportToMIDIClick = this.handleExportToMIDIClick.bind(this);
 
+    // save
+    this.handleSaveClick = this.handleSaveClick.bind(this);
+
     // Key handlers
     this.keyHandlers = {
       PLAY: e => {
@@ -366,21 +369,23 @@ class Project extends Component {
     };
   }
 
+  handleSaveClick() {
+    const projectContext = this.state;
+    const { saveProject } = this.props;
+    const screenshot = this.shapeCanvas.getScreenshot();
+    console.log(screenshot);
+    saveProject({
+      ...projectContext,
+      shapesList: this.shapeCanvas.getShapesList(),
+    });
+  }
+
   /* =============================== RENDER =============================== */
 
   render() {
     const { isFullscreenEnabled } = this.state;
-    const { initState, saveProject, downloadUrls } = this.props;
-    console.log(initState);
+    const { initState, downloadUrls, showSaveButton } = this.props;
     const projectContext = this.state;
-    const handleSaveClick = () => {
-      const screenshot = this.shapeCanvas.getScreenshot();
-      console.log(screenshot);
-      saveProject({
-        ...projectContext,
-        shapesList: this.shapeCanvas.getShapesList(),
-      });
-    };
 
     return (
       <HotKeys keyMap={keyMap} handlers={this.keyHandlers}>
@@ -407,7 +412,8 @@ class Project extends Component {
               handleFullscreenButtonClick={this.handleFullscreenButtonClick}
               handleClearButtonClick={this.handleClearButtonClick}
               handleExportToMIDIClick={this.handleExportToMIDIClick}
-              handleSaveClick={handleSaveClick}
+              handleSaveClick={this.handleSaveClick}
+              showSaveButton={showSaveButton}
             />
 
             {/* The Canvas */}

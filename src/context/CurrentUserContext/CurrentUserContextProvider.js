@@ -9,10 +9,11 @@ class CurrentUserContextProvider extends React.Component {
     user: netlifyIdentity.currentUser(),
   };
 
-  authenticate = ({ showSignup = false }) => {
+  authenticate = ({ showSignup = false, onSuccess }) => {
     netlifyIdentity.open(showSignup && 'signup');
     netlifyIdentity.on('login', user => {
       this.setState({ user });
+      onSuccess && onSuccess(user);
     });
   };
 

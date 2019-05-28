@@ -68,6 +68,18 @@ class ColorController extends Component {
     }
   }
 
+  componentWillUnmount(nextProps, nextState) {
+    this.fxBus.disconnect();
+    this.fxBus.dispose();
+    if (this.fxList) {
+      this.fxList.forEach(effect => {
+        effect.disconnect();
+        effect.dispose();
+      });
+      this.fxList = [];
+    }
+  }
+
   triggerEffectCallback(synthParams, knobIndex, val) {
     const targetParam = synthParams.dynamicParams[knobIndex];
     // change effect amount

@@ -37,6 +37,7 @@ class ColorController extends Component {
     this.output = new Tone.Gain(1);
     this.output.send('masterOutput', 0);
     this.connectEffects(props.synthParams.effects);
+    this.disposeEffects = this.disposeEffects.bind(this);
 
     this.handleInstChange = this.handleInstChange.bind(this);
     this.handleIncrementClick = this.handleIncrementClick.bind(this);
@@ -69,6 +70,12 @@ class ColorController extends Component {
   }
 
   componentWillUnmount(nextProps, nextState) {
+    this.disposeEffects();
+    this.output.disconnect();
+    this.output.dispose();
+  }
+
+  disposeEffects() {
     this.fxBus.disconnect();
     this.fxBus.dispose();
     if (this.fxList) {
@@ -96,15 +103,8 @@ class ColorController extends Component {
   }
 
   connectEffects(fxConstructors) {
-    if (this.fxList) {
-      this.fxList.forEach(effect => {
-        effect.dispose();
-      });
-      this.fxList = [];
-    }
+    this.disposeEffects();
 
-    this.fxBus.disconnect();
-    this.fxBus.dispose();
     this.fxBus = new Tone.Gain(0.8);
     this.fxBus.receive(this.props.receiveChannel);
 

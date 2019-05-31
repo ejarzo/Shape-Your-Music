@@ -42,7 +42,11 @@ export class Recorder {
     };
 
     source.connect(this.node);
-    this.node.connect(this.context.destination); //this should not be necessary
+    try {
+      this.node.connect(this.context.destination); //this should not be necessary
+    } catch (error) {
+      console.log(error);
+    }
 
     let self = {};
     this.worker = new InlineWorker(function() {

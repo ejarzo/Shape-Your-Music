@@ -91,7 +91,7 @@ class ProjectFileManager extends Component {
     return children({
       initState: { ...DEFAULT_PROJECT, ...loadedProject },
       saveProject: this.getSaveProject(projectId),
-      showSaveButton: loadedProject.userId === user.id,
+      showSaveButton: user && loadedProject.userId === user.id,
     });
   }
 }

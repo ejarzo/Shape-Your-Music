@@ -2224,13 +2224,6 @@ buffer@^4.3.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
-buffer@^5.0.3:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.1.0.tgz#c913e43678c7cb7c8bd16afbcddb6c5505e8f9fe"
-  dependencies:
-    base64-js "^1.0.2"
-    ieee754 "^1.1.4"
-
 builtin-modules@^1.0.0, builtin-modules@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
@@ -2913,10 +2906,6 @@ css-animation@^1.3.2:
     babel-runtime "6.x"
     component-classes "^1.2.5"
 
-css-color-keywords@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/css-color-keywords/-/css-color-keywords-1.0.0.tgz#fea2616dc676b2962686b3af8dbdbe180b244e05"
-
 css-color-names@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
@@ -2963,14 +2952,6 @@ css-selector-tokenizer@^0.7.0:
     cssesc "^0.1.0"
     fastparse "^1.1.1"
     regexpu-core "^1.0.0"
-
-css-to-react-native@^2.0.3:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.2.0.tgz#d524ef7f39a2747a8914e86563669ba35b7cf2e7"
-  dependencies:
-    css-color-keywords "^1.0.0"
-    fbjs "^0.8.5"
-    postcss-value-parser "^3.3.0"
 
 css-what@2.1:
   version "2.1.0"
@@ -4037,7 +4018,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8.0, fbjs@^0.8.1, fbjs@^0.8.4, fbjs@^0.8.5, fbjs@^0.8.9:
+fbjs@^0.8.0, fbjs@^0.8.9:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   dependencies:
@@ -4728,10 +4709,6 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoist-non-react-statics@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
-
 hoist-non-react-statics@^2.3.1:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
@@ -5207,10 +5184,6 @@ is-fullwidth-code-point@^1.0.0:
 is-fullwidth-code-point@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/is-fullwidth-code-point/-/is-fullwidth-code-point-2.0.0.tgz#a3b30a5c4f199183167aaab93beefae3ddfb654f"
-
-is-function@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/is-function/-/is-function-1.0.1.tgz#12cfb98b65b57dd3d193a3121f5f6e2f437602b5"
 
 is-glob@^2.0.0, is-glob@^2.0.1:
   version "2.0.1"
@@ -5892,10 +5865,10 @@ klaw@^1.0.0:
   optionalDependencies:
     graceful-fs "^4.1.9"
 
-konva@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/konva/-/konva-2.5.1.tgz#cca611a9522e831e54cf57c508a1aed3f0ceac25"
-  integrity sha512-YdHEWqmbWPieqIZuLx7JFGm9Ui08hSUaSJ2k2Ml8o5giFgJ0WmxAS0DPXIM+Ty2ADRagOHZfXSJ/skwYqqlwgQ==
+konva@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/konva/-/konva-3.3.1.tgz#6eeba5f75174e645c98bbfd5bf2bda5ae66698d0"
+  integrity sha512-aCN//zLwcBC9UlYzQVWE9EwOMkwI2tN+YFJIdaPNd+hM/H0N1sYo7e8EJ+7mb3G/3qhXfmm+s25ijBcBxtjscw==
 
 latest-version@^3.0.0:
   version "3.1.0"
@@ -7516,13 +7489,6 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.5.10:
-  version "15.5.10"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
-  dependencies:
-    fbjs "^0.8.9"
-    loose-envify "^1.3.1"
-
 prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
@@ -7844,23 +7810,15 @@ react-display-name@^0.2.0:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/react-display-name/-/react-display-name-0.2.4.tgz#e2a670b81d79a2204335510c01246f4c92ff12cf"
 
-react-dom@15.4.2:
-  version "15.4.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.4.2.tgz#015363f05b0a1fd52ae9efdd3a0060d90695208f"
-  dependencies:
-    fbjs "^0.8.1"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.0"
-
-react-dom@^16.6.31:
-  version "16.7.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.7.0.tgz#a17b2a7ca89ee7390bc1ed5eb81783c7461748b8"
-  integrity sha512-D0Ufv1ExCAmF38P2Uh1lwpminZFRXEINJe53zRAbm4KPwSyd6DY/uDoS0Blj9jvPpn1+wivKpZYc8aAAN/nAkg==
+react-dom@~16.8.6:
+  version "16.8.6"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.6.tgz#71d6303f631e8b0097f56165ef608f051ff6e10f"
+  integrity sha512-1nL7PIq9LTL3fthPqwkvr2zY7phIPjYrT0jp4HjyEQrEROnw4dG41VVwi/wfoCneoleqrNX7iAD+pXebJZwrwA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.12.0"
+    scheduler "^0.13.6"
 
 react-draggable@^3.0.3:
   version "3.0.5"
@@ -7906,27 +7864,18 @@ react-input-autosize@^2.1.2:
   dependencies:
     prop-types "^15.5.8"
 
-react-ionicons@^2.0.2:
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/react-ionicons/-/react-ionicons-2.1.6.tgz#c9c472c242f41f228a6261fd6ce156d54e0e7677"
-  dependencies:
-    prop-types "15.5.10"
-    react "15.4.2"
-    react-dom "15.4.2"
-    styled-components "2.2.3"
-
 react-is@^16.6.0, react-is@^16.7.0:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
-react-konva@^16.6.31:
-  version "16.6.31"
-  resolved "https://registry.yarnpkg.com/react-konva/-/react-konva-16.6.31.tgz#e6e715f1c4085f725d70fb3938695d3ddc54f2ec"
-  integrity sha512-SKVbf9uLii2qJrbPKl+yKKkfgpbd4ehWS7de2/I+nCWcrS5Ktz75O0oU4f3aklL+vrtcAtse94GuGK/Bufz/kw==
+react-konva@~16.8.6:
+  version "16.8.6"
+  resolved "https://registry.yarnpkg.com/react-konva/-/react-konva-16.8.6.tgz#0fe7ef2b6c75eeeec71ba9ca9db1829b5889293c"
+  integrity sha512-6KRIqHyJuTTMuAehDIXvw+ZrtEj2aMc2fwolhmFlg1HBzH4PJimsMByTcEx292Afh9d38TcHdjXP1C58qqDOlg==
   dependencies:
-    react-reconciler "^0.17.2"
-    scheduler "^0.11.2"
+    react-reconciler "^0.20.4"
+    scheduler "^0.13.6"
 
 react-portal@^3.2.0:
   version "3.2.0"
@@ -7934,15 +7883,15 @@ react-portal@^3.2.0:
   dependencies:
     prop-types "^15.5.8"
 
-react-reconciler@^0.17.2:
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.17.2.tgz#cabe8cb403793f6462842e07b525c3b61c4f5cde"
-  integrity sha512-V3WjUlYgMjWWRQH5lzMMsy1jMDL28pInmwfCsKoOGqNQ0TN2DQHKBzycgFnZsiL3NoIb52GQtQgkYGeDDDoN+g==
+react-reconciler@^0.20.4:
+  version "0.20.4"
+  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.20.4.tgz#3da6a95841592f849cb4edd3d38676c86fd920b2"
+  integrity sha512-kxERc4H32zV2lXMg/iMiwQHOtyqf15qojvkcZ5Ja2CPkjVohHw9k70pdDBwrnQhLVetUJBSYyqU3yqrlVTOajA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.11.2"
+    scheduler "^0.13.6"
 
 react-router-dom@^5.0.0:
   version "5.0.0"
@@ -7956,11 +7905,6 @@ react-router-dom@^5.0.0:
     react-router "5.0.0"
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
-
-react-router-modal@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/react-router-modal/-/react-router-modal-1.5.2.tgz#64fa736b0457339415785e086cf3498d5bf61536"
-  integrity sha512-q1a0KJaDI7pJbmMZV/bJYcr2BqsePOAyCgCl8xN7t5IA+3LFQyqFJwvLrMvmPnsjVKR0vaUSrqgObOslgpxs7A==
 
 react-router@5.0.0, react-router@^5.0.0:
   version "5.0.0"
@@ -8031,14 +7975,6 @@ react-select@^1.2.1:
     prop-types "^15.5.8"
     react-input-autosize "^2.1.2"
 
-react@15.4.2:
-  version "15.4.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
-  dependencies:
-    fbjs "^0.8.4"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.0"
-
 react@^15.6.1:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
@@ -8049,15 +7985,15 @@ react@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react@^16.6.31:
-  version "16.7.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.7.0.tgz#b674ec396b0a5715873b350446f7ea0802ab6381"
-  integrity sha512-StCz3QY8lxTb5cl2HJxjwLFOXPIFQp+p+hxQfc8WE0QiLfCtIlKj8/+5tjjKm8uSTlAW+fCPaavGFS06V9Ar3A==
+react@~16.8.6:
+  version "16.8.6"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
+  integrity sha512-pC0uMkhLaHm11ZSJULfOBqV4tIZkx87ZLvbbQYunNixAAvjnC+snJCg0XQXn9VIsttVsbZP/H/ewzgsd5fxKXw==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.12.0"
+    scheduler "^0.13.6"
 
 reactcss@^1.2.0:
   version "1.2.3"
@@ -8535,18 +8471,10 @@ sax@^1.2.1, sax@^1.2.4, sax@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
-scheduler@^0.11.2:
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.11.2.tgz#a8db5399d06eba5abac51b705b7151d2319d33d3"
-  integrity sha512-+WCP3s3wOaW4S7C1tl3TEXp4l9lJn0ZK8G3W3WKRWmw77Z2cIFUW2MiNTMHn5sCjxN+t7N43HAOOgMjyAg5hlg==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-
-scheduler@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.12.0.tgz#8ab17699939c0aedc5a196a657743c496538647b"
-  integrity sha512-t7MBR28Akcp4Jm+QoR63XgAi9YgCUmgvDHqf5otgAj4QvdoBE4ImCX0ffehefePPG+aitiYHp0g/mW6s4Tp+dw==
+scheduler@^0.13.6:
+  version "0.13.6"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.6.tgz#466a4ec332467b31a91b9bf74e5347072e4cd889"
+  integrity sha512-IWnObHt413ucAYKsD9J1QShUKkbKLQQHdxRyw73sw4FN26iWr3DY/H34xGPe4nmL1DwXyWmSWmMrA9TfQbE/XQ==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -9080,24 +9008,6 @@ style-loader@0.19.0:
     loader-utils "^1.0.2"
     schema-utils "^0.3.0"
 
-styled-components@2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.2.3.tgz#154575c269880c840f903f580287dab155cf684c"
-  dependencies:
-    buffer "^5.0.3"
-    css-to-react-native "^2.0.3"
-    fbjs "^0.8.9"
-    hoist-non-react-statics "^1.2.0"
-    is-function "^1.0.1"
-    is-plain-object "^2.0.1"
-    prop-types "^15.5.4"
-    stylis "3.x"
-    supports-color "^3.2.3"
-
-stylis@3.x:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.1.tgz#fd341d59f57f9aeb412bc14c9d8a8670b438e03b"
-
 superagent@^3.8.1:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.3.tgz#460ea0dbdb7d5b11bc4f78deba565f86a178e128"
@@ -9398,9 +9308,10 @@ tonal-midi@^0.69.7:
   dependencies:
     note-parser "^2.0.1"
 
-tone@^0.11.11:
-  version "0.11.12"
-  resolved "https://registry.yarnpkg.com/tone/-/tone-0.11.12.tgz#cb042dcad55d7965a66bbdb665ca1a8853442be2"
+tone@^13.8.12:
+  version "13.8.12"
+  resolved "https://registry.yarnpkg.com/tone/-/tone-13.8.12.tgz#450a65c3794cdee74efd1729b9bac850db1f360d"
+  integrity sha512-ckPoDvqzPKnL6cFSOC9Ai/kzjes7CsLZcji3A3OHDOuis9mPzkelHQmG9f+0v5dZY+Wa2FCB79NkSx/I5IDASg==
 
 toposort@^1.0.0:
   version "1.0.7"

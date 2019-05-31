@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { ModalContainer } from 'react-router-modal';
 import Project from 'views/Project';
 import Discover from 'views/Discover';
 import PageWrapper from 'components/PageWrapper';
@@ -26,7 +25,6 @@ function App() {
               />
               <Route path="/discover" component={Discover} />
             </Switch>
-            <ModalContainer />
           </PageWrapper>
         </BrowserRouter>
       </CurrentUserContextProvider>

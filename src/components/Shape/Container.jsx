@@ -258,7 +258,7 @@ class ShapeContainer extends PureComponent {
       const noteString = this.props.scaleObj.get(noteIndex).toString();
 
       // trigger synth
-      this.synth.triggerAttackRelease(noteString, dur - 50, time);
+      this.synth.triggerAttackRelease(noteString, dur, time);
     }, []).start(0);
 
     part.loop = true;

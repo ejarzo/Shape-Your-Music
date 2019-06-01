@@ -2,7 +2,10 @@
   Source: https://github.com/psixodyb/record-audio-js/blob/master/index.js
 */
 /* eslint-disable */
+
 import InlineWorker from 'inline-worker';
+import Tone from 'tone';
+
 export class Recorder {
   constructor(source, cfg) {
     this.config = {
@@ -42,10 +45,12 @@ export class Recorder {
     };
 
     source.connect(this.node);
-    try {
-      this.node.connect(this.context.destination); //this should not be necessary
-    } catch (error) {
-      console.log(error);
+
+    const isChrome =
+      !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+
+    if (isChrome) {
+      Tone.connect(this.node, this.context.destination, 0, 0);
     }
 
     let self = {};

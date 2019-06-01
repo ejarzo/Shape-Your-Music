@@ -9231,10 +9231,10 @@ tonal-midi@^0.69.7:
   dependencies:
     note-parser "^2.0.1"
 
-tone@^13.4.9:
-  version "13.4.9"
-  resolved "https://registry.yarnpkg.com/tone/-/tone-13.4.9.tgz#c5e9f69d0cdea6d2fa03e108766b10d5f9185dde"
-  integrity sha512-jU3MJOzt9wcGbo57TIzgAQe13EgwvdC7N6N/cA6ZkGYHH8gop+L6a87NRP3LIBCcJxVps6I6i/39ZUJI2aCWUA==
+tone@^13.8.12:
+  version "13.8.12"
+  resolved "https://registry.yarnpkg.com/tone/-/tone-13.8.12.tgz#450a65c3794cdee74efd1729b9bac850db1f360d"
+  integrity sha512-ckPoDvqzPKnL6cFSOC9Ai/kzjes7CsLZcji3A3OHDOuis9mPzkelHQmG9f+0v5dZY+Wa2FCB79NkSx/I5IDASg==
 
 toposort@^1.0.0:
   version "1.0.7"

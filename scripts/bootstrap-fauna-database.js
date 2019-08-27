@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const insideNetlify = insideNetlifyBuildContext();
 const q = faunadb.query;
 
-console.log(chalk.cyan('Creating your FaunaDB Database...\n'));
+console.log(chalk.cyan('Bootstrapping the FaunaDB Database...'));
 
 // 1. Check for required enviroment variables
 if (!process.env.FAUNADB_SERVER_SECRET) {
@@ -45,13 +45,13 @@ if (!process.env.FAUNADB_SERVER_SECRET) {
 // Has var. Do the thing
 if (process.env.FAUNADB_SERVER_SECRET) {
   createFaunaDB(process.env.FAUNADB_SERVER_SECRET).then(() => {
-    console.log('Database created');
+    console.log(chalk.green('Done!'));
   });
 }
 
 /* idempotent operation */
 function createFaunaDB(key) {
-  console.log('Create the database!');
+  // console.log('Create the database!');
   const client = new faunadb.Client({
     secret: key,
   });
@@ -60,6 +60,7 @@ function createFaunaDB(key) {
   return client
     .query(q.Create(q.Ref('classes'), { name: 'projects' }))
     .then(() => {
+      console.log('Creating the database!');
       return client.query(
         q.Create(q.Ref('indexes'), {
           name: 'all_projects',
@@ -69,11 +70,12 @@ function createFaunaDB(key) {
     })
     .catch(e => {
       // Database already exists
-      if (
-        e.requestResult.statusCode === 400 &&
-        e.message === 'instance not unique'
-      ) {
-        console.log('DB already exists');
+      if (e.message === 'instance already exists') {
+        console.log(chalk.green('DB already exists'));
+        // throw
+      } else {
+        console.log(chalk.red('Error'));
+        console.log(e);
         throw e;
       }
     });

@@ -137,6 +137,8 @@ If everything is already setup, run with `yarn start:server`.
 7. In your local environment (NOTE: this will NOT be your react app .env file. This will be your `~/.bash_profile`, `~/.zhrc`, etc.), set a new variable FAUNADB_SERVER_SECRET to be your copied key
 8. Reload your terminal session and run `yarn start:server`. The first time this runs, it will create and boostrap your Fauna DB. If you reload your Fauna dashboard, you should see a new `projects` collection and `all_projects` index.
 
+For more, see the [Netlify example repo](https://github.com/netlify/netlify-faunadb-example) which I used as a reference.
+
 #### Netlify Setup
 Netlify is used to handle user accounts through their [Identity](https://www.netlify.com/docs/identity/) feature. To fully integrate with the backend and be able to save your projects locally, you will need a Netlify account. Once you have an account, use their [CLI](https://www.netlify.com/docs/cli/) to login and initialize a project for this repo. Try signing up through the UI and you should get a confirmation email that redirects to your netlify project.
 

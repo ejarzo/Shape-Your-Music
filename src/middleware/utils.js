@@ -26,9 +26,10 @@ export const readResult = async endpoint => {
   try {
     console.log('Reading', endpoint);
     const response = await fetch(endpoint);
-    const { status, statusText } = response;
-    if (status === 200) {
+    const { ok, statusText } = response;
+    if (ok) {
       const jsonResponse = await response.json();
+      console.log(jsonResponse);
       return jsonResponse;
     } else throw new Error(statusText);
   } catch (e) {

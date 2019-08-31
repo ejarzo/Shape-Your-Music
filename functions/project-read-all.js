@@ -11,12 +11,12 @@ exports.handler = async (event, context) => {
     /* TODO: 400 error on client query */
     return {
       statusCode: 200,
-      body: JSON.stringify(
-        allProjects.map(({ ref, data }) => ({
+      body: JSON.stringify({
+        data: allProjects.map(({ ref, data }) => ({
           ref,
           data: getProjectPreviewData(data),
-        }))
-      ),
+        })),
+      }),
     };
   } catch (err) {
     console.log(err);

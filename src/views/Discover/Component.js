@@ -1,6 +1,7 @@
 import React from 'react';
 import ProjectCard from 'components/ProjectCard';
 import styles from './styles.module.css';
+import { getProjectIdFromResponse } from 'utils/project';
 
 function DiscoverComponent(props) {
   const { allProjects } = props;
@@ -10,7 +11,7 @@ function DiscoverComponent(props) {
       <div className={styles.projectsGrid}>
         {allProjects &&
           allProjects.map(projectPreview => (
-            <div>
+            <div key={getProjectIdFromResponse(projectPreview)}>
               <ProjectCard projectPreview={projectPreview} />
             </div>
           ))}

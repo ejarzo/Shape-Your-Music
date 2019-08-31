@@ -373,7 +373,7 @@ class Project extends Component {
     const projectContext = this.state;
     const { saveProject } = this.props;
     const screenshot = this.shapeCanvas.getScreenshot();
-    console.log(screenshot);
+    console.log('generated screenshot:', screenshot);
     saveProject({
       ...projectContext,
       shapesList: this.shapeCanvas.getShapesList(),
@@ -383,10 +383,15 @@ class Project extends Component {
   /* =============================== RENDER =============================== */
 
   render() {
-    const { isFullscreenEnabled } = this.state;
-    const { initState, downloadUrls, showSaveButton } = this.props;
+    const { name, isFullscreenEnabled } = this.state;
+    const {
+      initState,
+      downloadUrls,
+      showSaveButton,
+      projectAuthor,
+    } = this.props;
     const projectContext = this.state;
-
+    console.log(this.props);
     return (
       <HotKeys keyMap={keyMap} handlers={this.keyHandlers}>
         <ProjectContextProvider value={projectContext}>
@@ -396,6 +401,23 @@ class Project extends Component {
               this.setState({ isFullscreenEnabled })
             }
           >
+            {projectAuthor && (
+              <div
+                style={{
+                  display: 'inline-block',
+                  maxWidth: 250,
+                  textAlign: 'center',
+                  position: 'absolute',
+                  margin: '0 auto',
+                  left: 0,
+                  right: 0,
+                  top: 5,
+                }}
+              >
+                <strong>{name}</strong> by <em>{projectAuthor.name}</em>
+              </div>
+            )}
+
             {/* The Controls */}
             <Toolbar
               handlePlayClick={this.handlePlayClick}

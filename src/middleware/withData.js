@@ -5,19 +5,19 @@ export const withData = getData => Component =>
   class extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { loading: false, data: [], error: null };
+      this.state = { loading: false, result: undefined, error: null };
     }
 
     async componentDidMount() {
       this.setState({ loading: true });
-      const data = await getData().catch(e => {
+      const result = await getData().catch(e => {
         this.setState({ error: e });
       });
-      this.setState({ data, loading: false });
+      this.setState({ result, loading: false });
     }
 
     render() {
-      const { loading, data, error } = this.state;
+      const { loading, result: { data, ...rest } = {}, error } = this.state;
 
       if (!!error) {
         return <div style={{ padding: 15 }}>Error: {error.message}</div>;
@@ -31,6 +31,7 @@ export const withData = getData => Component =>
         <Component
           {...this.props}
           data={data}
+          result={{ ...rest }}
           loading={loading}
           error={error}
         />

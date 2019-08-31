@@ -21,3 +21,18 @@ export const fetch = async (endpoint, options = {}) => {
 
   return browserFetch(getEndpoint(endpoint), fetchOptions);
 };
+
+export const readResult = async endpoint => {
+  try {
+    console.log('Reading', endpoint);
+    const response = await fetch(endpoint);
+    const { status, statusText } = response;
+    if (status === 200) {
+      const jsonResponse = await response.json();
+      return jsonResponse;
+    } else throw new Error(statusText);
+  } catch (e) {
+    console.log('ERROR', e);
+    throw e;
+  }
+};

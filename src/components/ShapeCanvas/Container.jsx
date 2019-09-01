@@ -404,7 +404,7 @@ class ShapeCanvas extends Component {
         stageRef={c => (this.stage = c)}
         getShapeRef={this.getShapeRef}
         removeShapeRef={this.removeShapeRef}
-        height={window.innerHeight}
+        height={window.innerHeight - 80}
         width={window.innerWidth}
         gridSize={gridSize}
         onContentClick={this.handleClick}

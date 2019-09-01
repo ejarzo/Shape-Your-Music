@@ -1,12 +1,3 @@
-import { fetch } from './utils';
+import { readResult } from './utils';
 
-export const readAllProjects = async data => {
-  try {
-    const response = await fetch('project-read-all');
-    const jsonResponse = await response.json();
-    return jsonResponse;
-  } catch (e) {
-    console.log('ERROR', e);
-    return [];
-  }
-};
+export const readAllProjects = async () => await readResult('project-read-all');

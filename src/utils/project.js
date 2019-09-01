@@ -9,8 +9,7 @@ export const getProjectSaveData = projectData => {
     shapesList,
   } = projectData;
 
-  console.log(shapesList);
-
+  /* TODO: save selected instruments and knob values */
   return {
     name,
     tempo,

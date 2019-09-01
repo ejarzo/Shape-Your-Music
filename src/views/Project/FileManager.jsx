@@ -34,6 +34,7 @@ class ProjectFileManager extends Component {
         console.log('updating project', projectId);
         updateProject({ data: projectSaveData, id: projectId });
       } else {
+        /* TODO: only show this message if audio is playing */
         if (window.confirm('This action will stop audio. Proceed?')) {
           // Create new project and reload window
           if (!user) {
@@ -48,7 +49,7 @@ class ProjectFileManager extends Component {
 
   render() {
     const { data, children, projectId, user } = this.props;
-    console.log(user);
+
     if (!projectId) {
       return children({
         initState: DEFAULT_PROJECT,

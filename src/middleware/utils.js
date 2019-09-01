@@ -7,8 +7,6 @@ export const getEndpoint = path => `${ENDPOINT}/${path}`;
 
 export const fetch = async (endpoint, options = {}) => {
   const currentUser = getCurrentUser();
-  console.log('USER', currentUser);
-
   const fetchOptions = currentUser
     ? {
         headers: {

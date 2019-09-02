@@ -4,6 +4,6 @@
   publish = "dist"
 
 [build]
-  command = "yarn run bootstrap && yarn run create-fauna-indexes && yarn build"
+  command = "yarn run bootstrap && yarn run create-indexes && yarn build"
   publish = "build/"
   functions = 'build/functions'

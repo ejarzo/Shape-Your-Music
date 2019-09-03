@@ -19,6 +19,9 @@ function HeaderMenu(props) {
             <HeaderLink exact to="/discover">
               Discover
             </HeaderLink>
+            <a href="https://github.com/ejarzo/Shape-Your-Music/" target="blank">
+              GitHub
+            </a>
           </div>
           <div className={styles.headerAccount}>
             {user ? (

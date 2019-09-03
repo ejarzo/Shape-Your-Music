@@ -51,9 +51,10 @@
   "scripts": {
     "checkForFaunaKey": "node ./scripts/check-for-fauna-key.js",
     "bootstrap": "node ./scripts/bootstrap-fauna-database.js",
+    "create-indexes": "node ./scripts/create-fauna-indexes.js",
     "start": "npm-run-all --parallel start:app start:server",
     "start:app": "react-scripts start",
-    "start:server": "yarn checkForFaunaKey && yarn bootstrap && netlify-lambda serve functions -c ./webpack.config.js",
+    "start:server": "yarn checkForFaunaKey && yarn bootstrap && yarn create-indexes && netlify-lambda serve functions -c ./webpack.config.js",
     "build": "npm-run-all --parallel build:**",
     "build:app": "react-scripts build",
     "build:functions": "netlify-lambda build functions -c ./webpack.config.js",

@@ -35,8 +35,13 @@ ul {
   padding: 0;
   font-size: 0;
 }
+
 ul li {
   font-size: 12px;
+}
+
+.text-gray {
+  color: #888;
 }
 
 #holder {

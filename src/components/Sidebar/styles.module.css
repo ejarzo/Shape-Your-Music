@@ -4,6 +4,7 @@
   left: 0;
   top: 85px;
   display: flex;
+  flex-direction: flex-column;
 }
 
 .tabs {
@@ -32,5 +33,5 @@
 }
 
 .contentInner {
-  padding: 0 20px;
+  padding: 0 20px 20px 20px;
 }

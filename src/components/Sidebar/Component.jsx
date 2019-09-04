@@ -37,11 +37,24 @@ class Sidebar extends React.Component {
         <div className={styles.tabs}>
           <div
             className={styles.tabButton}
-            title="Downloads"
+            title="Settings"
             style={{
-              background: activePage === 0 && 'rgba(255,255,255,0.8)',
+              background: activePage === 0 && 'white',
             }}
             onClick={() => handleTabClick(0)}
+          >
+            <div>
+              <i className="ion-gear-b" />
+            </div>
+          </div>
+
+          <div
+            className={styles.tabButton}
+            title="Downloads"
+            style={{
+              background: activePage === 1 && 'white',
+            }}
+            onClick={() => handleTabClick(1)}
           >
             <div
               style={{
@@ -53,12 +66,23 @@ class Sidebar extends React.Component {
             </div>
           </div>
         </div>
-        <div className={styles.content}>
-          {activePage === 0 && (
-            <div className={styles.contentInner}>
-              <Downloads downloadUrls={downloadUrls} />
-            </div>
-          )}
+
+        <div>
+          <div className={styles.content}>
+            {activePage === 0 && (
+              <div className={styles.contentInner}>
+                <h2>Settings</h2>
+                <label htmlFor="projectName">Project Name</label>
+                <br />
+                <input name="projectName" />
+              </div>
+            )}
+            {activePage === 1 && (
+              <div className={styles.contentInner}>
+                <Downloads downloadUrls={downloadUrls} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );

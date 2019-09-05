@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { Menu, Dropdown, Icon } from 'antd';
 import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
 import styles from './styles.module.css';
 
@@ -19,7 +20,10 @@ function HeaderMenu(props) {
             <HeaderLink exact to="/discover">
               Discover
             </HeaderLink>
-            <a href="https://github.com/ejarzo/Shape-Your-Music/" target="blank">
+            <a
+              href="https://github.com/ejarzo/Shape-Your-Music/"
+              target="blank"
+            >
               GitHub
             </a>
           </div>
@@ -27,11 +31,24 @@ function HeaderMenu(props) {
             {user ? (
               <div>
                 {/* <i className="ion-ios-person" /> */}
-                <span>
+                {/*<span>
                   <em>{user.user_metadata.full_name}</em>
                 </span>
                 {' |'}
-                <button onClick={logout}>Log out</button>
+                <button onClick={logout}>Log out</button>*/}
+                <Dropdown
+                  overlay={() => (
+                    <Menu>
+                      <Menu.Item>
+                        <button onClick={logout}>Log out</button>
+                      </Menu.Item>
+                    </Menu>
+                  )}
+                >
+                  <a className="ant-dropdown-link" href="#">
+                    {user.user_metadata.full_name} <Icon type="down" />
+                  </a>
+                </Dropdown>
               </div>
             ) : (
               <div>

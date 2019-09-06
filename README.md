@@ -17,12 +17,13 @@ It allows you to create melodic loops by drawing shapes. When a shape plays, a n
 Using this app, one can:
 
 - Draw multiple shapes to generate unique polyrhythms
-- Move shapes up or down to transpose them within the scale, or side to side to move them in stereo space
 - Manipulate shapes in real time to improvise and perform
-- Change and adjust the sound that each color produces
 - Experiment with different musical modes, keys, and tempos
 - Use grid and syncing options to create defined rhythms and loops
-- Record and export your project as an audio file (export to MIDI coming soon)
+- Move shapes up or down to transpose them within the scale, or side to side to move them in stereo space
+- Change and adjust the sound that each color produces
+- Record and export your project as either an audio file or as MIDI files
+- Save projects and browse other people's creations
 
 [Read more](https://ejarzo.github.io/#sym)
 

@@ -1,7 +1,13 @@
 import { withRouter } from 'react-router';
 import { Component } from 'react';
+import { message } from 'antd';
 import { createProject, updateProject } from 'middleware';
 import { getProjectSaveData, getProjectIdFromResponse } from 'utils/project';
+import { getUserName } from 'utils/user';
+
+message.config({
+  top: 90,
+});
 
 const DEFAULT_PROJECT = {
   name: 'My Project',
@@ -19,23 +25,38 @@ class ProjectFileManager extends Component {
 
   getSaveProject(projectId) {
     return async project => {
+      const hideLoadingMessage = message.loading('Saving..');
       const { history, user, authenticate } = this.props;
+      const { isPlaying } = project;
       const projectSaveData = getProjectSaveData(project);
 
       const saveNewProject = async () => {
-        console.log('Saving new project');
         const newProject = await createProject(projectSaveData);
         const id = getProjectIdFromResponse(newProject);
         history.push(`/project/${id}`);
+        hideLoadingMessage();
+        message.success('Saved new project!');
       };
 
       if (projectId) {
         // Update project if it already exists
-        console.log('updating project', projectId);
-        updateProject({ data: projectSaveData, id: projectId });
+        await updateProject({
+          data: projectSaveData,
+          id: projectId,
+          onError: e => {
+            hideLoadingMessage();
+            message.error(`Error: ${e.message}`);
+          },
+          onSuccess: () => {
+            hideLoadingMessage();
+            message.success('Saved project!');
+          },
+        });
       } else {
-        /* TODO: only show this message if audio is playing */
-        if (window.confirm('This action will stop audio. Proceed?')) {
+        if (
+          !isPlaying ||
+          window.confirm('This action will stop audio. Proceed?')
+        ) {
           // Create new project and reload window
           if (!user) {
             authenticate({ onSuccess: saveNewProject });
@@ -56,7 +77,7 @@ class ProjectFileManager extends Component {
         saveProject: this.getSaveProject(),
         showSaveButton: true,
         projectAuthor: user && {
-          name: user.user_metadata.full_name,
+          name: getUserName(user),
           id: user.id,
         },
       });

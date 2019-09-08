@@ -113,7 +113,13 @@ class ShapeCanvas extends Component {
 
     /* Get absolute points for each shape */
     this.shapeRefs.forEach((shape, i) => {
-      if (!shape) return;
+      // TODO: error happening here sometimes?
+      // if (!shape || !shapesList[i]) {
+      //   console.error('something went wrong');
+      //   console.log('shape', shape);
+      //   console.log('shapesList[i]', shapesList[i]);
+      //   return;
+      // }
       const points = shape.getAbsolutePoints();
       shapesList[i].points = points;
     });

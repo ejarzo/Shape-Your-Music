@@ -35,7 +35,7 @@ class Sidebar extends React.Component {
     return (
       <div className={styles.sidebar}>
         <div className={styles.tabs}>
-          <div
+          {/*<div
             className={styles.tabButton}
             title="Settings"
             style={{
@@ -46,7 +46,7 @@ class Sidebar extends React.Component {
             <div>
               <i className="ion-gear-b" />
             </div>
-          </div>
+          </div>*/}
 
           <div
             className={styles.tabButton}

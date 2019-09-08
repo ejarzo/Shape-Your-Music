@@ -25,16 +25,13 @@ exports.handler = async (event, context) => {
     const response = await client.query(
       q.Update(q.Ref(`classes/projects/${id}`), { data })
     );
-
-    console.log('success', response);
     return {
       statusCode: 200,
       body: JSON.stringify(response),
     };
   } catch (error) {
-    console.log('error', error);
     return {
-      statusCode: 400,
+      statusCode: 500,
       body: JSON.stringify(error),
     };
   }

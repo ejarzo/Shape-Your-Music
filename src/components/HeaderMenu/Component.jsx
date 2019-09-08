@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, Dropdown, Icon } from 'antd';
 import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
+import { getUserName } from 'utils/user';
 import styles from './styles.module.css';
 
 const HeaderLink = props => (
@@ -30,12 +31,6 @@ function HeaderMenu(props) {
           <div className={styles.headerAccount}>
             {user ? (
               <div>
-                {/* <i className="ion-ios-person" /> */}
-                {/*<span>
-                  <em>{user.user_metadata.full_name}</em>
-                </span>
-                {' |'}
-                <button onClick={logout}>Log out</button>*/}
                 <Dropdown
                   overlay={() => (
                     <Menu>
@@ -45,9 +40,9 @@ function HeaderMenu(props) {
                     </Menu>
                   )}
                 >
-                  <a className="ant-dropdown-link" href="#">
-                    {user.user_metadata.full_name} <Icon type="down" />
-                  </a>
+                  <button>
+                    {getUserName(user)} <Icon type="down" />
+                  </button>
                 </Dropdown>
               </div>
             ) : (

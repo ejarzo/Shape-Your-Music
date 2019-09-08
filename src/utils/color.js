@@ -2,7 +2,7 @@ import Color from 'color';
 
 export const themeColors = [
   '#c9563c', // red
-  '#f4b549', // yellow
+  '#e8a531', // yellow
   '#2a548e', // blue
   '#705498', // purple
   '#33936b', // green

@@ -6,6 +6,7 @@
 }
 
 .titleBar {
+  line-height: 1.3;
   padding: 2px;
   color: #fff;
   display: grid;
@@ -16,7 +17,7 @@
 }
 
 .option {
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .knobsContainer {

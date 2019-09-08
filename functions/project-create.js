@@ -1,4 +1,4 @@
-import { getFauna } from './utils';
+import { getFauna, getUserName } from './utils';
 const { q, client } = getFauna();
 
 exports.handler = async (event, context) => {
@@ -20,7 +20,7 @@ exports.handler = async (event, context) => {
       data: {
         ...data,
         userId,
-        userName: user.user_metadata.full_name,
+        userName: getUserName(user),
       },
     };
 

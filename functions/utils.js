@@ -6,6 +6,9 @@ const getServerSecret = () =>
     ? process.env.FAUNADB_SERVER_SECRET_STAGING
     : process.env.FAUNADB_SERVER_SECRET;
 
+console.log('context', process.env.CONTEXT);
+console.log('server secret', getServerSecret());
+
 export const getFauna = () => ({
   q: faunadb.query,
   client: new faunadb.Client({

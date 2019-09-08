@@ -2,6 +2,9 @@ import { getFauna, getProjectPreviewData, withErrorWrapper } from './utils';
 const { q, client } = getFauna();
 
 exports.handler = withErrorWrapper(async (event, context) => {
+  console.log('context', process.env.CONTEXT);
+  console.log('server secret', getServerSecret());
+
   const { data: projectRefs } = await client.query(
     q.Paginate(q.Match(q.Index('projects_sort_by_ts_desc')))
   );

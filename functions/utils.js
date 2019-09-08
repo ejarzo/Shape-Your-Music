@@ -23,8 +23,6 @@ export const getProjectPreviewData = ({ name, userName }) => ({
 
 export const withErrorWrapper = callback => async (event, context) => {
   try {
-    console.log('context', process.env.CONTEXT);
-    console.log('server secret', getServerSecret());
     return await callback(event, context);
   } catch (err) {
     console.log('GOT ERROR', err.name);

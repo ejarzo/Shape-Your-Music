@@ -1,15 +1,9 @@
 import faunadb from 'faunadb';
 
-const getServerSecret = () =>
-  process.env.CONTEXT === 'deploy-preview' ||
-  process.env.CONTEXT === 'branch-deploy'
-    ? process.env.FAUNADB_SERVER_SECRET_STAGING
-    : process.env.FAUNADB_SERVER_SECRET;
-
 export const getFauna = () => ({
   q: faunadb.query,
   client: new faunadb.Client({
-    secret: getServerSecret(),
+    secret: process.env.FAUNADB_SERVER_SECRET,
   }),
 });
 

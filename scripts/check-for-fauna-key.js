@@ -1,8 +1,7 @@
 const chalk = require('chalk');
-const { getServerSecret } = require('./utils');
 
 function checkForFaunaKey() {
-  if (!getServerSecret()) {
+  if (!process.env.FAUNADB_SERVER_SECRET) {
     console.log(
       chalk.yellow(
         'Required FAUNADB_SERVER_SECRET enviroment variable not found.'

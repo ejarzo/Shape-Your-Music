@@ -1,12 +1,10 @@
 const faunadb = require('faunadb');
 const chalk = require('chalk');
-const { getServerSecret } = require('./utils');
-
 const q = faunadb.query;
 
 console.log(chalk.cyan('Creating indexes...'));
 
-createFaunaIndexes(getServerSecret()).then(() => {
+createFaunaIndexes(process.env.FAUNADB_SERVER_SECRET).then(() => {
   console.log(chalk.green('Indexes created'));
 });
 

@@ -2,17 +2,13 @@
 const readline = require('readline');
 const faunadb = require('faunadb');
 const chalk = require('chalk');
-const { getServerSecret } = require('./utils');
-
 const insideNetlify = insideNetlifyBuildContext();
 const q = faunadb.query;
 
 console.log(chalk.cyan('Bootstrapping the FaunaDB Database...'));
 
-const SERVER_SECRET = getServerSecret();
-
 // 1. Check for required enviroment variables
-if (!SERVER_SECRET) {
+if (!process.env.FAUNADB_SERVER_SECRET) {
   console.log(
     chalk.yellow(
       'Required FAUNADB_SERVER_SECRET enviroment variable not found.'
@@ -39,7 +35,7 @@ if (!SERVER_SECRET) {
         console.log('Please supply a faunaDB server key');
         process.exit(1);
       }
-      createFaunaDB(SERVER_SECRET).then(() => {
+      createFaunaDB(process.env.FAUNADB_SERVER_SECRET).then(() => {
         console.log('Database created');
       });
     });
@@ -47,8 +43,8 @@ if (!SERVER_SECRET) {
 }
 
 // Has var. Do the thing
-if (SERVER_SECRET) {
-  createFaunaDB(SERVER_SECRET).then(() => {
+if (process.env.FAUNADB_SERVER_SECRET) {
+  createFaunaDB(process.env.FAUNADB_SERVER_SECRET).then(() => {
     console.log(chalk.green('Done!'));
   });
 }

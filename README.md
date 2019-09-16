@@ -116,6 +116,8 @@ It uses:
 - [Tone.js](https://github.com/Tonejs/Tone.js) for music/audio generation
 - [React Konva](https://github.com/konvajs/react-konva) for canvas manipulation
 - [Teoria](https://github.com/saebekassebil/teoria) for music theory logic
+- [Ant Design](https://ant.design/docs/react/introduce) for several UI components
+
 
 To run: `yarn` and then `yarn start:app`.
 

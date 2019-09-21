@@ -2,6 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import Tone from 'tone';
 import Recorder from 'utils/Recorder';
+import { ZipFile } from 'utils/file';
+const MidiWriter = require('midi-writer-js');
 
 class AudioManager extends React.Component {
   constructor(props) {
@@ -34,6 +36,11 @@ class AudioManager extends React.Component {
     this.recorder = new Recorder(Tone.Master);
     this.beginRecording = this.beginRecording.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
+
+    // MIDI
+    this.convertAndDownloadTracksAsMIDI = this.convertAndDownloadTracksAsMIDI.bind(
+      this
+    );
   }
 
   componentWillUnmount() {
@@ -41,6 +48,10 @@ class AudioManager extends React.Component {
     this.masterCompressor.dispose();
     this.masterLimiter.dispose();
     this.masterOutput.dispose();
+  }
+
+  toggleTransport() {
+    Tone.Transport.toggle();
   }
 
   beginRecording() {
@@ -63,8 +74,34 @@ class AudioManager extends React.Component {
     });
   }
 
-  toggleTransport() {
-    Tone.Transport.toggle();
+  /* Exports (downloads) all shapes as individual MIDI files */
+  async convertAndDownloadTracksAsMIDI({ tempo, shapeNoteEventsList }) {
+    const zip = ZipFile('Shape Your Music Project');
+
+    // create MIDI track for each shape
+    shapeNoteEventsList.forEach((noteEvents, i) => {
+      const track = new MidiWriter.Track();
+
+      // TODO: confirm what the MIDI tempo should be
+      track.setTempo(60);
+      track.addEvent(new MidiWriter.ProgramChangeEvent({ instrument: 1 }));
+      track.addTrackName(`Shape ${i + 1}`);
+
+      // TODO: confirm Tick duration calculation
+      noteEvents.forEach(({ note, duration }) => {
+        const midiNoteEvent = {
+          pitch: [note],
+          duration: `T${duration * 60 * (100 / tempo)}`,
+        };
+        const midiNote = new MidiWriter.NoteEvent(midiNoteEvent);
+        track.addEvent(midiNote);
+      });
+
+      const write = new MidiWriter.Writer([track]);
+      zip.add(`shape-${i + 1}.mid`, write.buildFile());
+    });
+
+    await zip.download();
   }
 
   render() {
@@ -77,6 +114,7 @@ class AudioManager extends React.Component {
           beginRecording: this.beginRecording,
           stopRecording: this.stopRecording,
           toggleTransport: this.toggleTransport,
+          convertAndDownloadTracksAsMIDI: this.convertAndDownloadTracksAsMIDI,
         })}
       </div>
     );

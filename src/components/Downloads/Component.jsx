@@ -18,13 +18,13 @@ function Downloads(props) {
         <div style={{ paddingBottom: 20 }}>No recordings yet</div>
       )}
       <ul>
-        {downloadUrls.map((url, i) => (
+        {downloadUrls.map(({ url, fileName }, i) => (
           <li>
             <audio src={url} controls />
             <Button
               key={`download-${i}`}
               href={url}
-              download={url}
+              download={fileName}
               hasBorder
               darkHover
               color={appColors.grayLightest}

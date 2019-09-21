@@ -195,7 +195,8 @@ class Project extends Component {
   }
 
   stopRecording() {
-    this.props.stopRecording();
+    const { name } = this.state;
+    this.props.stopRecording(name);
     this.setState({
       isRecording: false,
       isArmed: false,

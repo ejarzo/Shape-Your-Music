@@ -48,11 +48,11 @@ class AudioManager extends React.Component {
     this.setState({ isRecording: true });
   }
 
-  stopRecording() {
+  stopRecording(fileName = 'My Project') {
     this.recorder.exportWAV(blob => {
       const url = URL.createObjectURL(blob);
       const downloadUrls = this.state.downloadUrls.slice();
-      downloadUrls.push(url);
+      downloadUrls.push({ url, fileName: `${fileName}[shapeyourmusic].wav` });
       this.setState({ downloadUrls });
       this.recorder.stop();
       this.recorder.clear();

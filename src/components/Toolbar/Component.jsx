@@ -19,6 +19,7 @@ import { TOOL_TYPES } from 'views/Project/Container';
 import { SCALES, TONICS } from 'utils/music';
 
 import withProjectContext from 'views/Project/withProjectContext';
+import SaveButton from './SaveButton';
 
 const { black, grayLightest, red } = appColors;
 
@@ -313,6 +314,7 @@ function ToolbarComponent(props) {
     activeTool,
     scaleObj,
     tempo,
+    projectName,
     isFullscreenEnabled,
     isGridActive,
     isSnapToGridActive,
@@ -330,7 +332,6 @@ function ToolbarComponent(props) {
         handleRecordClick={handleRecordClick}
       />
 
-      {/* TODO Color */}
       <ToolSelect
         activeTool={activeTool}
         activeColorIndex={activeColorIndex}
@@ -374,17 +375,10 @@ function ToolbarComponent(props) {
           </Button>
         </div>
         {showSaveButton && (
-          <div>
-            <Button
-              hasBorder
-              // darkHover
-              color={grayLightest}
-              onClick={handleSaveClick}
-              title="Save project"
-            >
-              Save
-            </Button>
-          </div>
+          <SaveButton
+            onConfirm={name => handleSaveClick(name)}
+            projectName={projectName}
+          />
         )}
       </div>
     </div>

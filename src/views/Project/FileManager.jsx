@@ -10,7 +10,7 @@ message.config({
 });
 
 const DEFAULT_PROJECT = {
-  name: 'My Project',
+  projectName: 'My Project',
   tempo: 50,
   tonic: 'a',
   scale: 'major',
@@ -84,7 +84,11 @@ class ProjectFileManager extends Component {
     }
 
     return children({
-      initState: { ...DEFAULT_PROJECT, ...data },
+      initState: {
+        ...DEFAULT_PROJECT,
+        ...data,
+        projectName: data && data.name,
+      },
       saveProject: this.getSaveProject(projectId),
       showSaveButton: user && data && data.userId === user.id,
       projectAuthor: data && { name: data.userName, id: data.userId },

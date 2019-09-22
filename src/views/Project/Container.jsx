@@ -25,7 +25,7 @@ export const TOOL_TYPES = {
 
 const propTypes = {
   initState: shape({
-    name: string.isRequired,
+    projectName: string.isRequired,
     tonic: string.isRequired,
     scale: string.isRequired,
     tempo: number.isRequired,
@@ -49,14 +49,14 @@ class Project extends Component {
     const { initState } = props;
 
     const {
-      name = 'New project',
+      projectName = 'New project',
       isGridActive = false,
       isSnapToGridActive = false,
       isAutoQuantizeActive = false,
     } = initState;
 
     this.state = {
-      name,
+      projectName,
       isGridActive,
       isSnapToGridActive,
       isAutoQuantizeActive,
@@ -192,8 +192,8 @@ class Project extends Component {
   }
 
   stopRecording() {
-    const { name } = this.state;
-    this.props.stopRecording(name);
+    const { projectName } = this.state;
+    this.props.stopRecording(projectName);
     this.setState({
       isRecording: false,
       isArmed: false,
@@ -342,13 +342,18 @@ class Project extends Component {
     };
   }
 
-  handleSaveClick() {
+  handleSaveClick(projectName) {
     const projectContext = this.state;
     const { saveProject } = this.props;
     const screenshot = this.shapeCanvas.getScreenshot();
     console.log('generated screenshot:', screenshot);
+    console.log('Saving project with name', projectName);
+
+    this.setState({ projectName });
+
     saveProject({
       ...projectContext,
+      name: projectName,
       shapesList: this.shapeCanvas.getShapesList(),
     });
   }
@@ -356,7 +361,7 @@ class Project extends Component {
   /* =============================== RENDER =============================== */
 
   render() {
-    const { name, isFullscreenEnabled } = this.state;
+    const { projectName, isFullscreenEnabled } = this.state;
     const {
       initState,
       downloadUrls,
@@ -387,7 +392,7 @@ class Project extends Component {
                   top: 5,
                 }}
               >
-                <strong>{name}</strong> by <em>{projectAuthor.name}</em>
+                <strong>{projectName}</strong> by <em>{projectAuthor.name}</em>
               </div>
             )}
 

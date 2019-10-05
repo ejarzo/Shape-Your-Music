@@ -13,6 +13,7 @@ function Sidebar({ activePage, downloadUrls, handleTabClick }) {
   const [iconScale, setIconScale] = useState(1);
 
   useEffect(() => {
+    if (downloadUrls.length === 0) return;
     setIconScale(1.8);
     const timer = setTimeout(() => setIconScale(1), 200);
     return () => clearTimeout(timer);

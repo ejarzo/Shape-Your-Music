@@ -10,7 +10,8 @@ import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
 
 import { themeColors } from 'utils/color';
-import PRESETS from 'presets';
+import { INSTRUMENT_PRESETS } from 'instrumentPresets';
+
 import { keyMap } from './keyMap';
 import ProjectContextProvider from './ProjectContextProvider';
 
@@ -40,9 +41,9 @@ class Project extends Component {
     const selectedInstruments = [0, 1, 4, 3, 2];
     const knobVals = [];
     selectedInstruments.forEach(instrumentIndex => {
-      const instrumentDefaults = PRESETS[instrumentIndex].dynamicParams.map(
-        param => param.default
-      );
+      const instrumentDefaults = INSTRUMENT_PRESETS[
+        instrumentIndex
+      ].dynamicParams.map(param => param.default);
       knobVals.push(instrumentDefaults);
     });
 
@@ -309,14 +310,14 @@ class Project extends Component {
 
   handleInstChange(colorIndex) {
     return instrumentName => {
-      const instrumentIndex = PRESETS.findIndex(
+      const instrumentIndex = INSTRUMENT_PRESETS.findIndex(
         ({ name }) => name === instrumentName
       );
       const selectedInstruments = this.state.selectedInstruments.slice();
       selectedInstruments[colorIndex] = instrumentIndex;
-      const defaultKnobvals = PRESETS[instrumentIndex].dynamicParams.map(
-        param => param.default
-      );
+      const defaultKnobvals = INSTRUMENT_PRESETS[
+        instrumentIndex
+      ].dynamicParams.map(param => param.default);
 
       const knobVals = this.state.knobVals.slice();
       knobVals[colorIndex] = defaultKnobvals;

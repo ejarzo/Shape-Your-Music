@@ -4,6 +4,4 @@ import jarzo from './jarzo';
 import blip from './blip';
 import cello from './cello';
 
-const PRESETS = [keys, jarzo, duo, blip, cello];
-
-export default PRESETS;
+export const INSTRUMENT_PRESETS = [keys, jarzo, duo, blip, cello];

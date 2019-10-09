@@ -7,7 +7,7 @@ import Button from 'components/Button';
 import { getDarker } from 'utils/color';
 
 import styles from './styles.module.css';
-import PRESETS from 'presets';
+import { INSTRUMENT_PRESETS } from 'instrumentPresets';
 
 const propTypes = {
   color: PropTypes.string.isRequired,
@@ -25,7 +25,7 @@ const propTypes = {
 
 function ColorControllerComponent(props) {
   const darkerColor = getDarker(props.color);
-  const dropdownOptions = PRESETS.map(({ name }) => ({
+  const dropdownOptions = INSTRUMENT_PRESETS.map(({ name }) => ({
     label: name,
     value: name,
   }));

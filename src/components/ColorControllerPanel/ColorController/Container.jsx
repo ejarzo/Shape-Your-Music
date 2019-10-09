@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Tone from 'tone';
 import ColorControllerComponent from './Component';
-import PRESETS from 'presets';
+import { INSTRUMENT_PRESETS } from 'instrumentPresets';
+
 const propTypes = {
   color: PropTypes.string.isRequired,
   receiveChannel: PropTypes.string.isRequired,
@@ -134,10 +135,10 @@ class ColorController extends Component {
       const { synthParams, onInstChange } = this.props;
 
       const currentVal = synthParams.name;
-      const currentIndex = PRESETS.findIndex(
+      const currentIndex = INSTRUMENT_PRESETS.findIndex(
         preset => preset.name === currentVal
       );
-      const numOptions = PRESETS.length - 1;
+      const numOptions = INSTRUMENT_PRESETS.length - 1;
 
       let nextVal = currentIndex + difference;
 
@@ -148,7 +149,7 @@ class ColorController extends Component {
         nextVal = numOptions;
       }
 
-      onInstChange(PRESETS[nextVal].name);
+      onInstChange(INSTRUMENT_PRESETS[nextVal].name);
     };
   }
 

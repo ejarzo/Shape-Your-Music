@@ -4,7 +4,7 @@ import ColorController from './ColorController';
 import cx from 'classnames';
 import { themeColors } from 'utils/color';
 import styles from './styles.module.css';
-import PRESETS from 'presets';
+import { INSTRUMENT_PRESETS } from 'instrumentPresets';
 
 import withProjectContext from 'views/Project/withProjectContext';
 
@@ -62,7 +62,7 @@ class ColorControllerPanel extends Component {
                     onInstChange={onInstChange(colorIndex)}
                     onKnobChange={onKnobChange(colorIndex)}
                     knobVals={knobVals[colorIndex]}
-                    synthParams={PRESETS[selectedInstrumentIndex]}
+                    synthParams={INSTRUMENT_PRESETS[selectedInstrumentIndex]}
                   />
                 </div>
               );

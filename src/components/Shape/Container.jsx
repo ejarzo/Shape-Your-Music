@@ -14,7 +14,8 @@ import {
   forEachPoint,
 } from 'utils/shape';
 
-import PRESETS from 'presets';
+import { INSTRUMENT_PRESETS } from 'instrumentPresets';
+
 import ShapeComponent from './Component';
 import withProjectContext from 'views/Project/withProjectContext';
 
@@ -299,7 +300,7 @@ class ShapeContainer extends PureComponent {
   setSynth(props, colorIndex) {
     const selectedInstrumentIndex = props.selectedInstruments[colorIndex];
     const knobVals = props.knobVals[colorIndex];
-    const synthObj = PRESETS[selectedInstrumentIndex];
+    const synthObj = INSTRUMENT_PRESETS[selectedInstrumentIndex];
 
     if (this.synth) {
       this.synth.triggerRelease();
@@ -427,7 +428,7 @@ class ShapeContainer extends PureComponent {
   setEffectVal(val, i) {
     const { colorIndex } = this.props;
     const presetIndex = this.props.selectedInstruments[colorIndex];
-    const synthParams = PRESETS[presetIndex];
+    const synthParams = INSTRUMENT_PRESETS[presetIndex];
 
     // set synth value when knobs are changed
     // values for connected effects are set with the colorController

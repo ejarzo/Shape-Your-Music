@@ -25,7 +25,6 @@ class ProjectFileManager extends Component {
 
   getSaveProject(projectId) {
     return async project => {
-      const hideLoadingMessage = message.loading('Saving..');
       const { history, user, authenticate } = this.props;
       const { isPlaying } = project;
       const projectSaveData = getProjectSaveData(project);
@@ -34,11 +33,12 @@ class ProjectFileManager extends Component {
         const newProject = await createProject(projectSaveData);
         const id = getProjectIdFromResponse(newProject);
         history.push(`/project/${id}`);
-        hideLoadingMessage();
         message.success('Saved new project!');
       };
 
       if (projectId) {
+        const hideLoadingMessage = message.loading('Saving...');
+
         // Update project if it already exists
         await updateProject({
           data: projectSaveData,
@@ -58,11 +58,13 @@ class ProjectFileManager extends Component {
           window.confirm('This action will stop audio. Proceed?')
         ) {
           // Create new project and reload window
+          const hideLoadingMessage = message.loading('Saving...');
           if (!user) {
             authenticate({ onSuccess: saveNewProject });
           } else {
             saveNewProject();
           }
+          hideLoadingMessage();
         }
       }
     };

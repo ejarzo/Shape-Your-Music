@@ -1,6 +1,10 @@
 import React from 'react';
 import netlifyIdentity from 'netlify-identity-widget';
-netlifyIdentity.init();
+
+netlifyIdentity.init({
+  // TODO: figure out why this is not working
+  namePlaceholder: 'Username',
+});
 
 export const CurrentUserContext = React.createContext({});
 

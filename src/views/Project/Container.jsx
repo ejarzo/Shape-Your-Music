@@ -343,18 +343,24 @@ class Project extends Component {
   }
 
   handleSaveClick(projectName) {
-    const projectContext = this.state;
-    const { saveProject } = this.props;
-    const screenshot = this.shapeCanvas.getScreenshot();
-    console.log('generated screenshot:', screenshot);
+    if (!projectName) return;
+
     console.log('Saving project with name', projectName);
 
-    this.setState({ projectName });
+    const projectContext = this.state;
+    const { saveProject } = this.props;
+    const shapesList = this.shapeCanvas.getShapesList();
+
+    // TODO: do something with this screenshot
+    // const screenshot = this.shapeCanvas.getScreenshot();
+    // console.log('generated screenshot:', screenshot);
+
+    // this.setState({ projectName });
 
     saveProject({
       ...projectContext,
       name: projectName,
-      shapesList: this.shapeCanvas.getShapesList(),
+      shapesList,
     });
   }
 
@@ -379,7 +385,7 @@ class Project extends Component {
               this.setState({ isFullscreenEnabled })
             }
           >
-            {projectAuthor && (
+            {projectAuthor && projectName && (
               <div
                 style={{
                   display: 'inline-block',

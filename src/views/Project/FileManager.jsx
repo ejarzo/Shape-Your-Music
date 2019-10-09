@@ -10,7 +10,7 @@ message.config({
 });
 
 const DEFAULT_PROJECT = {
-  projectName: 'My Project',
+  projectName: '',
   tempo: 50,
   tonic: 'a',
   scale: 'major',

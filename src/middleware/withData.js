@@ -1,16 +1,22 @@
 import React from 'react';
 import Loading from 'components/Loading';
+import { captureException } from 'utils/errorTracking';
 
 export const withData = getData => Component =>
   class extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { loading: false, result: undefined, error: null };
+      this.state = {
+        loading: false,
+        result: undefined,
+        error: null,
+      };
     }
 
     async componentDidMount() {
       this.setState({ loading: true });
       const result = await getData().catch(e => {
+        captureException(e);
         this.setState({ error: e });
       });
       this.setState({ result, loading: false });

@@ -10,10 +10,10 @@ import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
 
 import { themeColors } from 'utils/color';
-import { INSTRUMENT_PRESETS } from 'instrumentPresets';
 
 import { keyMap } from './keyMap';
 import ProjectContextProvider from './ProjectContextProvider';
+import { getDefaultSynths, getDefaultParamValues } from 'utils/synths';
 
 /* ========================================================================== */
 
@@ -37,13 +37,11 @@ class Project extends Component {
   constructor(props) {
     super(props);
 
-    // indeces of default instruments
-    const selectedInstruments = [0, 1, 4, 3, 2];
+    const defaultSynths = getDefaultSynths();
     const knobVals = [];
-    selectedInstruments.forEach(instrumentIndex => {
-      const instrumentDefaults = INSTRUMENT_PRESETS[
-        instrumentIndex
-      ].dynamicParams.map(param => param.default);
+
+    defaultSynths.forEach(synthType => {
+      const instrumentDefaults = getDefaultParamValues(synthType);
       knobVals.push(instrumentDefaults);
     });
 
@@ -74,7 +72,7 @@ class Project extends Component {
       activeTool: TOOL_TYPES.DRAW,
       activeColorIndex: 0,
 
-      selectedInstruments,
+      selectedSynths: defaultSynths,
       knobVals,
     };
 
@@ -310,20 +308,17 @@ class Project extends Component {
 
   handleInstChange(colorIndex) {
     return instrumentName => {
-      const instrumentIndex = INSTRUMENT_PRESETS.findIndex(
-        ({ name }) => name === instrumentName
-      );
-      const selectedInstruments = this.state.selectedInstruments.slice();
-      selectedInstruments[colorIndex] = instrumentIndex;
-      const defaultKnobvals = INSTRUMENT_PRESETS[
-        instrumentIndex
-      ].dynamicParams.map(param => param.default);
+      console.log('setting index', colorIndex, 'to synth', instrumentName);
 
+      const newSelectedSynths = this.state.selectedSynths.slice();
+      const defaultKnobvals = getDefaultParamValues(instrumentName);
       const knobVals = this.state.knobVals.slice();
+
+      newSelectedSynths[colorIndex] = instrumentName;
       knobVals[colorIndex] = defaultKnobvals;
 
       this.setState({
-        selectedInstruments,
+        selectedSynths: newSelectedSynths,
         knobVals,
       });
     };

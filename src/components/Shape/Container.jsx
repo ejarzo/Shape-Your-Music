@@ -14,10 +14,9 @@ import {
   forEachPoint,
 } from 'utils/shape';
 
-import { INSTRUMENT_PRESETS } from 'instrumentPresets';
-
 import ShapeComponent from './Component';
 import withProjectContext from 'views/Project/withProjectContext';
+import { SYNTH_PRESETS } from 'instrumentPresets';
 
 const propTypes = {
   index: number.isRequired,
@@ -27,7 +26,7 @@ const propTypes = {
   soloedShapeIndex: number.isRequired,
 
   isPlaying: bool.isRequired,
-  selectedInstruments: array.isRequired,
+  selectedSynths: array.isRequired,
   knobVals: array.isRequired,
 
   isAutoQuantizeActive: bool.isRequired,
@@ -125,8 +124,8 @@ class ShapeContainer extends PureComponent {
   componentWillUpdate(nextProps, nextState) {
     /* change instrument when color's instrument changes, or when shape's color changes */
     if (
-      nextProps.selectedInstruments[nextProps.colorIndex] !==
-        this.props.selectedInstruments[nextProps.colorIndex] ||
+      nextProps.selectedSynths[nextProps.colorIndex] !==
+        this.props.selectedSynths[nextProps.colorIndex] ||
       nextProps.colorIndex !== this.props.colorIndex
     ) {
       this.setSynth(nextProps, nextProps.colorIndex);
@@ -208,19 +207,17 @@ class ShapeContainer extends PureComponent {
     const part = new Tone.Part((time, val) => {
       //console.log("Playing note", val.note, "for", val.duration, "INDEX:", val.pIndex);
       const dur = val.duration / this.part.playbackRate;
+      const { points, noteIndexModifier } = this.state;
+      const { colorIndex, scaleObj } = this.props;
 
       // animation
       Tone.Draw.schedule(() => {
-        const xFrom = this.state.points[val.pIndex - 2];
-        const yFrom = this.state.points[val.pIndex - 1];
+        const xFrom = points[val.pIndex - 2];
+        const yFrom = points[val.pIndex - 1];
         const xTo =
-          val.pIndex >= this.state.points.length
-            ? this.state.points[0]
-            : this.state.points[val.pIndex];
+          val.pIndex >= points.length ? points[0] : points[val.pIndex];
         const yTo =
-          val.pIndex >= this.state.points.length
-            ? this.state.points[1]
-            : this.state.points[val.pIndex + 1];
+          val.pIndex >= points.length ? points[1] : points[val.pIndex + 1];
 
         const animCircle = this.shapeComponentElement.getAnimCircle();
         const shapeElement = this.shapeComponentElement.getShapeElement();
@@ -249,14 +246,14 @@ class ShapeContainer extends PureComponent {
           });
           animCircle.to({
             radius: 5,
-            fill: themeColors[this.props.colorIndex],
+            fill: themeColors[colorIndex],
             duration: 0.3,
           });
         }
       }, time);
 
-      const noteIndex = val.noteIndex + this.state.noteIndexModifier;
-      const noteString = this.props.scaleObj.get(noteIndex).toString();
+      const noteIndex = val.noteIndex + noteIndexModifier;
+      const noteString = scaleObj.get(noteIndex).toString();
 
       // trigger synth
       this.synth.triggerAttackRelease(noteString, dur, time);
@@ -298,9 +295,9 @@ class ShapeContainer extends PureComponent {
   }
 
   setSynth(props, colorIndex) {
-    const selectedInstrumentIndex = props.selectedInstruments[colorIndex];
+    const selectedSynth = props.selectedSynths[colorIndex];
     const knobVals = props.knobVals[colorIndex];
-    const synthObj = INSTRUMENT_PRESETS[selectedInstrumentIndex];
+    const synthObj = SYNTH_PRESETS[selectedSynth];
 
     if (this.synth) {
       this.synth.triggerRelease();
@@ -427,13 +424,13 @@ class ShapeContainer extends PureComponent {
 
   setEffectVal(val, i) {
     const { colorIndex } = this.props;
-    const presetIndex = this.props.selectedInstruments[colorIndex];
-    const synthParams = INSTRUMENT_PRESETS[presetIndex];
+    const synthName = this.props.selectedSynths[colorIndex];
+    const { dynamicParams } = SYNTH_PRESETS[synthName];
 
     // set synth value when knobs are changed
     // values for connected effects are set with the colorController
-    if (synthParams.dynamicParams[i].target === 'instrument') {
-      synthParams.dynamicParams[i].func(this, val);
+    if (dynamicParams[i].target === 'instrument') {
+      dynamicParams[i].func(this, val);
     }
   }
 

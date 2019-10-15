@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import ColorController from './ColorController';
 import cx from 'classnames';
 import { themeColors } from 'utils/color';
 import styles from './styles.module.css';
-import { INSTRUMENT_PRESETS } from 'instrumentPresets';
 
 import withProjectContext from 'views/Project/withProjectContext';
+import ColorController from './ColorController';
 
 const propTypes = {
   onInstChange: PropTypes.func.isRequired,
@@ -15,63 +14,45 @@ const propTypes = {
   selectedInstruments: PropTypes.array.isRequired,
 };
 
-class ColorControllerPanel extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isCollapsed: false,
-    };
-    this.handleToggleCollapseClick = this.handleToggleCollapseClick.bind(this);
-  }
+function ColorControllerPanel(props) {
+  const { onInstChange, onKnobChange, knobVals, selectedSynths } = props;
+  const [isCollapsed, setCollapsed] = useState(false);
 
-  handleToggleCollapseClick() {
-    this.setState({ isCollapsed: !this.state.isCollapsed });
-  }
-
-  render() {
-    const {
-      onInstChange,
-      onKnobChange,
-      knobVals,
-      selectedInstruments,
-    } = this.props;
-
-    return (
-      <div className={styles.wrapper}>
+  return (
+    <div className={styles.wrapper}>
+      <div
+        className={cx({
+          [styles.colorControllerPanel]: true,
+          [styles.isCollapsed]: isCollapsed,
+        })}
+      >
         <div
-          className={cx({
-            [styles.colorControllerPanel]: true,
-            [styles.isCollapsed]: this.state.isCollapsed,
+          className={styles.toggleCollapseButton}
+          onClick={() => setCollapsed(!isCollapsed)}
+        />
+        <div className={styles.colorControllers}>
+          {themeColors.map((color, colorIndex) => {
+            const synthType = selectedSynths[colorIndex];
+            return (
+              <div
+                className={styles.colorControllerContainer}
+                key={`colorController-${colorIndex}`}
+              >
+                <ColorController
+                  color={themeColors[colorIndex]}
+                  synthType={synthType}
+                  receiveChannel={`colorFx-${colorIndex}`}
+                  onInstChange={onInstChange(colorIndex)}
+                  onKnobChange={onKnobChange(colorIndex)}
+                  knobVals={knobVals[colorIndex]}
+                />
+              </div>
+            );
           })}
-        >
-          <div
-            className={styles.toggleCollapseButton}
-            onClick={this.handleToggleCollapseClick}
-          />
-          <div className={styles.colorControllers}>
-            {themeColors.map((color, colorIndex) => {
-              const selectedInstrumentIndex = selectedInstruments[colorIndex];
-              return (
-                <div
-                  className={styles.colorControllerContainer}
-                  key={`colorController-${colorIndex}`}
-                >
-                  <ColorController
-                    color={themeColors[colorIndex]}
-                    receiveChannel={`colorFx-${colorIndex}`}
-                    onInstChange={onInstChange(colorIndex)}
-                    onKnobChange={onKnobChange(colorIndex)}
-                    knobVals={knobVals[colorIndex]}
-                    synthParams={INSTRUMENT_PRESETS[selectedInstrumentIndex]}
-                  />
-                </div>
-              );
-            })}
-          </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 ColorControllerPanel.propTypes = propTypes;

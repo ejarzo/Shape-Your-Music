@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { themeColors } from 'utils/color';
 import styles from './styles.module.css';
+import { SEND_CHANNELS } from 'utils/music';
 
 import withProjectContext from 'views/Project/withProjectContext';
 import ColorController from './ColorController';
@@ -41,7 +42,7 @@ function ColorControllerPanel(props) {
                 <ColorController
                   color={themeColors[colorIndex]}
                   synthType={synthType}
-                  receiveChannel={`colorFx-${colorIndex}`}
+                  receiveChannel={`${SEND_CHANNELS.FX_PREFIX}${colorIndex}`}
                   onInstChange={onInstChange(colorIndex)}
                   onKnobChange={onKnobChange(colorIndex)}
                   knobVals={knobVals[colorIndex]}

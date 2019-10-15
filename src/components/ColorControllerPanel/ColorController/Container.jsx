@@ -3,6 +3,7 @@ import { string, array, func } from 'prop-types';
 import Tone from 'tone';
 import ColorControllerComponent from './Component';
 import { SYNTH_PRESETS, ALL_SYNTHS } from 'instrumentPresets';
+import { SEND_CHANNELS } from 'utils/music';
 
 const propTypes = {
   color: string.isRequired,
@@ -33,7 +34,7 @@ class ColorController extends Component {
     this.fxBus.receive(receiveChannel);
 
     this.output = new Tone.Gain(1);
-    this.output.send('masterOutput', 0);
+    this.output.send(SEND_CHANNELS.MASTER_OUTPUT, 0);
     this.connectEffects(effects);
 
     this.disposeEffects = this.disposeEffects.bind(this);

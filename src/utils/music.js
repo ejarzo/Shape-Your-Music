@@ -31,3 +31,8 @@ export const SCALES = [
   { value: 'melodicminor', label: 'Melodic Minor' },
   { value: 'wholetone', label: 'Wholetone' },
 ];
+
+export const SEND_CHANNELS = {
+  MASTER_OUTPUT: 'masterOutput',
+  FX_PREFIX: 'colorFx-',
+};

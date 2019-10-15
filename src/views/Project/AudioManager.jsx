@@ -3,6 +3,8 @@ import { withRouter } from 'react-router';
 import Tone from 'tone';
 import Recorder from 'utils/Recorder';
 import { ZipFile } from 'utils/file';
+import { SEND_CHANNELS } from 'utils/music';
+
 const MidiWriter = require('midi-writer-js');
 
 class AudioManager extends React.Component {
@@ -22,7 +24,7 @@ class AudioManager extends React.Component {
     });
 
     this.masterLimiter = new Tone.Limiter(-2);
-    this.masterOutput = new Tone.Gain(0.9).receive('masterOutput');
+    this.masterOutput = new Tone.Gain(0.9).receive(SEND_CHANNELS.MASTER_OUTPUT);
 
     this.masterOutput.chain(
       this.masterCompressor,

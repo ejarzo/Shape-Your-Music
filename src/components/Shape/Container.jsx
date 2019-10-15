@@ -17,6 +17,7 @@ import {
 import ShapeComponent from './Component';
 import withProjectContext from 'views/Project/withProjectContext';
 import { SYNTH_PRESETS } from 'instrumentPresets';
+import { SEND_CHANNELS } from 'utils/music';
 
 const propTypes = {
   index: number.isRequired,
@@ -332,7 +333,10 @@ class ShapeContainer extends PureComponent {
 
     this.panner = new Tone.Panner(0);
     this.solo = new Tone.Solo();
-    this.gain = new Tone.Gain().send(`colorFx-${colorIndex}`, 0);
+    this.gain = new Tone.Gain().send(
+      `${SEND_CHANNELS.FX_PREFIX}${colorIndex}`,
+      0
+    );
 
     this.synth.chain(this.panner, this.solo, this.gain);
   }

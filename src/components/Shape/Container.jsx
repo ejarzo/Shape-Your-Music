@@ -5,13 +5,12 @@ import Tone from 'tone';
 import { themeColors, appColors } from 'utils/color';
 import { TOOL_TYPES } from 'views/Project/Container';
 
-import { convertValToRange, dist } from 'utils/math';
+import { convertValToRange } from 'utils/math';
 import {
-  getAngle,
-  thetaToScaleDegree,
   getPerimeterLength,
   getAveragePoint,
   forEachPoint,
+  getNoteInfo,
 } from 'utils/shape';
 
 import ShapeComponent from './Component';
@@ -206,19 +205,18 @@ class ShapeContainer extends PureComponent {
 
   getPart() {
     const part = new Tone.Part((time, val) => {
-      //console.log("Playing note", val.note, "for", val.duration, "INDEX:", val.pIndex);
       const dur = val.duration / this.part.playbackRate;
-      const { points, noteIndexModifier } = this.state;
-      const { colorIndex, scaleObj } = this.props;
 
       // animation
       Tone.Draw.schedule(() => {
-        const xFrom = points[val.pIndex - 2];
-        const yFrom = points[val.pIndex - 1];
-        const xTo =
-          val.pIndex >= points.length ? points[0] : points[val.pIndex];
-        const yTo =
-          val.pIndex >= points.length ? points[1] : points[val.pIndex + 1];
+        const { points } = this.state;
+        const { colorIndex } = this.props;
+        const { pIndex } = val;
+
+        const xFrom = points[pIndex - 2];
+        const yFrom = points[pIndex - 1];
+        const xTo = pIndex >= points.length ? points[0] : points[pIndex];
+        const yTo = pIndex >= points.length ? points[1] : points[pIndex + 1];
 
         const animCircle = this.shapeComponentElement.getAnimCircle();
         const shapeElement = this.shapeComponentElement.getShapeElement();
@@ -253,6 +251,9 @@ class ShapeContainer extends PureComponent {
         }
       }, time);
 
+      const { noteIndexModifier } = this.state;
+      const { scaleObj } = this.props;
+
       const noteIndex = val.noteIndex + noteIndexModifier;
       const noteString = scaleObj.get(noteIndex).toString();
 
@@ -264,35 +265,6 @@ class ShapeContainer extends PureComponent {
     part.playbackRate = this.props.tempo / 50;
 
     return part;
-  }
-
-  getNoteInfo(points, scaleObj, i, iPrev, iPrevPrev, prevNoteIndex) {
-    const tempoModifier = 200;
-
-    const p = {
-      x: points[i],
-      y: points[i + 1],
-    };
-    const prev = {
-      x: points[iPrev],
-      y: points[iPrev + 1],
-    };
-    const prevPrev = {
-      x: points[iPrevPrev],
-      y: points[iPrevPrev + 1],
-    };
-
-    const edgeLength = dist(p.x, p.y, prev.x, prev.y) / tempoModifier;
-    const theta = getAngle(p, prev, prevPrev);
-    const degreeDiff = thetaToScaleDegree(theta, scaleObj);
-
-    const noteIndex = prevNoteIndex + degreeDiff;
-
-    return {
-      duration: edgeLength,
-      noteIndex: noteIndex,
-      pIndex: i === 0 ? points.length : i,
-    };
   }
 
   setSynth(props, colorIndex) {
@@ -350,7 +322,7 @@ class ShapeContainer extends PureComponent {
     const noteEvents = [];
     forEachPoint(points, (p, i) => {
       if (i >= 2) {
-        const noteInfo = this.getNoteInfo(
+        const noteInfo = getNoteInfo(
           points,
           scaleObj,
           i,
@@ -369,7 +341,7 @@ class ShapeContainer extends PureComponent {
 
     // last edge
     const n = points.length;
-    const lastNoteInfo = this.getNoteInfo(
+    const lastNoteInfo = getNoteInfo(
       points,
       scaleObj,
       0,
@@ -393,7 +365,7 @@ class ShapeContainer extends PureComponent {
 
     forEachPoint(points, (p, i) => {
       if (i >= 2) {
-        const noteInfo = this.getNoteInfo(
+        const noteInfo = getNoteInfo(
           points,
           scaleObj,
           i,
@@ -409,7 +381,7 @@ class ShapeContainer extends PureComponent {
 
     // last edge
     const n = points.length;
-    const lastNoteInfo = this.getNoteInfo(
+    const lastNoteInfo = getNoteInfo(
       points,
       scaleObj,
       0,
@@ -475,7 +447,7 @@ class ShapeContainer extends PureComponent {
     this.setPan(panVal);
 
     this.setState({
-      averagePoint: { x: x, y: y },
+      averagePoint: { x, y },
       noteIndexModifier: noteIndexVal,
     });
   }

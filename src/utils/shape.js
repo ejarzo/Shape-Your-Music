@@ -82,3 +82,39 @@ export const forEachPoint = (points, callback) => {
     callback(p, i);
   }
 };
+
+export const getNoteInfo = (
+  points,
+  scaleObj,
+  i,
+  iPrev,
+  iPrevPrev,
+  prevNoteIndex
+) => {
+  const tempoModifier = 200;
+
+  const p = {
+    x: points[i],
+    y: points[i + 1],
+  };
+  const prev = {
+    x: points[iPrev],
+    y: points[iPrev + 1],
+  };
+  const prevPrev = {
+    x: points[iPrevPrev],
+    y: points[iPrevPrev + 1],
+  };
+
+  const edgeLength = dist(p.x, p.y, prev.x, prev.y) / tempoModifier;
+  const theta = getAngle(p, prev, prevPrev);
+  const degreeDiff = thetaToScaleDegree(theta, scaleObj);
+
+  const noteIndex = prevNoteIndex + degreeDiff;
+
+  return {
+    duration: edgeLength,
+    noteIndex: noteIndex,
+    pIndex: i === 0 ? points.length : i,
+  };
+};

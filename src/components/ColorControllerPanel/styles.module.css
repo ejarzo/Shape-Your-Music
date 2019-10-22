@@ -4,7 +4,6 @@
   width: 100vw;
   height: 300px;
   overflow-x: scroll;
-  pointer-events: none;
 }
 
 .colorControllerPanel {

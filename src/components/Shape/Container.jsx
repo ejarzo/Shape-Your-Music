@@ -5,13 +5,12 @@ import Tone from 'tone';
 import { themeColors, appColors } from 'utils/color';
 import { TOOL_TYPES } from 'views/Project/Container';
 
-import { convertValToRange, dist } from 'utils/math';
+import { convertValToRange } from 'utils/math';
 import {
-  getAngle,
-  thetaToScaleDegree,
   getPerimeterLength,
   getAveragePoint,
   forEachPoint,
+  getNoteInfo,
 } from 'utils/shape';
 
 import ShapeComponent from './Component';
@@ -268,35 +267,6 @@ class ShapeContainer extends PureComponent {
     return part;
   }
 
-  getNoteInfo(points, scaleObj, i, iPrev, iPrevPrev, prevNoteIndex) {
-    const tempoModifier = 200;
-
-    const p = {
-      x: points[i],
-      y: points[i + 1],
-    };
-    const prev = {
-      x: points[iPrev],
-      y: points[iPrev + 1],
-    };
-    const prevPrev = {
-      x: points[iPrevPrev],
-      y: points[iPrevPrev + 1],
-    };
-
-    const edgeLength = dist(p.x, p.y, prev.x, prev.y) / tempoModifier;
-    const theta = getAngle(p, prev, prevPrev);
-    const degreeDiff = thetaToScaleDegree(theta, scaleObj);
-
-    const noteIndex = prevNoteIndex + degreeDiff;
-
-    return {
-      duration: edgeLength,
-      noteIndex: noteIndex,
-      pIndex: i === 0 ? points.length : i,
-    };
-  }
-
   setSynth(props, colorIndex) {
     const selectedSynth = props.selectedSynths[colorIndex];
     const knobVals = props.knobVals[colorIndex];
@@ -352,7 +322,7 @@ class ShapeContainer extends PureComponent {
     const noteEvents = [];
     forEachPoint(points, (p, i) => {
       if (i >= 2) {
-        const noteInfo = this.getNoteInfo(
+        const noteInfo = getNoteInfo(
           points,
           scaleObj,
           i,
@@ -371,7 +341,7 @@ class ShapeContainer extends PureComponent {
 
     // last edge
     const n = points.length;
-    const lastNoteInfo = this.getNoteInfo(
+    const lastNoteInfo = getNoteInfo(
       points,
       scaleObj,
       0,
@@ -395,7 +365,7 @@ class ShapeContainer extends PureComponent {
 
     forEachPoint(points, (p, i) => {
       if (i >= 2) {
-        const noteInfo = this.getNoteInfo(
+        const noteInfo = getNoteInfo(
           points,
           scaleObj,
           i,
@@ -411,7 +381,7 @@ class ShapeContainer extends PureComponent {
 
     // last edge
     const n = points.length;
-    const lastNoteInfo = this.getNoteInfo(
+    const lastNoteInfo = getNoteInfo(
       points,
       scaleObj,
       0,

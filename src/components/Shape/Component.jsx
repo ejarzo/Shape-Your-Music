@@ -143,6 +143,7 @@ class ShapeComponent extends React.Component {
 
     const isEditMode = activeTool === TOOL_TYPES.EDIT;
     const perimeter = getPerimeterLength(points);
+    const startingNoteString = scaleObj.get(noteIndexModifier + 1).toString();
 
     if (isEditMode) {
       return (
@@ -214,7 +215,7 @@ class ShapeComponent extends React.Component {
             >
               PAN: {panningVal}
               <br />
-              NOTE: {scaleObj.get(noteIndexModifier).toString()}
+              NOTE: {startingNoteString}
             </div>
           </Portal>
 

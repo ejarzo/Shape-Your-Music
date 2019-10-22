@@ -206,19 +206,18 @@ class ShapeContainer extends PureComponent {
 
   getPart() {
     const part = new Tone.Part((time, val) => {
-      //console.log("Playing note", val.note, "for", val.duration, "INDEX:", val.pIndex);
       const dur = val.duration / this.part.playbackRate;
-      const { points, noteIndexModifier } = this.state;
-      const { colorIndex, scaleObj } = this.props;
 
       // animation
       Tone.Draw.schedule(() => {
-        const xFrom = points[val.pIndex - 2];
-        const yFrom = points[val.pIndex - 1];
-        const xTo =
-          val.pIndex >= points.length ? points[0] : points[val.pIndex];
-        const yTo =
-          val.pIndex >= points.length ? points[1] : points[val.pIndex + 1];
+        const { points } = this.state;
+        const { colorIndex } = this.props;
+        const { pIndex } = val;
+
+        const xFrom = points[pIndex - 2];
+        const yFrom = points[pIndex - 1];
+        const xTo = pIndex >= points.length ? points[0] : points[pIndex];
+        const yTo = pIndex >= points.length ? points[1] : points[pIndex + 1];
 
         const animCircle = this.shapeComponentElement.getAnimCircle();
         const shapeElement = this.shapeComponentElement.getShapeElement();
@@ -252,6 +251,9 @@ class ShapeContainer extends PureComponent {
           });
         }
       }, time);
+
+      const { noteIndexModifier } = this.state;
+      const { scaleObj } = this.props;
 
       const noteIndex = val.noteIndex + noteIndexModifier;
       const noteString = scaleObj.get(noteIndex).toString();
@@ -475,7 +477,7 @@ class ShapeContainer extends PureComponent {
     this.setPan(panVal);
 
     this.setState({
-      averagePoint: { x: x, y: y },
+      averagePoint: { x, y },
       noteIndexModifier: noteIndexVal,
     });
   }

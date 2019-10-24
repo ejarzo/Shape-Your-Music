@@ -12,7 +12,7 @@ const propTypes = {
   onInstChange: PropTypes.func.isRequired,
   onKnobChange: PropTypes.func.isRequired,
   knobVals: PropTypes.array.isRequired,
-  selectedInstruments: PropTypes.array.isRequired,
+  selectedSynths: PropTypes.array.isRequired,
 };
 
 function ColorControllerPanel(props) {

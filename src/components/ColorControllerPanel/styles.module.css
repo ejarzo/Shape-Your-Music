@@ -2,11 +2,10 @@
   position: absolute;
   bottom: 0;
   width: 100vw;
-  height: 300px;
-  overflow-x: scroll;
 }
 
 .colorControllerPanel {
+  overflow-x: scroll;
   height: 110px;
   width: 100vw;
   position: absolute;
@@ -14,7 +13,7 @@
   left: 0;
   background: #aaa;
   transition: all 0.3s;
-  pointer-events: auto;
+  font-weight: bold;
 }
 
 .colorControllerPanel::-webkit-scrollbar {
@@ -35,7 +34,6 @@
 
 .colorControllers {
   width: 1500px;
-  /*height: calc(100% - 5px);*/
   height: 100%;
   white-space: nowrap;
 }

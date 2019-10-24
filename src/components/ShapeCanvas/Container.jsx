@@ -18,7 +18,6 @@ const propTypes = {
   // Context
   activeTool: string.isRequired,
   tempo: number.isRequired,
-  selectedInstruments: array.isRequired,
   scaleObj: object.isRequired,
   isPlaying: bool.isRequired,
   isGridActive: bool.isRequired,

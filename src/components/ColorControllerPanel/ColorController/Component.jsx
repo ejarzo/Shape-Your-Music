@@ -41,7 +41,7 @@ function ColorControllerComponent(props) {
         <CustomSelect
           menuTop
           dropDownAlign="BottomLeft"
-          color={props.color}
+          baseColor={props.color}
           name="Instrument Select"
           value={synthType}
           options={dropdownOptions}

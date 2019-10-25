@@ -2,27 +2,33 @@
   position: absolute;
   z-index: 200;
   left: 0;
-  top: 85px;
+  top: 100px;
   display: flex;
   flex-direction: flex-column;
 }
 
 .tabs {
-  border-radius: 2px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
+  background: rgba(255, 255, 255, 0.3);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .tabButton {
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.3);
   padding: 10px;
   height: 46px;
   width: 46px;
   text-align: center;
   font-size: 1.5em;
+  transform: scale3d(1, 1, 1);
 }
 
 .tabButton:hover {
-  background: rgba(255, 255, 255, 0.9);
+  transform: scale3d(1.2, 1.2, 1);
+  /* background: rgba(255, 255, 255, 0.9); */
 }
 
 .content {

@@ -251,9 +251,9 @@ MusicalControls.propTypes = {
 /* ---------------------- Other ---------------------- */
 
 function OtherControls(props) {
-  const fullscreenButtonClass = props.isFullscreenEnabled
-    ? 'ion-arrow-shrink'
-    : 'ion-arrow-expand';
+  // const fullscreenButtonClass = props.isFullscreenEnabled
+  //   ? 'ion-arrow-shrink'
+  //   : 'ion-arrow-expand';
 
   return (
     <div className={cx(styles.toolbarSection, styles.OtherControls)}>
@@ -268,13 +268,13 @@ function OtherControls(props) {
           Clear
         </Button>
       </div>
-      <div>
+      {/* <div>
         <IconButton
           iconClassName={fullscreenButtonClass}
           onClick={props.handleFullscreenButtonClick}
           title="Toggle Fullscreen"
         />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'components/Button';
-import { appColors } from 'utils/color';
+import { Button } from 'antd';
 import styles from './styles.module.css';
 
 const propTypes = {
@@ -11,26 +10,34 @@ const propTypes = {
 /* ================================ Toolbar ================================ */
 function Downloads(props) {
   const { downloadUrls } = props;
+  console.log(downloadUrls);
   return (
     <div className={styles.downloads}>
-      <h2>Downloads</h2>
-      {downloadUrls.length === 0 && (
-        <div style={{ paddingBottom: 20 }}>No recordings yet</div>
-      )}
+      <div style={{ paddingBottom: 20 }}>
+        {downloadUrls.length === 0 ? (
+          <span>
+            No recordings yet. Press record <i className="ion-record" /> to
+            create some!
+          </span>
+        ) : (
+          <span>
+            Download your recordings to your computer as WAV files. The most
+            recent recording is first.
+          </span>
+        )}
+      </div>
       <ul>
-        {downloadUrls.map(({ url, fileName }, i) => (
-          <li>
+        {downloadUrls.reverse().map(({ url, fileName }, i) => (
+          <li key={url}>
             <audio src={url} controls />
+
             <Button
-              key={`download-${i}`}
+              icon="download"
               href={url}
-              download={fileName}
-              hasBorder
-              darkHover
-              color={appColors.grayLightest}
-              title={`download-${i}`}
+              download={fileName || `recording-${i}`}
+              title={`shape-your-music-download-${i}`}
             >
-              <i className="ion-android-download" /> {`download ${i}`}
+              Download
             </Button>
           </li>
         ))}

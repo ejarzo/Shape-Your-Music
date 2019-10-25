@@ -413,9 +413,6 @@ class Project extends Component {
               handleScaleChange={this.handleScaleChange}
               handleFullscreenButtonClick={this.handleFullscreenButtonClick}
               handleClearButtonClick={this.handleClearButtonClick}
-              handleExportToMIDIClick={this.handleExportToMIDIClick}
-              handleSaveClick={this.handleSaveClick}
-              showSaveButton={showSaveButton}
             />
 
             {/* The Canvas */}
@@ -423,6 +420,7 @@ class Project extends Component {
               // TODO: revisit: do we need to do this?
               onMount={c => (this.shapeCanvas = c)}
               initShapesList={initState.shapesList}
+              handleExportToMIDIClick={this.handleExportToMIDIClick}
             />
 
             {/* Instrument controller panels */}
@@ -432,7 +430,12 @@ class Project extends Component {
             />
 
             {/* Sidebar */}
-            <Sidebar downloadUrls={downloadUrls} />
+            <Sidebar
+              downloadUrls={downloadUrls}
+              handleSaveClick={this.handleSaveClick}
+              showSaveButton={showSaveButton}
+              handleExportToMIDIClick={this.handleExportToMIDIClick}
+            />
           </Fullscreen>
         </ProjectContextProvider>
       </HotKeys>

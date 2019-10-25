@@ -30,10 +30,14 @@ class ProjectFileManager extends Component {
       const projectSaveData = getProjectSaveData(project);
 
       const saveNewProject = async () => {
-        const newProject = await createProject(projectSaveData);
-        const id = getProjectIdFromResponse(newProject);
-        history.push(`/project/${id}`);
-        message.success('Saved new project!');
+        try {
+          const newProject = await createProject(projectSaveData);
+          const id = getProjectIdFromResponse(newProject);
+          history.push(`/project/${id}`);
+          message.success('Saved new project!');
+        } catch (error) {
+          message.error(`Error: ${error.message}`);
+        }
       };
 
       if (projectId) {

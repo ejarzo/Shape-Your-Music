@@ -96,3 +96,7 @@ div[tabindex='-1']:focus {
 .ant-popover.ant-popover-placement-rightTop {
   z-index: 2000;
 }
+
+.ant-tooltip {
+  font-weight: bold;
+}

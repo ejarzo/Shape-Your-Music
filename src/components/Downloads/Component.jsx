@@ -27,20 +27,23 @@ function Downloads(props) {
         )}
       </div>
       <ul>
-        {downloadUrls.reverse().map(({ url, fileName }, i) => (
-          <li key={url}>
-            <audio src={url} controls />
+        {downloadUrls
+          .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+          .map(({ url, fileName, createdAt }, i) => (
+            <li key={url}>
+              <h2>{createdAt.format('HH:mm:ss [on] MMM DD').toString()}</h2>
+              <audio src={url} controls />
 
-            <Button
-              icon="download"
-              href={url}
-              download={fileName || `recording-${i}`}
-              title={`shape-your-music-download-${i}`}
-            >
-              Download
-            </Button>
-          </li>
-        ))}
+              <Button
+                icon="download"
+                href={url}
+                download={fileName || `recording-${i}`}
+                title={`shape-your-music-download-${i}`}
+              >
+                Download
+              </Button>
+            </li>
+          ))}
       </ul>
     </div>
   );

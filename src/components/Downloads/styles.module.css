@@ -1,13 +1,16 @@
 .downloads li {
   margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 4px;
+  background: #eee;
 }
 
 .downloads audio {
   display: block;
   margin-bottom: 10px;
+  width: 100%;
 }
+
 .downloads a {
   display: block;
 }

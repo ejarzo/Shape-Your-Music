@@ -19,7 +19,6 @@ import { TOOL_TYPES } from 'views/Project/Container';
 import { SCALES, TONICS } from 'utils/music';
 
 import withProjectContext from 'views/Project/withProjectContext';
-import SaveButton from './SaveButton';
 
 const { black, grayLightest, red } = appColors;
 
@@ -38,7 +37,6 @@ const propTypes = {
   handleScaleChange: func.isRequired,
   handleFullscreenButtonClick: func.isRequired,
   handleClearButtonClick: func.isRequired,
-  handleExportToMIDIClick: func.isRequired,
 };
 
 /* ---------------------- Transport ---------------------- */
@@ -251,9 +249,9 @@ MusicalControls.propTypes = {
 /* ---------------------- Other ---------------------- */
 
 function OtherControls(props) {
-  const fullscreenButtonClass = props.isFullscreenEnabled
-    ? 'ion-arrow-shrink'
-    : 'ion-arrow-expand';
+  // const fullscreenButtonClass = props.isFullscreenEnabled
+  //   ? 'ion-arrow-shrink'
+  //   : 'ion-arrow-expand';
 
   return (
     <div className={cx(styles.toolbarSection, styles.OtherControls)}>
@@ -268,13 +266,14 @@ function OtherControls(props) {
           Clear
         </Button>
       </div>
-      <div>
+      {/* TODO: re-enable if fullscreen bug is fixed (ShapeEditorPopover not appearing in fullscreen) */}
+      {/* <div>
         <IconButton
           iconClassName={fullscreenButtonClass}
           onClick={props.handleFullscreenButtonClick}
           title="Toggle Fullscreen"
         />
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -300,13 +299,10 @@ function ToolbarComponent(props) {
     handleTempoChange,
     handleFullscreenButtonClick,
     handleClearButtonClick,
-    handleExportToMIDIClick,
     handleColorChange,
     handleColorMouseEnter,
     handleColorMouseLeave,
     isColorPickerOpen,
-    handleSaveClick,
-    showSaveButton,
     // Context
     isPlaying,
     isArmed,
@@ -314,7 +310,6 @@ function ToolbarComponent(props) {
     activeTool,
     scaleObj,
     tempo,
-    projectName,
     isFullscreenEnabled,
     isGridActive,
     isSnapToGridActive,
@@ -362,25 +357,6 @@ function ToolbarComponent(props) {
         handleFullscreenButtonClick={handleFullscreenButtonClick}
         handleClearButtonClick={handleClearButtonClick}
       />
-      <div className={cx(styles.toolbarSection)}>
-        <div>
-          <Button
-            hasBorder
-            // darkHover
-            color={grayLightest}
-            onClick={handleExportToMIDIClick}
-            title="Export and download MIDI file"
-          >
-            Export To MIDI
-          </Button>
-        </div>
-        {showSaveButton && (
-          <SaveButton
-            onConfirm={name => handleSaveClick(name)}
-            projectName={projectName}
-          />
-        )}
-      </div>
     </div>
   );
 }

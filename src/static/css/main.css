@@ -83,10 +83,20 @@ div[tabindex='-1']:focus {
   boxshadow: 0 0 12px 0 rgba(0, 0, 0, 0.11) !important;
   background: white !important;
 }
+
 .github-picker span {
   width: 20% !important;
   height: 100% !important;
 }
+
 .github-picker span div {
   width: 100% !important;
+}
+
+.ant-popover.ant-popover-placement-rightTop {
+  z-index: 2000;
+}
+
+.ant-tooltip {
+  font-weight: bold;
 }

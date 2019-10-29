@@ -1,58 +1,72 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-import styles from './styles.module.css';
+import { Badge, Icon, Drawer, Tooltip } from 'antd';
 
 import Downloads from 'components/Downloads';
+import styles from './styles.module.css';
+import SaveButton from 'components/Toolbar/SaveButton';
+import withProjectContext from 'views/Project/withProjectContext';
 
 const propTypes = {
   downloadUrls: PropTypes.array.isRequired,
 };
 
-function Sidebar({ activePage, downloadUrls, handleTabClick }) {
-  const [iconScale, setIconScale] = useState(1);
+function Sidebar(props) {
+  const {
+    handleSaveClick,
+    showSaveButton,
+    projectName,
+    activePage,
+    downloadUrls,
+    handleExportToMIDIClick,
+  } = props;
 
-  useEffect(() => {
-    if (downloadUrls.length === 0) return;
-    setIconScale(1.8);
-    const timer = setTimeout(() => setIconScale(1), 200);
-    return () => clearTimeout(timer);
-  }, [downloadUrls]);
+  const [seenDownloadCount, setSeenDownloadCount] = useState(0);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+  const count = downloadUrls.length - seenDownloadCount;
 
   return (
     <div className={styles.sidebar}>
       <div className={styles.tabs}>
-        {/*<div
-            className={styles.tabButton}
-            title="Settings"
-            style={{
-              background: activePage === 0 && 'white',
-            }}
-            onClick={() => handleTabClick(0)}
-          >
-            <div>
-              <i className="ion-gear-b" />
+        {showSaveButton && (
+          <Tooltip placement="right" title="Save Project">
+            <div className={styles.tabButton} onClick={() => {}}>
+              <SaveButton
+                onConfirm={name => handleSaveClick(name)}
+                projectName={projectName}
+              />
             </div>
-          </div>*/}
-
-        <div
-          className={styles.tabButton}
-          title="Downloads"
-          style={{
-            background: activePage === 1 && 'white',
-          }}
-          onClick={() => handleTabClick(1)}
-        >
-          <div
-            style={{
-              transition: 'all 0.2s',
-              transform: `scale(${iconScale})`,
-            }}
-          >
-            <i className="ion-android-download" />
+          </Tooltip>
+        )}
+        <Badge style={{ fontWeight: 'bold' }} count={count} offset={[-2, 2]}>
+          <Tooltip placement="right" title="Downloads">
+            <div
+              className={styles.tabButton}
+              onClick={() => {
+                setSeenDownloadCount(downloadUrls.length);
+                setIsDrawerVisible(true);
+              }}
+            >
+              <Icon type="download" />
+            </div>
+          </Tooltip>
+        </Badge>
+        <Tooltip placement="right" title="Export to MIDI">
+          <div className={styles.tabButton} onClick={handleExportToMIDIClick}>
+            <Icon type="export" />
           </div>
-        </div>
+        </Tooltip>
       </div>
+
+      <Drawer
+        title="Downloads"
+        placement="left"
+        width={400}
+        onClose={() => setIsDrawerVisible(false)}
+        visible={isDrawerVisible}
+      >
+        <Downloads downloadUrls={downloadUrls} />
+      </Drawer>
 
       <div>
         <div className={styles.content}>
@@ -64,11 +78,6 @@ function Sidebar({ activePage, downloadUrls, handleTabClick }) {
               <input name="projectName" />
             </div>
           )}
-          {activePage === 1 && (
-            <div className={styles.contentInner}>
-              <Downloads downloadUrls={downloadUrls} />
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -77,4 +86,4 @@ function Sidebar({ activePage, downloadUrls, handleTabClick }) {
 
 Sidebar.propTypes = propTypes;
 
-export default Sidebar;
+export default withProjectContext(Sidebar);

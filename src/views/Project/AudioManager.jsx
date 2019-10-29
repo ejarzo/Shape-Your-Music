@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { withRouter } from 'react-router';
 import Tone from 'tone';
 import Recorder from 'utils/Recorder';
@@ -65,7 +66,13 @@ class AudioManager extends React.Component {
     this.recorder.exportWAV(blob => {
       const url = URL.createObjectURL(blob);
       const downloadUrls = this.state.downloadUrls.slice();
-      downloadUrls.push({ url, fileName: `${fileName}[shapeyourmusic].wav` });
+      const createdAt = moment();
+
+      downloadUrls.push({
+        url,
+        fileName: `${fileName}[shapeyourmusic].wav`,
+        createdAt,
+      });
       this.setState({ downloadUrls });
       this.recorder.stop();
       this.recorder.clear();

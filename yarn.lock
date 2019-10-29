@@ -10086,11 +10086,6 @@ react-fullscreenable@^2.5.0:
     fullscreen "^1.1.1"
     react-display-name "^0.2.0"
 
-react-horizontal-scrolling-menu@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/react-horizontal-scrolling-menu/-/react-horizontal-scrolling-menu-0.7.3.tgz#78f05d0cbcf50dad5bc18e0eb0db6b3162ef5944"
-  integrity sha512-U+RkMg1LRtvECjIU6x/krvPPjiqqAHSHynE/cYONYWMB66a0RmD5qQuS1I0H44Os5ox6b64l3SFBgCYprcVDOg==
-
 react-hotkeys@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-hotkeys/-/react-hotkeys-2.0.0.tgz#a7719c7340cbba888b0e9184f806a9ec0ac2c53f"

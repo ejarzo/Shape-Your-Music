@@ -11,4 +11,6 @@ function DiscoverContainer({ data }) {
   );
 }
 
-export default withData(readAllProjects)(DiscoverContainer);
+export default withData('READ_ALL_PROJECTS', readAllProjects)(
+  DiscoverContainer
+);

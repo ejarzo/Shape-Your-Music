@@ -12,7 +12,7 @@ class Project extends React.Component {
     const { projectId } = this.props;
 
     const FileManagerWithData = !!projectId
-      ? withData(() => readProject(projectId))(FileManager)
+      ? withData('READ_PROJECT', () => readProject(projectId))(FileManager)
       : FileManager;
 
     return (

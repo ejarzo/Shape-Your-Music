@@ -1,46 +1,29 @@
 import React from 'react';
 import Loading from 'components/Loading';
 import { captureException } from 'utils/errorTracking';
+import useSWR from 'swr';
 
-export const withData = getData => Component =>
-  class extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        loading: false,
-        result: undefined,
-        error: null,
-      };
-    }
+export const withData = (key, getData) => Component => props => {
+  const { data: result, error } = useSWR(key, getData, {
+    onError: captureException,
+  });
 
-    async componentDidMount() {
-      this.setState({ loading: true });
-      const result = await getData().catch(e => {
-        captureException(e);
-        this.setState({ error: e });
-      });
-      this.setState({ result, loading: false });
-    }
+  if (!!error) {
+    return <div style={{ padding: 15 }}>Error: {error.message}</div>;
+  }
 
-    render() {
-      const { loading, result: { data, ...rest } = {}, error } = this.state;
+  const loading = !result;
+  if (loading) {
+    return <Loading />;
+  }
 
-      if (!!error) {
-        return <div style={{ padding: 15 }}>Error: {error.message}</div>;
-      }
-
-      if (loading) {
-        return <Loading />;
-      }
-
-      return (
-        <Component
-          {...this.props}
-          data={data}
-          result={{ ...rest }}
-          loading={loading}
-          error={error}
-        />
-      );
-    }
-  };
+  return (
+    <Component
+      {...props}
+      data={result.data}
+      result={{ ...result }}
+      loading={loading}
+      error={error}
+    />
+  );
+};

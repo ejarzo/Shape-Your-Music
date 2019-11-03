@@ -12,6 +12,15 @@
   background: #e5e5e5;
 }
 
+.colorPickerWrapper {
+  width: 140px;
+  left: 0px;
+  top: 7px;
+  height: 50px;
+  position: relative;
+  z-index: 500;
+}
+
 .toolbarSection {
   position: relative;
   display: grid;

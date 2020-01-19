@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { bool, func } from 'prop-types';
+import { func } from 'prop-types';
 import cx from 'classnames';
 
 import Button from 'components/Button';
@@ -82,23 +82,26 @@ function ToolbarComponent(props) {
     <div className={styles.toolbar}>
       {/* TRANSPORT CONTROLS */}
       <div className={styles.toolbarSection}>
-        <div>
-          <IconButton
-            iconClassName={playButtonClass}
-            onClick={handlePlayClick}
-            title="Play project (SPACE)"
-          />
-        </div>
-        <div
-          className={isRecording ? styles.pulse : undefined}
-          style={{ color: (isArmed || isRecording) && red }}
-        >
-          <IconButton
-            iconClassName={'ion-record'}
-            onClick={handleRecordClick}
-            title="Record project to audio file"
-          />
-        </div>
+        <Tooltip title="Play" placement="bottomLeft">
+          <div>
+            <IconButton
+              iconClassName={playButtonClass}
+              onClick={handlePlayClick}
+              title="Play project (SPACE)"
+            />
+          </div>
+        </Tooltip>
+        <Tooltip title="Record project to audio file" placement="bottomLeft">
+          <div
+            className={isRecording ? styles.pulse : undefined}
+            style={{ color: (isArmed || isRecording) && red }}
+          >
+            <IconButton
+              iconClassName={'ion-record'}
+              onClick={handleRecordClick}
+            />
+          </div>
+        </Tooltip>
       </div>
 
       {/* TOOL CONTROLS */}
@@ -107,27 +110,39 @@ function ToolbarComponent(props) {
           activeColor={activeColor}
           handleColorChange={handleColorChange}
         />
-        <Tooltip title="Draw Tool (TAB to toggle)" placement="bottom">
-          <Button
-            // darkHover
-            hasBorder
-            color={isDrawTool ? black : grayLightest}
-            onClick={handleDrawToolClick}
-            // title="Draw Tool (TAB to toggle)"
-          >
-            <DrawToolIcon fill={isDrawTool ? grayLightest : black} />
-          </Button>
+        <Tooltip
+          title={
+            <span>
+              Draw Tool <span style={{ opacity: 0.6 }}>(TAB)</span>
+            </span>
+          }
+        >
+          <div>
+            <Button
+              hasBorder
+              color={isDrawTool ? black : grayLightest}
+              onClick={handleDrawToolClick}
+            >
+              <DrawToolIcon fill={isDrawTool ? grayLightest : black} />
+            </Button>
+          </div>
         </Tooltip>
-        <Tooltip title="Edit Tool (TAB to toggle)" placement="bottom">
-          <Button
-            // darkHover
-            hasBorder
-            color={isEditTool ? black : grayLightest}
-            onClick={handleEditToolClick}
-            title="Edit Tool (TAB to toggle)"
-          >
-            <EditToolIcon fill={!isDrawTool ? grayLightest : black} />
-          </Button>
+        <Tooltip
+          title={
+            <span>
+              Edit Tool <span style={{ opacity: 0.6 }}>(TAB)</span>
+            </span>
+          }
+        >
+          <div>
+            <Button
+              hasBorder
+              color={isEditTool ? black : grayLightest}
+              onClick={handleEditToolClick}
+            >
+              <EditToolIcon fill={!isDrawTool ? grayLightest : black} />
+            </Button>
+          </div>
         </Tooltip>
       </div>
 
@@ -162,22 +177,24 @@ function ToolbarComponent(props) {
           </div>
         </div>
 
-        <div
-          style={{
-            borderRadius: 3,
-            padding: 0,
-            border: `1px solid ${lightGray}`,
-            background: lightGray,
-            gridGap: 1,
-            overflow: 'hidden',
-          }}
-        >
-          <CheckboxButton
-            checked={isAutoQuantizeActive}
-            onChange={handleAutoQuantizeChange}
-            label={'Sync'}
-          />
-        </div>
+        <Tooltip title="Locks shape perimeters">
+          <div
+            style={{
+              borderRadius: 3,
+              padding: 0,
+              border: `1px solid ${lightGray}`,
+              background: lightGray,
+              gridGap: 1,
+              overflow: 'hidden',
+            }}
+          >
+            <CheckboxButton
+              checked={isAutoQuantizeActive}
+              onChange={handleAutoQuantizeChange}
+              label={'Sync'}
+            />
+          </div>
+        </Tooltip>
       </div>
 
       {/* MUSICAL CONTROLS */}

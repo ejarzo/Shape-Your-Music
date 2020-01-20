@@ -1,0 +1,25 @@
+type Shape {
+  points: [Int!]
+  colorIndex: Int!
+  volume: Int!
+  isMuted: Boolean
+  project: Project @relation
+}
+
+type Project {
+  name: String!
+  tempo: Int!
+  tonic: String!
+  scale: String!
+  isGridActive: Boolean!
+  isSnapToGridActive: Boolean!
+  isAutoQuantizeActive: Boolean!
+  shapesList: [Shape!] @relation
+  userId: String!
+  userName: String!
+}
+
+type Query {
+  allProjects: [Project!]
+  # ProjectsByCompletedFlag(completed: Boolean!): [Project!]
+}

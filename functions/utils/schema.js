@@ -1,3 +1,5 @@
+// APOLLO SERVER SCHEMA
+
 import gql from 'graphql-tag';
 export const typeDefs = gql`
   directive @embedded on OBJECT
@@ -14,12 +16,12 @@ export const typeDefs = gql`
   scalar Long
 
   type Mutation {
-    createProject(data: ProjectCreateInput!): Project!
+    # createProject(data: ProjectCreateInput!): Project!
     updateProject(id: ID!, data: ProjectUpdateInput!): Project
-    deleteProject(id: ID!): Project
+    # deleteProject(id: ID!): Project
     createShape(data: ShapeInput!): Shape!
-    updateShape(id: ID!, data: ShapeInput!): Shape
-    deleteShape(id: ID!): Shape
+    # updateShape(id: ID!, data: ShapeInput!): Shape
+    # deleteShape(id: ID!): Shape
   }
 
   type Project {
@@ -45,7 +47,7 @@ export const typeDefs = gql`
     isGridActive: Boolean!
     isSnapToGridActive: Boolean!
     isAutoQuantizeActive: Boolean!
-    shapesList: ProjectShapesListRelation
+    shapesList: [ShapeInput]
     userId: String!
     userName: String!
   }
@@ -58,7 +60,7 @@ export const typeDefs = gql`
     isGridActive: Boolean
     isSnapToGridActive: Boolean
     isAutoQuantizeActive: Boolean
-    shapesList: ProjectShapesListRelation
+    shapesList: [ShapeInput]
   }
 
   type ProjectPage {

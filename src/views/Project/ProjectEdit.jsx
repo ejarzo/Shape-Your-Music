@@ -68,9 +68,10 @@ const UPDATE_PROJECT = gql`
     }
   }
 `;
+
 function ProjectEdit(props) {
-  console.log('project render. projectId:', props.projectId);
   const { projectId } = props;
+  console.log('ProjectEdit render. projectId:', projectId);
 
   const { loading, data, error } = useQuery(GET_PROJECT, {
     variables: { id: projectId },
@@ -78,12 +79,13 @@ function ProjectEdit(props) {
 
   const [saveProjectMutation, mutationData] = useMutation(UPDATE_PROJECT, {
     onError: err => {
-      console.log('ERROR', err);
-      message.error(`Sorry, an error occurred: ${err}`);
+      message.error({
+        content: `Sorry, an error occurred: ${err}`,
+        key: 'LOADING_MESSAGE',
+      });
     },
-    onCompleted: data => {
-      message.success(`Success!`);
-      console.log('onSuccess', data);
+    onCompleted: ({ updateProject: { name } }) => {
+      message.success({ content: `Saved "${name}"`, key: 'LOADING_MESSAGE' });
     },
   });
 
@@ -99,29 +101,24 @@ function ProjectEdit(props) {
     })),
   };
 
+  const saveProject = project => {
+    message.loading({ content: 'Saving...', key: 'LOADING_MESSAGE' });
+    const projectSaveData = getProjectSaveData(project);
+    saveProjectMutation({
+      variables: {
+        id: projectId,
+        data: projectSaveData,
+      },
+    });
+  };
+
   const projectProps = {
     initState: {
       ...DEFAULT_PROJECT,
       projectName: projectData && projectData.name,
       ...projectData,
     },
-    saveProject: project => {
-      console.log('PROJECt', project);
-      const projectSaveData = getProjectSaveData(project);
-
-      const shapesListRelation = {
-        create: projectSaveData.shapesList,
-        disconnect: originalShapesList.map(({ _id }) => _id),
-      };
-
-      console.log('save data', projectSaveData);
-      saveProjectMutation({
-        variables: {
-          id: projectId,
-          data: { ...projectSaveData, shapesList: shapesListRelation },
-        },
-      });
-    },
+    saveProject,
     projectAuthor: projectData.userId && {
       name: projectData.userName,
       id: projectData.userId,

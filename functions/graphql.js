@@ -35,20 +35,29 @@ const resolvers = {
 
       const { sub: loggedInUserId, user_metadata } = user;
       const userName = user_metadata.full_name;
-      const { id } = variables;
+      const {
+        id,
+        data: { shapesList },
+      } = variables;
 
       const {
-        findProjectByID: { userId },
+        findProjectByID: { userId, shapesList: originalShapesList },
       } = await client.request(findProjectByID, { id });
 
       if (loggedInUserId !== userId) {
         throw new AuthenticationError('Not authorized');
       }
 
+      const shapesListRelation = {
+        create: shapesList,
+        disconnect: originalShapesList.data.map(({ _id }) => _id),
+      };
+
       const response = await client.request(updateProject, {
         id,
         data: {
           ...variables.data,
+          shapesList: shapesListRelation,
           userId: loggedInUserId,
           userName,
         },

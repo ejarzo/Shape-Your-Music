@@ -6,6 +6,7 @@ import PhantomShape from './PhantomShape';
 import Grid from './Grid';
 import { themeColors } from 'utils/color';
 import { TOOL_TYPES } from 'views/Project/Container';
+import { DRAWING_STATES } from './Container';
 
 import ProjectContextConsumer from 'views/Project/ProjectContextConsumer';
 import ProjectContextProvider from 'views/Project/ProjectContextProvider';
@@ -134,6 +135,7 @@ function ShapeCanvasComponent(props) {
                     mousePos={mousePos}
                     points={currPoints}
                     drawingState={drawingState}
+                    closed={drawingState === DRAWING_STATES.PREVIEW}
                     color={themeColors[activeColorIndex]}
                   />
                 </Layer>

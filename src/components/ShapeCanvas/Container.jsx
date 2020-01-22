@@ -8,8 +8,9 @@ import { TOOL_TYPES } from 'views/Project/Container';
 
 import withProjectContext from 'views/Project/withProjectContext';
 
-const DRAWING_STATES = {
+export const DRAWING_STATES = {
   PENDING: 'pending',
+  PREVIEW: 'preview',
   DRAWING: 'drawing',
 };
 
@@ -203,7 +204,7 @@ class ShapeCanvas extends Component {
     if (e.evt.which === 1) {
       if (activeTool === TOOL_TYPES.DRAW) {
         // hovering over first point
-        if (drawingState === 'preview') {
+        if (drawingState === DRAWING_STATES.PREVIEW) {
           this.appendShape();
           this.setState({
             drawingState: DRAWING_STATES.PENDING,
@@ -265,7 +266,7 @@ class ShapeCanvas extends Component {
       ) {
         x = originX;
         y = originY;
-        newDrawingState = 'preview';
+        newDrawingState = DRAWING_STATES.PREVIEW;
       }
 
       this.setState({

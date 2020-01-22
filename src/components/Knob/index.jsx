@@ -65,7 +65,7 @@ class Knob extends Component {
 
     return (
       <div className={styles.knobContainer}>
-        <div tabIndex="0">
+        <div tabIndex="0" style={{ height: 42 }}>
           <Draggable
             axis="both"
             position={{ x: 0, y: 0 }}

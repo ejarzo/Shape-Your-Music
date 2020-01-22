@@ -14,12 +14,12 @@ export const typeDefs = gql`
   scalar Long
 
   type Mutation {
-    updateProject(id: ID!, data: ProjectInput!): Project
-    createShape(data: ShapeInput!): Shape!
-    deleteShape(id: ID!): Shape
+    createProject(data: ProjectCreateInput!): Project!
+    updateProject(id: ID!, data: ProjectUpdateInput!): Project
     deleteProject(id: ID!): Project
-    createProject(data: ProjectInput!): Project!
+    createShape(data: ShapeInput!): Shape!
     updateShape(id: ID!, data: ShapeInput!): Shape
+    deleteShape(id: ID!): Shape
   }
 
   type Project {
@@ -37,7 +37,7 @@ export const typeDefs = gql`
     _ts: Long!
   }
 
-  input ProjectInput {
+  input ProjectCreateInput {
     name: String!
     tempo: Int!
     tonic: String!
@@ -48,6 +48,17 @@ export const typeDefs = gql`
     shapesList: ProjectShapesListRelation
     userId: String!
     userName: String!
+  }
+
+  input ProjectUpdateInput {
+    name: String
+    tempo: Int
+    tonic: String
+    scale: String
+    isGridActive: Boolean
+    isSnapToGridActive: Boolean
+    isAutoQuantizeActive: Boolean
+    shapesList: ProjectShapesListRelation
   }
 
   type ProjectPage {
@@ -72,14 +83,14 @@ export const typeDefs = gql`
     project: Project
     _id: ID!
     isMuted: Boolean
-    points: [Int!]
+    points: [Float!]
     colorIndex: Int!
     volume: Int!
     _ts: Long!
   }
 
   input ShapeInput {
-    points: [Int!]
+    points: [Float!]
     colorIndex: Int!
     volume: Int!
     isMuted: Boolean
@@ -93,7 +104,7 @@ export const typeDefs = gql`
   }
 
   input ShapeProjectRelation {
-    create: ProjectInput
+    create: ProjectCreateInput
     connect: ID
     disconnect: Boolean
   }

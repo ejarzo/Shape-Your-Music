@@ -1,5 +1,5 @@
 type Shape {
-  points: [Int!]
+  points: [Float!]
   colorIndex: Int!
   volume: Int!
   isMuted: Boolean

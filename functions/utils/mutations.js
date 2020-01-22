@@ -1,20 +1,6 @@
-export const allProjects = `
-  query AllProjects {
-    allProjects {
-      data {
-        _id
-        _ts
-        name
-        userId
-        userName
-      }
-    }
-  }
-`;
-
-export const findProjectByID = `
-  query FindProjectByID($id: ID!) {
-    findProjectByID(id: $id) {
+export const updateProject = `
+  mutation UpdateProject($id: ID!, $data: ProjectInput!) {
+    updateProject(id: $id, data: $data) {
       name
       tempo
       scale

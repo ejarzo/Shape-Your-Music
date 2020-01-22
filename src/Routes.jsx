@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Project from 'views/Project';
+import ProjectCreate from 'views/Project/ProjectCreate';
+import ProjectEdit from 'views/Project/ProjectEdit';
 import Discover from 'views/Discover';
 import DiscoverGQL from 'views/DiscoverGQL';
 import NotFound from 'views/NotFound';
@@ -11,7 +12,7 @@ function Routes() {
     <BrowserRouter>
       <PageWrapper>
         <Switch>
-          <Route exact path="/" component={() => <Project />} />
+          <Route exact path="/" component={() => <ProjectCreate />} />
           <Route
             exact
             path="/project/:projectId"
@@ -19,7 +20,7 @@ function Routes() {
               match: {
                 params: { projectId },
               },
-            }) => <Project projectId={projectId} />}
+            }) => <ProjectEdit projectId={projectId} />}
           />
           <Route path="/discover" component={Discover} />
           <Route path="/discovergql" component={DiscoverGQL} />

@@ -4,7 +4,7 @@ _A geometric sequencer that suggests one answer to the question "What does a sha
 
 [https://shapeyourmusic.dev/](https://shapeyourmusic.dev)
 
-![Project](assets/readme-images/project_screenshot_2.png)
+![Project](assets/readme-images/project_screenshot_3.png)
 
 ## About
 

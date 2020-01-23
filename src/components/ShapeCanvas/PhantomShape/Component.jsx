@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import Color from 'color';
 import { Group, Circle, Line } from 'react-konva';
 import { TOOL_TYPES } from 'views/Project/Container';
-import withProjectContext from 'views/Project/withProjectContext';
+import { ProjectContext } from 'views/Project/ProjectContextProvider';
 
 const propTypes = {
   points: PropTypes.array.isRequired,
   color: PropTypes.string.isRequired,
-  activeTool: PropTypes.string.isRequired,
-  drawingState: PropTypes.string.isRequired,
+  closed: PropTypes.bool.isRequired,
   mousePos: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
@@ -21,11 +20,14 @@ const propTypes = {
   Used to show the shape that is currently being drawn. 
 */
 function PhantomShapeComponent(props) {
-  const { points, color, activeTool, mousePos, drawingState } = props;
+  const { activeTool } = useContext(ProjectContext);
+  const { points, mousePos, color, closed } = props;
+
   const radius = 4;
   const strokeWidth = 2;
   const previewFillOpacity = 0.1;
-  const originPoint = points[0] && (
+
+  const OriginPoint = () => (
     <Circle
       x={points[0]}
       y={points[1]}
@@ -50,7 +52,7 @@ function PhantomShapeComponent(props) {
           strokeWidth={strokeWidth}
           opacity={0.8}
         />
-        {originPoint}
+        {points[0] && <OriginPoint />}
         <Line // shape so far
           points={points}
           strokeWidth={strokeWidth}
@@ -59,7 +61,7 @@ function PhantomShapeComponent(props) {
             .alpha(previewFillOpacity)
             .toString()}
           fillEnabled={true}
-          closed={drawingState === 'preview'}
+          closed={closed}
           transformsEnabled="position"
         />
         <Line // line from previous point to cursor
@@ -76,4 +78,4 @@ function PhantomShapeComponent(props) {
 
 PhantomShapeComponent.propTypes = propTypes;
 
-export default withProjectContext(PhantomShapeComponent);
+export default PhantomShapeComponent;

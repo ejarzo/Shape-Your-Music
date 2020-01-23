@@ -77,7 +77,7 @@ function ProjectEdit(props) {
     variables: { id: projectId },
   });
 
-  const [saveProjectMutation, mutationData] = useMutation(UPDATE_PROJECT, {
+  const [saveProjectMutation] = useMutation(UPDATE_PROJECT, {
     onError: err => {
       message.error({
         content: `Sorry, an error occurred: ${err}`,

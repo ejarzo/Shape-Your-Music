@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import AudioManager from './AudioManager';
 import ProjectContainer from './Container';
 
@@ -8,6 +8,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { message } from 'antd';
 import { getProjectSaveData } from 'utils/project';
 import { GET_ALL_PROJECTS } from 'views/DiscoverGQL/Container';
+import { CurrentUserContext } from 'context/CurrentUserContext/CurrentUserContextProvider';
 
 const DEFAULT_PROJECT = {
   projectName: '',
@@ -44,6 +45,8 @@ const CREATE_PROJECT = gql`
 `;
 
 function ProjectCreate(props) {
+  const { user: currentUser, authenticate } = useContext(CurrentUserContext);
+
   const [createProjectMutation] = useMutation(CREATE_PROJECT, {
     refetchQueries: () => [{ query: GET_ALL_PROJECTS }],
     onError: err => {
@@ -53,18 +56,31 @@ function ProjectCreate(props) {
       });
     },
     onCompleted: ({ createProject: { name } }) => {
-      message.success({ content: `Saved "${name}"`, key: 'LOADING_MESSAGE' });
+      message.success({
+        content: `Saved "${name}"`,
+        key: 'LOADING_MESSAGE',
+      });
     },
   });
 
   const saveProject = project => {
-    message.loading({ content: 'Saving...', key: 'LOADING_MESSAGE' });
-    const projectSaveData = getProjectSaveData(project);
-    createProjectMutation({
-      variables: {
-        data: projectSaveData,
-      },
-    });
+    const executeMutation = () => {
+      message.loading({
+        content: 'Saving...',
+        key: 'LOADING_MESSAGE',
+      });
+      const projectSaveData = getProjectSaveData(project);
+      createProjectMutation({
+        variables: {
+          data: projectSaveData,
+        },
+      });
+    };
+    if (!currentUser) {
+      authenticate({ onSuccess: executeMutation });
+    } else {
+      executeMutation();
+    }
   };
 
   const projectProps = {

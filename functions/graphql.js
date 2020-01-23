@@ -6,7 +6,7 @@ const {
 const { GraphQLClient } = require('graphql-request');
 const { typeDefs } = require('./utils/schema');
 const { allProjects, findProjectByID } = require('./utils/queries');
-const { updateProject } = require('./utils/mutations');
+const { updateProject, createProject } = require('./utils/mutations');
 
 const FAUNADB_API = 'https://graphql.fauna.com/graphql';
 
@@ -63,6 +63,31 @@ const resolvers = {
         },
       });
       return response.updateProject;
+    },
+    createProject: async (_, variables, { user }) => {
+      if (!user) {
+        throw new AuthenticationError('Not Logged In');
+      }
+
+      const { sub: loggedInUserId, user_metadata } = user;
+      const userName = user_metadata.full_name;
+      const {
+        data: { shapesList },
+      } = variables;
+
+      const shapesListRelation = {
+        create: shapesList,
+      };
+
+      const response = await client.request(createProject, {
+        data: {
+          ...variables.data,
+          shapesList: shapesListRelation,
+          userId: loggedInUserId,
+          userName,
+        },
+      });
+      return response.createProject;
     },
   },
 };

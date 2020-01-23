@@ -16,7 +16,7 @@ export const typeDefs = gql`
   scalar Long
 
   type Mutation {
-    # createProject(data: ProjectCreateInput!): Project!
+    createProject(data: ProjectCreateInput!): Project!
     updateProject(id: ID!, data: ProjectUpdateInput!): Project
     # deleteProject(id: ID!): Project
     createShape(data: ShapeInput!): Shape!
@@ -48,8 +48,6 @@ export const typeDefs = gql`
     isSnapToGridActive: Boolean!
     isAutoQuantizeActive: Boolean!
     shapesList: [ShapeInput]
-    userId: String!
-    userName: String!
   }
 
   input ProjectUpdateInput {

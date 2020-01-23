@@ -5,8 +5,8 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import Loading from 'components/Loading';
 
-const GET_ALL_PROJECTS = gql`
-  {
+export const GET_ALL_PROJECTS = gql`
+  query AllProjects {
     allProjects {
       data {
         _id

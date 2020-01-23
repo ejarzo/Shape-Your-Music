@@ -1,13 +1,12 @@
 import React from 'react';
-import FileManager from './FileManager';
 import AudioManager from './AudioManager';
 import ProjectContainer from './Container';
-import { withData, readProject } from 'middleware';
 
 import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
 import { gql } from 'apollo-boost';
-import { useQuery } from '@apollo/react-hooks';
-import Loading from 'components/Loading';
+import { useMutation } from '@apollo/react-hooks';
+import { message } from 'antd';
+import { getProjectSaveData } from 'utils/project';
 
 const DEFAULT_PROJECT = {
   projectName: '',
@@ -16,14 +15,63 @@ const DEFAULT_PROJECT = {
   scale: 'major',
 };
 
+const CREATE_PROJECT = gql`
+  mutation CreateProject($data: ProjectCreateInput!) {
+    createProject(data: $data) {
+      name
+      tempo
+      scale
+      _id
+      isSnapToGridActive
+      isAutoQuantizeActive
+      tonic
+      isGridActive
+      userId
+      shapesList {
+        data {
+          _id
+          points
+          isMuted
+          colorIndex
+          volume
+        }
+      }
+      userName
+      _ts
+    }
+  }
+`;
+
 function ProjectCreate(props) {
+  const [createProjectMutation] = useMutation(CREATE_PROJECT, {
+    // TODO: refetch NOT WORKING
+    refetchQueries: () => ['AllProjects'],
+    onError: err => {
+      message.error({
+        content: `Sorry, an error occurred: ${err}`,
+        key: 'LOADING_MESSAGE',
+      });
+    },
+    onCompleted: ({ createProject: { name } }) => {
+      message.success({ content: `Saved "${name}"`, key: 'LOADING_MESSAGE' });
+    },
+  });
+
+  const saveProject = project => {
+    message.loading({ content: 'Saving...', key: 'LOADING_MESSAGE' });
+    const projectSaveData = getProjectSaveData(project);
+    createProjectMutation({
+      variables: {
+        data: projectSaveData,
+      },
+    });
+  };
+
   const projectProps = {
     initState: {
       ...DEFAULT_PROJECT,
     },
-    saveProject: () => {
-      console.log('Save');
-    },
+    saveProject,
     showSaveButton: true,
     projectAuthor: '',
   };

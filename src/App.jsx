@@ -5,6 +5,10 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { CurrentUserContextProvider } from 'context/CurrentUserContext';
 import Routes from './Routes';
 import { getToken, getCurrentUser } from 'utils/user';
+import { message } from 'antd';
+
+/* Global style for message component */
+message.config({ top: 90 });
 
 const client = new ApolloClient({
   uri: '/.netlify/functions/graphql',

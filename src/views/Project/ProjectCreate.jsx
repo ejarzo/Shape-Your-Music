@@ -7,6 +7,7 @@ import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { message } from 'antd';
 import { getProjectSaveData } from 'utils/project';
+import { GET_ALL_PROJECTS } from 'views/DiscoverGQL/Container';
 
 const DEFAULT_PROJECT = {
   projectName: '',
@@ -44,8 +45,7 @@ const CREATE_PROJECT = gql`
 
 function ProjectCreate(props) {
   const [createProjectMutation] = useMutation(CREATE_PROJECT, {
-    // TODO: refetch NOT WORKING
-    refetchQueries: () => ['AllProjects'],
+    refetchQueries: () => [{ query: GET_ALL_PROJECTS }],
     onError: err => {
       message.error({
         content: `Sorry, an error occurred: ${err}`,

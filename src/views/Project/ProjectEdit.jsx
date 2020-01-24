@@ -1,12 +1,12 @@
 import React from 'react';
 import AudioManager from './AudioManager';
 import ProjectContainer from './Container';
-import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Loading from 'components/Loading';
 import { getProjectSaveData } from 'utils/project';
 import { message } from 'antd';
+import { useIdentityContext } from 'react-netlify-identity';
 
 const DEFAULT_PROJECT = {
   projectName: '',
@@ -71,6 +71,8 @@ const UPDATE_PROJECT = gql`
 
 function ProjectEdit(props) {
   const { projectId } = props;
+  const { user } = useIdentityContext();
+
   console.log('ProjectEdit render. projectId:', projectId);
 
   const { loading, data, error } = useQuery(GET_PROJECT, {
@@ -85,15 +87,17 @@ function ProjectEdit(props) {
       });
     },
     onCompleted: ({ updateProject: { name } }) => {
-      message.success({ content: `Saved "${name}"`, key: 'LOADING_MESSAGE' });
+      message.success({
+        content: `Saved "${name}"`,
+        key: 'LOADING_MESSAGE',
+      });
     },
   });
 
   if (loading) return <Loading />;
-  if (error) return <div>Error: {error.messsage}</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   const originalShapesList = data.findProjectByID.shapesList.data;
-
   const projectData = {
     ...data.findProjectByID,
     shapesList: originalShapesList.map(({ __typename, _id, ...rest }) => ({
@@ -101,8 +105,13 @@ function ProjectEdit(props) {
     })),
   };
 
+  const showSaveButton = user && projectData && projectData.userId === user.id;
+
   const saveProject = project => {
-    message.loading({ content: 'Saving...', key: 'LOADING_MESSAGE' });
+    message.loading({
+      content: 'Saving...',
+      key: 'LOADING_MESSAGE',
+    });
     const projectSaveData = getProjectSaveData(project);
     saveProjectMutation({
       variables: {
@@ -119,6 +128,7 @@ function ProjectEdit(props) {
       ...projectData,
     },
     saveProject,
+    showSaveButton,
     projectAuthor: projectData.userId && {
       name: projectData.userName,
       id: projectData.userId,
@@ -126,21 +136,9 @@ function ProjectEdit(props) {
   };
 
   return (
-    <CurrentUserContextConsumer>
-      {({ user }) => (
-        <AudioManager>
-          {audioProps => (
-            <ProjectContainer
-              showSaveButton={
-                user && projectData && projectData.userId === user.id
-              }
-              {...projectProps}
-              {...audioProps}
-            />
-          )}
-        </AudioManager>
-      )}
-    </CurrentUserContextConsumer>
+    <AudioManager>
+      {audioProps => <ProjectContainer {...projectProps} {...audioProps} />}
+    </AudioManager>
   );
 }
 

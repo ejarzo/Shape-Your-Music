@@ -90,7 +90,7 @@ function ProjectEdit(props) {
   });
 
   if (loading) return <Loading />;
-  if (error) return <div>Error: {error.messsage}</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   const originalShapesList = data.findProjectByID.shapesList.data;
 

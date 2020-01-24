@@ -9,6 +9,7 @@ import { message } from 'antd';
 import { getProjectSaveData } from 'utils/project';
 import { GET_ALL_PROJECTS } from 'views/DiscoverGQL/Container';
 import { CurrentUserContext } from 'context/CurrentUserContext/CurrentUserContextProvider';
+import { withRouter } from 'react-router';
 
 const DEFAULT_PROJECT = {
   projectName: '',
@@ -46,6 +47,7 @@ const CREATE_PROJECT = gql`
 
 function ProjectCreate(props) {
   const { user: currentUser, authenticate } = useContext(CurrentUserContext);
+  const { history } = props;
 
   const [createProjectMutation] = useMutation(CREATE_PROJECT, {
     refetchQueries: () => [{ query: GET_ALL_PROJECTS }],
@@ -55,11 +57,12 @@ function ProjectCreate(props) {
         key: 'LOADING_MESSAGE',
       });
     },
-    onCompleted: ({ createProject: { name } }) => {
+    onCompleted: ({ createProject: { _id, name } }) => {
       message.success({
         content: `Saved "${name}"`,
         key: 'LOADING_MESSAGE',
       });
+      history.push(`/project/${_id}`);
     },
   });
 
@@ -103,4 +106,4 @@ function ProjectCreate(props) {
   );
 }
 
-export default ProjectCreate;
+export default withRouter(ProjectCreate);

@@ -1,14 +1,13 @@
-import React, { useContext } from 'react';
-import AudioManager from './AudioManager';
-import ProjectContainer from './Container';
-
-import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
+import React from 'react';
+import { message } from 'antd';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
-import { message } from 'antd';
+import { useIdentityContext } from 'react-netlify-identity';
+
+import AudioManager from './AudioManager';
+import ProjectContainer from './Container';
 import { getProjectSaveData } from 'utils/project';
 import { GET_ALL_PROJECTS } from 'views/DiscoverGQL/Container';
-import { CurrentUserContext } from 'context/CurrentUserContext/CurrentUserContextProvider';
 
 const DEFAULT_PROJECT = {
   projectName: '',
@@ -45,7 +44,7 @@ const CREATE_PROJECT = gql`
 `;
 
 function ProjectCreate(props) {
-  const { user: currentUser, authenticate } = useContext(CurrentUserContext);
+  const { isLoggedIn } = useIdentityContext();
 
   const [createProjectMutation] = useMutation(CREATE_PROJECT, {
     refetchQueries: () => [{ query: GET_ALL_PROJECTS }],
@@ -64,23 +63,22 @@ function ProjectCreate(props) {
   });
 
   const saveProject = project => {
-    const executeMutation = () => {
-      message.loading({
-        content: 'Saving...',
-        key: 'LOADING_MESSAGE',
-      });
-      const projectSaveData = getProjectSaveData(project);
-      createProjectMutation({
-        variables: {
-          data: projectSaveData,
-        },
-      });
-    };
-    if (!currentUser) {
-      authenticate({ onSuccess: executeMutation });
-    } else {
-      executeMutation();
+    if (!isLoggedIn) {
+      message.info('Please log in to save your project');
+      return;
     }
+
+    message.loading({
+      content: 'Saving...',
+      key: 'LOADING_MESSAGE',
+    });
+
+    const projectSaveData = getProjectSaveData(project);
+    createProjectMutation({
+      variables: {
+        data: projectSaveData,
+      },
+    });
   };
 
   const projectProps = {
@@ -93,13 +91,9 @@ function ProjectCreate(props) {
   };
 
   return (
-    <CurrentUserContextConsumer>
-      {currentUser => (
-        <AudioManager>
-          {audioProps => <ProjectContainer {...projectProps} {...audioProps} />}
-        </AudioManager>
-      )}
-    </CurrentUserContextConsumer>
+    <AudioManager>
+      {audioProps => <ProjectContainer {...projectProps} {...audioProps} />}
+    </AudioManager>
   );
 }
 

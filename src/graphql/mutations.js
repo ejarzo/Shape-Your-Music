@@ -12,6 +12,7 @@ export const CREATE_PROJECT = gql`
       tonic
       isGridActive
       userId
+      selectedSynths
       shapesList {
         points
         isMuted
@@ -36,6 +37,7 @@ export const UPDATE_PROJECT = gql`
       tonic
       isGridActive
       userId
+      selectedSynths
       shapesList {
         points
         isMuted

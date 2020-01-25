@@ -10,6 +10,7 @@ export const updateProject = `
       tonic
       isGridActive
       userId
+      selectedSynths
       shapesList {
         points
         isMuted
@@ -34,6 +35,7 @@ export const createProject = `
       tonic
       isGridActive
       userId
+      selectedSynths
       shapesList {
         points
         isMuted

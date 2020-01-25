@@ -6,6 +6,15 @@ export const typeDefs = gql`
   scalar Long
   scalar Time
 
+  enum Synth {
+    KEYS
+    JARZO
+    DUO
+    BLIP
+    CELLO
+    SUB_BASS
+  }
+
   type Query {
     allProjects(_size: Int, _cursor: String): ProjectPage!
     findProjectByID(id: ID!): Project
@@ -27,9 +36,10 @@ export const typeDefs = gql`
     isAutoQuantizeActive: Boolean!
     tonic: String!
     isGridActive: Boolean!
-    userId: String!
     shapesList: [Shape!]
+    selectedSynths: [Synth!]
     userName: String!
+    userId: String!
   }
 
   input ProjectCreateInput {
@@ -41,6 +51,7 @@ export const typeDefs = gql`
     isSnapToGridActive: Boolean!
     isAutoQuantizeActive: Boolean!
     shapesList: [ShapeInput!]
+    selectedSynths: [Synth!]
   }
 
   input ProjectUpdateInput {
@@ -52,6 +63,7 @@ export const typeDefs = gql`
     isSnapToGridActive: Boolean
     isAutoQuantizeActive: Boolean
     shapesList: [ShapeInput!]
+    selectedSynths: [Synth!]
   }
 
   type ProjectPage {

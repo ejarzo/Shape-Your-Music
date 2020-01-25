@@ -14,6 +14,7 @@ export const getProjectSaveData = projectData => {
     isSnapToGridActive,
     isAutoQuantizeActive,
     shapesList,
+    selectedSynths,
   } = projectData;
 
   /* TODO: save selected instruments and knob values */
@@ -26,6 +27,7 @@ export const getProjectSaveData = projectData => {
     isSnapToGridActive,
     isAutoQuantizeActive,
     shapesList,
+    selectedSynths,
   };
 };
 

@@ -24,6 +24,7 @@ export const findProjectByID = `
       tonic
       isGridActive
       userId
+      selectedSynths
       shapesList {
         points
         isMuted

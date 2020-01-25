@@ -26,6 +26,7 @@ export const GET_PROJECT = gql`
       tonic
       isGridActive
       userId
+      selectedSynths
       shapesList {
         points
         isMuted

@@ -1,5 +1,5 @@
-import React from 'react';
-import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
+import React, { useContext } from 'react';
+import { CurrentUserContext } from 'context/CurrentUserContext/CurrentUserContextProvider';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import Loading from 'components/Loading';
@@ -21,6 +21,7 @@ function ProjectEdit(props) {
     location: { state },
   } = props;
   const { projectData } = state || {};
+  const { user: currentUser } = useContext(CurrentUserContext);
 
   console.log('ProjectEdit render. projectId:', projectId);
 
@@ -52,6 +53,7 @@ function ProjectEdit(props) {
   const saveProject = project => {
     showLoadingMessage('Saving...');
     const projectSaveData = getProjectSaveData(project);
+    console.log('project save data', projectSaveData);
     saveProjectMutation({
       variables: {
         id: projectId,
@@ -60,6 +62,8 @@ function ProjectEdit(props) {
     });
   };
 
+  const showSaveButton =
+    currentUser && newProjectData && newProjectData.userId === currentUser.id;
   const projectProps = {
     initState: {
       ...DEFAULT_PROJECT,
@@ -67,6 +71,7 @@ function ProjectEdit(props) {
       ...newProjectData,
     },
     saveProject,
+    showSaveButton,
     projectAuthor: newProjectData.userId && {
       name: newProjectData.userName,
       id: newProjectData.userId,
@@ -74,22 +79,9 @@ function ProjectEdit(props) {
   };
 
   return (
-    <CurrentUserContextConsumer>
-      {({ user }) => (
-        <AudioManager>
-          {audioProps => (
-            <ProjectContainer
-              showSaveButton={
-                user && newProjectData && newProjectData.userId === user.id
-              }
-              showSaveButton={true}
-              {...projectProps}
-              {...audioProps}
-            />
-          )}
-        </AudioManager>
-      )}
-    </CurrentUserContextConsumer>
+    <AudioManager>
+      {audioProps => <ProjectContainer {...projectProps} {...audioProps} />}
+    </AudioManager>
   );
 }
 

@@ -52,8 +52,9 @@ class Project extends Component {
       isGridActive = false,
       isSnapToGridActive = false,
       isAutoQuantizeActive = false,
+      selectedSynths,
     } = initState;
-
+    console.log('INIT STATE', initState);
     this.state = {
       projectName,
       isGridActive,
@@ -72,7 +73,7 @@ class Project extends Component {
       activeTool: TOOL_TYPES.DRAW,
       activeColorIndex: 0,
 
-      selectedSynths: defaultSynths,
+      selectedSynths: selectedSynths || defaultSynths,
       knobVals,
     };
 

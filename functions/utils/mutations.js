@@ -11,13 +11,10 @@ export const updateProject = `
       isGridActive
       userId
       shapesList {
-        data {
-          _id
-          points
-          isMuted
-          colorIndex
-          volume
-        }
+        points
+        isMuted
+        colorIndex
+        volume
       }
       userName
       _ts
@@ -38,13 +35,10 @@ export const createProject = `
       isGridActive
       userId
       shapesList {
-        data {
-          _id
-          points
-          isMuted
-          colorIndex
-          volume
-        }
+        points
+        isMuted
+        colorIndex
+        volume
       }
       userName
       _ts

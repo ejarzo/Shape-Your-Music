@@ -1,8 +1,4 @@
-const {
-  ApolloServer,
-  gql,
-  AuthenticationError,
-} = require('apollo-server-lambda');
+const { ApolloServer, AuthenticationError } = require('apollo-server-lambda');
 const { GraphQLClient } = require('graphql-request');
 const { typeDefs } = require('./utils/schema');
 const { allProjects, findProjectByID } = require('./utils/queries');
@@ -32,32 +28,21 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError('Not Logged In');
       }
-
-      const { sub: loggedInUserId, user_metadata } = user;
-      const userName = user_metadata.full_name;
-      const {
-        id,
-        data: { shapesList },
-      } = variables;
+      const { userId: loggedInUserId, userName } = user;
+      const { id, data } = variables;
 
       const {
-        findProjectByID: { userId, shapesList: originalShapesList },
+        findProjectByID: { userId },
       } = await client.request(findProjectByID, { id });
 
       if (loggedInUserId !== userId) {
         throw new AuthenticationError('Not authorized');
       }
 
-      const shapesListRelation = {
-        create: shapesList,
-        disconnect: originalShapesList.data.map(({ _id }) => _id),
-      };
-
       const response = await client.request(updateProject, {
         id,
         data: {
-          ...variables.data,
-          shapesList: shapesListRelation,
+          ...data,
           userId: loggedInUserId,
           userName,
         },
@@ -68,22 +53,13 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError('Not Logged In');
       }
-
-      const { sub: loggedInUserId, user_metadata } = user;
-      const userName = user_metadata.full_name;
-      const {
-        data: { shapesList },
-      } = variables;
-
-      const shapesListRelation = {
-        create: shapesList,
-      };
+      const { userId, userName } = user;
+      const { data } = variables;
 
       const response = await client.request(createProject, {
         data: {
-          ...variables.data,
-          shapesList: shapesListRelation,
-          userId: loggedInUserId,
+          ...data,
+          userId,
           userName,
         },
       });
@@ -97,7 +73,11 @@ const server = new ApolloServer({
   resolvers,
   context: async ({ context }) => {
     const { user } = context.clientContext || {};
-    return { user };
+    if (!user) return { user: null };
+
+    const { sub: userId, user_metadata } = user;
+    const userName = user_metadata.full_name;
+    return { user: { userId, userName } };
   },
 });
 

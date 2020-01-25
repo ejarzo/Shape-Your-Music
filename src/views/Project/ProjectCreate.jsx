@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { withRouter } from 'react-router';
 import { useMutation } from '@apollo/react-hooks';
 
-import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
 import { DEFAULT_PROJECT, getProjectSaveData } from 'utils/project';
 import { CurrentUserContext } from 'context/CurrentUserContext/CurrentUserContextProvider';
 
@@ -34,39 +33,32 @@ function ProjectCreate(props) {
   });
 
   const saveProject = project => {
-    const executeMutation = () => {
-      showLoadingMessage('Saving...');
-      const projectSaveData = getProjectSaveData(project);
-      createProjectMutation({
-        variables: {
-          data: projectSaveData,
-        },
-      });
-    };
+    /* TODO: Automatically save on user login success */
     if (!currentUser) {
-      authenticate({ onSuccess: executeMutation });
-    } else {
-      executeMutation();
+      authenticate();
+      return;
     }
+
+    showLoadingMessage('Saving...');
+    const projectSaveData = getProjectSaveData(project);
+    createProjectMutation({
+      variables: {
+        data: projectSaveData,
+      },
+    });
   };
 
   const projectProps = {
-    initState: {
-      ...DEFAULT_PROJECT,
-    },
+    initState: DEFAULT_PROJECT,
     saveProject,
     showSaveButton: true,
     projectAuthor: '',
   };
 
   return (
-    <CurrentUserContextConsumer>
-      {currentUser => (
-        <AudioManager>
-          {audioProps => <ProjectContainer {...projectProps} {...audioProps} />}
-        </AudioManager>
-      )}
-    </CurrentUserContextConsumer>
+    <AudioManager>
+      {audioProps => <ProjectContainer {...projectProps} {...audioProps} />}
+    </AudioManager>
   );
 }
 

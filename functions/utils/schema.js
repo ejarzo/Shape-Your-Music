@@ -1,42 +1,35 @@
 // APOLLO SERVER SCHEMA
-
 import gql from 'graphql-tag';
-export const typeDefs = gql`
-  directive @embedded on OBJECT
-  directive @collection(name: String!) on OBJECT
-  directive @index(name: String!) on FIELD_DEFINITION
-  directive @resolver(
-    name: String
-    paginated: Boolean! = false
-  ) on FIELD_DEFINITION
-  directive @relation(name: String) on FIELD_DEFINITION
-  directive @unique(index: String) on FIELD_DEFINITION
-  scalar Date
 
+export const typeDefs = gql`
+  scalar Date
   scalar Long
+  scalar Time
+
+  type Query {
+    allProjects(_size: Int, _cursor: String): ProjectPage!
+    findProjectByID(id: ID!): Project
+  }
 
   type Mutation {
     createProject(data: ProjectCreateInput!): Project!
     updateProject(id: ID!, data: ProjectUpdateInput!): Project
     # deleteProject(id: ID!): Project
-    createShape(data: ShapeInput!): Shape!
-    # updateShape(id: ID!, data: ShapeInput!): Shape
-    # deleteShape(id: ID!): Shape
   }
 
   type Project {
+    _id: ID!
+    _ts: Long!
     name: String!
     tempo: Int!
     scale: String!
-    _id: ID!
     isSnapToGridActive: Boolean!
     isAutoQuantizeActive: Boolean!
     tonic: String!
     isGridActive: Boolean!
     userId: String!
-    shapesList(_size: Int, _cursor: String): ShapePage!
+    shapesList: [Shape!]
     userName: String!
-    _ts: Long!
   }
 
   input ProjectCreateInput {
@@ -47,7 +40,7 @@ export const typeDefs = gql`
     isGridActive: Boolean!
     isSnapToGridActive: Boolean!
     isAutoQuantizeActive: Boolean!
-    shapesList: [ShapeInput]
+    shapesList: [ShapeInput!]
   }
 
   input ProjectUpdateInput {
@@ -58,7 +51,7 @@ export const typeDefs = gql`
     isGridActive: Boolean
     isSnapToGridActive: Boolean
     isAutoQuantizeActive: Boolean
-    shapesList: [ShapeInput]
+    shapesList: [ShapeInput!]
   }
 
   type ProjectPage {
@@ -67,26 +60,11 @@ export const typeDefs = gql`
     before: String
   }
 
-  input ProjectShapesListRelation {
-    create: [ShapeInput]
-    connect: [ID]
-    disconnect: [ID]
-  }
-
-  type Query {
-    findProjectByID(id: ID!): Project
-    findShapeByID(id: ID!): Shape
-    allProjects(_size: Int, _cursor: String): ProjectPage!
-  }
-
   type Shape {
-    project: Project
-    _id: ID!
-    isMuted: Boolean
     points: [Float!]
     colorIndex: Int!
     volume: Int!
-    _ts: Long!
+    isMuted: Boolean
   }
 
   input ShapeInput {
@@ -94,20 +72,5 @@ export const typeDefs = gql`
     colorIndex: Int!
     volume: Int!
     isMuted: Boolean
-    project: ShapeProjectRelation
   }
-
-  type ShapePage {
-    data: [Shape]!
-    after: String
-    before: String
-  }
-
-  input ShapeProjectRelation {
-    create: ProjectCreateInput
-    connect: ID
-    disconnect: Boolean
-  }
-
-  scalar Time
 `;

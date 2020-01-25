@@ -21,6 +21,7 @@ function ProjectEdit(props) {
     location: { state },
   } = props;
   const { projectData } = state || {};
+
   console.log('ProjectEdit render. projectId:', projectId);
 
   const { loading, data, error } = useQuery(GET_PROJECT, {
@@ -39,7 +40,7 @@ function ProjectEdit(props) {
   if (error) return <div>Error: {error.message}</div>;
 
   const project = projectData || data.findProjectByID;
-  const originalShapesList = project.shapesList.data;
+  const originalShapesList = project.shapesList;
 
   const newProjectData = {
     ...project,
@@ -81,6 +82,7 @@ function ProjectEdit(props) {
               showSaveButton={
                 user && newProjectData && newProjectData.userId === user.id
               }
+              showSaveButton={true}
               {...projectProps}
               {...audioProps}
             />

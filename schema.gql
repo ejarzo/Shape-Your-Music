@@ -1,9 +1,8 @@
-type Shape {
+type Shape @embedded {
   points: [Float!]
   colorIndex: Int!
   volume: Int!
   isMuted: Boolean
-  project: Project @relation
 }
 
 type Project {
@@ -14,7 +13,7 @@ type Project {
   isGridActive: Boolean!
   isSnapToGridActive: Boolean!
   isAutoQuantizeActive: Boolean!
-  shapesList: [Shape!] @relation
+  shapesList: [Shape!]
   userId: String!
   userName: String!
 }

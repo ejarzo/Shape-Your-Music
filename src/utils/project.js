@@ -1,3 +1,10 @@
+export const DEFAULT_PROJECT = {
+  projectName: '',
+  tempo: 50,
+  tonic: 'a',
+  scale: 'major',
+};
+
 export const getProjectSaveData = projectData => {
   const {
     name,

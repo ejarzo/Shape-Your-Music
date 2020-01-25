@@ -1,108 +1,55 @@
 import React from 'react';
+import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+
+import Loading from 'components/Loading';
 import AudioManager from './AudioManager';
 import ProjectContainer from './Container';
-import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
-import { gql } from 'apollo-boost';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import Loading from 'components/Loading';
-import { getProjectSaveData } from 'utils/project';
-import { message } from 'antd';
-
-const DEFAULT_PROJECT = {
-  projectName: '',
-  tempo: 50,
-  tonic: 'a',
-  scale: 'major',
-};
-
-const GET_PROJECT = gql`
-  query FindProjectByID($id: ID!) {
-    findProjectByID(id: $id) {
-      name
-      tempo
-      scale
-      _id
-      isSnapToGridActive
-      isAutoQuantizeActive
-      tonic
-      isGridActive
-      userId
-      shapesList {
-        data {
-          _id
-          points
-          isMuted
-          colorIndex
-          volume
-        }
-      }
-      userName
-      _ts
-    }
-  }
-`;
-
-const UPDATE_PROJECT = gql`
-  mutation UpdateProject($id: ID!, $data: ProjectUpdateInput!) {
-    updateProject(id: $id, data: $data) {
-      name
-      tempo
-      scale
-      _id
-      isSnapToGridActive
-      isAutoQuantizeActive
-      tonic
-      isGridActive
-      userId
-      shapesList {
-        data {
-          _id
-          points
-          isMuted
-          colorIndex
-          volume
-        }
-      }
-      userName
-      _ts
-    }
-  }
-`;
+import { DEFAULT_PROJECT, getProjectSaveData } from 'utils/project';
+import {
+  showLoadingMessage,
+  showErrorMessage,
+  showSuccessMessage,
+} from 'utils/message';
+import { GET_PROJECT } from 'graphql/queries';
+import { UPDATE_PROJECT } from 'graphql/mutations';
+import { withRouter } from 'react-router';
 
 function ProjectEdit(props) {
-  const { projectId } = props;
+  const {
+    projectId,
+    location: { state },
+  } = props;
+  const { projectData } = state || {};
   console.log('ProjectEdit render. projectId:', projectId);
 
   const { loading, data, error } = useQuery(GET_PROJECT, {
+    skip: !!projectData,
     variables: { id: projectId },
   });
 
   const [saveProjectMutation] = useMutation(UPDATE_PROJECT, {
-    onError: err => {
-      message.error({
-        content: `Sorry, an error occurred: ${err}`,
-        key: 'LOADING_MESSAGE',
-      });
-    },
+    onError: showErrorMessage,
     onCompleted: ({ updateProject: { name } }) => {
-      message.success({ content: `Saved "${name}"`, key: 'LOADING_MESSAGE' });
+      showSuccessMessage(`Saved "${name}"`);
     },
   });
 
   if (loading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
-  const originalShapesList = data.findProjectByID.shapesList.data;
+  const project = projectData || data.findProjectByID;
+  const originalShapesList = project.shapesList.data;
 
-  const projectData = {
-    ...data.findProjectByID,
+  const newProjectData = {
+    ...project,
     shapesList: originalShapesList.map(({ __typename, _id, ...rest }) => ({
       ...rest,
     })),
   };
 
   const saveProject = project => {
-    message.loading({ content: 'Saving...', key: 'LOADING_MESSAGE' });
+    showLoadingMessage('Saving...');
     const projectSaveData = getProjectSaveData(project);
     saveProjectMutation({
       variables: {
@@ -115,13 +62,13 @@ function ProjectEdit(props) {
   const projectProps = {
     initState: {
       ...DEFAULT_PROJECT,
-      projectName: projectData && projectData.name,
-      ...projectData,
+      projectName: newProjectData && newProjectData.name,
+      ...newProjectData,
     },
     saveProject,
-    projectAuthor: projectData.userId && {
-      name: projectData.userName,
-      id: projectData.userId,
+    projectAuthor: newProjectData.userId && {
+      name: newProjectData.userName,
+      id: newProjectData.userId,
     },
   };
 
@@ -132,7 +79,7 @@ function ProjectEdit(props) {
           {audioProps => (
             <ProjectContainer
               showSaveButton={
-                user && projectData && projectData.userId === user.id
+                user && newProjectData && newProjectData.userId === user.id
               }
               {...projectProps}
               {...audioProps}
@@ -144,4 +91,4 @@ function ProjectEdit(props) {
   );
 }
 
-export default ProjectEdit;
+export default withRouter(ProjectEdit);

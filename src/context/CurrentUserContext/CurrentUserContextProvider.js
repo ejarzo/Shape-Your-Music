@@ -18,7 +18,7 @@ function CurrentUserContextProvider({ children }) {
     });
   });
 
-  const authenticate = ({ showSignup = false, onSuccess }) => {
+  const authenticate = ({ showSignup = false, onSuccess } = {}) => {
     netlifyIdentity.open(showSignup && 'signup');
   };
 

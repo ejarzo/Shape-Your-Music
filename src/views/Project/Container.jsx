@@ -72,8 +72,8 @@ class Project extends Component {
       scaleObj: Teoria.note(props.initState.tonic).scale(props.initState.scale),
       activeTool: TOOL_TYPES.DRAW,
       activeColorIndex: 0,
-
-      selectedSynths: selectedSynths || defaultSynths,
+      selectedSynths:
+        selectedSynths.length > 0 ? selectedSynths : defaultSynths,
       knobVals,
     };
 

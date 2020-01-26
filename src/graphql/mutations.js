@@ -1,51 +1,20 @@
 import { gql } from 'apollo-boost';
+import { ProjectFragment } from './queries';
 
 export const CREATE_PROJECT = gql`
   mutation CreateProject($data: ProjectCreateInput!) {
     createProject(data: $data) {
-      name
-      tempo
-      scale
-      _id
-      isSnapToGridActive
-      isAutoQuantizeActive
-      tonic
-      isGridActive
-      userId
-      selectedSynths
-      shapesList {
-        points
-        isMuted
-        colorIndex
-        volume
-      }
-      userName
-      _ts
+      ...ProjectFragment
     }
   }
+  ${ProjectFragment}
 `;
 
 export const UPDATE_PROJECT = gql`
   mutation UpdateProject($id: ID!, $data: ProjectUpdateInput!) {
     updateProject(id: $id, data: $data) {
-      name
-      tempo
-      scale
-      _id
-      isSnapToGridActive
-      isAutoQuantizeActive
-      tonic
-      isGridActive
-      userId
-      selectedSynths
-      shapesList {
-        points
-        isMuted
-        colorIndex
-        volume
-      }
-      userName
-      _ts
+      ...ProjectFragment
     }
   }
+  ${ProjectFragment}
 `;

@@ -73,7 +73,9 @@ class Project extends Component {
       activeTool: TOOL_TYPES.DRAW,
       activeColorIndex: 0,
       selectedSynths:
-        selectedSynths.length > 0 ? selectedSynths : defaultSynths,
+        selectedSynths && selectedSynths.length > 0
+          ? selectedSynths
+          : defaultSynths,
       knobVals,
     };
 

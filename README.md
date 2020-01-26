@@ -146,6 +146,7 @@ For more, see the [Netlify example repo](https://github.com/netlify/netlify-faun
 Netlify is used to handle user accounts through their [Identity](https://www.netlify.com/docs/identity/) feature. To fully integrate with the backend and be able to save your projects locally, you will need a Netlify account. Once you have an account, use their [CLI](https://www.netlify.com/docs/cli/) to login and initialize a project for this repo. Try signing up through the UI and you should get a confirmation email that redirects to your netlify project.
 
 
-### To Test
+### Testing
 
-Run `yarn test`.
+Tests are in [this repo](https://github.com/ejarzo/sym-tests). Because there is a lot going on with canvas and Web Audio, I found that E2E tests with [puppeteer](https://pptr.dev/) were the easiest way to confirm things are working.
+

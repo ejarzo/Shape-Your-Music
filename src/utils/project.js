@@ -1,8 +1,11 @@
+import { DEFAULT_SYNTHS } from './synths';
+
 export const DEFAULT_PROJECT = {
   projectName: '',
   tempo: 50,
   tonic: 'a',
   scale: 'major',
+  selectedSynths: DEFAULT_SYNTHS,
 };
 
 export const getProjectSaveData = projectData => {

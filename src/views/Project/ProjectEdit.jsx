@@ -14,10 +14,12 @@ import {
 import { GET_PROJECT } from 'graphql/queries';
 import { UPDATE_PROJECT } from 'graphql/mutations';
 import { withRouter } from 'react-router';
+import { DEFAULT_SYNTHS } from 'utils/synths';
 
 function ProjectEdit(props) {
   const {
     projectId,
+    history,
     location: { state },
   } = props;
   const { projectData } = state || {};
@@ -32,8 +34,13 @@ function ProjectEdit(props) {
 
   const [saveProjectMutation] = useMutation(UPDATE_PROJECT, {
     onError: showErrorMessage,
-    onCompleted: ({ updateProject: { name } }) => {
+    onCompleted: ({ updateProject }) => {
+      const { name } = updateProject;
       showSuccessMessage(`Saved "${name}"`);
+      // Update local state that may contain old data
+      history.push({
+        state: { projectData: updateProject },
+      });
     },
   });
 
@@ -41,11 +48,17 @@ function ProjectEdit(props) {
   if (error) return <div>Error: {error.message}</div>;
 
   const project = projectData || data.findProjectByID;
-  const originalShapesList = project.shapesList;
+  const { shapesList, selectedSynths } = project;
+
+  const newSelectedSynths =
+    selectedSynths && selectedSynths.length > 0
+      ? selectedSynths
+      : DEFAULT_SYNTHS;
 
   const newProjectData = {
     ...project,
-    shapesList: originalShapesList.map(({ __typename, _id, ...rest }) => ({
+    selectedSynths: newSelectedSynths,
+    shapesList: shapesList.map(({ __typename, _id, ...rest }) => ({
       ...rest,
     })),
   };

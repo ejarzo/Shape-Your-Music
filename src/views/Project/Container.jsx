@@ -13,7 +13,7 @@ import { themeColors } from 'utils/color';
 
 import { keyMap } from './keyMap';
 import ProjectContextProvider from './ProjectContextProvider';
-import { getDefaultSynths, getDefaultParamValues } from 'utils/synths';
+import { getDefaultParamValues } from 'utils/synths';
 
 /* ========================================================================== */
 
@@ -37,15 +37,8 @@ class Project extends Component {
   constructor(props) {
     super(props);
 
-    const defaultSynths = getDefaultSynths();
-    const knobVals = [];
-
-    defaultSynths.forEach(synthType => {
-      const instrumentDefaults = getDefaultParamValues(synthType);
-      knobVals.push(instrumentDefaults);
-    });
-
     const { initState } = props;
+    console.log('INIT STATE', initState);
 
     const {
       projectName = 'New project',
@@ -54,7 +47,13 @@ class Project extends Component {
       isAutoQuantizeActive = false,
       selectedSynths,
     } = initState;
-    console.log('INIT STATE', initState);
+
+    const knobVals = [];
+    selectedSynths.forEach(synthType => {
+      const instrumentDefaults = getDefaultParamValues(synthType);
+      knobVals.push(instrumentDefaults);
+    });
+
     this.state = {
       projectName,
       isGridActive,
@@ -72,10 +71,7 @@ class Project extends Component {
       scaleObj: Teoria.note(props.initState.tonic).scale(props.initState.scale),
       activeTool: TOOL_TYPES.DRAW,
       activeColorIndex: 0,
-      selectedSynths:
-        selectedSynths && selectedSynths.length > 0
-          ? selectedSynths
-          : defaultSynths,
+      selectedSynths,
       knobVals,
     };
 

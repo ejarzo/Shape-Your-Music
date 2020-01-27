@@ -25,7 +25,6 @@ function ProjectCreate(props) {
     onCompleted: ({ createProject }) => {
       const { _id, name } = createProject;
       showSuccessMessage(`Saved "${name}"`);
-      /* TODO: fix bug where reloading the page loads from older project state */
       history.push({
         pathname: `/project/${_id}`,
         state: { projectData: createProject },

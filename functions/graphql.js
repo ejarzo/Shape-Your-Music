@@ -62,12 +62,13 @@ const resolvers = {
       }
       const { userId, userName } = user;
       const { data } = variables;
-
+      const dateCreated = Date.now() * 1000;
       const response = await client.request(createProject, {
         data: {
           ...data,
           userId,
           userName,
+          dateCreated,
         },
       });
       return response.createProject;

@@ -2,15 +2,16 @@ import { gql } from 'apollo-boost';
 
 export const ProjectFragment = gql`
   fragment ProjectFragment on Project {
+    _id
+    _ts
     name
     tempo
     scale
-    _id
+    tonic
     isSnapToGridActive
     isAutoQuantizeActive
-    tonic
     isGridActive
-    userId
+    dateCreated
     selectedSynths
     shapesList {
       points
@@ -18,8 +19,8 @@ export const ProjectFragment = gql`
       colorIndex
       volume
     }
+    userId
     userName
-    _ts
   }
 `;
 
@@ -29,6 +30,7 @@ export const GET_ALL_PROJECTS = gql`
       data {
         _id
         _ts
+        dateCreated
         name
         userId
         userName

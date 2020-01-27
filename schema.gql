@@ -26,6 +26,7 @@ type Project {
   userId: String!
   userName: String!
   selectedSynths: [Synth!]
+  dateCreated: Long
 }
 
 type Query {

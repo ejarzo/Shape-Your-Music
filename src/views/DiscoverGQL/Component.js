@@ -10,7 +10,7 @@ function DiscoverGQLComponent(props) {
       <h1>All Projects</h1>
       <div className={styles.projectsGrid}>
         {allProjects &&
-          allProjects.map(({ _id, name, userName, _ts }) => (
+          allProjects.map(({ _id, name, userName, dateCreated }) => (
             <div>
               <Link to={`/project/${_id}`}>
                 <div className={styles.projectCard}>
@@ -20,7 +20,9 @@ function DiscoverGQLComponent(props) {
                   <div>
                     by <em>{userName}</em>
                   </div>
-                  <div className="text-gray">{formatTimestamp(_ts)}</div>
+                  <div className="text-gray">
+                    {dateCreated && formatTimestamp(dateCreated)}
+                  </div>
                 </div>
               </Link>
             </div>

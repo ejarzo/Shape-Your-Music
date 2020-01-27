@@ -1,14 +1,15 @@
 export const PROJECT_FRAGMENT = `
   fragment ProjectFragment on Project {
+    _id
+    _ts
     name
     tempo
     scale
-    _id
+    tonic
     isSnapToGridActive
     isAutoQuantizeActive
-    tonic
     isGridActive
-    userId
+    dateCreated
     selectedSynths
     shapesList {
       points
@@ -17,7 +18,7 @@ export const PROJECT_FRAGMENT = `
       volume
     }
     userName
-    _ts
+    userId
   }
 `;
 
@@ -27,6 +28,7 @@ export const allProjects = `
       data {
         _id
         _ts
+        dateCreated
         name
         userId
         userName

@@ -40,6 +40,7 @@ export const typeDefs = gql`
     selectedSynths: [Synth!]
     userName: String!
     userId: String!
+    dateCreated: Long
   }
 
   input ProjectCreateInput {
@@ -52,6 +53,7 @@ export const typeDefs = gql`
     isAutoQuantizeActive: Boolean!
     shapesList: [ShapeInput!]
     selectedSynths: [Synth!]
+    dateCreated: Long
   }
 
   input ProjectUpdateInput {
@@ -64,6 +66,7 @@ export const typeDefs = gql`
     isAutoQuantizeActive: Boolean
     shapesList: [ShapeInput!]
     selectedSynths: [Synth!]
+    dateCreated: Long
   }
 
   type ProjectPage {

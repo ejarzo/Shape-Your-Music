@@ -1,4 +1,8 @@
-const { ApolloServer, AuthenticationError } = require('apollo-server-lambda');
+const {
+  ApolloServer,
+  AuthenticationError,
+  ApolloError,
+} = require('apollo-server-lambda');
 const { GraphQLClient } = require('graphql-request');
 const { typeDefs } = require('./utils/schema');
 const { allProjects, findProjectByID } = require('./utils/queries');
@@ -20,6 +24,9 @@ const resolvers = {
     },
     findProjectByID: async (_, variables) => {
       const response = await client.request(findProjectByID, variables);
+      if (!response.findProjectByID) {
+        throw new ApolloError('Project not found');
+      }
       return response.findProjectByID;
     },
   },

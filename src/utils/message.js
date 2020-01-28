@@ -21,6 +21,6 @@ export const showErrorMessage = error => {
 export const showSuccessMessage = content => {
   message.success({
     content,
-    key: 'LOADING_MESSAGE',
+    key: MESSAGE_KEY,
   });
 };

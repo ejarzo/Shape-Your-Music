@@ -113,12 +113,21 @@ class ColorController extends Component {
     this.fxBus.receive(this.props.receiveChannel);
 
     fxConstructors.forEach(fxObj => {
-      const newEffect = new fxObj.type(fxObj.params);
+      const newEffect = fxObj.start
+        ? new fxObj.type(fxObj.params).start()
+        : new fxObj.type(fxObj.params);
       this.fxList.push(newEffect);
     });
 
     // TODO
-    if (this.fxList.length === 2) {
+    if (this.fxList.length === 3) {
+      this.fxBus.chain(
+        this.fxList[0],
+        this.fxList[1],
+        this.fxList[2],
+        this.output
+      );
+    } else if (this.fxList.length === 2) {
       this.fxBus.chain(this.fxList[0], this.fxList[1], this.output);
     } else if (this.fxList.length === 1) {
       this.fxBus.chain(this.fxList[0], this.output);

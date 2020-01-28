@@ -13,6 +13,7 @@ export const typeDefs = gql`
     BLIP
     CELLO
     SUB_BASS
+    JARZO2
   }
 
   type Query {

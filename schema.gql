@@ -5,6 +5,7 @@ enum Synth {
   BLIP
   CELLO
   SUB_BASS
+  JARZO2
 }
 
 type Shape @embedded {

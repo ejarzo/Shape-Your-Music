@@ -20,7 +20,7 @@ const resolvers = {
   Query: {
     allProjects: async () => {
       const response = await client.request(allProjects);
-      return response.allProjects;
+      return { data: response.allProjects.data.reverse() };
     },
     findProjectByID: async (_, variables) => {
       const response = await client.request(findProjectByID, variables);

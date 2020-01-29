@@ -3,7 +3,7 @@ import { setEffectWet } from './utils';
 import { convertValToRange } from 'utils/math';
 
 export default {
-  name: 'Jarzo2',
+  name: 'Wavy',
   baseSynth: Tone.DuoSynth,
   params: {
     vibratoAmount: 0,
@@ -101,7 +101,7 @@ export default {
     },
     {
       name: 'Pulse Rate',
-      default: 90,
+      default: 50,
       target: 'effect',
       func: (colorController, val) => {
         colorController.setEffectAmount(

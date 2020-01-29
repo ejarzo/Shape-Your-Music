@@ -3,7 +3,7 @@ import { convertValToRange } from 'utils/math';
 import { setEffectWet } from './utils';
 
 export default {
-  name: 'jarz01',
+  name: 'Buzzz',
   baseSynth: Tone.DuoSynth,
   params: {
     vibratoAmount: 0.2,

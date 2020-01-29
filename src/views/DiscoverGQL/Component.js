@@ -13,7 +13,7 @@ function DiscoverGQLComponent(props) {
           allProjects.map(({ _id, name, userName, dateCreated }) => (
             <div>
               <Link to={`/project/${_id}`}>
-                <div className={styles.projectCard}>
+                <div className={styles.ProjectCard}>
                   <div>
                     <strong>{name}</strong>
                   </div>

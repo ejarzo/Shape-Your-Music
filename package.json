@@ -13,9 +13,13 @@
   ],
   "private": false,
   "dependencies": {
+    "@apollo/react-hooks": "^3.1.3",
     "@craco/craco": "^5.4.0",
     "@sentry/browser": "^5.0.8",
     "antd": "^3.23.1",
+    "apollo-boost": "^0.4.7",
+    "apollo-server-lambda": "^2.9.16",
+    "bufferutil": "^4.0.1",
     "chalk": "^2.4.2",
     "classnames": "^2.2.5",
     "color": "^2.0.1",
@@ -23,6 +27,8 @@
     "date-fns": "^2.0.1",
     "faunadb": "^2.6.1",
     "file-saver": "2.0.0",
+    "graphql": "^14.5.8",
+    "graphql-request": "^1.8.2",
     "http-proxy-middleware": "^0.20.0",
     "inline-worker": "1.1.0",
     "jszip": "3.1.5",
@@ -50,7 +56,8 @@
     "swr": "^0.1.5",
     "teoria": "^2.5.0",
     "tone": "^13.8.12",
-    "unmute": "^0.1.3"
+    "unmute": "^0.1.3",
+    "utf-8-validate": "^5.0.2"
   },
   "scripts": {
     "checkForFaunaKey": "node ./scripts/check-for-fauna-key.js",
@@ -58,7 +65,9 @@
     "create-indexes": "node ./scripts/create-fauna-indexes.js",
     "start": "npm-run-all --parallel start:app start:server",
     "start:app": "craco start",
-    "start:server": "yarn checkForFaunaKey && yarn bootstrap && yarn create-indexes && netlify-lambda serve functions -c ./webpack.config.js",
+    "upload-schema": "yarn checkForFaunaKey && curl -u $FAUNADB_SERVER_SECRET: https://graphql.fauna.com/import --data-binary \"@schema.gql\"",
+    "start:server": "yarn upload-schema && netlify-lambda serve functions -c ./webpack.config.js",
+    "start:devserver": "NODE_ENV=development yarn start:server",
     "build": "npm-run-all --parallel build:**",
     "build:app": "craco build",
     "build:functions": "netlify-lambda build functions -c ./webpack.config.js",

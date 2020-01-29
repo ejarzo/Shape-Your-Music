@@ -109,22 +109,18 @@ class ShapeCanvas extends Component {
   }
 
   getShapesList() {
+    // TODO: clean this up
     const shapesList = this.state.shapesList.slice();
+    const { deletedShapeIndeces } = this.state;
 
     /* Get absolute points for each shape */
     this.shapeRefs.forEach((shape, i) => {
-      // TODO: error happening here sometimes?
-      // if (!shape || !shapesList[i]) {
-      //   console.error('something went wrong');
-      //   console.log('shape', shape);
-      //   console.log('shapesList[i]', shapesList[i]);
-      //   return;
-      // }
+      if (deletedShapeIndeces[i]) return;
       const points = shape.getAbsolutePoints();
       shapesList[i].points = points;
     });
 
-    return shapesList;
+    return shapesList.filter((_, i) => !deletedShapeIndeces[i]);
   }
 
   getShapeRef() {

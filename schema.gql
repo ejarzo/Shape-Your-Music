@@ -1,0 +1,35 @@
+enum Synth {
+  KEYS
+  JARZO
+  DUO
+  BLIP
+  CELLO
+  SUB_BASS
+}
+
+type Shape @embedded {
+  points: [Float!]
+  colorIndex: Int!
+  volume: Int!
+  isMuted: Boolean
+}
+
+type Project {
+  name: String!
+  tempo: Int!
+  tonic: String!
+  scale: String!
+  isGridActive: Boolean!
+  isSnapToGridActive: Boolean!
+  isAutoQuantizeActive: Boolean!
+  shapesList: [Shape!]
+  userId: String!
+  userName: String!
+  selectedSynths: [Synth!]
+  dateCreated: Long
+}
+
+type Query {
+  allProjects: [Project!]
+  # ProjectsByCompletedFlag(completed: Boolean!): [Project!]
+}

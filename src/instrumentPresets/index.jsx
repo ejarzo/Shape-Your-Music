@@ -12,7 +12,7 @@ export const SYNTH_TYPES = {
   DUO: 'DUO',
   BLIP: 'BLIP',
   CELLO: 'CELLO',
-  SUB_BASS: 'subBass',
+  SUB_BASS: 'SUB_BASS',
 };
 
 export const SYNTH_PRESETS = {

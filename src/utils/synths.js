@@ -1,6 +1,6 @@
 import { SYNTH_TYPES, SYNTH_PRESETS } from 'instrumentPresets';
 
-export const getDefaultSynths = () => [
+export const DEFAULT_SYNTHS = [
   SYNTH_TYPES.KEYS,
   SYNTH_TYPES.JARZO,
   SYNTH_TYPES.CELLO,

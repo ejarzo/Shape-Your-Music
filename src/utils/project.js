@@ -1,3 +1,13 @@
+import { DEFAULT_SYNTHS } from './synths';
+
+export const DEFAULT_PROJECT = {
+  projectName: '',
+  tempo: 50,
+  tonic: 'a',
+  scale: 'major',
+  selectedSynths: DEFAULT_SYNTHS,
+};
+
 export const getProjectSaveData = projectData => {
   const {
     name,
@@ -7,6 +17,7 @@ export const getProjectSaveData = projectData => {
     isSnapToGridActive,
     isAutoQuantizeActive,
     shapesList,
+    selectedSynths,
   } = projectData;
 
   /* TODO: save selected instruments and knob values */
@@ -19,6 +30,7 @@ export const getProjectSaveData = projectData => {
     isSnapToGridActive,
     isAutoQuantizeActive,
     shapesList,
+    selectedSynths,
   };
 };
 

@@ -40,7 +40,7 @@ function SaveButton(props) {
       onConfirm={handleSubmit}
       icon={<Icon type="question-circle-o" />}
     >
-      <Icon type="save" />
+      <Icon id="SaveButton" type="save" />
     </Popconfirm>
   );
 }

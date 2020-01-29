@@ -21,9 +21,6 @@ function HeaderMenu(props) {
             <HeaderLink exact to="/discover">
               Discover
             </HeaderLink>
-            <HeaderLink exact to="/discovergql">
-              Discover GQL
-            </HeaderLink>
             <a
               href="https://github.com/ejarzo/Shape-Your-Music/"
               target="blank"

@@ -22,8 +22,8 @@ function Routes() {
               },
             }) => <ProjectEdit projectId={projectId} />}
           />
-          <Route path="/discover" component={Discover} />
-          <Route path="/discovergql" component={DiscoverGQL} />
+          <Route path="/discover" component={DiscoverGQL} />
+          <Route path="/discover-legacy" component={Discover} />
           <Route component={NotFound} />
         </Switch>
       </PageWrapper>

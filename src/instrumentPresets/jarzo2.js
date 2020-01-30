@@ -1,6 +1,6 @@
 import Tone from 'tone';
 import { setEffectWet } from './utils';
-import { convertValToRange } from 'utils/math';
+import { convertValToRange, convertToLogScale } from 'utils/math';
 
 export default {
   name: 'Wavy',
@@ -116,11 +116,7 @@ export default {
       default: 50,
       target: 'effect',
       func: (colorController, val) => {
-        colorController.setEffectAmount(
-          2,
-          convertValToRange(val, 0, 100, 20, 10000),
-          'frequency'
-        );
+        colorController.setEffectAmount(2, convertToLogScale(val), 'frequency');
       },
     },
   ],

@@ -1,12 +1,12 @@
-const {
+import {
   ApolloServer,
   AuthenticationError,
   ApolloError,
-} = require('apollo-server-lambda');
-const { GraphQLClient } = require('graphql-request');
-const { typeDefs } = require('./utils/schema');
-const { allProjects, findProjectByID } = require('./utils/queries');
-const { updateProject, createProject } = require('./utils/mutations');
+} from 'apollo-server-lambda';
+import { GraphQLClient } from 'graphql-request';
+import { typeDefs } from './utils/schema';
+import { allProjects, findProjectByID } from './utils/queries';
+import { updateProject, createProject } from './utils/mutations';
 
 const FAUNADB_API = 'https://graphql.fauna.com/graphql';
 

@@ -5,6 +5,7 @@ import jarzo from './jarzo';
 import blip from './blip';
 import cello from './cello';
 import subBass from './subBass';
+import jarzo2 from './jarzo2';
 
 export const SYNTH_TYPES = {
   KEYS: 'KEYS',
@@ -13,6 +14,7 @@ export const SYNTH_TYPES = {
   BLIP: 'BLIP',
   CELLO: 'CELLO',
   SUB_BASS: 'SUB_BASS',
+  JARZO2: 'JARZO2',
 };
 
 export const SYNTH_PRESETS = {
@@ -22,6 +24,7 @@ export const SYNTH_PRESETS = {
   [SYNTH_TYPES.BLIP]: blip,
   [SYNTH_TYPES.CELLO]: cello,
   [SYNTH_TYPES.SUB_BASS]: subBass,
+  [SYNTH_TYPES.JARZO2]: jarzo2,
 };
 
 export const ALL_SYNTHS = map(SYNTH_TYPES, key => ({

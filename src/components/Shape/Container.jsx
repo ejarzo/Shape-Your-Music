@@ -263,6 +263,10 @@ class ShapeContainer extends PureComponent {
 
     part.loop = true;
     part.playbackRate = this.props.tempo / 50;
+    const { isMuted} = this.props;
+    if (isMuted) {
+      part.mute = true;
+    }
 
     return part;
   }

@@ -13,6 +13,7 @@ type Shape @embedded {
   colorIndex: Int!
   volume: Int!
   isMuted: Boolean
+  quantizeFactor: Float
 }
 
 type Project {

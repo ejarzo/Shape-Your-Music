@@ -81,6 +81,7 @@ export const typeDefs = gql`
     colorIndex: Int!
     volume: Int!
     isMuted: Boolean
+    quantizeFactor: Float
   }
 
   input ShapeInput {
@@ -88,5 +89,6 @@ export const typeDefs = gql`
     colorIndex: Int!
     volume: Int!
     isMuted: Boolean
+    quantizeFactor: Float
   }
 `;

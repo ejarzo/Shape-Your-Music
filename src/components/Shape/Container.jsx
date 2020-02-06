@@ -42,10 +42,11 @@ const propTypes = {
 class ShapeContainer extends PureComponent {
   constructor(props) {
     super(props);
-    const { initialPoints } = props;
+    const { initialPoints, initialQuantizeFactor } = props;
+
     this.state = {
       points: initialPoints,
-      quantizeFactor: 1,
+      quantizeFactor: initialQuantizeFactor || 1,
       averagePoint: { x: 0, y: 0 },
       firstNoteIndex: 1,
       noteIndexModifier: 0,
@@ -263,7 +264,7 @@ class ShapeContainer extends PureComponent {
 
     part.loop = true;
     part.playbackRate = this.props.tempo / 50;
-    const { isMuted} = this.props;
+    const { isMuted } = this.props;
     if (isMuted) {
       part.mute = true;
     }

@@ -102,7 +102,13 @@ function ShapeCanvasComponent(props) {
                 <Layer>
                   <Group>
                     {shapesList.map((shape, index) => {
-                      const { points, colorIndex, volume, isMuted } = shape;
+                      const {
+                        points,
+                        colorIndex,
+                        volume,
+                        isMuted,
+                        quantizeFactor,
+                      } = shape;
                       return (
                         !deletedShapeIndeces[index] && (
                           <Shape
@@ -112,6 +118,7 @@ function ShapeCanvasComponent(props) {
                             index={index}
                             volume={volume}
                             isMuted={isMuted}
+                            initialQuantizeFactor={quantizeFactor}
                             initialPoints={points}
                             isSelected={index === selectedShapeIndex}
                             soloedShapeIndex={soloedShapeIndex}

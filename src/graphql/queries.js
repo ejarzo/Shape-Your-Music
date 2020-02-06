@@ -18,6 +18,7 @@ export const ProjectFragment = gql`
       isMuted
       colorIndex
       volume
+      quantizeFactor
     }
     userId
     userName

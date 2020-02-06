@@ -16,6 +16,7 @@ export const PROJECT_FRAGMENT = `
       isMuted
       colorIndex
       volume
+      quantizeFactor
     }
     userName
     userId

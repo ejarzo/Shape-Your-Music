@@ -118,6 +118,8 @@ class ShapeCanvas extends Component {
       if (deletedShapeIndeces[i]) return;
       const points = shape.getAbsolutePoints();
       shapesList[i].points = points;
+      // TODO lift this property to ShapeCanvas state
+      shapesList[i].quantizeFactor = shape.state.quantizeFactor;
     });
 
     return shapesList.filter((_, i) => !deletedShapeIndeces[i]);

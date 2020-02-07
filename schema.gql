@@ -33,5 +33,5 @@ type Project {
 
 type Query {
   allProjects: [Project!]
-  # ProjectsByCompletedFlag(completed: Boolean!): [Project!]
+  projectsByUserId(userId: String!): [Project!]
 }

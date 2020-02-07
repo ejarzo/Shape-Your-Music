@@ -1,9 +1,10 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { Menu, Dropdown, Icon } from 'antd';
 import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
 import { getUserName } from 'utils/user';
 import styles from './styles.module.css';
+import { ROUTES } from 'Routes';
 
 const HeaderLink = props => (
   <NavLink activeStyle={{ fontWeight: 'bold' }} {...props} />
@@ -15,10 +16,10 @@ function HeaderMenu(props) {
       {({ user, authenticate, logout }) => (
         <div className={styles.headerMenu}>
           <div className={styles.headerMenuLinks}>
-            <HeaderLink exact to="/">
+            <HeaderLink exact to={ROUTES.INDEX}>
               Create
             </HeaderLink>
-            <HeaderLink exact to="/discover">
+            <HeaderLink exact to={ROUTES.DISCOVER}>
               Discover
             </HeaderLink>
             <a
@@ -35,7 +36,12 @@ function HeaderMenu(props) {
                   overlay={() => (
                     <Menu>
                       <Menu.Item>
-                        <button onClick={logout}>Log out</button>
+                        <Link to={ROUTES.MY_PROJECTS}>My Projects</Link>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <button style={{ padding: 0 }} onClick={logout}>
+                          Log Out
+                        </button>
                       </Menu.Item>
                     </Menu>
                   )}

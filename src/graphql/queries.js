@@ -40,6 +40,21 @@ export const GET_ALL_PROJECTS = gql`
   }
 `;
 
+export const GET_MY_PROJECTS = gql`
+  query MyProjects {
+    myProjects {
+      data {
+        _id
+        _ts
+        dateCreated
+        name
+        userId
+        userName
+      }
+    }
+  }
+`;
+
 export const GET_PROJECT = gql`
   query FindProjectByID($id: ID!) {
     findProjectByID(id: $id) {

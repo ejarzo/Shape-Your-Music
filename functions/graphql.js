@@ -5,7 +5,7 @@ import {
 } from 'apollo-server-lambda';
 import { GraphQLClient } from 'graphql-request';
 import { typeDefs } from './utils/schema';
-import { allProjects, findProjectByID } from './utils/queries';
+import { allProjects, findProjectByID, projectByUserId } from './utils/queries';
 import { updateProject, createProject } from './utils/mutations';
 
 const FAUNADB_API = 'https://graphql.fauna.com/graphql';
@@ -21,6 +21,14 @@ const resolvers = {
     allProjects: async () => {
       const response = await client.request(allProjects);
       return { data: response.allProjects.data.reverse() };
+    },
+    myProjects: async (_, variables, { user }) => {
+      if (!user) {
+        throw new AuthenticationError('Not Logged In');
+      }
+      const { userId } = user;
+      const response = await client.request(projectByUserId, { userId });
+      return { data: response.projectsByUserId.data };
     },
     findProjectByID: async (_, variables) => {
       const response = await client.request(findProjectByID, variables);

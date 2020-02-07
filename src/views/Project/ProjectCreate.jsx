@@ -14,6 +14,7 @@ import AudioManager from './AudioManager';
 import ProjectContainer from './Container';
 import { CREATE_PROJECT } from 'graphql/mutations';
 import { GET_ALL_PROJECTS } from 'graphql/queries';
+import { ROUTES } from 'Routes';
 
 function ProjectCreate(props) {
   const { user: currentUser, authenticate } = useContext(CurrentUserContext);
@@ -26,7 +27,7 @@ function ProjectCreate(props) {
       const { _id, name } = createProject;
       showSuccessMessage(`Saved "${name}"`);
       history.push({
-        pathname: `/project/${_id}`,
+        pathname: `${ROUTES.PROJECT}/${_id}`,
         state: { projectData: createProject },
       });
     },

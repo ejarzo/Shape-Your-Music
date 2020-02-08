@@ -1,22 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
 import { formatTimestamp } from 'utils/time';
-import { CurrentUserContext } from 'context/CurrentUserContext/CurrentUserContextProvider';
-import { getUserName } from 'utils/user';
+import { ROUTES } from 'Routes';
 
-function DiscoverGQLComponent(props) {
-  const { allProjects } = props;
-  const { user } = useContext(CurrentUserContext);
-  const userName = getUserName(user);
+function ProjectList(props) {
+  const { title, projects } = props;
   return (
     <div>
-      <h1>{userName}'s Projects</h1>
+      <h1>{title}</h1>
       <div className={styles.projectsGrid}>
-        {allProjects &&
-          allProjects.map(({ _id, name, userName, dateCreated }) => (
+        {projects &&
+          projects.map(({ _id, name, userName, dateCreated }) => (
             <div>
-              <Link to={`/project/${_id}`}>
+              <Link to={`${ROUTES.PROJECT}/${_id}`}>
                 <div className={styles.ProjectCard}>
                   <div>
                     <strong>{name}</strong>
@@ -36,4 +33,4 @@ function DiscoverGQLComponent(props) {
   );
 }
 
-export default DiscoverGQLComponent;
+export default ProjectList;

@@ -38,6 +38,21 @@ export const allProjects = `
   }
 `;
 
+export const projectByUserId = `
+  query ProjectsByUserId($userId: String!) {
+    projectsByUserId(userId: $userId) {
+      data {
+        _id
+        _ts
+        dateCreated
+        name
+        userId
+        userName
+      }
+    }
+  }
+`;
+
 export const findProjectByID = `
   query FindProjectByID($id: ID!) {
     findProjectByID(id: $id) {

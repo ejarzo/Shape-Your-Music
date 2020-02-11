@@ -18,6 +18,7 @@ export const typeDefs = gql`
 
   type Query {
     allProjects(_size: Int, _cursor: String): ProjectPage!
+    myProjects(_size: Int, _cursor: String): ProjectPage!
     findProjectByID(id: ID!): Project
   }
 

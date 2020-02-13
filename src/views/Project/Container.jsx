@@ -49,7 +49,9 @@ class Project extends Component {
     } = initState;
 
     const knobVals =
-      initState.knobVals || selectedSynths.map(getDefaultParamValues);
+      initState.knobVals && initState.knobVals.length > 0
+        ? initState.knobVals
+        : selectedSynths.map(getDefaultParamValues);
 
     this.state = {
       projectName,

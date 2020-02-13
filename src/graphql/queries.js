@@ -13,6 +13,7 @@ export const ProjectFragment = gql`
     isGridActive
     dateCreated
     selectedSynths
+    knobVals
     shapesList {
       points
       isMuted

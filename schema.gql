@@ -29,6 +29,7 @@ type Project {
   userName: String!
   selectedSynths: [Synth!]
   dateCreated: Long
+  knobVals: [[Float!]]
 }
 
 type Query {

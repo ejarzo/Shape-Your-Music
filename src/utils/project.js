@@ -18,9 +18,9 @@ export const getProjectSaveData = projectData => {
     isAutoQuantizeActive,
     shapesList,
     selectedSynths,
+    knobVals,
   } = projectData;
 
-  /* TODO: save selected instruments and knob values */
   return {
     name,
     tempo,
@@ -31,6 +31,7 @@ export const getProjectSaveData = projectData => {
     isAutoQuantizeActive,
     shapesList,
     selectedSynths,
+    knobVals,
   };
 };
 

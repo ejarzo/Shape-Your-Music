@@ -48,11 +48,10 @@ class Project extends Component {
       selectedSynths,
     } = initState;
 
-    const knobVals = [];
-    selectedSynths.forEach(synthType => {
-      const instrumentDefaults = getDefaultParamValues(synthType);
-      knobVals.push(instrumentDefaults);
-    });
+    const knobVals =
+      initState.knobVals && initState.knobVals.length > 0
+        ? initState.knobVals
+        : selectedSynths.map(getDefaultParamValues);
 
     this.state = {
       projectName,

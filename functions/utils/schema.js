@@ -43,6 +43,7 @@ export const typeDefs = gql`
     userName: String!
     userId: String!
     dateCreated: Long
+    knobVals: [[Float!]]
   }
 
   input ProjectCreateInput {
@@ -56,6 +57,7 @@ export const typeDefs = gql`
     shapesList: [ShapeInput!]
     selectedSynths: [Synth!]
     dateCreated: Long
+    knobVals: [[Float!]]
   }
 
   input ProjectUpdateInput {
@@ -69,6 +71,7 @@ export const typeDefs = gql`
     shapesList: [ShapeInput!]
     selectedSynths: [Synth!]
     dateCreated: Long
+    knobVals: [[Float!]]
   }
 
   type ProjectPage {

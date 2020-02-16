@@ -11,6 +11,7 @@ export const PROJECT_FRAGMENT = `
     isGridActive
     dateCreated
     selectedSynths
+    knobVals
     shapesList {
       points
       isMuted

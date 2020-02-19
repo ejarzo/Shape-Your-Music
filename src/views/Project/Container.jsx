@@ -368,6 +368,7 @@ class Project extends Component {
       showSaveButton,
       showSettingsButton,
       projectAuthor,
+      deleteProject,
     } = this.props;
     const projectContext = this.state;
     console.log(this.props);
@@ -432,6 +433,7 @@ class Project extends Component {
             <Sidebar
               downloadUrls={downloadUrls}
               handleSaveClick={this.handleSaveClick}
+              handleDeleteClick={deleteProject}
               showSaveButton={showSaveButton}
               showSettingsButton={showSettingsButton}
               handleExportToMIDIClick={this.handleExportToMIDIClick}

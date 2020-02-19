@@ -6,7 +6,7 @@ import {
 import { GraphQLClient } from 'graphql-request';
 import { typeDefs } from './utils/schema';
 import { allProjects, findProjectByID, projectByUserId } from './utils/queries';
-import { updateProject, createProject } from './utils/mutations';
+import { updateProject, createProject, deleteProject } from './utils/mutations';
 
 const FAUNADB_API = 'https://graphql.fauna.com/graphql';
 
@@ -80,6 +80,24 @@ const resolvers = {
         },
       });
       return response.createProject;
+    },
+    deleteProject: async (_, variables, { user }) => {
+      if (!user) {
+        throw new AuthenticationError('Not Logged In');
+      }
+      const { userId: loggedInUserId } = user;
+      const { id } = variables;
+
+      const {
+        findProjectByID: { userId },
+      } = await client.request(findProjectByID, { id });
+
+      if (loggedInUserId !== userId) {
+        throw new AuthenticationError('Not authorized');
+      }
+
+      const response = await client.request(deleteProject, { id });
+      return response.deleteProject;
     },
   },
 };

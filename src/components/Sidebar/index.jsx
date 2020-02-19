@@ -14,6 +14,7 @@ function Sidebar(props) {
     projectName,
     downloadUrls,
     handleExportToMIDIClick,
+    handleDeleteClick,
   } = props;
 
   const [seenDownloadCount, setSeenDownloadCount] = useState(0);
@@ -85,7 +86,11 @@ function Sidebar(props) {
           onClose={() => setIsSettingsDrawerVisible(false)}
           visible={isSettingsDrawerVisible}
         >
-          <Button style={{ fontWeight: 'bold' }} type="danger">
+          <Button
+            onClick={handleDeleteClick}
+            style={{ fontWeight: 'bold' }}
+            type="danger"
+          >
             Delete Project
           </Button>
         </Drawer>

@@ -13,7 +13,7 @@ import {
 import AudioManager from './AudioManager';
 import ProjectContainer from './Container';
 import { CREATE_PROJECT } from 'graphql/mutations';
-import { GET_ALL_PROJECTS } from 'graphql/queries';
+import { GET_ALL_PROJECTS, GET_MY_PROJECTS } from 'graphql/queries';
 import { ROUTES } from 'Routes';
 
 function ProjectCreate(props) {
@@ -21,7 +21,10 @@ function ProjectCreate(props) {
   const { history } = props;
 
   const [createProjectMutation] = useMutation(CREATE_PROJECT, {
-    refetchQueries: () => [{ query: GET_ALL_PROJECTS }],
+    refetchQueries: () => [
+      { query: GET_ALL_PROJECTS },
+      { query: GET_MY_PROJECTS },
+    ],
     onError: showErrorMessage,
     onCompleted: ({ createProject }) => {
       const { _id, name } = createProject;

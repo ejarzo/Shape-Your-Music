@@ -25,7 +25,7 @@ export const typeDefs = gql`
   type Mutation {
     createProject(data: ProjectCreateInput!): Project!
     updateProject(id: ID!, data: ProjectUpdateInput!): Project
-    # deleteProject(id: ID!): Project
+    deleteProject(id: ID!): Project
   }
 
   type Project {

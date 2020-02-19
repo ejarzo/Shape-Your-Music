@@ -18,3 +18,12 @@ export const UPDATE_PROJECT = gql`
   }
   ${ProjectFragment}
 `;
+
+export const DELETE_PROJECT = gql`
+  mutation DeleteProject($id: ID!) {
+    deleteProject(id: $id) {
+      ...ProjectFragment
+    }
+  }
+  ${ProjectFragment}
+`;

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { CurrentUserContext } from 'context/CurrentUserContext/CurrentUserContextProvider';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import { withRouter } from 'react-router';
 
 import Loading from 'components/Loading';
 import AudioManager from './AudioManager';
@@ -11,10 +12,15 @@ import {
   showErrorMessage,
   showSuccessMessage,
 } from 'utils/message';
-import { GET_PROJECT } from 'graphql/queries';
-import { UPDATE_PROJECT } from 'graphql/mutations';
-import { withRouter } from 'react-router';
+
 import { DEFAULT_SYNTHS } from 'utils/synths';
+import { ROUTES } from 'Routes';
+import {
+  GET_PROJECT,
+  GET_ALL_PROJECTS,
+  GET_MY_PROJECTS,
+} from 'graphql/queries';
+import { UPDATE_PROJECT, DELETE_PROJECT } from 'graphql/mutations';
 
 function ProjectEdit(props) {
   const {
@@ -41,6 +47,19 @@ function ProjectEdit(props) {
       history.push({
         state: { projectData: updateProject },
       });
+    },
+  });
+
+  const [deleteProjectMutation] = useMutation(DELETE_PROJECT, {
+    refetchQueries: () => [
+      { query: GET_ALL_PROJECTS },
+      { query: GET_MY_PROJECTS },
+    ],
+    onError: showErrorMessage,
+    onCompleted: ({ deleteProject }) => {
+      const { name } = deleteProject;
+      showSuccessMessage(`Deleted "${name}"`);
+      history.push(ROUTES.INDEX);
     },
   });
 
@@ -75,7 +94,12 @@ function ProjectEdit(props) {
     });
   };
 
-  const showSaveButton =
+  const deleteProject = () => {
+    showLoadingMessage('Deleting...');
+    deleteProjectMutation({ variables: { id: newProjectData._id } });
+  };
+
+  const userIsProjectAuthor =
     currentUser && newProjectData && newProjectData.userId === currentUser.id;
   const projectProps = {
     initState: {
@@ -84,7 +108,9 @@ function ProjectEdit(props) {
       ...newProjectData,
     },
     saveProject,
-    showSaveButton,
+    deleteProject,
+    showSaveButton: userIsProjectAuthor,
+    showSettingsButton: userIsProjectAuthor,
     projectAuthor: newProjectData.userId && {
       name: newProjectData.userName,
       id: newProjectData.userId,

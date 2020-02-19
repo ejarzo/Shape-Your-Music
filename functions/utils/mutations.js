@@ -17,3 +17,12 @@ export const createProject = `
   }
   ${PROJECT_FRAGMENT}
 `;
+
+export const deleteProject = `
+  mutation DeleteProject($id: ID!) {
+    deleteProject(id: $id) {
+      ...ProjectFragment
+    }
+  }
+  ${PROJECT_FRAGMENT}
+`;

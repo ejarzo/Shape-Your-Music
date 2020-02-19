@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Badge, Icon, Drawer, Tooltip, Button } from 'antd';
+import { Badge, Icon, Drawer, Tooltip, Button, Popconfirm } from 'antd';
 
 import Downloads from 'components/Downloads';
 import SaveButton from 'components/Toolbar/SaveButton';
@@ -86,13 +86,23 @@ function Sidebar(props) {
           onClose={() => setIsSettingsDrawerVisible(false)}
           visible={isSettingsDrawerVisible}
         >
-          <Button
-            onClick={handleDeleteClick}
-            style={{ fontWeight: 'bold' }}
-            type="danger"
+          <Popconfirm
+            title={`Delete "${projectName}"? This action cannot be undone.`}
+            placement="rightTop"
+            okText="Delete"
+            okType="danger"
+            cancelText="Cancel"
+            onConfirm={handleDeleteClick}
+            icon={<Icon type="question-circle-o" />}
           >
-            Delete Project
-          </Button>
+            <Button
+              //onClick={handleDeleteClick}
+              style={{ fontWeight: 'bold' }}
+              type="danger"
+            >
+              Delete Project
+            </Button>
+          </Popconfirm>
         </Drawer>
       )}
     </div>

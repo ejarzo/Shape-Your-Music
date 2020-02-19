@@ -75,7 +75,7 @@ function ProjectEdit(props) {
     });
   };
 
-  const showSaveButton =
+  const userIsProjectAuthor =
     currentUser && newProjectData && newProjectData.userId === currentUser.id;
   const projectProps = {
     initState: {
@@ -84,7 +84,8 @@ function ProjectEdit(props) {
       ...newProjectData,
     },
     saveProject,
-    showSaveButton,
+    showSaveButton: userIsProjectAuthor,
+    showSettingsButton: userIsProjectAuthor,
     projectAuthor: newProjectData.userId && {
       name: newProjectData.userName,
       id: newProjectData.userId,

@@ -366,6 +366,7 @@ class Project extends Component {
       initState,
       downloadUrls,
       showSaveButton,
+      showSettingsButton,
       projectAuthor,
     } = this.props;
     const projectContext = this.state;
@@ -432,6 +433,7 @@ class Project extends Component {
               downloadUrls={downloadUrls}
               handleSaveClick={this.handleSaveClick}
               showSaveButton={showSaveButton}
+              showSettingsButton={showSettingsButton}
               handleExportToMIDIClick={this.handleExportToMIDIClick}
             />
           </Fullscreen>

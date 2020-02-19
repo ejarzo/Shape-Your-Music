@@ -53,6 +53,7 @@ function ProjectCreate(props) {
     initState: DEFAULT_PROJECT,
     saveProject,
     showSaveButton: true,
+    showSettingsButton: false,
     projectAuthor: '',
   };
 

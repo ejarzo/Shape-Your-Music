@@ -8,15 +8,19 @@ import netlifyIdentity from 'netlify-identity-widget';
 
 const client = new ApolloClient({
   uri: '/.netlify/functions/graphql',
-  request: async operation => {
+  request: operation => {
     const currentUser = netlifyIdentity.currentUser();
-    const token = currentUser && (await currentUser.jwt());
-    console.log('TOKEN: ', token);
-    operation.setContext({
-      headers: {
-        authorization: token ? `Bearer ${token}` : '',
-      },
-    });
+    console.log('current user', currentUser);
+    if (currentUser) {
+      currentUser.jwt().then(token => {
+        console.log('TOKEN: ', token);
+        operation.setContext({
+          headers: {
+            authorization: token ? `Bearer ${token}` : '',
+          },
+        });
+      });
+    }
   },
 });
 

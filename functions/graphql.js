@@ -40,9 +40,6 @@ const resolvers = {
       }
       return response.findProjectByID;
     },
-    testErrorHandling: async () => {
-      throw new Error('Report me!');
-    },
   },
   Mutation: {
     updateProject: async (_, variables, { user }) => {

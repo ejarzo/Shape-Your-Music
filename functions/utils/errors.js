@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/node';
+import { AuthenticationError, ApolloError } from 'apollo-server-lambda';
 const { FUNCTIONS_SENTRY_DSN } = process.env;
 
 export const initSentry = () => {
@@ -20,10 +21,6 @@ export const resolversWrapper = resolvers =>
       const result = await resolver(...args);
       return result;
     } catch (err) {
-      // TODO ignore these if they become too much
-      // if (err instanceof AuthenticationError) {
-      //   throw err;
-      // }
       console.error('ERROR: ', err, args);
       const [variables, context] = args.slice(1);
       Sentry.withScope(scope => {
@@ -33,7 +30,11 @@ export const resolversWrapper = resolvers =>
         Sentry.captureException(err);
       });
       await Sentry.flush(2000);
-
-      throw new Error('INTERNAL_SERVER_ERROR');
+      if (err instanceof AuthenticationError || err instanceof ApolloError) {
+        // TODO disable these if there are too many
+        throw err;
+      } else {
+        throw new Error('INTERNAL_SERVER_ERROR');
+      }
     }
   });

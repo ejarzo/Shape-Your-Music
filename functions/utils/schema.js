@@ -16,15 +16,10 @@ export const typeDefs = gql`
     JARZO2
   }
 
-  type ErrorReceived {
-    received: Boolean
-  }
-
   type Query {
     allProjects(_size: Int, _cursor: String): ProjectPage!
     myProjects(_size: Int, _cursor: String): ProjectPage!
     findProjectByID(id: ID!): Project
-    testErrorHandling: ErrorReceived
   }
 
   type Mutation {

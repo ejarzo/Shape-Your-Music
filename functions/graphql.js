@@ -7,6 +7,9 @@ import { GraphQLClient } from 'graphql-request';
 import { typeDefs } from './utils/schema';
 import { allProjects, findProjectByID, projectByUserId } from './utils/queries';
 import { updateProject, createProject, deleteProject } from './utils/mutations';
+import { initSentry, resolversWrapper, objectMap } from './utils/errors';
+
+initSentry();
 
 const FAUNADB_API = 'https://graphql.fauna.com/graphql';
 
@@ -104,7 +107,7 @@ const resolvers = {
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers,
+  resolvers: objectMap(resolvers, resolversWrapper),
   context: async ({ context }) => {
     const { user } = context.clientContext || {};
     if (!user) return { user: null };

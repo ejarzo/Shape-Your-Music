@@ -7,6 +7,7 @@ function Loading(props) {
     <PageContainer>
       <div style={{ textAlign: 'center' }}>
         <Spin
+          delay={100}
           indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}
         />
       </div>

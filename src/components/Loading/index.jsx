@@ -1,10 +1,15 @@
 import React from 'react';
 import PageContainer from 'components/PageContainer';
+import { Spin, Icon } from 'antd';
 
 function Loading(props) {
   return (
     <PageContainer>
-      <span>Loading...</span>
+      <div style={{ textAlign: 'center' }}>
+        <Spin
+          indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}
+        />
+      </div>
     </PageContainer>
   );
 }

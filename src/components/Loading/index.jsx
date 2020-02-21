@@ -1,10 +1,11 @@
 import React from 'react';
+import PageContainer from 'components/PageContainer';
 
 function Loading(props) {
   return (
-    <div style={{ padding: 15 }}>
+    <PageContainer>
       <span>Loading...</span>
-    </div>
+    </PageContainer>
   );
 }
 

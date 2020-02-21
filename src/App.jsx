@@ -4,20 +4,23 @@ import ApolloClient from 'apollo-boost';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { CurrentUserContextProvider } from 'context/CurrentUserContext';
 import Routes from './Routes';
-import { getToken } from 'utils/user';
 import netlifyIdentity from 'netlify-identity-widget';
 
 const client = new ApolloClient({
   uri: '/.netlify/functions/graphql',
   request: operation => {
     const currentUser = netlifyIdentity.currentUser();
-    console.log('Got user', currentUser);
-    const token = getToken(currentUser);
-    operation.setContext({
-      headers: {
-        authorization: token ? `Bearer ${token}` : '',
-      },
-    });
+    console.log('current user', currentUser);
+    if (currentUser) {
+      currentUser.jwt().then(token => {
+        console.log('TOKEN: ', token);
+        operation.setContext({
+          headers: {
+            authorization: token ? `Bearer ${token}` : '',
+          },
+        });
+      });
+    }
   },
 });
 

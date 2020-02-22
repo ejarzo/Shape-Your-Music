@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import { Alert } from 'antd';
 
 import PageContainer from 'components/PageContainer';
 import ProjectList from 'components/ProjectList';
@@ -14,7 +15,15 @@ function UserProjects() {
   const { loading, error, data } = useQuery(GET_MY_PROJECTS, { skip: !user });
 
   if (!user)
-    return <PageContainer>Please log in to view your projects</PageContainer>;
+    return (
+      <PageContainer>
+        <Alert
+          showIcon
+          type="warning"
+          message="Please log in to view your projects"
+        />
+      </PageContainer>
+    );
   if (loading) return <Loading />;
   if (error) return <ErrorMessage message={error.message} />;
 

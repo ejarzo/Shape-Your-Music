@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from 'components/Button';
+import { Button } from 'antd';
 import { captureException } from 'utils/errorTracking';
 
 class ErrorBoundary extends React.Component {

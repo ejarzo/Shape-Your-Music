@@ -21,6 +21,7 @@ import {
   GET_MY_PROJECTS,
 } from 'graphql/queries';
 import { UPDATE_PROJECT, DELETE_PROJECT } from 'graphql/mutations';
+import ErrorMessage from 'components/ErrorMessage';
 
 function ProjectEdit(props) {
   const {
@@ -64,7 +65,7 @@ function ProjectEdit(props) {
   });
 
   if (loading) return <Loading />;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <ErrorMessage message={error.message} />;
 
   const project = projectData || data.findProjectByID;
   const { shapesList, selectedSynths } = project;

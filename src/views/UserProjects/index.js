@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import { Alert } from 'antd';
 
 import PageContainer from 'components/PageContainer';
 import ProjectList from 'components/ProjectList';
@@ -7,14 +8,24 @@ import Loading from 'components/Loading';
 import { CurrentUserContext } from 'context/CurrentUserContext/CurrentUserContextProvider';
 import { getUserName } from 'utils/user';
 import { GET_MY_PROJECTS } from 'graphql/queries';
+import ErrorMessage from 'components/ErrorMessage';
 
 function UserProjects() {
   const { user } = useContext(CurrentUserContext);
   const { loading, error, data } = useQuery(GET_MY_PROJECTS, { skip: !user });
 
-  if (!user) return <div>Please log in to view your projects</div>;
+  if (!user)
+    return (
+      <PageContainer>
+        <Alert
+          showIcon
+          type="warning"
+          message="Please log in to view your projects"
+        />
+      </PageContainer>
+    );
   if (loading) return <Loading />;
-  if (error) return <div>error: {error.message}</div>;
+  if (error) return <ErrorMessage message={error.message} />;
 
   return (
     <PageContainer>

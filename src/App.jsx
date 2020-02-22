@@ -8,7 +8,7 @@ import netlifyIdentity from 'netlify-identity-widget';
 
 const client = new ApolloClient({
   uri: '/.netlify/functions/graphql',
-  request: async operation => {
+  request: operation => {
     const currentUser = netlifyIdentity.currentUser();
     console.log('current user', currentUser);
     if (currentUser) {

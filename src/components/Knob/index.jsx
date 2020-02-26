@@ -10,7 +10,6 @@ const propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   paramName: PropTypes.string.isRequired,
-  color: PropTypes.string,
 };
 
 class Knob extends Component {
@@ -28,6 +27,11 @@ class Knob extends Component {
     this.dragStart = {
       x: 0,
       y: 0,
+    };
+
+    this.svgStyle = {
+      height: 2 * (this.knobRadius + this.knobStrokeWidth),
+      width: 2 * (this.knobRadius + this.knobStrokeWidth),
     };
 
     this.handleDragStart = this.handleDragStart.bind(this);
@@ -58,11 +62,6 @@ class Knob extends Component {
   }
 
   render() {
-    const svgStyle = {
-      height: 2 * (this.knobRadius + this.knobStrokeWidth),
-      width: 2 * (this.knobRadius + this.knobStrokeWidth),
-    };
-
     return (
       <div className={styles.knobContainer}>
         <div tabIndex="0" style={{ height: 42 }}>
@@ -74,7 +73,7 @@ class Knob extends Component {
             onDrag={this.handleDrag}
             onStop={this.handleDragStop}
           >
-            <svg className={styles.knobSvg} style={svgStyle}>
+            <svg className={styles.knobSvg} style={this.svgStyle}>
               {/* background static arc */}
               <path
                 fill="none"

@@ -50,7 +50,7 @@ class ColorController extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // Change instrument
     if (nextProps.synthType !== this.props.synthType) {
       const newSynth = SYNTH_PRESETS[nextProps.synthType];

@@ -385,7 +385,7 @@ class Project extends Component {
               <div
                 style={{
                   display: 'inline-block',
-                  maxWidth: 250,
+                  maxWidth: 300,
                   textAlign: 'center',
                   position: 'absolute',
                   margin: '0 auto',

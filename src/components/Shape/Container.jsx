@@ -85,7 +85,7 @@ class ShapeContainer extends PureComponent {
     this.handleReverseClick = this.handleReverseClick.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { colorIndex, scaleObj } = this.props;
     const { points, quantizeFactor } = this.state;
 
@@ -122,7 +122,7 @@ class ShapeContainer extends PureComponent {
     this.synth.dispose();
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
     /* change instrument when color's instrument changes, or when shape's color changes */
     if (
       nextProps.selectedSynths[nextProps.colorIndex] !==
@@ -137,7 +137,7 @@ class ShapeContainer extends PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     /* remove hover styles when switching to draw mode */
     if (
       nextProps.activeTool === TOOL_TYPES.DRAW &&
@@ -621,6 +621,7 @@ class ShapeContainer extends PureComponent {
       handleDelete,
       handleSoloChange,
       handleMuteChange,
+      handleShapeDuplicate,
     } = this.props;
 
     const {
@@ -697,6 +698,11 @@ class ShapeContainer extends PureComponent {
         handleToTopClick={this.handleToTopClick}
         handleToBottomClick={this.handleToBottomClick}
         handleReverseClick={this.handleReverseClick}
+        handleDuplicateClick={() => {
+          // pass points if needed for duplication
+          const absolutePoints = this.getAbsolutePoints();
+          handleShapeDuplicate(index, absolutePoints);
+        }}
       />
     );
   }

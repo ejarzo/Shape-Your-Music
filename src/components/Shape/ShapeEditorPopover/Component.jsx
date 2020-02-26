@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { themeColors, getDarker } from 'utils/color';
@@ -42,21 +42,17 @@ const propTypes = {
   // perimeter: PropTypes.number.isRequired,
 };
 
-const Caret = props => (
+const Caret = ({ caretPosition, color }) => (
   <div
     className={cx({
       [styles.tooltipArrow]: true,
-      [styles.arrowLeft]: props.caretPosition.isLeft,
-      [styles.arrowRight]: !props.caretPosition.isLeft,
+      [styles.arrowLeft]: caretPosition.isLeft,
+      [styles.arrowRight]: !caretPosition.isLeft,
     })}
     style={{
-      top: props.caretPosition.top,
-      borderRightColor: props.caretPosition.isLeft
-        ? props.color
-        : 'transparent',
-      borderLeftColor: !props.caretPosition.isLeft
-        ? props.color
-        : 'transparent',
+      top: caretPosition.top,
+      borderRightColor: caretPosition.isLeft ? color : 'transparent',
+      borderLeftColor: !caretPosition.isLeft ? color : 'transparent',
     }}
   />
 );
@@ -69,132 +65,131 @@ Caret.propTypes = {
   color: PropTypes.string.isRequired,
 };
 
-class ShapeEditorPopoverComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isColorPickerOpen: false,
-    };
+function ShapeEditorPopoverComponent(props) {
+  const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
+  const {
+    volume,
+    onVolumeChange,
+    isMuted,
+    onMuteChange,
+    isSoloed,
+    onSoloChange,
+    onColorChange,
+    onQuantizeFactorChange,
+    onReverseClick,
+    onToTopClick,
+    onToBottomClick,
+    onDeleteClick,
+    onDuplicateClick,
+    caretPosition,
+    colorIndex,
+    panelStyle: { width, height, top, left },
+  } = props;
+  const colorString = themeColors[colorIndex];
+  const darkColor = getDarker(colorString, 0.2);
+  const medColor = getDarker(colorString);
 
-    this.handleToggleColorPickerClick = this.handleToggleColorPickerClick.bind(
-      this
-    );
-  }
-
-  handleToggleColorPickerClick() {
-    this.setState({
-      isColorPickerOpen: !this.state.isColorPickerOpen,
-    });
-  }
-
-  render() {
-    const colorString = themeColors[this.props.colorIndex];
-    const darkColor = getDarker(colorString, 0.2);
-    const medColor = getDarker(colorString);
-    const { width, height, top, left } = this.props.panelStyle;
-    return (
+  return (
+    <div
+      className={styles.ShapeEditorPopover}
+      style={{
+        width,
+        height,
+        top,
+        left,
+        backgroundColor: darkColor,
+        fontWeight: 'bold',
+      }}
+    >
+      <div className={styles.sliderContainer}>
+        <CustomSlider
+          color={colorString}
+          min={-18}
+          max={0}
+          value={volume}
+          onChange={onVolumeChange}
+        />
+      </div>
+      <div className={styles.buttonShort}>
+        <CheckboxButton
+          label="Mute"
+          checked={isMuted}
+          onChange={onMuteChange}
+          color={colorString}
+        />
+      </div>
+      <div className={styles.buttonShort}>
+        <CheckboxButton
+          label="Solo"
+          checked={isSoloed}
+          onChange={onSoloChange}
+          color={colorString}
+        />
+      </div>
       <div
-        className={styles.ShapeEditorPopover}
+        className={styles.colorPickerContainer}
         style={{
-          width,
-          height,
-          top,
-          left,
-          backgroundColor: darkColor,
-          fontWeight: 'bold',
+          backgroundColor: colorString,
+          height: isColorPickerOpen ? 61 : 30,
         }}
       >
-        <div className={styles.sliderContainer}>
-          <CustomSlider
-            color={colorString}
-            min={-18}
-            max={0}
-            value={this.props.volume}
-            onChange={this.props.onVolumeChange}
-          />
-        </div>
-        <div className={styles.buttonShort}>
-          <CheckboxButton
-            label="Mute"
-            checked={this.props.isMuted}
-            onChange={this.props.onMuteChange}
-            color={colorString}
-          />
-        </div>
-        <div className={styles.buttonShort}>
-          <CheckboxButton
-            label="Solo"
-            checked={this.props.isSoloed}
-            onChange={this.props.onSoloChange}
-            color={colorString}
-          />
-        </div>
-        <div
-          className={styles.colorPickerContainer}
-          style={{
-            backgroundColor: colorString,
-            height: this.state.isColorPickerOpen ? 61 : 30,
-          }}
+        <Button
+          color={colorString}
+          onClick={() => setIsColorPickerOpen(!isColorPickerOpen)}
         >
-          <Button
-            color={colorString}
-            onClick={this.handleToggleColorPickerClick}
-          >
-            Color{' '}
-            <i
-              className={
-                this.state.isColorPickerOpen
-                  ? 'ion-arrow-up-b'
-                  : 'ion-arrow-down-b'
-              }
-            />
-          </Button>
-          <ColorPicker
-            triangle="hide"
-            color={colorString}
-            onChange={this.props.onColorChange}
+          Color{' '}
+          <i
+            className={
+              isColorPickerOpen ? 'ion-arrow-up-b' : 'ion-arrow-down-b'
+            }
           />
-        </div>
-        {/*<button onClick={this.props.onQuantizeClick}>Quantize</button>*/}
-        <div className={styles.thirds}>
-          <Button
-            color={colorString}
-            onClick={this.props.onQuantizeFactorChange(2)}
-          >
-            {'*2'}
-          </Button>
-          <Button
-            color={colorString}
-            onClick={this.props.onQuantizeFactorChange(0.5)}
-          >
-            {'/2'}
-          </Button>
-          <Button
-            title="Reverse Direction"
-            color={colorString}
-            onClick={this.props.onReverseClick}
-          >
-            <i className="ion-arrow-swap" />
-          </Button>
-        </div>
-        <Button color={colorString} onClick={this.props.onToTopClick}>
-          To Front
         </Button>
-        <Button color={colorString} onClick={this.props.onToBottomClick}>
-          To Back
+        <ColorPicker
+          triangle="hide"
+          color={colorString}
+          onChange={onColorChange}
+        />
+      </div>
+      {/*<button onClick={onQuantizeClick}>Quantize</button>*/}
+      <div className={styles.thirds}>
+        <Button color={colorString} onClick={onQuantizeFactorChange(2)}>
+          {'*2'}
+        </Button>
+        <Button color={colorString} onClick={onQuantizeFactorChange(0.5)}>
+          {'/2'}
         </Button>
         <Button
-          className={styles.deleteButton}
-          color={medColor}
-          onClick={this.props.onDeleteClick}
+          title="Reverse Direction"
+          color={colorString}
+          onClick={onReverseClick}
         >
-          Delete
+          <i className="ion-arrow-swap" />
         </Button>
-
-        <Caret caretPosition={this.props.caretPosition} color={darkColor} />
       </div>
-    );
-  }
+      <Button color={colorString} onClick={onToTopClick}>
+        To Front
+      </Button>
+      <Button color={colorString} onClick={onToBottomClick}>
+        To Back
+      </Button>
+      <Button
+        className={styles.duplicateButton}
+        color={colorString}
+        onClick={onDuplicateClick}
+      >
+        Duplicate
+      </Button>
+      <Button
+        className={styles.deleteButton}
+        color={medColor}
+        onClick={onDeleteClick}
+      >
+        Delete
+      </Button>
+
+      <Caret caretPosition={caretPosition} color={darkColor} />
+    </div>
+  );
 }
 
 ShapeEditorPopoverComponent.propTypes = propTypes;

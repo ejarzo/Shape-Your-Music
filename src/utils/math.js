@@ -21,6 +21,5 @@ export const convertToLogScale = (
   // calculate adjustment factor
   const scale = (maxv - minv) / (maxp - minp);
   const result = Math.exp(minv + scale * (position - minp));
-  console.log('result', result);
   return result;
 };

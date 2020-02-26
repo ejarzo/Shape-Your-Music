@@ -61,6 +61,7 @@ class ShapeCanvas extends Component {
     this.getScreenshot = this.getScreenshot.bind(this);
     this.getShapeRef = this.getShapeRef.bind(this);
     this.removeShapeRef = this.removeShapeRef.bind(this);
+    this.duplicateShape = this.duplicateShape.bind(this);
 
     this.handleClick = this.handleClick.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -83,7 +84,7 @@ class ShapeCanvas extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.activeTool === TOOL_TYPES.DRAW) {
       this.setState({
         selectedShapeIndex: -1,
@@ -185,6 +186,20 @@ class ShapeCanvas extends Component {
     this.setState(this.initState);
   }
 
+  duplicateShape(index, points) {
+    const { shapesList } = this.state;
+
+    const newShapesList = shapesList.slice();
+    const { colorIndex } = newShapesList[index];
+    const newShape = {
+      points: points.map(p => p + 20),
+      colorIndex,
+      volume: this.defaultVolume,
+      isMuted: false,
+    };
+    newShapesList.push(newShape);
+    this.setState({ shapesList: newShapesList });
+  }
   /* ============================== HANDLERS ============================== */
 
   handleMouseDown() {
@@ -278,19 +293,8 @@ class ShapeCanvas extends Component {
 
   handleShapeClick(index, points) {
     const { isAltPressed } = this.props;
-    const { shapesList } = this.state;
-
     if (isAltPressed) {
-      const newShapesList = shapesList.slice();
-      const { colorIndex } = newShapesList[index];
-      const newShape = {
-        points: points.map(p => p + 20),
-        colorIndex,
-        volume: this.defaultVolume,
-        isMuted: false,
-      };
-      newShapesList.push(newShape);
-      this.setState({ shapesList: newShapesList });
+      this.duplicateShape(index, points);
     } else {
       this.setState({
         selectedShapeIndex: index,
@@ -428,6 +432,7 @@ class ShapeCanvas extends Component {
         handleShapeColorChange={this.handleShapeColorChange}
         handleShapeVolumeChange={this.handleShapeVolumeChange}
         handleShapeMuteChange={this.handleShapeMuteChange}
+        handleShapeDuplicate={this.duplicateShape}
       />
     );
   }

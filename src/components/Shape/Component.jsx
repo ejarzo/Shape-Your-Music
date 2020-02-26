@@ -113,6 +113,7 @@ class ShapeComponent extends React.Component {
       handleMouseOut,
       handleVertexDragMove,
       handleReverseClick,
+      handleDuplicateClick,
     } = this.props;
 
     const color = themeColors[colorIndex];
@@ -239,6 +240,7 @@ class ShapeComponent extends React.Component {
               onToTopClick={handleToTopClick}
               onToBottomClick={handleToBottomClick}
               onDeleteClick={() => handleDelete(index)}
+              onDuplicateClick={handleDuplicateClick}
             />
           </Portal>
         </Group>

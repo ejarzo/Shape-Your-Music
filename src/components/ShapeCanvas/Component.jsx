@@ -31,6 +31,7 @@ const propTypes = {
   handleShapeClick: PropTypes.func.isRequired,
   handleShapeDelete: PropTypes.func.isRequired,
   handleShapeSoloChange: PropTypes.func.isRequired,
+  handleShapeDuplicate: PropTypes.func.isRequired,
 };
 
 function ShapeCanvasComponent(props) {
@@ -57,6 +58,7 @@ function ShapeCanvasComponent(props) {
     handleShapeVolumeChange,
     handleShapeSoloChange,
     handleShapeMuteChange,
+    handleShapeDuplicate,
     stageRef,
   } = props;
 
@@ -126,6 +128,7 @@ function ShapeCanvasComponent(props) {
                             snapToGrid={snapToGrid}
                             handleClick={handleShapeClick}
                             handleDelete={handleShapeDelete}
+                            handleShapeDuplicate={handleShapeDuplicate}
                             handleColorChange={handleShapeColorChange}
                             handleVolumeChange={handleShapeVolumeChange}
                             handleSoloChange={handleShapeSoloChange}

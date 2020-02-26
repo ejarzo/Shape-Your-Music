@@ -6,7 +6,7 @@
   display: grid;
   grid-gap: 2px;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 30px auto 1fr 1fr 30px;
+  grid-template-rows: 30px auto 1fr 1fr 30px 30px;
   box-shadow: 1px 2px 19px rgba(0, 0, 0, 0.3);
 }
 
@@ -20,7 +20,7 @@
 }
 
 .sliderContainer {
-  grid-row: 1 / 6;
+  grid-row: 1 / 7;
 }
 
 .ShapeEditorPopover button {
@@ -48,6 +48,7 @@
 }
 
 .deleteButton,
+.duplicateButton,
 .colorPickerContainer {
   grid-column: 2 / 4;
   text-align: center;

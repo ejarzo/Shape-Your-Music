@@ -68,5 +68,7 @@ export default {
       target: 'effect',
       func: setEffectWet(1),
     },
+    { name: 'nothing' },
+    { name: 'something' },
   ],
 };

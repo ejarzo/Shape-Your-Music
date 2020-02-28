@@ -6,6 +6,7 @@ enum Synth {
   CELLO
   SUB_BASS
   JARZO2
+  PIANO
 }
 
 type Shape @embedded {

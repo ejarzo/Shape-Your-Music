@@ -22,7 +22,7 @@ function ProjectList(props) {
 
         {projects &&
           projects.map(({ _id, name, userName, dateCreated }) => (
-            <div>
+            <div key={_id}>
               <Link to={`${ROUTES.PROJECT}/${_id}`}>
                 <div className={styles.ProjectCard}>
                   <div>

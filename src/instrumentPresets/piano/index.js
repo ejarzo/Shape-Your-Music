@@ -12,13 +12,13 @@ import C3 from './samples/GrandPiano-C3.mp3';
 import C4 from './samples/GrandPiano-C4.mp3';
 import C5 from './samples/GrandPiano-C5.mp3';
 import FSHARP1 from './samples/GrandPiano-Fsharp1.mp3';
-import FSHARP2 from './samples/GrandPiano-Fsharp2.mp3';
-import FSHARP3 from './samples/GrandPiano-Fsharp3.mp3';
-import FSHARP4 from './samples/GrandPiano-Fsharp4.mp3';
-import FSHARP5 from './samples/GrandPiano-Fsharp5.mp3';
+// import FSHARP2 from './samples/GrandPiano-Fsharp2.mp3';
+// import FSHARP3 from './samples/GrandPiano-Fsharp3.mp3';
+// import FSHARP4 from './samples/GrandPiano-Fsharp4.mp3';
+// import FSHARP5 from './samples/GrandPiano-Fsharp5.mp3';
 
 export default {
-  name: 'Piano',
+  name: 'Grand Piano',
   baseSynth: Tone.Sampler,
   params: {
     A0,
@@ -68,7 +68,7 @@ export default {
       target: 'effect',
       func: setEffectWet(1),
     },
-    { name: 'nothing' },
-    { name: 'something' },
+    // { name: 'nothing' },
+    // { name: 'something' },
   ],
 };

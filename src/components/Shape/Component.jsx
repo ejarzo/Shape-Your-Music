@@ -11,6 +11,8 @@ import Portal from 'react-portal';
 import ShapeEditorPopover from './ShapeEditorPopover';
 import withProjectContext from 'views/Project/withProjectContext';
 import { TOOL_TYPES } from 'views/Project/Container';
+import Loading from 'components/Loading';
+import { Spin, Icon } from 'antd';
 
 const propTypes = {
   scaleObj: object.isRequired,
@@ -95,6 +97,7 @@ class ShapeComponent extends React.Component {
       isDragging,
       noteIndexModifier,
       isSelected,
+      isBuffering,
       // handlers
       handleVolumeChange,
       handleMuteChange,
@@ -214,9 +217,11 @@ class ShapeComponent extends React.Component {
                 boxShadow: '0 0 10px rgba(0,0,0,0.2)',
               }}
             >
-              PAN: {panningVal}
-              <br />
-              NOTE: {startingNoteString}
+              <div>
+                PAN: {panningVal}
+                <br />
+                NOTE: {startingNoteString}
+              </div>
             </div>
           </Portal>
 
@@ -265,6 +270,28 @@ class ShapeComponent extends React.Component {
             strokeWidth={attrs.strokeWidth}
             closed
           />
+
+          {/* loading indicator */}
+          <Portal isOpened={isBuffering}>
+            <div
+              style={{
+                textTransform: 'capitalize',
+                color: appColors.white,
+                backgroundColor: color,
+                fontWeight: 'bold',
+                padding: '2px',
+                position: 'absolute',
+                opacity: 0.8,
+                top: averagePoint.y + 40,
+                left: averagePoint.x - 20,
+                fontSize: '0.6em',
+                borderRadius: 2,
+                boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+              }}
+            >
+              Loading samples...
+            </div>
+          </Portal>
 
           <ShapeVertex
             index={0}

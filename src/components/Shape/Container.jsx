@@ -642,6 +642,7 @@ class ShapeContainer extends PureComponent {
       averagePoint,
       editorX,
       editorY,
+      isBuffering,
     } = this.state;
 
     const color = themeColors[colorIndex];
@@ -678,6 +679,7 @@ class ShapeContainer extends PureComponent {
         isSelected={isSelected}
         isMuted={isMuted}
         isSoloed={isSoloed}
+        isBuffering={isBuffering}
         averagePoint={averagePoint}
         editorPosition={{
           x: editorX,

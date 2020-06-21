@@ -14,6 +14,7 @@ export const typeDefs = gql`
     CELLO
     SUB_BASS
     JARZO2
+    PIANO
   }
 
   type Query {

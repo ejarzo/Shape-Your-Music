@@ -56,6 +56,7 @@ class ShapeContainer extends PureComponent {
       editorY: 0,
       animCircleX: 0,
       animCircleY: 0,
+      isBuffering: false,
     };
     this.quantizeLength = 500;
 
@@ -252,14 +253,16 @@ class ShapeContainer extends PureComponent {
         }
       }, time);
 
-      const { noteIndexModifier } = this.state;
+      const { noteIndexModifier, isBuffering } = this.state;
       const { scaleObj } = this.props;
 
       const noteIndex = val.noteIndex + noteIndexModifier;
       const noteString = scaleObj.get(noteIndex).toString();
 
       // trigger synth
-      this.synth.triggerAttackRelease(noteString, dur, time);
+      if (!isBuffering) {
+        this.synth.triggerAttackRelease(noteString, dur, time);
+      }
     }, []).start(0);
 
     part.loop = true;
@@ -296,7 +299,14 @@ class ShapeContainer extends PureComponent {
       this.synth.dispose();
     }
 
-    this.synth = new synthObj.baseSynth(synthObj.params);
+    this.synth = new synthObj.baseSynth(synthObj.params, () => {
+      console.log('LOADED');
+      this.setState({ isBuffering: false });
+    });
+    if (this.synth instanceof Tone.Sampler) {
+      console.log('setting isbuffering to true');
+      this.setState({ isBuffering: true });
+    }
     this.synth.volume.exponentialRampToValueAtTime(
       this.props.volume,
       Tone.now() + 0.2
@@ -632,6 +642,7 @@ class ShapeContainer extends PureComponent {
       averagePoint,
       editorX,
       editorY,
+      isBuffering,
     } = this.state;
 
     const color = themeColors[colorIndex];
@@ -668,6 +679,7 @@ class ShapeContainer extends PureComponent {
         isSelected={isSelected}
         isMuted={isMuted}
         isSoloed={isSoloed}
+        isBuffering={isBuffering}
         averagePoint={averagePoint}
         editorPosition={{
           x: editorX,

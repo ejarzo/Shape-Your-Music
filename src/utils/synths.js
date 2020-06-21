@@ -4,8 +4,8 @@ export const DEFAULT_SYNTHS = [
   SYNTH_TYPES.KEYS,
   SYNTH_TYPES.JARZO2,
   SYNTH_TYPES.CELLO,
-  SYNTH_TYPES.DUO,
-  SYNTH_TYPES.BLIP,
+  SYNTH_TYPES.PIANO,
+  SYNTH_TYPES.SUB_BASS,
 ];
 
 export const getDefaultParamValues = synthType => {

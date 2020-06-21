@@ -11,8 +11,6 @@ import Portal from 'react-portal';
 import ShapeEditorPopover from './ShapeEditorPopover';
 import withProjectContext from 'views/Project/withProjectContext';
 import { TOOL_TYPES } from 'views/Project/Container';
-import Loading from 'components/Loading';
-import { Spin, Icon } from 'antd';
 
 const propTypes = {
   scaleObj: object.isRequired,

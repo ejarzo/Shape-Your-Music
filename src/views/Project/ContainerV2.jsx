@@ -296,9 +296,9 @@ export default props => {
       toggleActiveTool();
     },
     CHANGE_DRAW_COLOR: handleChangeDrawColor,
-    // ALT_DOWN: () => handleAltChange(true),
-    // ALT_UP: () => handleAltChange(false),
-    // DELETE_SHAPE: () => shapeCanvas.deleteSelectedShape(),
+    ALT_DOWN: () => setState({ ...state, isAltPressed: true }),
+    ALT_UP: () => setState({ ...state, isAltPressed: false }),
+    DELETE_SHAPE: () => shapeCanvas.current.deleteSelectedShape(),
   };
 
   return (

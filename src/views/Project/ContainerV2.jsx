@@ -1,5 +1,5 @@
-import React, { Component, useState, useRef } from 'react';
-import { shape, string, number } from 'prop-types';
+import React, { useState, useRef } from 'react';
+// import { shape, string, number } from 'prop-types';
 import Fullscreen from 'react-full-screen';
 import Teoria from 'teoria';
 import { HotKeys } from 'react-hotkeys';
@@ -24,14 +24,14 @@ export const TOOL_TYPES = {
 
 /* ========================================================================== */
 
-const propTypes = {
-  initState: shape({
-    projectName: string.isRequired,
-    tonic: string.isRequired,
-    scale: string.isRequired,
-    tempo: number.isRequired,
-  }).isRequired,
-};
+// const propTypes = {
+//   initState: shape({
+//     projectName: string.isRequired,
+//     tonic: string.isRequired,
+//     scale: string.isRequired,
+//     tempo: number.isRequired,
+//   }).isRequired,
+// };
 
 export default props => {
   const {
@@ -72,7 +72,6 @@ export default props => {
 
   const shapeCanvas = useRef(null);
   const {
-    activeTool,
     isPlaying,
     projectName,
     isArmed,

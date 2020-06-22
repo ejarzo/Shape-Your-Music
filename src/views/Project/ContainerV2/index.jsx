@@ -9,8 +9,8 @@ import ColorControllerPanel from 'components/ColorControllerPanel';
 
 import { themeColors } from 'utils/color';
 
-import { keyMap } from './keyMap';
-import ProjectContextProvider from './ProjectContextProvider';
+import { keyMap } from '../keyMap';
+import ProjectContextProvider from '../ProjectContextProvider';
 import { getDefaultParamValues } from 'utils/synths';
 import styles from './styles.module.css';
 

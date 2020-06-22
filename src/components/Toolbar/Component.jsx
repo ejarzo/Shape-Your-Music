@@ -242,4 +242,4 @@ function ToolbarComponent(props) {
 
 ToolbarComponent.propTypes = propTypes;
 
-export default withProjectContext(ToolbarComponent);
+export default ToolbarComponent;

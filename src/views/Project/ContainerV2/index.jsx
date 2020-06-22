@@ -1,6 +1,4 @@
 import React, { useState, useRef } from 'react';
-// import { shape, string, number } from 'prop-types';
-import Fullscreen from 'react-full-screen';
 import Teoria from 'teoria';
 import { HotKeys } from 'react-hotkeys';
 
@@ -14,6 +12,7 @@ import { themeColors } from 'utils/color';
 import { keyMap } from './keyMap';
 import ProjectContextProvider from './ProjectContextProvider';
 import { getDefaultParamValues } from 'utils/synths';
+import styles from './styles.module.css';
 
 /* ========================================================================== */
 
@@ -24,14 +23,27 @@ export const TOOL_TYPES = {
 
 /* ========================================================================== */
 
-// const propTypes = {
-//   initState: shape({
-//     projectName: string.isRequired,
-//     tonic: string.isRequired,
-//     scale: string.isRequired,
-//     tempo: number.isRequired,
-//   }).isRequired,
-// };
+const getInitState = initState => ({
+  projectName: initState.projectName,
+  isGridActive: !!initState.isGridActive,
+  isSnapToGridActive: !!initState.isSnapToGridActive,
+  isAutoQuantizeActive: !!initState.isAutoQuantizeActive,
+  isFullscreenEnabled: false,
+  isPlaying: false,
+  isRecording: false,
+  isArmed: false,
+  isAltPressed: false,
+  quantizeLength: 700,
+  tempo: initState.tempo,
+  scaleObj: Teoria.note(initState.tonic).scale(initState.scale),
+  activeTool: TOOL_TYPES.DRAW,
+  activeColorIndex: 0,
+  selectedSynths: initState.selectedSynths,
+  knobVals:
+    initState.knobVals && initState.knobVals.length > 0
+      ? initState.knobVals
+      : initState.selectedSynths.map(getDefaultParamValues),
+});
 
 export default props => {
   const {
@@ -48,37 +60,10 @@ export default props => {
     saveProject,
   } = props;
 
-  const [state, setState] = useState({
-    projectName: initState.projectName,
-    isGridActive: !!initState.isGridActive,
-    isSnapToGridActive: !!initState.isSnapToGridActive,
-    isAutoQuantizeActive: !!initState.isAutoQuantizeActive,
-    isFullscreenEnabled: false,
-    isPlaying: false,
-    isRecording: false,
-    isArmed: false,
-    isAltPressed: false,
-    quantizeLength: 700,
-    tempo: initState.tempo,
-    scaleObj: Teoria.note(initState.tonic).scale(initState.scale),
-    activeTool: TOOL_TYPES.DRAW,
-    activeColorIndex: 0,
-    selectedSynths: initState.selectedSynths,
-    knobVals:
-      initState.knobVals && initState.knobVals.length > 0
-        ? initState.knobVals
-        : initState.selectedSynths.map(getDefaultParamValues),
-  });
-
   const shapeCanvas = useRef(null);
-  const {
-    isPlaying,
-    projectName,
-    isArmed,
-    isRecording,
-    isFullscreenEnabled,
-    tempo,
-  } = state;
+  const [state, setState] = useState(getInitState(initState));
+
+  const { isPlaying, projectName, isArmed, isRecording, tempo } = state;
 
   const beginRecording = () => {
     propsBeginRecording();
@@ -192,13 +177,6 @@ export default props => {
     }
   };
 
-  const handleFullscreenButtonClick = () => {
-    setState(prevState => ({
-      ...prevState,
-      isFullscreenEnabled: !prevState.isFullscreenEnabled,
-    }));
-  };
-
   const handleTempoChange = val => {
     // TODO: move to constants
     const min = 1;
@@ -303,69 +281,52 @@ export default props => {
   return (
     <HotKeys keyMap={keyMap} handlers={keyHandlers}>
       <ProjectContextProvider value={{ ...state }}>
-        <Fullscreen
-          enabled={isFullscreenEnabled}
-          onChange={isFullscreenEnabled => setState({ isFullscreenEnabled })}
-        >
-          {projectAuthor && projectName && (
-            <div
-              style={{
-                display: 'inline-block',
-                maxWidth: 300,
-                textAlign: 'center',
-                position: 'absolute',
-                margin: '0 auto',
-                left: 0,
-                right: 0,
-                top: 5,
-              }}
-            >
-              <strong>{projectName}</strong> by <em>{projectAuthor.name}</em>
-            </div>
-          )}
+        {projectAuthor && projectName && (
+          <div className={styles.ProjectTitle}>
+            <strong>{projectName}</strong> by <em>{projectAuthor.name}</em>
+          </div>
+        )}
 
-          {/* The Controls */}
-          <Toolbar
-            handlePlayClick={togglePlayStop}
-            handleRecordClick={handleRecordClick}
-            handleColorChange={handleColorChange}
-            handleDrawToolClick={handleDrawToolClick}
-            handleEditToolClick={handleEditToolClick}
-            handleGridToggleChange={handleGridToggleChange}
-            handleSnapToGridToggleChange={handleSnapToGridToggleChange}
-            handleAutoQuantizeChange={handleAutoQuantizeChange}
-            handleTempoChange={handleTempoChange}
-            handleTonicChange={handleTonicChange}
-            handleScaleChange={handleScaleChange}
-            handleFullscreenButtonClick={handleFullscreenButtonClick}
-            handleClearButtonClick={handleClearButtonClick}
-          />
+        {/* The Controls */}
+        <Toolbar
+          handlePlayClick={togglePlayStop}
+          handleRecordClick={handleRecordClick}
+          handleColorChange={handleColorChange}
+          handleDrawToolClick={handleDrawToolClick}
+          handleEditToolClick={handleEditToolClick}
+          handleGridToggleChange={handleGridToggleChange}
+          handleSnapToGridToggleChange={handleSnapToGridToggleChange}
+          handleAutoQuantizeChange={handleAutoQuantizeChange}
+          handleTempoChange={handleTempoChange}
+          handleTonicChange={handleTonicChange}
+          handleScaleChange={handleScaleChange}
+          handleClearButtonClick={handleClearButtonClick}
+        />
 
-          {/* The Canvas */}
-          <ShapeCanvas
-            // TODO: revisit: do we need to do this?
-            onMount={e => {
-              shapeCanvas.current = e;
-            }}
-            initShapesList={initState.shapesList}
-          />
+        {/* The Canvas */}
+        <ShapeCanvas
+          // TODO: revisit: do we need to do this?
+          onMount={e => {
+            shapeCanvas.current = e;
+          }}
+          initShapesList={initState.shapesList}
+        />
 
-          {/* Instrument controller panels */}
-          <ColorControllerPanel
-            onInstChange={handleInstChange}
-            onKnobChange={handleKnobChange}
-          />
+        {/* Instrument controller panels */}
+        <ColorControllerPanel
+          onInstChange={handleInstChange}
+          onKnobChange={handleKnobChange}
+        />
 
-          {/* Sidebar */}
-          <Sidebar
-            downloadUrls={downloadUrls}
-            handleSaveClick={handleSaveClick}
-            handleDeleteClick={deleteProject}
-            showSaveButton={showSaveButton}
-            showSettingsButton={showSettingsButton}
-            handleExportToMIDIClick={handleExportToMIDIClick}
-          />
-        </Fullscreen>
+        {/* Sidebar */}
+        <Sidebar
+          downloadUrls={downloadUrls}
+          handleSaveClick={handleSaveClick}
+          handleDeleteClick={deleteProject}
+          showSaveButton={showSaveButton}
+          showSettingsButton={showSettingsButton}
+          handleExportToMIDIClick={handleExportToMIDIClick}
+        />
       </ProjectContextProvider>
     </HotKeys>
   );

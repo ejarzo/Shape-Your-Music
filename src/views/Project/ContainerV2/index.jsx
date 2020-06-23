@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import Teoria from 'teoria';
 import { HotKeys } from 'react-hotkeys';
-
+import gql from 'graphql-tag';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import Toolbar from 'components/Toolbar';
 import Sidebar from 'components/Sidebar';
 import ShapeCanvas from 'components/ShapeCanvas';
@@ -22,6 +23,20 @@ export const TOOL_TYPES = {
 };
 
 /* ========================================================================== */
+
+const TOGGLE_IS_GRID_ACTIVE = gql`
+  mutation ToggleIsGridActive($projectId: Int!) {
+    toggleIsGridActive(projectId: $projectId) @client
+  }
+`;
+
+const GET_CURRENT_PROJECT = gql`
+  query {
+    unsavedProject @client {
+      isGridActive
+    }
+  }
+`;
 
 const getInitState = initState => ({
   projectName: initState.projectName,
@@ -62,8 +77,18 @@ export default props => {
 
   const shapeCanvas = useRef(null);
   const [state, setState] = useState(getInitState(initState));
-
   const { isPlaying, projectName, isArmed, isRecording, tempo } = state;
+
+  const projectId = 1;
+  const [toggleIsGridActive] = useMutation(TOGGLE_IS_GRID_ACTIVE, {
+    variables: { projectId },
+  });
+
+  const { data, error } = useQuery(GET_CURRENT_PROJECT);
+  console.log(data, error);
+  const {
+    unsavedProject: { isGridActive },
+  } = data;
 
   const beginRecording = () => {
     propsBeginRecording();
@@ -151,10 +176,12 @@ export default props => {
   };
 
   const handleGridToggleChange = () => {
-    setState(prevState => ({
-      ...prevState,
-      isGridActive: !prevState.isGridActive,
-    }));
+    // console.log(toggleIsGridActive);
+    toggleIsGridActive();
+    // setState(prevState => ({
+    //   ...prevState,
+    //   isGridActive: !prevState.isGridActive,
+    // }));
   };
 
   const handleSnapToGridToggleChange = () => {
@@ -280,7 +307,7 @@ export default props => {
 
   return (
     <HotKeys keyMap={keyMap} handlers={keyHandlers}>
-      <ProjectContextProvider value={{ ...state }}>
+      <ProjectContextProvider value={{ ...state, isGridActive }}>
         {projectAuthor && projectName && (
           <div className={styles.ProjectTitle}>
             <strong>{projectName}</strong> by <em>{projectAuthor.name}</em>

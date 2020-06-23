@@ -17,7 +17,6 @@ import styles from './styles.module.css';
 import { TOOL_TYPES } from 'views/Project/Container';
 import { SCALES, TONICS } from 'utils/music';
 
-import withProjectContext from 'views/Project/withProjectContext';
 import { ProjectContext } from 'views/Project/ProjectContextProvider';
 
 import ColorSelect from './ColorSelect';
@@ -242,4 +241,4 @@ function ToolbarComponent(props) {
 
 ToolbarComponent.propTypes = propTypes;
 
-export default withProjectContext(ToolbarComponent);
+export default ToolbarComponent;

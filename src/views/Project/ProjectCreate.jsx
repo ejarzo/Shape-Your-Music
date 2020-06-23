@@ -11,7 +11,7 @@ import {
   showSuccessMessage,
 } from 'utils/message';
 import AudioManager from './AudioManager';
-import ProjectContainer from './Container';
+import ProjectContainer from './ContainerV2';
 import { CREATE_PROJECT } from 'graphql/mutations';
 import { GET_ALL_PROJECTS, GET_MY_PROJECTS } from 'graphql/queries';
 import { ROUTES } from 'Routes';

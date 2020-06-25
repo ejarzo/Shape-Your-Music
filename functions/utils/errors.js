@@ -3,7 +3,10 @@ import { AuthenticationError, ApolloError } from 'apollo-server-lambda';
 const { FUNCTIONS_SENTRY_DSN } = process.env;
 
 export const initSentry = () => {
-  Sentry.init({ dsn: FUNCTIONS_SENTRY_DSN });
+  Sentry.init({
+    dsn: FUNCTIONS_SENTRY_DSN,
+    release: process.env.COMMIT_REF,
+  });
 };
 
 export const objectMap = (object, mapper) =>

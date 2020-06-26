@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import Teoria from 'teoria';
 import { HotKeys } from 'react-hotkeys';
 
@@ -8,11 +8,13 @@ import ShapeCanvas from 'components/ShapeCanvas';
 import ColorControllerPanel from 'components/ColorControllerPanel';
 
 import { themeColors } from 'utils/color';
+import { convertAndDownloadTracksAsMIDI } from 'utils/file';
 
 import { keyMap } from '../keyMap';
 import ProjectContextProvider from '../ProjectContextProvider';
 import { getDefaultParamValues } from 'utils/synths';
 import styles from './styles.module.css';
+import { useRecorder } from '../useRecorder';
 
 /* ========================================================================== */
 
@@ -48,36 +50,29 @@ const getInitState = initState => ({
 export default props => {
   const {
     initState,
-    downloadUrls,
     showSaveButton,
     showSettingsButton,
     projectAuthor,
     deleteProject,
     toggleTransport,
-    beginRecording: propsBeginRecording,
-    stopRecording: propsStopRecording,
-    convertAndDownloadTracksAsMIDI,
     saveProject,
   } = props;
 
   const shapeCanvas = useRef(null);
   const [state, setState] = useState(getInitState(initState));
 
-  const { isPlaying, projectName, isArmed, isRecording, tempo } = state;
+  const { isPlaying, projectName, tempo } = state;
 
-  const beginRecording = () => {
-    propsBeginRecording();
-    setState({ ...state, isRecording: true });
-  };
+  const {
+    isArmed,
+    isRecording,
+    beginRecording,
+    stopRecording,
+    armRecording,
+    downloadUrls,
+  } = useRecorder();
 
-  const stopRecording = () => {
-    propsStopRecording(projectName);
-    setState({
-      ...state,
-      isRecording: false,
-      isArmed: false,
-    });
-  };
+  const projectContext = { ...state, isRecording, isArmed };
 
   const togglePlayStop = () => {
     toggleTransport();
@@ -87,7 +82,7 @@ export default props => {
     if (isRecording) {
       stopRecording();
     }
-    setState(prevState => ({ ...prevState, isPlaying: !prevState.isPlaying }));
+    setState(s => ({ ...s, isPlaying: !s.isPlaying }));
   };
 
   const handleRecordClick = () => {
@@ -97,10 +92,7 @@ export default props => {
       if (isPlaying) {
         beginRecording();
       } else {
-        setState(prevState => ({
-          ...prevState,
-          isArmed: !prevState.isArmed,
-        }));
+        armRecording();
       }
     }
   };
@@ -260,11 +252,14 @@ export default props => {
       shapesList,
     });
   };
-
+  console.log('render is armed', isArmed);
   const keyHandlers = {
     PLAY: e => {
+      console.log(e);
       e.preventDefault();
       e.stopPropagation();
+
+      console.log('handler isarmed', state.isArmed);
       togglePlayStop();
     },
     TOGGLE_ACTIVE_TOOL: e => {
@@ -277,10 +272,9 @@ export default props => {
     ALT_UP: () => setState({ ...state, isAltPressed: false }),
     DELETE_SHAPE: () => shapeCanvas.current.deleteSelectedShape(),
   };
-
   return (
-    <HotKeys keyMap={keyMap} handlers={keyHandlers}>
-      <ProjectContextProvider value={{ ...state }}>
+    <HotKeys allowChanges keyMap={keyMap} handlers={keyHandlers}>
+      <ProjectContextProvider value={projectContext}>
         {projectAuthor && projectName && (
           <div className={styles.ProjectTitle}>
             <strong>{projectName}</strong> by <em>{projectAuthor.name}</em>

@@ -15,6 +15,7 @@ import ProjectContextProvider from '../ProjectContextProvider';
 import { getDefaultParamValues } from 'utils/synths';
 import styles from './styles.module.css';
 import { useRecorder } from '../useRecorder';
+import { useAudioOutput } from '../useAudioOutput';
 
 /* ========================================================================== */
 
@@ -32,8 +33,6 @@ const getInitState = initState => ({
   isAutoQuantizeActive: !!initState.isAutoQuantizeActive,
   isFullscreenEnabled: false,
   isPlaying: false,
-  isRecording: false,
-  isArmed: false,
   isAltPressed: false,
   quantizeLength: 700,
   tempo: initState.tempo,
@@ -54,14 +53,14 @@ export default props => {
     showSettingsButton,
     projectAuthor,
     deleteProject,
-    toggleTransport,
+    // toggleTransport,
     saveProject,
   } = props;
 
   const shapeCanvas = useRef(null);
   const [state, setState] = useState(getInitState(initState));
 
-  const { isPlaying, projectName, tempo } = state;
+  const { projectName, tempo } = state;
 
   const {
     isArmed,
@@ -72,10 +71,12 @@ export default props => {
     downloadUrls,
   } = useRecorder();
 
+  const { isPlaying, toggleIsPlaying } = useAudioOutput();
+
   const projectContext = { ...state, isRecording, isArmed };
 
   const togglePlayStop = () => {
-    toggleTransport();
+    toggleIsPlaying();
     if (isArmed) {
       beginRecording();
     }

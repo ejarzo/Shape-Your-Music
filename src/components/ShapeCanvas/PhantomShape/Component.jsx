@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import Color from 'color';
 import { Group, Circle, Line } from 'react-konva';
-import { TOOL_TYPES } from 'views/Project/Container';
-import { ProjectContext } from 'views/Project/ProjectContextProvider';
+import { TOOL_TYPES } from 'components/Project';
+import { ProjectContext } from 'components/Project/ProjectContextProvider';
 
 const propTypes = {
   points: PropTypes.array.isRequired,

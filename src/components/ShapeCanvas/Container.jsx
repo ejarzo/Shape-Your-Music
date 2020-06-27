@@ -4,9 +4,9 @@ import { object, string, number, array, bool, func } from 'prop-types';
 import { dist } from 'utils/math';
 import { themeColors } from 'utils/color';
 import ShapeCanvasComponent from './Component';
-import { TOOL_TYPES } from 'views/Project/Container';
+import { TOOL_TYPES } from 'components/Project';
 
-import withProjectContext from 'views/Project/withProjectContext';
+import withProjectContext from 'components/Project/withProjectContext';
 
 export const DRAWING_STATES = {
   PENDING: 'pending',

@@ -4,7 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { withRouter } from 'react-router';
 
 import Loading from 'components/Loading';
-import ProjectContainer from './ContainerV2';
+import ProjectContainer from 'components/Project';
 import { DEFAULT_PROJECT, getProjectSaveData } from 'utils/project';
 import {
   showLoadingMessage,

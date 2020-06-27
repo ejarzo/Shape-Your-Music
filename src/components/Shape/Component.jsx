@@ -9,8 +9,8 @@ import { themeColors, appColors } from 'utils/color';
 import ShapeVertex from './ShapeVertex';
 import Portal from 'react-portal';
 import ShapeEditorPopover from './ShapeEditorPopover';
-import withProjectContext from 'views/Project/withProjectContext';
-import { TOOL_TYPES } from 'views/Project/Container';
+import withProjectContext from 'components/Project/withProjectContext';
+import { TOOL_TYPES } from 'components/Project';
 
 const propTypes = {
   scaleObj: object.isRequired,

@@ -3,7 +3,7 @@ import { Badge, Icon, Drawer, Tooltip, Button, Popconfirm } from 'antd';
 
 import Downloads from 'components/Downloads';
 import SaveButton from 'components/Toolbar/SaveButton';
-import withProjectContext from 'views/Project/withProjectContext';
+import withProjectContext from 'components/Project/withProjectContext';
 import styles from './styles.module.css';
 
 function Sidebar(props) {

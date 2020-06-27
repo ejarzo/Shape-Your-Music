@@ -2,7 +2,7 @@ import React from 'react';
 import { func, number, string } from 'prop-types';
 import { GithubPicker } from 'react-color';
 import { themeColors } from 'utils/color';
-import withProjectContext from 'views/Project/withProjectContext';
+import withProjectContext from 'components/Project/withProjectContext';
 
 const propTypes = {
   onChange: func.isRequired,

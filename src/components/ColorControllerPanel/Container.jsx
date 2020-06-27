@@ -5,7 +5,7 @@ import { themeColors } from 'utils/color';
 import styles from './styles.module.css';
 import { SEND_CHANNELS } from 'utils/music';
 
-import withProjectContext from 'views/Project/withProjectContext';
+import withProjectContext from 'components/Project/withProjectContext';
 import ColorController from './ColorController';
 
 const propTypes = {

@@ -3,7 +3,7 @@ import { number, string, array, bool, object, func } from 'prop-types';
 import Color from 'color';
 import Tone from 'tone';
 import { themeColors, appColors } from 'utils/color';
-import { TOOL_TYPES } from 'views/Project/Container';
+import { TOOL_TYPES } from 'components/Project';
 
 import { convertValToRange } from 'utils/math';
 import {
@@ -14,7 +14,7 @@ import {
 } from 'utils/shape';
 
 import ShapeComponent from './Component';
-import withProjectContext from 'views/Project/withProjectContext';
+import withProjectContext from 'components/Project/withProjectContext';
 import { SYNTH_PRESETS } from 'instrumentPresets';
 import { SEND_CHANNELS } from 'utils/music';
 

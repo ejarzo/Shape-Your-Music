@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import ProjectCreate from 'views/Project/ProjectCreate';
-import ProjectEdit from 'views/Project/ProjectEdit';
+import ProjectCreate from 'views/ProjectCreate';
+import ProjectEdit from 'views/ProjectEdit';
 import DiscoverGQL from 'views/DiscoverGQL';
 import UserProjects from 'views/UserProjects';
 import NotFound from 'views/NotFound';

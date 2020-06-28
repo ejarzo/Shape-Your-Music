@@ -10,8 +10,7 @@ import {
   showErrorMessage,
   showSuccessMessage,
 } from 'utils/message';
-import AudioManager from './AudioManager';
-import ProjectContainer from './Container';
+import ProjectContainer from 'components/Project';
 import { CREATE_PROJECT } from 'graphql/mutations';
 import { GET_ALL_PROJECTS, GET_MY_PROJECTS } from 'graphql/queries';
 import { ROUTES } from 'Routes';
@@ -60,11 +59,7 @@ function ProjectCreate(props) {
     projectAuthor: '',
   };
 
-  return (
-    <AudioManager>
-      {audioProps => <ProjectContainer {...projectProps} {...audioProps} />}
-    </AudioManager>
-  );
+  return <ProjectContainer {...projectProps} />;
 }
 
 export default withRouter(ProjectCreate);

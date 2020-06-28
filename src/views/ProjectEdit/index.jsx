@@ -4,8 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { withRouter } from 'react-router';
 
 import Loading from 'components/Loading';
-import AudioManager from './AudioManager';
-import ProjectContainer from './Container';
+import ProjectContainer from 'components/Project';
 import { DEFAULT_PROJECT, getProjectSaveData } from 'utils/project';
 import {
   showLoadingMessage,
@@ -118,11 +117,7 @@ function ProjectEdit(props) {
     },
   };
 
-  return (
-    <AudioManager>
-      {audioProps => <ProjectContainer {...projectProps} {...audioProps} />}
-    </AudioManager>
-  );
+  return <ProjectContainer {...projectProps} />;
 }
 
 export default withRouter(ProjectEdit);

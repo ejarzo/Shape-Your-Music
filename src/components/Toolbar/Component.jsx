@@ -14,11 +14,10 @@ import { themeColors, appColors, getDarker } from 'utils/color';
 
 import styles from './styles.module.css';
 
-import { TOOL_TYPES } from 'views/Project/Container';
+import { TOOL_TYPES } from 'components/Project';
 import { SCALES, TONICS } from 'utils/music';
 
-import withProjectContext from 'views/Project/withProjectContext';
-import { ProjectContext } from 'views/Project/ProjectContextProvider';
+import { ProjectContext } from 'components/Project/ProjectContextProvider';
 
 import ColorSelect from './ColorSelect';
 import { Tooltip } from 'antd';
@@ -242,4 +241,4 @@ function ToolbarComponent(props) {
 
 ToolbarComponent.propTypes = propTypes;
 
-export default withProjectContext(ToolbarComponent);
+export default ToolbarComponent;

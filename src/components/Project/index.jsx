@@ -253,7 +253,7 @@ export default props => {
       shapesList,
     });
   };
-  console.log('render is armed', isArmed);
+
   const keyHandlers = {
     PLAY: e => {
       console.log(e);
@@ -273,6 +273,7 @@ export default props => {
     ALT_UP: () => setState({ ...state, isAltPressed: false }),
     DELETE_SHAPE: () => shapeCanvas.current.deleteSelectedShape(),
   };
+
   return (
     <HotKeys allowChanges keyMap={keyMap} handlers={keyHandlers}>
       <ProjectContextProvider value={projectContext}>

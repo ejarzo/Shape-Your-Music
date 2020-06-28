@@ -19,8 +19,6 @@ const propTypes = {
   onContentMouseMove: PropTypes.func.isRequired,
   onContentMouseDown: PropTypes.func.isRequired,
 
-  gridDots: PropTypes.array,
-
   shapesList: PropTypes.array.isRequired,
   selectedShapeIndex: PropTypes.number.isRequired,
   soloedShapeIndex: PropTypes.number.isRequired,

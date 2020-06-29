@@ -118,3 +118,18 @@ export const getNoteInfo = (
     pIndex: i === 0 ? points.length : i,
   };
 };
+
+export const getPointsForFixedPerimeterLength = (points, length) => {
+  const currLen = getPerimeterLength(points);
+  const avgPoint = getAveragePoint(points);
+  const ratio = length / currLen;
+
+  const newPoints = points.slice();
+
+  forEachPoint(points, (p, i) => {
+    newPoints[i] = p.x * ratio + (1 - ratio) * avgPoint.x;
+    newPoints[i + 1] = p.y * ratio + (1 - ratio) * avgPoint.y;
+  });
+
+  return newPoints;
+};

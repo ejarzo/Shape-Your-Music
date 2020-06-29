@@ -3,7 +3,11 @@ import { themeColors, appColors } from 'utils/color';
 import { TOOL_TYPES } from 'components/Project';
 
 import { convertValToRange } from 'utils/math';
-import { getPerimeterLength, getAveragePoint, forEachPoint } from 'utils/shape';
+import {
+  getPerimeterLength,
+  getAveragePoint,
+  getPointsForFixedPerimeterLength,
+} from 'utils/shape';
 
 import ShapeComponent from './ComponentV2';
 import { useContext } from 'react';
@@ -11,21 +15,6 @@ import { ProjectContext } from 'components/Project/ProjectContextProvider';
 import { useShapeAttrs } from './useShapeAttrs';
 import { useShapeSynth } from './useShapeSynth';
 import { useCallback } from 'react';
-
-const getPointsForFixedPerimeterLength = (points, length) => {
-  const currLen = getPerimeterLength(points);
-  const avgPoint = getAveragePoint(points);
-  const ratio = length / currLen;
-
-  const newPoints = points.slice();
-
-  forEachPoint(points, (p, i) => {
-    newPoints[i] = p.x * ratio + (1 - ratio) * avgPoint.x;
-    newPoints[i + 1] = p.y * ratio + (1 - ratio) * avgPoint.y;
-  });
-
-  return newPoints;
-};
 
 function ShapeContainerV2(props, ref) {
   console.log('shape render');

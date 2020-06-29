@@ -36,7 +36,6 @@ const propTypes = {
   handleTempoChange: func.isRequired,
   handleTonicChange: func.isRequired,
   handleScaleChange: func.isRequired,
-  handleFullscreenButtonClick: func.isRequired,
   handleClearButtonClick: func.isRequired,
 };
 

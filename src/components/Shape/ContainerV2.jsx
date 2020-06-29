@@ -21,6 +21,8 @@ import { useContext } from 'react';
 import { ProjectContext } from 'components/Project/ProjectContextProvider';
 import { useShapeAttrs } from './useShapeAttrs';
 import { useShapeSynth } from './useShapeSynth';
+import { useImperativeHandle } from 'react';
+import { useCallback } from 'react';
 
 const getPointsForFixedPerimeterLength = (points, length) => {
   const currLen = getPerimeterLength(points);
@@ -37,11 +39,14 @@ const getPointsForFixedPerimeterLength = (points, length) => {
   return newPoints;
 };
 
-function ShapeContainerV2(props) {
+function ShapeContainerV2(props, ref) {
   console.log('shape render');
-  const { activeTool, isAutoQuantizeActive, scaleObj } = useContext(
-    ProjectContext
-  );
+  const {
+    activeTool,
+    isAutoQuantizeActive,
+    selectedSynths,
+    knobVals,
+  } = useContext(ProjectContext);
 
   const {
     index,
@@ -74,7 +79,14 @@ function ShapeContainerV2(props) {
     animCircleY: 0,
   });
 
-  const { points, noteIndexModifier, averagePoint, editorX, editorY } = state;
+  const {
+    points,
+    noteIndexModifier,
+    averagePoint,
+    editorX,
+    editorY,
+    firstNoteIndex,
+  } = state;
 
   const [isHoveredOver, setIsHoveredOver] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -94,7 +106,55 @@ function ShapeContainerV2(props) {
     isHoveredOver,
   });
 
-  // const { isBuffering } = useShapeSynth();
+  const isPlayingAnimator = useCallback(
+    (val, dur) => () => {
+      const { pIndex } = val;
+
+      const xFrom = points[pIndex - 2];
+      const yFrom = points[pIndex - 1];
+      const xTo = pIndex >= points.length ? points[0] : points[pIndex];
+      const yTo = pIndex >= points.length ? points[1] : points[pIndex + 1];
+
+      const shapeFill = shapeAttrs.fill;
+      if (!shapeRef.current) return;
+      shapeRef.current.flashFill(shapeFill);
+      shapeRef.current.setProgressDotAttrs({
+        x: xFrom,
+        y: yFrom,
+        fill: appColors.white,
+        radius: 8,
+      });
+      shapeRef.current.setProgressDotTo({
+        x: xTo,
+        y: yTo,
+        duration: dur,
+      });
+      shapeRef.current.setProgressDotTo({
+        radius: 5,
+        fill: themeColors[colorIndex],
+        duration: 0.3,
+      });
+    },
+    [points, colorIndex, shapeAttrs.fill]
+  );
+
+  const { isBuffering } = useShapeSynth({
+    selectedSynths,
+    colorIndex,
+    knobVals,
+    volume,
+    isPlayingAnimator,
+    points,
+    noteIndexModifier,
+    firstNoteIndex,
+    isMuted,
+    isSoloed,
+  });
+
+  useEffect(() => {
+    // initializes starting note
+    handleDrag();
+  }, []);
 
   useEffect(() => {
     if (!isEditMode) {
@@ -102,8 +162,18 @@ function ShapeContainerV2(props) {
     }
   }, [isEditMode]);
 
-  // TODO set volume
-  // TODO set mute
+  useEffect(() => {
+    if (isAutoQuantizeActive) {
+      setState(s => {
+        const newPoints = getPointsForFixedPerimeterLength(
+          s.points,
+          quantizeLength * s.quantizeFactor
+        );
+
+        return { ...s, points: newPoints };
+      });
+    }
+  }, [isAutoQuantizeActive]);
 
   /* Hover */
   const handleMouseDown = e => {
@@ -177,10 +247,6 @@ function ShapeContainerV2(props) {
             ? factor * quantizeFactor * quantizeLength
             : getPerimeterLength(points) * factor;
           const newPoints = getPointsForFixedPerimeterLength(points, newPerim);
-
-          // TODO
-          // setNoteEvents(scaleObj, newPoints);
-
           return {
             ...s,
             points: newPoints,
@@ -198,7 +264,6 @@ function ShapeContainerV2(props) {
     return absolutePoints;
   };
 
-  // TODO test
   const handleReverseClick = () => {
     setState(s => {
       const { points } = s;
@@ -207,10 +272,6 @@ function ShapeContainerV2(props) {
         reversed.push(points[i]);
         reversed.push(points[i + 1]);
       }
-
-      // TODO
-      // this.setNoteEvents(scaleObj, reversed);
-
       return { ...s, points: reversed };
     });
   };
@@ -229,7 +290,7 @@ function ShapeContainerV2(props) {
       isSelected={isSelected}
       isMuted={isMuted}
       isSoloed={isSoloed}
-      // isBuffering={isBuffering}
+      isBuffering={isBuffering}
       averagePoint={averagePoint}
       editorPosition={{ x: editorX, y: editorY }}
       // shape event handlers

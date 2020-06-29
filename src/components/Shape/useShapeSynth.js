@@ -1,60 +1,89 @@
-import Tone from 'tone';
-import { SYNTH_PRESETS } from 'instrumentPresets';
-import { SEND_CHANNELS } from 'utils/music';
+import { useRef, useState, useEffect, useContext } from 'react';
+import { ProjectContext } from 'components/Project/ProjectContextProvider';
+import { Synth } from './Synth';
 
-export const useShapeAttrs = ({ selectedSynths, colorIndex, knobVals }) => {
-  const setSynth = () => {
-    const selectedSynth = selectedSynths[colorIndex];
-    const shapeKnobVals = knobVals[colorIndex];
-    const synthObj = SYNTH_PRESETS[selectedSynth];
+export const useShapeSynth = ({
+  selectedSynths,
+  colorIndex,
+  knobVals,
+  volume,
+  isPlayingAnimator,
+  points,
+  noteIndexModifier,
+  firstNoteIndex,
+  isMuted,
+  isSoloed,
+}) => {
+  const { tempo, scaleObj } = useContext(ProjectContext);
+  const [isBuffering, setIsBuffering] = useState(false);
+  const selectedSynth = selectedSynths[colorIndex];
+  const shapeKnobVals = knobVals[colorIndex];
+  // const synthObj = SYNTH_PRESETS[selectedSynth];
+  const synthContainer = useRef(null);
 
-    if (this.synth) {
-      this.synth.triggerRelease();
-
-      this.panner.disconnect();
-      this.panner.dispose();
-      this.solo.disconnect();
-      this.solo.dispose();
-      this.gain.disconnect();
-      this.gain.dispose();
-
-      this.synth.volume.exponentialRampToValueAtTime(
-        -Infinity,
-        Tone.now() + 0.2
-      );
-
-      this.synth.disconnect();
-      this.synth.dispose();
-    }
-
-    this.synth = new synthObj.baseSynth(synthObj.params, () => {
-      console.log('LOADED');
-      this.setState({ isBuffering: false });
+  useEffect(() => {
+    synthContainer.current = new Synth({
+      initVolume: volume,
+      initKnobVals: shapeKnobVals,
+      isPlayingAnimator,
+      noteIndexModifier,
+      firstNoteIndex,
+      onStartLoading: () => setIsBuffering(true),
+      onEndLoading: () => setIsBuffering(false),
     });
-    if (this.synth instanceof Tone.Sampler) {
-      console.log('setting isbuffering to true');
-      this.setState({ isBuffering: true });
-    }
-    this.synth.volume.exponentialRampToValueAtTime(
-      this.props.volume,
-      Tone.now() + 0.2
-    );
+    return () => {
+      synthContainer.current.dispose();
+    };
+  }, []);
 
-    shapeKnobVals.forEach((val, i) => {
-      if (synthObj.dynamicParams[i].target === 'instrument') {
-        synthObj.dynamicParams[i].func(this, val);
-      }
-    });
+  useEffect(() => {
+    console.log('CHANGE scale');
+    synthContainer.current.setScaleObj(scaleObj);
+  }, [scaleObj]);
 
-    this.panner = new Tone.Panner(0);
-    this.solo = new Tone.Solo();
-    this.gain = new Tone.Gain().send(
-      `${SEND_CHANNELS.FX_PREFIX}${colorIndex}`,
-      0
-    );
+  useEffect(() => {
+    console.log('CHANGE tempo');
+    synthContainer.current.setTempo(tempo);
+  }, [tempo]);
 
-    this.synth.chain(this.panner, this.solo, this.gain);
-  };
+  useEffect(() => {
+    console.log('CHANGE SYNTH');
+    synthContainer.current.setSynth(selectedSynth, colorIndex);
+  }, [selectedSynth, colorIndex]);
 
-  return { isBuffering: false };
+  useEffect(() => {
+    console.log('CHANGE KNOBS');
+    synthContainer.current.setKnobValues(shapeKnobVals);
+  }, [shapeKnobVals]);
+
+  useEffect(() => {
+    console.log('CHANGE NOTES');
+    synthContainer.current.setNoteEvents(scaleObj, points);
+  }, [scaleObj, points]);
+
+  useEffect(() => {
+    console.log('CHANGE VOLUME');
+    synthContainer.current.setVolume(volume);
+  }, [volume]);
+
+  useEffect(() => {
+    synthContainer.current.updateAnimator(isPlayingAnimator);
+  }, [isPlayingAnimator]);
+
+  useEffect(() => {
+    console.log('CHANGE noteIndexModifier');
+    synthContainer.current.updateNoteIndexModifier(noteIndexModifier);
+  }, [noteIndexModifier]);
+
+  useEffect(() => {
+    console.log('CHANGE muted');
+    synthContainer.current.setIsMuted(isMuted);
+  }, [isMuted]);
+
+  useEffect(() => {
+    console.log('CHANGE solo');
+    synthContainer.current.setIsSoloed(isSoloed);
+  }, [isSoloed]);
+
+  return { isBuffering };
 };

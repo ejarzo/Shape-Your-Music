@@ -10,7 +10,6 @@ const propTypes = {
 /* ================================ Toolbar ================================ */
 function Downloads(props) {
   const { downloadUrls } = props;
-  console.log(downloadUrls);
   return (
     <div className={styles.downloads}>
       <div style={{ paddingBottom: 20 }}>

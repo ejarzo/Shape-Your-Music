@@ -4,7 +4,6 @@ import React, {
   forwardRef,
   useContext,
 } from 'react';
-import { number, bool, string, object, func, array } from 'prop-types';
 import { Circle, Group, Line } from 'react-konva';
 
 import { getPerimeterLength } from 'utils/shape';
@@ -17,63 +16,31 @@ import ShapeEditorPopover from './ShapeEditorPopover';
 import { TOOL_TYPES } from 'components/Project';
 import { ProjectContext } from 'components/Project/ProjectContextProvider';
 
-const propTypes = {
-  scaleObj: object.isRequired,
-  activeTool: string.isRequired,
-  isPlaying: bool.isRequired,
-  tempo: number.isRequired,
-
-  points: array.isRequired,
-  attrs: object.isRequired,
-
-  noteIndexModifier: number.isRequired,
-
-  colorIndex: number.isRequired,
-  index: number.isRequired,
-  volume: number.isRequired,
-
-  isSelected: bool.isRequired,
-  isMuted: bool.isRequired,
-  isDragging: bool.isRequired,
-  isSoloed: bool.isRequired,
-
-  dragBoundFunc: func.isRequired,
-  handleDrag: func.isRequired,
-  handleDragStart: func.isRequired,
-  handleDragEnd: func.isRequired,
-
-  handleClick: func.isRequired,
-  handleMouseDown: func.isRequired,
-  handleMouseOver: func.isRequired,
-  handleMouseOut: func.isRequired,
-  handleVertexDragMove: func.isRequired,
-
-  handleVolumeChange: func.isRequired,
-  handleMuteChange: func.isRequired,
-  handleSoloChange: func.isRequired,
-  handleColorChange: func.isRequired,
-  handleDelete: func.isRequired,
-  handleQuantizeFactorChange: func.isRequired,
-  handleToTopClick: func.isRequired,
-  handleToBottomClick: func.isRequired,
-  handleReverseClick: func.isRequired,
-
-  averagePoint: object.isRequired,
-  editorPosition: object.isRequired,
-};
-
 function ShapeComponent(props, ref) {
-  const shapeElement = useRef();
-  const groupElement = useRef();
-  const animCircleRef = useRef();
+  const shapeFillRef = useRef();
+  const groupRef = useRef();
+  const progressDotRef = useRef();
 
   useImperativeHandle(ref, () => ({
-    getAbsolutePosition: () => shapeElement.current.getAbsolutePosition(),
+    getAbsolutePosition: () => shapeFillRef.current.getAbsolutePosition(),
     moveToTop: () => {
-      groupElement.current.moveToTop();
+      groupRef.current.moveToTop();
     },
     moveToBottom: () => {
-      groupElement.current.moveToBottom();
+      groupRef.current.moveToBottom();
+    },
+    flashFill: fill => {
+      if (!shapeFillRef.current) return;
+      shapeFillRef.current.setAttrs({ fill: appColors.white });
+      shapeFillRef.current.to({ fill, duration: 0.2 });
+    },
+    setProgressDotAttrs: attrs => {
+      if (!progressDotRef.current) return;
+      progressDotRef.current.setAttrs(attrs);
+    },
+    setProgressDotTo: to => {
+      if (!progressDotRef.current) return;
+      progressDotRef.current.to(to);
     },
   }));
 
@@ -127,9 +94,10 @@ function ShapeComponent(props, ref) {
     panningVal = `${Math.abs(panningVal)} L`;
   }
 
-  const animCircle = isPlaying && (
+  const progressDot = isPlaying && (
     <Circle
-      ref={animCircleRef}
+      key="progress-dot"
+      ref={progressDotRef}
       hitGraphEnabled={false}
       transformsEnabled="position"
       x={-999}
@@ -148,7 +116,8 @@ function ShapeComponent(props, ref) {
   if (isEditMode) {
     return (
       <Group
-        ref={groupElement}
+        key="shapeGroup"
+        ref={groupRef}
         draggable
         dragBoundFunc={dragBoundFunc}
         onDragMove={handleDrag}
@@ -159,7 +128,8 @@ function ShapeComponent(props, ref) {
       >
         {/* shape perimeter */}
         <Line
-          ref={shapeElement}
+          key="shapeLine"
+          ref={shapeFillRef}
           points={points}
           fill={attrs.fill}
           lineJoin="bevel"
@@ -193,7 +163,7 @@ function ShapeComponent(props, ref) {
         )}
 
         {/* node that travels around the perimeter when playing */}
-        {animCircle}
+        {progressDot}
 
         {/* tooltip that appears on drag */}
         <Portal isOpened={isDragging}>
@@ -249,14 +219,16 @@ function ShapeComponent(props, ref) {
   } else {
     return (
       <Group
-        ref={groupElement}
+        key="shapeGroup"
+        ref={groupRef}
         hitGraphEnabled={false}
         draggable={false}
         opacity={attrs.opacity}
         transformsEnabled="position"
       >
         <Line
-          ref={shapeElement}
+          key="shapeLine"
+          ref={shapeFillRef}
           strokeScaleEnabled={false}
           transformsEnabled="position"
           points={points}
@@ -299,13 +271,11 @@ function ShapeComponent(props, ref) {
           onVertexDragMove={handleVertexDragMove(0)}
         />
 
-        {animCircle}
+        {progressDot}
       </Group>
     );
   }
   // }
 }
-
-ShapeComponent.propTypes = propTypes;
 
 export default forwardRef(ShapeComponent);

@@ -1,27 +1,15 @@
-import React, { PureComponent, useState, useRef, useEffect } from 'react';
-import { number, string, array, bool, object, func } from 'prop-types';
-import Color from 'color';
-import Tone from 'tone';
+import React, { useState, useRef, useEffect } from 'react';
 import { themeColors, appColors } from 'utils/color';
 import { TOOL_TYPES } from 'components/Project';
 
 import { convertValToRange } from 'utils/math';
-import {
-  getPerimeterLength,
-  getAveragePoint,
-  forEachPoint,
-  getNoteInfo,
-} from 'utils/shape';
+import { getPerimeterLength, getAveragePoint, forEachPoint } from 'utils/shape';
 
 import ShapeComponent from './ComponentV2';
-import withProjectContext from 'components/Project/withProjectContext';
-import { SYNTH_PRESETS } from 'instrumentPresets';
-import { SEND_CHANNELS } from 'utils/music';
 import { useContext } from 'react';
 import { ProjectContext } from 'components/Project/ProjectContextProvider';
 import { useShapeAttrs } from './useShapeAttrs';
 import { useShapeSynth } from './useShapeSynth';
-import { useImperativeHandle } from 'react';
 import { useCallback } from 'react';
 
 const getPointsForFixedPerimeterLength = (points, length) => {

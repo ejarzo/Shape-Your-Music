@@ -34,7 +34,8 @@ export const useShapeSynth = ({
     return () => {
       synthContainer.current.dispose();
     };
-  }, []);
+  }, []); // eslint-disable-line
+  // TODO ^
 
   useEffect(() => {
     console.log('CHANGE scale');

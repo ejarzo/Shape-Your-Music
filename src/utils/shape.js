@@ -133,3 +133,50 @@ export const getPointsForFixedPerimeterLength = (points, length) => {
 
   return newPoints;
 };
+
+export const convertPointsToMIDINoteEvents = ({
+  firstNoteIndex,
+  points,
+  scaleObj,
+  noteIndexModifier,
+}) => {
+  let prevNoteIndex = firstNoteIndex;
+
+  // TODO: clean this up
+  const noteEvents = [];
+  forEachPoint(points, (p, i) => {
+    if (i >= 2) {
+      const noteInfo = getNoteInfo(
+        points,
+        scaleObj,
+        i,
+        i - 2,
+        i - 4,
+        prevNoteIndex
+      );
+
+      const noteIndex = noteInfo.noteIndex + noteIndexModifier;
+      const noteString = scaleObj.get(noteIndex).toString();
+      noteEvents.push({ note: noteString, duration: noteInfo.duration });
+
+      prevNoteIndex = noteInfo.noteIndex;
+    }
+  });
+
+  // last edge
+  const n = points.length;
+  const lastNoteInfo = getNoteInfo(
+    points,
+    scaleObj,
+    0,
+    n - 2,
+    n - 4,
+    prevNoteIndex
+  );
+
+  const noteIndex = lastNoteInfo.noteIndex + noteIndexModifier;
+  const noteString = scaleObj.get(noteIndex).toString();
+  noteEvents.push({ note: noteString, duration: lastNoteInfo.duration });
+
+  return noteEvents;
+};

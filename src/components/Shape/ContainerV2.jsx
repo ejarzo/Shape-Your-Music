@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef, memo } from 'react';
 import { themeColors, appColors } from 'utils/color';
 import { TOOL_TYPES } from 'components/Project';
 
@@ -7,6 +7,7 @@ import {
   getPerimeterLength,
   getAveragePoint,
   getPointsForFixedPerimeterLength,
+  convertPointsToMIDINoteEvents,
 } from 'utils/shape';
 
 import ShapeComponent from './ComponentV2';
@@ -15,6 +16,7 @@ import { ProjectContext } from 'components/Project/ProjectContextProvider';
 import { useShapeAttrs } from './useShapeAttrs';
 import { useShapeSynth } from './useShapeSynth';
 import { useCallback } from 'react';
+import { useImperativeHandle } from 'react';
 
 function ShapeContainerV2(props, ref) {
   console.log('shape render');
@@ -23,6 +25,7 @@ function ShapeContainerV2(props, ref) {
     isAutoQuantizeActive,
     selectedSynths,
     knobVals,
+    scaleObj,
   } = useContext(ProjectContext);
 
   const {
@@ -63,6 +66,7 @@ function ShapeContainerV2(props, ref) {
     editorX,
     editorY,
     firstNoteIndex,
+    quantizeFactor,
   } = state;
 
   const [isHoveredOver, setIsHoveredOver] = useState(false);
@@ -73,6 +77,7 @@ function ShapeContainerV2(props, ref) {
   const color = themeColors[colorIndex];
   const isSoloed = soloedShapeIndex === index;
   const isEditMode = activeTool === TOOL_TYPES.EDIT;
+
   const shapeAttrs = useShapeAttrs({
     color,
     isSelected,
@@ -151,6 +156,23 @@ function ShapeContainerV2(props, ref) {
       });
     }
   }, [isAutoQuantizeActive]);
+
+  useImperativeHandle(ref, () => ({
+    getSaveDataState: () => {
+      console.log('getAbsolutePoints called');
+      return {
+        points: getAbsolutePoints(),
+        quantizeFactor,
+      };
+    },
+    getMIDINoteEvents: () =>
+      convertPointsToMIDINoteEvents({
+        firstNoteIndex,
+        points,
+        scaleObj,
+        noteIndexModifier,
+      }),
+  }));
 
   /* Hover */
   const handleMouseDown = e => {
@@ -304,4 +326,4 @@ function ShapeContainerV2(props, ref) {
   );
 }
 
-export default React.memo(ShapeContainerV2);
+export default memo(forwardRef(ShapeContainerV2));

@@ -241,7 +241,7 @@ export default props => {
 
     const projectContext = state;
     const shapesList = shapeCanvas.current.getShapesList();
-
+    console.log('shapes list', shapesList);
     // TODO: do something with this screenshot
     // const screenshot = this.shapeCanvas.getScreenshot();
     // console.log('generated screenshot:', screenshot);

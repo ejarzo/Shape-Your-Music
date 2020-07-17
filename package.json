@@ -33,7 +33,7 @@
     "inline-worker": "1.1.0",
     "jszip": "3.1.5",
     "konva": "^6.0.0",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.19",
     "midi-writer-js": "1.5.2",
     "netlify-identity-widget": "^1.5.5",
     "prop-types": "^15.6.0",

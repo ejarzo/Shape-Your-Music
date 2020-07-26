@@ -36,7 +36,6 @@ const propTypes = {
   handleTempoChange: func.isRequired,
   handleTonicChange: func.isRequired,
   handleScaleChange: func.isRequired,
-  handleFullscreenButtonClick: func.isRequired,
   handleClearButtonClick: func.isRequired,
 };
 
@@ -81,12 +80,19 @@ function ToolbarComponent(props) {
     <div className={styles.toolbar}>
       {/* TRANSPORT CONTROLS */}
       <div className={styles.toolbarSection}>
-        <Tooltip title="Play" placement="bottomLeft">
+        <Tooltip
+          title={
+            <span>
+              {isPlaying ? 'Stop' : 'Play'}{' '}
+              <span style={{ opacity: 0.6 }}>(SPACE)</span>
+            </span>
+          }
+          placement="bottomLeft"
+        >
           <div>
             <IconButton
               iconClassName={playButtonClass}
               onClick={handlePlayClick}
-              title="Play project (SPACE)"
             />
           </div>
         </Tooltip>

@@ -100,9 +100,7 @@ class ShapeContainer extends PureComponent {
         this.quantizeLength * quantizeFactor
       );
       this.setNoteEvents(scaleObj, newPoints);
-      this.setState({
-        points: newPoints,
-      });
+      this.setState({ points: newPoints });
     } else {
       this.setNoteEvents(scaleObj, points);
     }
@@ -431,17 +429,12 @@ class ShapeContainer extends PureComponent {
 
   /* Click */
   handleMouseDown(e) {
-    this.setState({
-      editorX: e.evt.offsetX,
-      editorY: e.evt.offsetY,
-    });
+    this.setState({ editorX: e.evt.offsetX, editorY: e.evt.offsetY });
   }
 
   /* Drag */
   handleDragStart() {
-    this.setState({
-      isDragging: true,
-    });
+    this.setState({ isDragging: true });
   }
 
   handleDrag() {

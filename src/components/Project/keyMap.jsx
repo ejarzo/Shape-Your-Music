@@ -5,4 +5,5 @@ export const keyMap = {
   ALT_DOWN: [{ sequence: 'alt', action: 'keydown' }],
   ALT_UP: [{ sequence: 'alt', action: 'keyup' }],
   DELETE_SHAPE: 'backspace',
+  CANCEL_IN_PROGRESS_SHAPE: 'escape',
 };

@@ -1,3 +1,7 @@
+/* 
+  TODO : Remove file
+*/
+
 import React from 'react';
 import { number, bool, string, object, func, array } from 'prop-types';
 import { Circle, Group, Line } from 'react-konva';

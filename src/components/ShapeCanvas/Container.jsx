@@ -9,9 +9,9 @@ import { TOOL_TYPES } from 'components/Project';
 import withProjectContext from 'components/Project/withProjectContext';
 
 export const DRAWING_STATES = {
-  PENDING: 'pending',
-  PREVIEW: 'preview',
-  DRAWING: 'drawing',
+  PENDING: 'pending', // not currently drawing
+  PREVIEW: 'preview', // mouse is hovered over final position, showing a preview of the finished shape
+  DRAWING: 'drawing', // drawing but not previewing
 };
 
 const propTypes = {
@@ -59,8 +59,6 @@ class ShapeCanvas extends Component {
 
     this.getShapesList = this.getShapesList.bind(this);
     this.getScreenshot = this.getScreenshot.bind(this);
-    this.getShapeRef = this.getShapeRef.bind(this);
-    this.removeShapeRef = this.removeShapeRef.bind(this);
     this.duplicateShape = this.duplicateShape.bind(this);
 
     this.handleClick = this.handleClick.bind(this);
@@ -110,32 +108,18 @@ class ShapeCanvas extends Component {
   }
 
   getShapesList() {
-    // TODO: clean this up
     const shapesList = this.state.shapesList.slice();
     const { deletedShapeIndeces } = this.state;
 
     /* Get absolute points for each shape */
-    this.shapeRefs.forEach((shape, i) => {
+    shapesList.forEach((shape, i) => {
       if (deletedShapeIndeces[i]) return;
-      const points = shape.getAbsolutePoints();
+      const { points, quantizeFactor } = this.shapeCanvas.getShapeState(i);
       shapesList[i].points = points;
-      // TODO lift this property to ShapeCanvas state
-      shapesList[i].quantizeFactor = shape.state.quantizeFactor;
+      shapesList[i].quantizeFactor = quantizeFactor;
     });
 
     return shapesList.filter((_, i) => !deletedShapeIndeces[i]);
-  }
-
-  getShapeRef() {
-    return c => {
-      console.log('adding shape ref', c);
-      this.shapeRefs.push(c);
-    };
-  }
-
-  removeShapeRef(i) {
-    console.log('removing shape ref', i);
-    this.shapeRefs[i] = null;
   }
 
   appendShape() {
@@ -163,15 +147,19 @@ class ShapeCanvas extends Component {
     return this.state.drawingState === DRAWING_STATES.PENDING;
   }
 
+  cancelInProgressShape() {
+    const { drawingState } = this.state;
+    if (drawingState !== DRAWING_STATES.PENDING) {
+      this.setState({
+        currPoints: [],
+        drawingState: DRAWING_STATES.PENDING,
+      });
+    }
+  }
+
   getShapeMIDINoteEvents() {
-    const midiSequences = [];
-    this.shapeRefs.forEach((shape, i) => {
-      if (!shape) return;
-
-      const midiSequence = shape.getMIDINoteEvents();
-      midiSequences.push(midiSequence);
-    });
-
+    console.log(this.shapeCanvas);
+    const midiSequences = this.shapeCanvas.getShapeMIDISequences();
     return midiSequences;
   }
 
@@ -243,12 +231,7 @@ class ShapeCanvas extends Component {
     }
     // right click to cancel shape mid-draw
     else if (e.evt.which === 3) {
-      if (drawingState !== DRAWING_STATES.PENDING) {
-        this.setState({
-          currPoints: [],
-          drawingState: DRAWING_STATES.PENDING,
-        });
-      }
+      this.cancelInProgressShape();
     }
   }
 
@@ -408,10 +391,7 @@ class ShapeCanvas extends Component {
 
     return (
       <ShapeCanvasComponent
-        // TODO: revisit shape refs
-        stageRef={c => (this.stage = c)}
-        getShapeRef={this.getShapeRef}
-        removeShapeRef={this.removeShapeRef}
+        ref={c => (this.shapeCanvas = c)}
         height={window.innerHeight - 80}
         width={window.innerWidth}
         gridSize={gridSize}

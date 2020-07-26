@@ -24,6 +24,7 @@
   text-align: center;
   font-size: 1.5em;
   transform: scale3d(1, 1, 1);
+  transition: all 0.2s;
 }
 
 .tabButton:hover {

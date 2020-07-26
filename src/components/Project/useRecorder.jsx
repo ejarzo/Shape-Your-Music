@@ -8,7 +8,7 @@ export const useRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isArmed, setIsArmed] = useState(false);
   const [downloadUrls, setDownloadUrls] = useState([]);
-  console.log('downloadUrls', downloadUrls);
+
   const beginRecording = () => {
     setIsArmed(false);
     setIsRecording(true);

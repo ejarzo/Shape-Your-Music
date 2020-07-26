@@ -1,7 +1,11 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, {
+  useContext,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import { Stage, Layer, Group } from 'react-konva';
-import Shape from 'components/Shape';
+import ShapesWrapper from './ShapesWrapper';
 import PhantomShape from './PhantomShape';
 import Grid from './Grid';
 import { themeColors } from 'utils/color';
@@ -12,35 +16,10 @@ import ProjectContextProvider, {
   ProjectContext,
 } from 'components/Project/ProjectContextProvider';
 
-const propTypes = {
-  height: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  onContentClick: PropTypes.func.isRequired,
-  onContentMouseMove: PropTypes.func.isRequired,
-  onContentMouseDown: PropTypes.func.isRequired,
-
-  gridDots: PropTypes.array,
-
-  shapesList: PropTypes.array.isRequired,
-  selectedShapeIndex: PropTypes.number.isRequired,
-  soloedShapeIndex: PropTypes.number.isRequired,
-  deletedShapeIndeces: PropTypes.array.isRequired,
-
-  mousePos: PropTypes.object.isRequired,
-  currPoints: PropTypes.array.isRequired,
-
-  handleShapeClick: PropTypes.func.isRequired,
-  handleShapeDelete: PropTypes.func.isRequired,
-  handleShapeSoloChange: PropTypes.func.isRequired,
-  handleShapeDuplicate: PropTypes.func.isRequired,
-};
-
-function ShapeCanvasComponent(props) {
+function ShapeCanvasComponent(props, ref) {
   const {
     width,
     height,
-    getShapeRef,
-    removeShapeRef,
     currPoints,
     snapToGrid,
     gridSize,
@@ -60,11 +39,16 @@ function ShapeCanvasComponent(props) {
     handleShapeSoloChange,
     handleShapeMuteChange,
     handleShapeDuplicate,
-    stageRef,
   } = props;
+  const shapesGroupRef = useRef({});
+
+  useImperativeHandle(ref, () => ({
+    getShapeState: shapesGroupRef.current.getShapeState,
+    getShapeMIDISequences: shapesGroupRef.current.getShapeMIDISequences,
+  }));
 
   /* 
-    NOTE: hack to propagate context through the Konva Stage
+  NOTE: hack to propagate context through the Konva Stage
   */
   const projectContext = useContext(ProjectContext);
   const {
@@ -73,7 +57,9 @@ function ShapeCanvasComponent(props) {
     isGridActive,
     activeColorIndex,
   } = projectContext;
+
   const isEditMode = activeTool === TOOL_TYPES.EDIT;
+
   return (
     <div
       id="holder"
@@ -83,7 +69,6 @@ function ShapeCanvasComponent(props) {
       }}
     >
       <Stage
-        ref={stageRef}
         width={width}
         height={height}
         onContentClick={onContentClick}
@@ -101,40 +86,21 @@ function ShapeCanvasComponent(props) {
 
           <Layer>
             <Group>
-              {shapesList.map((shape, index) => {
-                const {
-                  points,
-                  colorIndex,
-                  volume,
-                  isMuted,
-                  quantizeFactor,
-                } = shape;
-                return (
-                  !deletedShapeIndeces[index] && (
-                    <Shape
-                      getShapeRef={getShapeRef}
-                      removeShapeRef={removeShapeRef}
-                      key={index}
-                      index={index}
-                      volume={volume}
-                      isMuted={isMuted}
-                      initialQuantizeFactor={quantizeFactor}
-                      initialPoints={points}
-                      isSelected={index === selectedShapeIndex}
-                      soloedShapeIndex={soloedShapeIndex}
-                      colorIndex={colorIndex}
-                      snapToGrid={snapToGrid}
-                      handleClick={handleShapeClick}
-                      handleDelete={handleShapeDelete}
-                      handleShapeDuplicate={handleShapeDuplicate}
-                      handleColorChange={handleShapeColorChange}
-                      handleVolumeChange={handleShapeVolumeChange}
-                      handleSoloChange={handleShapeSoloChange}
-                      handleMuteChange={handleShapeMuteChange}
-                    />
-                  )
-                );
-              })}
+              <ShapesWrapper
+                ref={shapesGroupRef}
+                shapesList={shapesList}
+                deletedShapeIndeces={deletedShapeIndeces}
+                selectedShapeIndex={selectedShapeIndex}
+                soloedShapeIndex={soloedShapeIndex}
+                snapToGrid={snapToGrid}
+                handleShapeClick={handleShapeClick}
+                handleShapeDelete={handleShapeDelete}
+                handleShapeDuplicate={handleShapeDuplicate}
+                handleShapeColorChange={handleShapeColorChange}
+                handleShapeVolumeChange={handleShapeVolumeChange}
+                handleShapeSoloChange={handleShapeSoloChange}
+                handleShapeMuteChange={handleShapeMuteChange}
+              />
             </Group>
           </Layer>
 
@@ -153,6 +119,4 @@ function ShapeCanvasComponent(props) {
   );
 }
 
-ShapeCanvasComponent.propTypes = propTypes;
-
-export default ShapeCanvasComponent;
+export default forwardRef(ShapeCanvasComponent);

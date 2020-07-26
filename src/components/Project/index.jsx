@@ -131,6 +131,7 @@ export default props => {
   const handleChangeDrawColor = ({ key }) => {
     setState({
       ...state,
+      activeTool: TOOL_TYPES.DRAW,
       activeColorIndex: parseInt(key, 10) - 1,
     });
   };
@@ -139,6 +140,7 @@ export default props => {
   const handleColorChange = colorObj => {
     setState({
       ...state,
+      activeTool: TOOL_TYPES.DRAW,
       activeColorIndex: themeColors.indexOf(colorObj.hex),
     });
   };
@@ -256,11 +258,8 @@ export default props => {
 
   const keyHandlers = {
     PLAY: e => {
-      console.log(e);
       e.preventDefault();
       e.stopPropagation();
-
-      console.log('handler isarmed', state.isArmed);
       togglePlayStop();
     },
     TOGGLE_ACTIVE_TOOL: e => {
@@ -271,7 +270,16 @@ export default props => {
     CHANGE_DRAW_COLOR: handleChangeDrawColor,
     ALT_DOWN: () => setState({ ...state, isAltPressed: true }),
     ALT_UP: () => setState({ ...state, isAltPressed: false }),
-    DELETE_SHAPE: () => shapeCanvas.current.deleteSelectedShape(),
+    DELETE_SHAPE: e => {
+      e.preventDefault();
+      e.stopPropagation();
+      // TODO move into separate shape canvas hotkeys wrapper
+      shapeCanvas.current.deleteSelectedShape();
+    },
+    CANCEL_IN_PROGRESS_SHAPE: () => {
+      // TODO move into separate shape canvas hotkeys wrapper
+      shapeCanvas.current.cancelInProgressShape();
+    },
   };
 
   return (

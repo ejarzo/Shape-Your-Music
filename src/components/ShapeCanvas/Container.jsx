@@ -147,6 +147,16 @@ class ShapeCanvas extends Component {
     return this.state.drawingState === DRAWING_STATES.PENDING;
   }
 
+  cancelInProgressShape() {
+    const { drawingState } = this.state;
+    if (drawingState !== DRAWING_STATES.PENDING) {
+      this.setState({
+        currPoints: [],
+        drawingState: DRAWING_STATES.PENDING,
+      });
+    }
+  }
+
   getShapeMIDINoteEvents() {
     console.log(this.shapeCanvas);
     const midiSequences = this.shapeCanvas.getShapeMIDISequences();
@@ -221,12 +231,7 @@ class ShapeCanvas extends Component {
     }
     // right click to cancel shape mid-draw
     else if (e.evt.which === 3) {
-      if (drawingState !== DRAWING_STATES.PENDING) {
-        this.setState({
-          currPoints: [],
-          drawingState: DRAWING_STATES.PENDING,
-        });
-      }
+      this.cancelInProgressShape();
     }
   }
 

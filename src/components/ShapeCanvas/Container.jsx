@@ -9,9 +9,9 @@ import { TOOL_TYPES } from 'components/Project';
 import withProjectContext from 'components/Project/withProjectContext';
 
 export const DRAWING_STATES = {
-  PENDING: 'pending',
-  PREVIEW: 'preview',
-  DRAWING: 'drawing',
+  PENDING: 'pending', // not currently drawing
+  PREVIEW: 'preview', // mouse is hovered over final position, showing a preview of the finished shape
+  DRAWING: 'drawing', // drawing but not previewing
 };
 
 const propTypes = {
@@ -59,8 +59,6 @@ class ShapeCanvas extends Component {
 
     this.getShapesList = this.getShapesList.bind(this);
     this.getScreenshot = this.getScreenshot.bind(this);
-    // this.getShapeRef = this.getShapeRef.bind(this);
-    // this.removeShapeRef = this.removeShapeRef.bind(this);
     this.duplicateShape = this.duplicateShape.bind(this);
 
     this.handleClick = this.handleClick.bind(this);
@@ -123,18 +121,6 @@ class ShapeCanvas extends Component {
 
     return shapesList.filter((_, i) => !deletedShapeIndeces[i]);
   }
-
-  // getShapeRef() {
-  //   return c => {
-  //     console.log('adding shape ref', c);
-  //     this.shapeRefs.push(c);
-  //   };
-  // }
-
-  // removeShapeRef(i) {
-  //   console.log('removing shape ref', i);
-  //   this.shapeRefs[i] = null;
-  // }
 
   appendShape() {
     const { activeColorIndex } = this.props;
@@ -400,11 +386,7 @@ class ShapeCanvas extends Component {
 
     return (
       <ShapeCanvasComponent
-        // TODO: revisit shape refs
         ref={c => (this.shapeCanvas = c)}
-        // stageRef={c => (this.stage = c)}
-        // getShapeRef={this.getShapeRef}
-        // removeShapeRef={this.removeShapeRef}
         height={window.innerHeight - 80}
         width={window.innerWidth}
         gridSize={gridSize}

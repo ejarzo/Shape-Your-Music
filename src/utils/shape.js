@@ -180,3 +180,6 @@ export const convertPointsToMIDINoteEvents = ({
 
   return noteEvents;
 };
+
+export const getPanningValText = pan =>
+  pan > 0 ? `${pan} R` : `${Math.abs(pan)} L`;

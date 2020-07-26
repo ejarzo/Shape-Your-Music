@@ -39,7 +39,6 @@ function ShapeCanvasComponent(props, ref) {
     handleShapeSoloChange,
     handleShapeMuteChange,
     handleShapeDuplicate,
-    stageRef,
   } = props;
   const shapesGroupRef = useRef({});
 
@@ -70,7 +69,6 @@ function ShapeCanvasComponent(props, ref) {
       }}
     >
       <Stage
-        ref={stageRef}
         width={width}
         height={height}
         onContentClick={onContentClick}

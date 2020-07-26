@@ -1,6 +1,11 @@
 import React, { useRef, memo, forwardRef, useImperativeHandle } from 'react';
 import Shape from 'components/Shape';
 
+/* 
+  - Handles the rendering of just the shapes onto the canvas. This avoids
+    re-renders from project udpates unrelated to the shapes (eg. mouse position)
+  - Provides imperative handle for calling functions on the shapes list
+*/
 export default memo(
   forwardRef((props, ref) => {
     const {

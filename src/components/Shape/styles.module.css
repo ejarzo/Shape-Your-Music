@@ -1,0 +1,12 @@
+.shapeDraggingInfo {
+  text-transform: capitalize;
+  color: white;
+  background-color: color;
+  font-weight: bold;
+  padding: 5px;
+  position: absolute;
+  opacity: 0.8;
+  font-size: 0.8em;
+  border-radius: 2;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}

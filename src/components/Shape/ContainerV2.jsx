@@ -1,6 +1,16 @@
-import React, { useState, useRef, useEffect, forwardRef, memo } from 'react';
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useEffect,
+  forwardRef,
+  memo,
+  useCallback,
+  useImperativeHandle,
+} from 'react';
 import { themeColors, appColors } from 'utils/color';
 import { TOOL_TYPES } from 'components/Project';
+import { ProjectContext } from 'components/Project/ProjectContextProvider';
 
 import { convertValToRange } from 'utils/math';
 import {
@@ -10,23 +20,15 @@ import {
   convertPointsToMIDINoteEvents,
 } from 'utils/shape';
 
-import ShapeComponent from './ComponentV2';
-import { useContext } from 'react';
-import { ProjectContext } from 'components/Project/ProjectContextProvider';
 import { useShapeAttrs } from './useShapeAttrs';
 import { useShapeSynth } from './useShapeSynth';
-import { useCallback } from 'react';
-import { useImperativeHandle } from 'react';
+import ShapeComponent from './ComponentV2';
 
 function ShapeContainerV2(props, ref) {
   console.log('shape render');
-  const {
-    activeTool,
-    isAutoQuantizeActive,
-    selectedSynths,
-    knobVals,
-    scaleObj,
-  } = useContext(ProjectContext);
+  const { activeTool, isAutoQuantizeActive, scaleObj } = useContext(
+    ProjectContext
+  );
 
   const {
     index,
@@ -57,6 +59,7 @@ function ShapeContainerV2(props, ref) {
     editorY: 0,
     animCircleX: 0,
     animCircleY: 0,
+    panVal: 0,
   });
 
   const {
@@ -67,6 +70,7 @@ function ShapeContainerV2(props, ref) {
     editorY,
     firstNoteIndex,
     quantizeFactor,
+    panVal,
   } = state;
 
   const [isHoveredOver, setIsHoveredOver] = useState(false);
@@ -88,6 +92,10 @@ function ShapeContainerV2(props, ref) {
     isHoveredOver,
   });
 
+  /* 
+    Executes every time a note plays.
+    Animates the perimeter Dot to move around the shape as it plays
+  */
   const isPlayingAnimator = useCallback(
     (val, dur) => () => {
       const { pIndex } = val;
@@ -121,9 +129,7 @@ function ShapeContainerV2(props, ref) {
   );
 
   const { isBuffering } = useShapeSynth({
-    selectedSynths,
     colorIndex,
-    knobVals,
     volume,
     isPlayingAnimator,
     points,
@@ -131,7 +137,10 @@ function ShapeContainerV2(props, ref) {
     firstNoteIndex,
     isMuted,
     isSoloed,
+    panVal,
   });
+
+  // ======================= HOOKS =======================
 
   useEffect(() => {
     // initializes starting note
@@ -159,7 +168,6 @@ function ShapeContainerV2(props, ref) {
 
   useImperativeHandle(ref, () => ({
     getSaveDataState: () => {
-      console.log('getAbsolutePoints called');
       return {
         points: getAbsolutePoints(),
         quantizeFactor,
@@ -174,6 +182,8 @@ function ShapeContainerV2(props, ref) {
       }),
   }));
 
+  // ====================== HANDLERS ======================
+
   /* Hover */
   const handleMouseDown = e => {
     setState(s => ({ ...s, editorX: e.evt.offsetX, editorY: e.evt.offsetY }));
@@ -186,12 +196,14 @@ function ShapeContainerV2(props, ref) {
       const avgPoint = getAveragePoint(s.points);
       const x = parseInt(absPos.x + avgPoint.x, 10);
       const y = parseInt(absPos.y + avgPoint.y, 10);
+      const panVal = convertValToRange(x, 0, window.innerWidth, -1, 1);
       const noteIndexVal = parseInt(
         convertValToRange(y, 0, window.innerHeight, 5, -7),
         10
       );
       return {
         ...s,
+        panVal,
         averagePoint: { x, y },
         noteIndexModifier: noteIndexVal,
       };
@@ -220,41 +232,41 @@ function ShapeContainerV2(props, ref) {
     });
   };
 
-  const handleToTopClick = () => {
-    shapeRef.current.moveToTop();
+  const resetHover = () => {
     // hack to update Konva layout following imperative changes
     setIsHoveredOver(true);
     setIsHoveredOver(false);
+  };
+
+  const handleToTopClick = () => {
+    shapeRef.current.moveToTop();
+    resetHover();
   };
 
   const handleToBottomClick = () => {
     shapeRef.current.moveToBottom();
-    // hack to update Konva layout following imperative changes
-    setIsHoveredOver(true);
-    setIsHoveredOver(false);
+    resetHover();
   };
 
-  const handleQuantizeFactorChange = factor => {
-    return () => {
-      setState(s => {
-        const { points, quantizeFactor } = s;
-        if (
-          (factor < 1 && quantizeFactor >= 0.25) ||
-          (factor > 1 && quantizeFactor <= 4)
-        ) {
-          const newPerim = isAutoQuantizeActive
-            ? factor * quantizeFactor * quantizeLength
-            : getPerimeterLength(points) * factor;
-          const newPoints = getPointsForFixedPerimeterLength(points, newPerim);
-          return {
-            ...s,
-            points: newPoints,
-            quantizeFactor: factor * quantizeFactor,
-          };
-        }
-        return s;
-      });
-    };
+  const handleQuantizeFactorChange = factor => () => {
+    setState(s => {
+      const { points, quantizeFactor } = s;
+      if (
+        (factor < 1 && quantizeFactor >= 0.25) ||
+        (factor > 1 && quantizeFactor <= 4)
+      ) {
+        const newPerim = isAutoQuantizeActive
+          ? factor * quantizeFactor * quantizeLength
+          : getPerimeterLength(points) * factor;
+        const newPoints = getPointsForFixedPerimeterLength(points, newPerim);
+        return {
+          ...s,
+          points: newPoints,
+          quantizeFactor: factor * quantizeFactor,
+        };
+      }
+      return s;
+    });
   };
 
   const getAbsolutePoints = () => {
@@ -308,7 +320,6 @@ function ShapeContainerV2(props, ref) {
       handleVertexDragMove={handleVertexDragMove}
       // editor panel handlers
       handleColorChange={handleColorChange}
-      //  handleQuantizeClick={() => 'handleQuantizeClick'}
       handleDelete={handleDelete}
       handleQuantizeFactorChange={handleQuantizeFactorChange}
       handleVolumeChange={handleVolumeChange(index)}

@@ -5,22 +5,24 @@ import React, {
   useContext,
 } from 'react';
 import { Circle, Group, Line } from 'react-konva';
+import Portal from 'react-portal';
 
-import { getPerimeterLength } from 'utils/shape';
+import { getPerimeterLength, getPanningValText } from 'utils/shape';
 import { convertValToRange } from 'utils/math';
 import { themeColors, appColors } from 'utils/color';
 
 import ShapeVertex from './ShapeVertex';
-import Portal from 'react-portal';
 import ShapeEditorPopover from './ShapeEditorPopover';
 import { TOOL_TYPES } from 'components/Project';
 import { ProjectContext } from 'components/Project/ProjectContextProvider';
+import styles from './styles.module.css';
 
 function ShapeComponent(props, ref) {
   const shapeFillRef = useRef();
   const groupRef = useRef();
   const progressDotRef = useRef();
 
+  /* Functions used to control lower level access on shape */
   useImperativeHandle(ref, () => ({
     getAbsolutePosition: () => shapeFillRef.current.getAbsolutePosition(),
     moveToTop: () => {
@@ -83,16 +85,14 @@ function ShapeComponent(props, ref) {
   } = props;
 
   const color = themeColors[colorIndex];
+  const isEditMode = activeTool === TOOL_TYPES.EDIT;
+  const perimeter = getPerimeterLength(points);
+  const startingNoteString = scaleObj.get(noteIndexModifier + 1).toString();
   let panningVal = parseInt(
     convertValToRange(averagePoint.x, 0, window.innerWidth, -50, 50),
     10
   );
-
-  if (panningVal > 0) {
-    panningVal = `${panningVal} R`;
-  } else if (panningVal < 0) {
-    panningVal = `${Math.abs(panningVal)} L`;
-  }
+  const panningValText = getPanningValText(panningVal);
 
   const progressDot = isPlaying && (
     <Circle
@@ -108,10 +108,6 @@ function ShapeComponent(props, ref) {
       fill={color}
     />
   );
-
-  const isEditMode = activeTool === TOOL_TYPES.EDIT;
-  const perimeter = getPerimeterLength(points);
-  const startingNoteString = scaleObj.get(noteIndexModifier + 1).toString();
 
   if (isEditMode) {
     return (
@@ -152,10 +148,7 @@ function ShapeComponent(props, ref) {
                 dragBoundFunc={dragBoundFunc}
                 key={i}
                 index={i}
-                p={{
-                  x: p,
-                  y: arr[i + 1],
-                }}
+                p={{ x: p, y: arr[i + 1] }}
                 onVertexDragMove={handleVertexDragMove(i)}
                 color={color}
               />
@@ -168,25 +161,17 @@ function ShapeComponent(props, ref) {
         {/* tooltip that appears on drag */}
         <Portal isOpened={isDragging}>
           <div
+            className={styles.shapeDraggingInfo}
             style={{
-              textTransform: 'capitalize',
-              color: appColors.white,
               backgroundColor: color,
-              fontWeight: 'bold',
-              padding: '5px',
-              position: 'absolute',
-              opacity: 0.8,
               top: averagePoint.y + 40,
               left: averagePoint.x - 40,
-              fontSize: '0.8em',
-              borderRadius: 2,
-              boxShadow: '0 0 10px rgba(0,0,0,0.2)',
             }}
           >
             <div>
-              PAN: {panningVal}
+              {`PAN: ${panningValText}`}
               <br />
-              NOTE: {startingNoteString}
+              {`NOTE: ${startingNoteString}`}
             </div>
           </div>
         </Portal>
@@ -242,22 +227,14 @@ function ShapeComponent(props, ref) {
         {/* loading indicator */}
         <Portal isOpened={isBuffering}>
           <div
+            className={styles.shapeDraggingInfo}
             style={{
-              textTransform: 'capitalize',
-              color: appColors.white,
               backgroundColor: color,
-              fontWeight: 'bold',
-              padding: '2px',
-              position: 'absolute',
-              opacity: 0.8,
               top: averagePoint.y + 40,
               left: averagePoint.x - 20,
-              fontSize: '0.6em',
-              borderRadius: 2,
-              boxShadow: '0 0 10px rgba(0,0,0,0.2)',
             }}
           >
-            Loading samples...
+            {'Loading samples...'}
           </div>
         </Portal>
 
@@ -275,7 +252,6 @@ function ShapeComponent(props, ref) {
       </Group>
     );
   }
-  // }
 }
 
 export default forwardRef(ShapeComponent);

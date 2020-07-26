@@ -3,18 +3,11 @@ import { SYNTH_PRESETS } from 'instrumentPresets';
 import { SEND_CHANNELS } from 'utils/music';
 import { forEachPoint, getNoteInfo } from 'utils/shape';
 
-export function Synth({
-  initVolume,
-  isPlayingAnimator: initIsPlayingAnimator,
-  noteIndexModifier: initNoteIndexModifier,
-  firstNoteIndex: initFirstNoteIndex,
-  onStartLoading,
-  onEndLoading,
-}) {
+export function Synth({ onStartLoading, onEndLoading }) {
   console.log('Synth constructed');
 
-  let noteIndexModifier = initNoteIndexModifier || 0;
-  let isPlayingAnimator = initIsPlayingAnimator;
+  let noteIndexModifier = 0;
+  let isPlayingAnimator = () => {};
   let synth = null;
   let isBuffering = false;
 
@@ -33,12 +26,12 @@ export function Synth({
 
   part.loop = true;
 
-  let volume = initVolume;
+  let volume = -Infinity;
   let panner = null;
   let solo = null;
   let gain = null;
 
-  let firstNoteIndex = initFirstNoteIndex;
+  let firstNoteIndex = 0;
   let scaleObj = null;
   let synthObj = null;
 
@@ -128,11 +121,14 @@ export function Synth({
       part.add(delay, lastNoteInfo);
       part.loopEnd = delay + lastNoteInfo.duration;
     },
-    updateAnimator: animator => {
+    setAnimator: animator => {
       isPlayingAnimator = animator;
     },
-    updateNoteIndexModifier: val => {
+    setNoteIndexModifier: val => {
       noteIndexModifier = val;
+    },
+    setFirstNoteIndex: val => {
+      firstNoteIndex = val;
     },
     setScaleObj: val => {
       scaleObj = val;
@@ -145,6 +141,9 @@ export function Synth({
     },
     setTempo: tempo => {
       part.playbackRate = tempo / 50;
+    },
+    setPan: val => {
+      panner.pan.value = val * 0.9;
     },
     dispose: () => {
       part.dispose();

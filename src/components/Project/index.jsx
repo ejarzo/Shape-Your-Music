@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useReducer } from 'react';
 import Teoria from 'teoria';
 import { HotKeys } from 'react-hotkeys';
 
@@ -46,6 +46,48 @@ const getInitState = initState => ({
       : initState.selectedSynths.map(getDefaultParamValues),
 });
 
+export const ACTIONS = {
+  CHANGE_DRAW_COLOR: 'CHANGE_DRAW_COLOR',
+  SET_DRAW_COLOR: 'SET_DRAW_COLOR',
+  TOGGLE_GRID: 'TOGGLE_GRID',
+  TOGGLE_SNAP_TO_GRID: 'TOGGLE_SNAP_TO_GRID',
+  TOGGLE_AUTO_QUANTIZE: 'TOGGLE_AUTO_QUANTIZE',
+};
+
+const projectReducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONS.CHANGE_DRAW_COLOR:
+      return {
+        ...state,
+        activeTool: TOOL_TYPES.DRAW,
+        activeColorIndex: parseInt(action.payload, 10) - 1,
+      };
+    case ACTIONS.SET_DRAW_COLOR:
+      return {
+        ...state,
+        activeTool: TOOL_TYPES.DRAW,
+        activeColorIndex: themeColors.indexOf(action.payload),
+      };
+    case ACTIONS.TOGGLE_GRID:
+      return {
+        ...state,
+        isGridActive: !state.isGridActive,
+      };
+    case ACTIONS.TOGGLE_SNAP_TO_GRID:
+      return {
+        ...state,
+        isSnapToGridActive: !state.isSnapToGridActive,
+      };
+    case ACTIONS.TOGGLE_AUTO_QUANTIZE:
+      return {
+        ...state,
+        isAutoQuantizeActive: !state.isAutoQuantizeActive,
+      };
+    default:
+      throw new Error(`Unknown action type ${action.type}`);
+  }
+};
+
 export default props => {
   const {
     initState,
@@ -60,6 +102,11 @@ export default props => {
   const shapeCanvas = useRef(null);
   const [state, setState] = useState(getInitState(initState));
 
+  const [newState, dispatch] = useReducer(
+    projectReducer,
+    getInitState(initState)
+  );
+
   const { projectName, tempo } = state;
 
   const {
@@ -73,7 +120,13 @@ export default props => {
 
   const { isPlaying, toggleIsPlaying } = useAudioOutput();
 
-  const projectContext = { ...state, isRecording, isArmed };
+  const projectContext = {
+    ...state,
+    ...newState,
+    isRecording,
+    isArmed,
+    dispatch,
+  };
 
   const togglePlayStop = () => {
     toggleIsPlaying();
@@ -128,43 +181,43 @@ export default props => {
   };
 
   // using number keys
-  const handleChangeDrawColor = ({ key }) => {
-    setState({
-      ...state,
-      activeTool: TOOL_TYPES.DRAW,
-      activeColorIndex: parseInt(key, 10) - 1,
-    });
-  };
+  // const handleChangeDrawColor = ({ key }) => {
+  //   setState({
+  //     ...state,
+  //     activeTool: TOOL_TYPES.DRAW,
+  //     activeColorIndex: parseInt(key, 10) - 1,
+  //   });
+  // };
 
   // clicking on color
-  const handleColorChange = colorObj => {
-    setState({
-      ...state,
-      activeTool: TOOL_TYPES.DRAW,
-      activeColorIndex: themeColors.indexOf(colorObj.hex),
-    });
-  };
+  // const handleColorChange = colorObj => {
+  //   setState({
+  //     ...state,
+  //     activeTool: TOOL_TYPES.DRAW,
+  //     activeColorIndex: themeColors.indexOf(colorObj.hex),
+  //   });
+  // };
 
-  const handleGridToggleChange = () => {
-    setState(prevState => ({
-      ...prevState,
-      isGridActive: !prevState.isGridActive,
-    }));
-  };
+  // const handleGridToggleChange = () => {
+  //   setState(prevState => ({
+  //     ...prevState,
+  //     isGridActive: !prevState.isGridActive,
+  //   }));
+  // };
 
-  const handleSnapToGridToggleChange = () => {
-    setState(prevState => ({
-      ...prevState,
-      isSnapToGridActive: !prevState.isSnapToGridActive,
-    }));
-  };
+  // const handleSnapToGridToggleChange = () => {
+  //   setState(prevState => ({
+  //     ...prevState,
+  //     isSnapToGridActive: !prevState.isSnapToGridActive,
+  //   }));
+  // };
 
-  const handleAutoQuantizeChange = () => {
-    setState(prevState => ({
-      ...prevState,
-      isAutoQuantizeActive: !prevState.isAutoQuantizeActive,
-    }));
-  };
+  // const handleAutoQuantizeChange = () => {
+  //   setState(prevState => ({
+  //     ...prevState,
+  //     isAutoQuantizeActive: !prevState.isAutoQuantizeActive,
+  //   }));
+  // };
 
   const handleClearButtonClick = () => {
     if (shapeCanvas) {
@@ -241,7 +294,7 @@ export default props => {
     if (!projectName) return;
     console.log('Saving project with name', projectName);
 
-    const projectContext = state;
+    // const projectContext = state;
     const shapesList = shapeCanvas.current.getShapesList();
     console.log('shapes list', shapesList);
     // TODO: do something with this screenshot
@@ -267,7 +320,9 @@ export default props => {
       e.stopPropagation();
       toggleActiveTool();
     },
-    CHANGE_DRAW_COLOR: handleChangeDrawColor,
+    CHANGE_DRAW_COLOR: ({ key }) => {
+      dispatch({ type: ACTIONS.CHANGE_DRAW_COLOR, payload: key });
+    },
     ALT_DOWN: () => setState({ ...state, isAltPressed: true }),
     ALT_UP: () => setState({ ...state, isAltPressed: false }),
     DELETE_SHAPE: e => {
@@ -295,12 +350,8 @@ export default props => {
         <Toolbar
           handlePlayClick={togglePlayStop}
           handleRecordClick={handleRecordClick}
-          handleColorChange={handleColorChange}
           handleDrawToolClick={handleDrawToolClick}
           handleEditToolClick={handleEditToolClick}
-          handleGridToggleChange={handleGridToggleChange}
-          handleSnapToGridToggleChange={handleSnapToGridToggleChange}
-          handleAutoQuantizeChange={handleAutoQuantizeChange}
           handleTempoChange={handleTempoChange}
           handleTonicChange={handleTonicChange}
           handleScaleChange={handleScaleChange}

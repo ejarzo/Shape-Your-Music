@@ -1,5 +1,4 @@
 import React from 'react';
-import { func } from 'prop-types';
 import cx from 'classnames';
 import { Tooltip } from 'antd';
 

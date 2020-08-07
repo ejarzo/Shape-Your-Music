@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Color from 'color';
 import { Group, Circle, Line } from 'react-konva';
 import { TOOL_TYPES } from 'components/Project';
-import { ProjectContext } from 'components/Project/ProjectContextProvider';
+import { useProjectContext } from 'context/useProjectContext';
 
 const propTypes = {
   points: PropTypes.array.isRequired,
@@ -20,7 +20,7 @@ const propTypes = {
   Used to show the shape that is currently being drawn. 
 */
 function PhantomShapeComponent(props) {
-  const { activeTool } = useContext(ProjectContext);
+  const { activeTool } = useProjectContext();
   const { points, mousePos, color, closed } = props;
 
   const radius = 4;

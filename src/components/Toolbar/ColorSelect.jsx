@@ -1,13 +1,13 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import Button from 'components/Button';
 import ColorPicker from 'components/ColorPicker';
 import styles from './styles.module.css';
-import { ProjectContext } from 'components/Project/ProjectContextProvider';
-import { ACTIONS } from 'components/Project';
+import { PROJECT_ACTIONS } from 'utils/project';
 import { themeColors } from 'utils/color';
+import { useProjectContext } from 'context/useProjectContext';
 
 function ColorSelect() {
-  const { activeColorIndex, dispatch } = useContext(ProjectContext);
+  const { activeColorIndex, dispatch } = useProjectContext();
   const [isColorPickerOpen, setColorPickerOpen] = useState(false);
   let closeTimer = useRef(false);
   const activeColor = themeColors[activeColorIndex];
@@ -33,7 +33,7 @@ function ColorSelect() {
           <ColorPicker
             color={activeColor}
             onChange={({ hex }) => {
-              dispatch({ type: ACTIONS.SET_DRAW_COLOR, payload: hex });
+              dispatch({ type: PROJECT_ACTIONS.SET_DRAW_COLOR, payload: hex });
             }}
           />
         </div>

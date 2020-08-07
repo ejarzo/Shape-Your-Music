@@ -16,6 +16,7 @@ import { getDefaultParamValues } from 'utils/synths';
 import styles from './styles.module.css';
 import { useRecorder } from './useRecorder';
 import { useAudioOutput } from './useAudioOutput';
+import { PROJECT_ACTIONS } from 'utils/project';
 
 /* ========================================================================== */
 
@@ -28,65 +29,19 @@ export const TOOL_TYPES = {
 
 const getInitState = initState => ({
   projectName: initState.projectName,
+  activeColorIndex: 0,
   isGridActive: !!initState.isGridActive,
   isSnapToGridActive: !!initState.isSnapToGridActive,
   isAutoQuantizeActive: !!initState.isAutoQuantizeActive,
-  isFullscreenEnabled: false,
-  isPlaying: false,
-  isAltPressed: false,
-  quantizeLength: 700,
   tempo: initState.tempo,
   scaleObj: Teoria.note(initState.tonic).scale(initState.scale),
   activeTool: TOOL_TYPES.DRAW,
-  activeColorIndex: 0,
   selectedSynths: initState.selectedSynths,
   knobVals:
     initState.knobVals && initState.knobVals.length > 0
       ? initState.knobVals
       : initState.selectedSynths.map(getDefaultParamValues),
 });
-
-export const ACTIONS = {
-  CHANGE_DRAW_COLOR: 'CHANGE_DRAW_COLOR',
-  SET_DRAW_COLOR: 'SET_DRAW_COLOR',
-  TOGGLE_GRID: 'TOGGLE_GRID',
-  TOGGLE_SNAP_TO_GRID: 'TOGGLE_SNAP_TO_GRID',
-  TOGGLE_AUTO_QUANTIZE: 'TOGGLE_AUTO_QUANTIZE',
-};
-
-const projectReducer = (state, action) => {
-  switch (action.type) {
-    case ACTIONS.CHANGE_DRAW_COLOR:
-      return {
-        ...state,
-        activeTool: TOOL_TYPES.DRAW,
-        activeColorIndex: parseInt(action.payload, 10) - 1,
-      };
-    case ACTIONS.SET_DRAW_COLOR:
-      return {
-        ...state,
-        activeTool: TOOL_TYPES.DRAW,
-        activeColorIndex: themeColors.indexOf(action.payload),
-      };
-    case ACTIONS.TOGGLE_GRID:
-      return {
-        ...state,
-        isGridActive: !state.isGridActive,
-      };
-    case ACTIONS.TOGGLE_SNAP_TO_GRID:
-      return {
-        ...state,
-        isSnapToGridActive: !state.isSnapToGridActive,
-      };
-    case ACTIONS.TOGGLE_AUTO_QUANTIZE:
-      return {
-        ...state,
-        isAutoQuantizeActive: !state.isAutoQuantizeActive,
-      };
-    default:
-      throw new Error(`Unknown action type ${action.type}`);
-  }
-};
 
 export default props => {
   const {
@@ -95,17 +50,116 @@ export default props => {
     showSettingsButton,
     projectAuthor,
     deleteProject,
-    // toggleTransport,
     saveProject,
   } = props;
 
   const shapeCanvas = useRef(null);
-  const [state, setState] = useState(getInitState(initState));
+  const [isAltPressed, setIsAltPressed] = useState(false);
 
-  const [newState, dispatch] = useReducer(
-    projectReducer,
-    getInitState(initState)
-  );
+  const projectReducer = (state, action) => {
+    if (!action.type) {
+      throw new Error(`No action type`);
+    }
+    switch (action.type) {
+      case PROJECT_ACTIONS.SET_ACTIVE_TOOL:
+        if (shapeCanvas && shapeCanvas.current.canChangeTool()) {
+          return {
+            ...state,
+            activeTool: action.payload,
+          };
+        } else {
+          return state;
+        }
+      case PROJECT_ACTIONS.TOGGLE_ACTIVE_TOOL:
+        if (shapeCanvas && shapeCanvas.current.canChangeTool()) {
+          return {
+            ...state,
+            activeTool:
+              state.activeTool === TOOL_TYPES.DRAW
+                ? TOOL_TYPES.EDIT
+                : TOOL_TYPES.DRAW,
+          };
+        } else {
+          return state;
+        }
+      case PROJECT_ACTIONS.CHANGE_DRAW_COLOR:
+        return {
+          ...state,
+          activeTool: TOOL_TYPES.DRAW,
+          activeColorIndex: parseInt(action.payload, 10) - 1,
+        };
+      case PROJECT_ACTIONS.SET_DRAW_COLOR:
+        return {
+          ...state,
+          activeTool: TOOL_TYPES.DRAW,
+          activeColorIndex: themeColors.indexOf(action.payload),
+        };
+      case PROJECT_ACTIONS.TOGGLE_GRID:
+        return {
+          ...state,
+          isGridActive: !state.isGridActive,
+        };
+      case PROJECT_ACTIONS.TOGGLE_SNAP_TO_GRID:
+        return {
+          ...state,
+          isSnapToGridActive: !state.isSnapToGridActive,
+        };
+      case PROJECT_ACTIONS.TOGGLE_AUTO_QUANTIZE:
+        return {
+          ...state,
+          isAutoQuantizeActive: !state.isAutoQuantizeActive,
+        };
+      case PROJECT_ACTIONS.SET_TEMPO:
+        const min = 1;
+        const max = 100;
+        const tempo = Math.max(Math.min(action.payload, max), min);
+        return { ...state, tempo };
+      case PROJECT_ACTIONS.SET_TONIC:
+        return {
+          ...state,
+          scaleObj: Teoria.note(action.payload).scale(state.scaleObj.name),
+        };
+      case PROJECT_ACTIONS.SET_MODE:
+        if (!action.payload) return state;
+        const {
+          scaleObj: { tonic },
+        } = state;
+        return {
+          ...state,
+          scaleObj: tonic.scale(action.payload),
+        };
+      case PROJECT_ACTIONS.SET_INSTRUMENT_FOR_COLOR: {
+        const { colorIndex, instrumentName } = action.payload;
+        const newSelectedSynths = state.selectedSynths.slice();
+        const defaultKnobvals = getDefaultParamValues(instrumentName);
+        const knobVals = state.knobVals.slice();
+        newSelectedSynths[colorIndex] = instrumentName;
+        knobVals[colorIndex] = defaultKnobvals;
+        return {
+          ...state,
+          selectedSynths: newSelectedSynths,
+          knobVals,
+        };
+      }
+      case PROJECT_ACTIONS.SET_KNOB_VALUE_FOR_COLOR: {
+        const {
+          payload: { colorIndex, effectIndex, value },
+        } = action;
+        const knobVals = state.knobVals.slice();
+        const colorKnobVals = knobVals[colorIndex].slice();
+        colorKnobVals[effectIndex] = value;
+        knobVals[colorIndex] = colorKnobVals;
+        return {
+          ...state,
+          knobVals,
+        };
+      }
+      default:
+        throw new Error(`Unknown action type ${action.type}`);
+    }
+  };
+
+  const [state, dispatch] = useReducer(projectReducer, getInitState(initState));
 
   const { projectName, tempo } = state;
 
@@ -118,13 +172,20 @@ export default props => {
     downloadUrls,
   } = useRecorder();
 
-  const { isPlaying, toggleIsPlaying } = useAudioOutput();
+  const { isPlaying, toggleIsPlaying } = useAudioOutput({
+    isArmed,
+    isRecording,
+    beginRecording,
+    stopRecording,
+  });
 
   const projectContext = {
+    // ...state,
     ...state,
-    ...newState,
+    isAltPressed,
     isRecording,
     isArmed,
+    isPlaying,
     dispatch,
   };
 
@@ -136,7 +197,6 @@ export default props => {
     if (isRecording) {
       stopRecording();
     }
-    setState(s => ({ ...s, isPlaying: !s.isPlaying }));
   };
 
   const handleRecordClick = () => {
@@ -151,137 +211,10 @@ export default props => {
     }
   };
 
-  const setActiveTool = tool => {
-    if (shapeCanvas && shapeCanvas.current.canChangeTool()) {
-      setState({
-        ...state,
-        activeTool: tool,
-      });
-    }
-  };
-
-  const handleDrawToolClick = () => {
-    setActiveTool(TOOL_TYPES.DRAW);
-  };
-
-  const handleEditToolClick = () => {
-    setActiveTool(TOOL_TYPES.EDIT);
-  };
-
-  const toggleActiveTool = () => {
-    if (shapeCanvas && shapeCanvas.current.canChangeTool()) {
-      setState(prevState => ({
-        ...state,
-        activeTool:
-          prevState.activeTool === TOOL_TYPES.DRAW
-            ? TOOL_TYPES.EDIT
-            : TOOL_TYPES.DRAW,
-      }));
-    }
-  };
-
-  // using number keys
-  // const handleChangeDrawColor = ({ key }) => {
-  //   setState({
-  //     ...state,
-  //     activeTool: TOOL_TYPES.DRAW,
-  //     activeColorIndex: parseInt(key, 10) - 1,
-  //   });
-  // };
-
-  // clicking on color
-  // const handleColorChange = colorObj => {
-  //   setState({
-  //     ...state,
-  //     activeTool: TOOL_TYPES.DRAW,
-  //     activeColorIndex: themeColors.indexOf(colorObj.hex),
-  //   });
-  // };
-
-  // const handleGridToggleChange = () => {
-  //   setState(prevState => ({
-  //     ...prevState,
-  //     isGridActive: !prevState.isGridActive,
-  //   }));
-  // };
-
-  // const handleSnapToGridToggleChange = () => {
-  //   setState(prevState => ({
-  //     ...prevState,
-  //     isSnapToGridActive: !prevState.isSnapToGridActive,
-  //   }));
-  // };
-
-  // const handleAutoQuantizeChange = () => {
-  //   setState(prevState => ({
-  //     ...prevState,
-  //     isAutoQuantizeActive: !prevState.isAutoQuantizeActive,
-  //   }));
-  // };
-
   const handleClearButtonClick = () => {
     if (shapeCanvas) {
       shapeCanvas.current.clearAll();
     }
-  };
-
-  const handleTempoChange = val => {
-    // TODO: move to constants
-    const min = 1;
-    const max = 100;
-    const tempo = Math.max(Math.min(val, max), min);
-    setState({ ...state, tempo });
-  };
-
-  const handleTonicChange = val => {
-    setState(prevState => ({
-      ...prevState,
-      scaleObj: Teoria.note(val.value).scale(prevState.scaleObj.name),
-    }));
-  };
-
-  const handleScaleChange = val => {
-    if (!val) return;
-    const {
-      scaleObj: { tonic },
-    } = state;
-    setState({
-      ...state,
-      scaleObj: tonic.scale(val.value),
-    });
-  };
-
-  const handleInstChange = colorIndex => {
-    return instrumentName => {
-      console.log('setting index', colorIndex, 'to synth', instrumentName);
-      setState(prevState => {
-        const newSelectedSynths = prevState.selectedSynths.slice();
-        const defaultKnobvals = getDefaultParamValues(instrumentName);
-        const knobVals = prevState.knobVals.slice();
-        newSelectedSynths[colorIndex] = instrumentName;
-        knobVals[colorIndex] = defaultKnobvals;
-        return {
-          ...prevState,
-          selectedSynths: newSelectedSynths,
-          knobVals,
-        };
-      });
-    };
-  };
-
-  const handleKnobChange = colorIndex => {
-    return effectIndex => val => {
-      setState(prevState => {
-        const knobVals = prevState.knobVals.slice();
-        const colorKnobVals = knobVals[colorIndex].slice();
-        colorKnobVals[effectIndex] = val;
-        knobVals[colorIndex] = colorKnobVals;
-        return {
-          ...prevState,
-          knobVals: knobVals,
-        };
-      });
-    };
   };
 
   const handleExportToMIDIClick = async () => {
@@ -318,13 +251,13 @@ export default props => {
     TOGGLE_ACTIVE_TOOL: e => {
       e.preventDefault();
       e.stopPropagation();
-      toggleActiveTool();
+      dispatch({ type: PROJECT_ACTIONS.TOGGLE_ACTIVE_TOOL });
     },
     CHANGE_DRAW_COLOR: ({ key }) => {
-      dispatch({ type: ACTIONS.CHANGE_DRAW_COLOR, payload: key });
+      dispatch({ type: PROJECT_ACTIONS.CHANGE_DRAW_COLOR, payload: key });
     },
-    ALT_DOWN: () => setState({ ...state, isAltPressed: true }),
-    ALT_UP: () => setState({ ...state, isAltPressed: false }),
+    ALT_DOWN: () => setIsAltPressed(true),
+    ALT_UP: () => setIsAltPressed(false),
     DELETE_SHAPE: e => {
       e.preventDefault();
       e.stopPropagation();
@@ -350,11 +283,6 @@ export default props => {
         <Toolbar
           handlePlayClick={togglePlayStop}
           handleRecordClick={handleRecordClick}
-          handleDrawToolClick={handleDrawToolClick}
-          handleEditToolClick={handleEditToolClick}
-          handleTempoChange={handleTempoChange}
-          handleTonicChange={handleTonicChange}
-          handleScaleChange={handleScaleChange}
           handleClearButtonClick={handleClearButtonClick}
         />
 
@@ -368,10 +296,7 @@ export default props => {
         />
 
         {/* Instrument controller panels */}
-        <ColorControllerPanel
-          onInstChange={handleInstChange}
-          onKnobChange={handleKnobChange}
-        />
+        <ColorControllerPanel />
 
         {/* Sidebar */}
         <Sidebar

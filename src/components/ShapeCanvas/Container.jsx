@@ -24,7 +24,6 @@ const propTypes = {
   isGridActive: bool.isRequired,
   isSnapToGridActive: bool.isRequired,
   isAutoQuantizeActive: bool.isRequired,
-  quantizeLength: number.isRequired,
   activeColorIndex: number.isRequired,
   knobVals: array.isRequired,
 };

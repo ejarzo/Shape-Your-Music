@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { func } from 'prop-types';
 import cx from 'classnames';
 import { Tooltip } from 'antd';
@@ -18,36 +18,20 @@ import styles from './styles.module.css';
 import { TOOL_TYPES } from 'components/Project';
 import { SCALES, TONICS } from 'utils/music';
 
-import { ProjectContext } from 'components/Project/ProjectContextProvider';
-
 import ColorSelect from './ColorSelect';
-import { ACTIONS } from 'components/Project';
+import { PROJECT_ACTIONS } from 'utils/project';
+import { useProjectContext } from 'context/useProjectContext';
 
 const { black, grayLightest, red } = appColors;
 
 const propTypes = {
   handlePlayClick: func.isRequired,
   handleRecordClick: func.isRequired,
-  handleDrawToolClick: func.isRequired,
-  handleEditToolClick: func.isRequired,
-  handleTempoChange: func.isRequired,
-  handleTonicChange: func.isRequired,
-  handleScaleChange: func.isRequired,
   handleClearButtonClick: func.isRequired,
 };
 
 function ToolbarComponent(props) {
-  const {
-    handlePlayClick,
-    handleRecordClick,
-    handleDrawToolClick,
-    handleEditToolClick,
-    handleTonicChange,
-    handleScaleChange,
-    handleTempoChange,
-    // handleFullscreenButtonClick,
-    handleClearButtonClick,
-  } = props;
+  const { handlePlayClick, handleRecordClick, handleClearButtonClick } = props;
 
   const {
     isPlaying,
@@ -56,12 +40,11 @@ function ToolbarComponent(props) {
     activeTool,
     scaleObj,
     tempo,
-    // isFullscreenEnabled,
     isGridActive,
     isSnapToGridActive,
     isAutoQuantizeActive,
     dispatch,
-  } = useContext(ProjectContext);
+  } = useProjectContext();
 
   const lightGray = getDarker(grayLightest);
   const playButtonClass = isPlaying ? 'ion-stop' : 'ion-play';
@@ -115,7 +98,12 @@ function ToolbarComponent(props) {
             <Button
               hasBorder
               color={isDrawTool ? black : grayLightest}
-              onClick={handleDrawToolClick}
+              onClick={() => {
+                dispatch({
+                  type: PROJECT_ACTIONS.SET_ACTIVE_TOOL,
+                  payload: TOOL_TYPES.DRAW,
+                });
+              }}
             >
               <DrawToolIcon fill={isDrawTool ? grayLightest : black} />
             </Button>
@@ -132,7 +120,12 @@ function ToolbarComponent(props) {
             <Button
               hasBorder
               color={isEditTool ? black : grayLightest}
-              onClick={handleEditToolClick}
+              onClick={() => {
+                dispatch({
+                  type: PROJECT_ACTIONS.SET_ACTIVE_TOOL,
+                  payload: TOOL_TYPES.EDIT,
+                });
+              }}
             >
               <EditToolIcon fill={!isDrawTool ? grayLightest : black} />
             </Button>
@@ -159,7 +152,7 @@ function ToolbarComponent(props) {
             <CheckboxButton
               checked={isGridActive}
               onChange={() => {
-                dispatch({ type: ACTIONS.TOGGLE_GRID });
+                dispatch({ type: PROJECT_ACTIONS.TOGGLE_GRID });
               }}
               label={'Grid'}
             />
@@ -168,7 +161,7 @@ function ToolbarComponent(props) {
             <CheckboxButton
               checked={isSnapToGridActive}
               onChange={() => {
-                dispatch({ type: ACTIONS.TOGGLE_SNAP_TO_GRID });
+                dispatch({ type: PROJECT_ACTIONS.TOGGLE_SNAP_TO_GRID });
               }}
               label={'Snap'}
             />
@@ -189,7 +182,7 @@ function ToolbarComponent(props) {
             <CheckboxButton
               checked={isAutoQuantizeActive}
               onChange={() => {
-                dispatch({ type: ACTIONS.TOGGLE_AUTO_QUANTIZE });
+                dispatch({ type: PROJECT_ACTIONS.TOGGLE_AUTO_QUANTIZE });
               }}
               label={'Sync'}
             />
@@ -199,17 +192,26 @@ function ToolbarComponent(props) {
 
       {/* MUSICAL CONTROLS */}
       <div className={cx(styles.toolbarSection, styles.musicalControls)}>
-        <TempoInput onChange={handleTempoChange} value={tempo} />
+        <TempoInput
+          onChange={val => {
+            dispatch({ type: PROJECT_ACTIONS.SET_TEMPO, payload: val });
+          }}
+          value={tempo}
+        />
         <CustomSelect
           value={scaleObj.tonic.toString(true)}
           options={TONICS}
-          onChange={handleTonicChange}
+          onChange={({ value }) => {
+            dispatch({ type: PROJECT_ACTIONS.SET_TONIC, payload: value });
+          }}
           title="Key Root"
         />
         <CustomSelect
           value={scaleObj.name}
           options={SCALES}
-          onChange={handleScaleChange}
+          onChange={({ value }) => {
+            dispatch({ type: PROJECT_ACTIONS.SET_MODE, payload: value });
+          }}
           title="Key Mode"
         />
       </div>

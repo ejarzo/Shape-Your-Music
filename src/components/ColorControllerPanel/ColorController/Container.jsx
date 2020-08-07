@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { string, array, func } from 'prop-types';
+import { string, array } from 'prop-types';
 import Tone from 'tone';
 import ColorControllerComponent from './Component';
-import { SYNTH_PRESETS, ALL_SYNTHS } from 'instrumentPresets';
+import { SYNTH_PRESETS } from 'instrumentPresets';
 import { SEND_CHANNELS } from 'utils/music';
 
 const propTypes = {
@@ -10,8 +10,6 @@ const propTypes = {
   receiveChannel: string.isRequired,
   knobVals: array.isRequired,
   synthType: string.isRequired,
-  onInstChange: func.isRequired,
-  onKnobChange: func.isRequired,
 };
 
 const knobIndexChanged = (currVals, nextVals) => {
@@ -38,9 +36,6 @@ class ColorController extends Component {
     this.connectEffects(effects);
 
     this.disposeEffects = this.disposeEffects.bind(this);
-
-    this.handleInstChange = this.handleInstChange.bind(this);
-    this.handleIncrementClick = this.handleIncrementClick.bind(this);
   }
 
   componentDidMount() {
@@ -136,37 +131,8 @@ class ColorController extends Component {
     }
   }
 
-  handleInstChange(option) {
-    if (option) {
-      this.props.onInstChange(option.value);
-    }
-  }
-
-  handleIncrementClick(difference) {
-    return () => {
-      const { synthType, onInstChange } = this.props;
-      const numOptions = ALL_SYNTHS.length - 1;
-      const currentIndex = ALL_SYNTHS.findIndex(
-        ({ value }) => value === synthType
-      );
-
-      let nextVal = currentIndex + difference;
-
-      if (nextVal > numOptions) nextVal = 0;
-      if (nextVal < 0) nextVal = numOptions;
-
-      onInstChange(ALL_SYNTHS[nextVal].value);
-    };
-  }
-
   render() {
-    return (
-      <ColorControllerComponent
-        {...this.props}
-        onInstChange={this.handleInstChange}
-        onIncrementClick={this.handleIncrementClick}
-      />
-    );
+    return <ColorControllerComponent {...this.props} />;
   }
 }
 

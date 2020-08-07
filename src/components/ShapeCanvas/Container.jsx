@@ -4,7 +4,7 @@ import { object, string, number, array, bool, func } from 'prop-types';
 import { dist } from 'utils/math';
 import { themeColors } from 'utils/color';
 import ShapeCanvasComponent from './Component';
-import { TOOL_TYPES } from 'components/Project';
+import { TOOL_TYPES } from 'utils/project';
 
 import withProjectContext from 'components/Project/withProjectContext';
 

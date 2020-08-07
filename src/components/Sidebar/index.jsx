@@ -3,25 +3,24 @@ import { Badge, Icon, Drawer, Tooltip, Button, Popconfirm } from 'antd';
 
 import Downloads from 'components/Downloads';
 import SaveButton from 'components/Toolbar/SaveButton';
-import withProjectContext from 'components/Project/withProjectContext';
 import styles from './styles.module.css';
+import { useProjectContext } from 'context/useProjectContext';
 
 function Sidebar(props) {
-  const {
-    handleSaveClick,
-    showSaveButton,
-    showSettingsButton,
-    projectName,
-    downloadUrls,
-    handleExportToMIDIClick,
-    handleDeleteClick,
-  } = props;
+  const { showSaveButton, showSettingsButton } = props;
 
   const [seenDownloadCount, setSeenDownloadCount] = useState(0);
   const [isDownloadsDrawerVisible, setIsDownloadsDrawerVisible] = useState(
     false
   );
   const [isSettingsDrawerVisible, setIsSettingsDrawerVisible] = useState(false);
+
+  const {
+    downloadUrls,
+    projectName,
+    imperativeHandlers: { exportProjectToMIDI, saveProject, deleteProject },
+  } = useProjectContext();
+
   const count = downloadUrls.length - seenDownloadCount;
 
   return (
@@ -31,7 +30,7 @@ function Sidebar(props) {
           <Tooltip placement="right" title="Save Project">
             <div className={styles.tabButton}>
               <SaveButton
-                onConfirm={name => handleSaveClick(name)}
+                onConfirm={name => saveProject(name)}
                 projectName={projectName}
               />
             </div>
@@ -51,7 +50,7 @@ function Sidebar(props) {
           </Tooltip>
         </Badge>
         <Tooltip placement="right" title="Export to MIDI">
-          <div className={styles.tabButton} onClick={handleExportToMIDIClick}>
+          <div className={styles.tabButton} onClick={exportProjectToMIDI}>
             <Icon type="export" />
           </div>
         </Tooltip>
@@ -92,14 +91,10 @@ function Sidebar(props) {
             okText="Delete"
             okType="danger"
             cancelText="Cancel"
-            onConfirm={handleDeleteClick}
+            onConfirm={deleteProject}
             icon={<Icon type="question-circle-o" />}
           >
-            <Button
-              //onClick={handleDeleteClick}
-              style={{ fontWeight: 'bold' }}
-              type="danger"
-            >
+            <Button style={{ fontWeight: 'bold' }} type="danger">
               Delete Project
             </Button>
           </Popconfirm>
@@ -109,4 +104,4 @@ function Sidebar(props) {
   );
 }
 
-export default withProjectContext(Sidebar);
+export default Sidebar;

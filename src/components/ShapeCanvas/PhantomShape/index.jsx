@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Color from 'color';
 import { Group, Circle, Line } from 'react-konva';
-import { TOOL_TYPES } from 'components/Project';
+import { TOOL_TYPES } from 'utils/project';
 import { useProjectContext } from 'context/useProjectContext';
 
 const propTypes = {

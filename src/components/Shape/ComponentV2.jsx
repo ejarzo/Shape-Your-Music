@@ -8,7 +8,7 @@ import { themeColors, appColors } from 'utils/color';
 
 import ShapeVertex from './ShapeVertex';
 import ShapeEditorPopover from './ShapeEditorPopover';
-import { TOOL_TYPES } from 'components/Project';
+import { TOOL_TYPES } from 'utils/project';
 import styles from './styles.module.css';
 import { useProjectContext } from 'context/useProjectContext';
 

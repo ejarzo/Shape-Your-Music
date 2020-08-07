@@ -4,7 +4,7 @@ import ShapesWrapper from './ShapesWrapper';
 import PhantomShape from './PhantomShape';
 import Grid from './Grid';
 import { themeColors } from 'utils/color';
-import { TOOL_TYPES } from 'components/Project';
+import { TOOL_TYPES } from 'utils/project';
 import { DRAWING_STATES } from './Container';
 
 import ProjectContextProvider from 'components/Project/ProjectContextProvider';

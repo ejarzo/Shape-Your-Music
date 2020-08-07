@@ -16,32 +16,7 @@ import { getDefaultParamValues } from 'utils/synths';
 import styles from './styles.module.css';
 import { useRecorder } from './useRecorder';
 import { useAudioOutput } from './useAudioOutput';
-import { PROJECT_ACTIONS } from 'utils/project';
-
-/* ========================================================================== */
-
-export const TOOL_TYPES = {
-  EDIT: 'edit',
-  DRAW: 'draw',
-};
-
-/* ========================================================================== */
-
-const getInitState = initState => ({
-  projectName: initState.projectName,
-  activeColorIndex: 0,
-  isGridActive: !!initState.isGridActive,
-  isSnapToGridActive: !!initState.isSnapToGridActive,
-  isAutoQuantizeActive: !!initState.isAutoQuantizeActive,
-  tempo: initState.tempo,
-  scaleObj: Teoria.note(initState.tonic).scale(initState.scale),
-  activeTool: TOOL_TYPES.DRAW,
-  selectedSynths: initState.selectedSynths,
-  knobVals:
-    initState.knobVals && initState.knobVals.length > 0
-      ? initState.knobVals
-      : initState.selectedSynths.map(getDefaultParamValues),
-});
+import { PROJECT_ACTIONS, TOOL_TYPES, getInitState } from 'utils/project';
 
 export default props => {
   const {
@@ -49,8 +24,8 @@ export default props => {
     showSaveButton,
     showSettingsButton,
     projectAuthor,
-    deleteProject,
-    saveProject,
+    deleteProject: deleteProjectMutation,
+    saveProject: saveProjectMutation,
   } = props;
 
   const shapeCanvas = useRef(null);
@@ -179,16 +154,6 @@ export default props => {
     stopRecording,
   });
 
-  const projectContext = {
-    // ...state,
-    ...state,
-    isAltPressed,
-    isRecording,
-    isArmed,
-    isPlaying,
-    dispatch,
-  };
-
   const togglePlayStop = () => {
     toggleIsPlaying();
     if (isArmed) {
@@ -199,7 +164,7 @@ export default props => {
     }
   };
 
-  const handleRecordClick = () => {
+  const toggleRecord = () => {
     if (isRecording) {
       stopRecording();
     } else {
@@ -211,23 +176,23 @@ export default props => {
     }
   };
 
-  const handleClearButtonClick = () => {
+  const clearProjectCanvas = () => {
     if (shapeCanvas) {
       shapeCanvas.current.clearAll();
     }
   };
 
-  const handleExportToMIDIClick = async () => {
+  const exportProjectToMIDI = async () => {
     // get list of MIDI events from the shape canvas
     const shapeNoteEventsList = shapeCanvas.current.getShapeMIDINoteEvents();
     await convertAndDownloadTracksAsMIDI({ tempo, shapeNoteEventsList });
   };
 
-  const handleSaveClick = projectName => {
+  const saveProject = projectName => {
     if (!projectName) return;
     console.log('Saving project with name', projectName);
 
-    // const projectContext = state;
+    const projectData = state;
     const shapesList = shapeCanvas.current.getShapesList();
     console.log('shapes list', shapesList);
     // TODO: do something with this screenshot
@@ -235,11 +200,29 @@ export default props => {
     // console.log('generated screenshot:', screenshot);
     // this.setState({ projectName });
 
-    saveProject({
-      ...projectContext,
+    saveProjectMutation({
+      ...projectData,
       name: projectName,
       shapesList,
     });
+  };
+
+  const projectContext = {
+    ...state,
+    isAltPressed,
+    isRecording,
+    isArmed,
+    isPlaying,
+    downloadUrls,
+    dispatch,
+    imperativeHandlers: {
+      togglePlayStop,
+      toggleRecord,
+      clearProjectCanvas,
+      exportProjectToMIDI,
+      saveProject,
+      deleteProject: deleteProjectMutation,
+    },
   };
 
   const keyHandlers = {
@@ -280,11 +263,7 @@ export default props => {
         )}
 
         {/* The Controls */}
-        <Toolbar
-          handlePlayClick={togglePlayStop}
-          handleRecordClick={handleRecordClick}
-          handleClearButtonClick={handleClearButtonClick}
-        />
+        <Toolbar />
 
         {/* The Canvas */}
         <ShapeCanvas
@@ -300,12 +279,8 @@ export default props => {
 
         {/* Sidebar */}
         <Sidebar
-          downloadUrls={downloadUrls}
-          handleSaveClick={handleSaveClick}
-          handleDeleteClick={deleteProject}
           showSaveButton={showSaveButton}
           showSettingsButton={showSettingsButton}
-          handleExportToMIDIClick={handleExportToMIDIClick}
         />
       </ProjectContextProvider>
     </HotKeys>

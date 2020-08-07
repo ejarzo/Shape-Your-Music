@@ -3,7 +3,7 @@ import { number, string, array, bool, object, func } from 'prop-types';
 import Color from 'color';
 import Tone from 'tone';
 import { themeColors, appColors } from 'utils/color';
-import { TOOL_TYPES } from 'components/Project';
+import { TOOL_TYPES } from 'utils/project';
 
 import { convertValToRange } from 'utils/math';
 import {

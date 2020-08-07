@@ -15,7 +15,7 @@ import { appColors, getDarker } from 'utils/color';
 
 import styles from './styles.module.css';
 
-import { TOOL_TYPES } from 'components/Project';
+import { TOOL_TYPES } from 'utils/project';
 import { SCALES, TONICS } from 'utils/music';
 
 import ColorSelect from './ColorSelect';
@@ -24,15 +24,7 @@ import { useProjectContext } from 'context/useProjectContext';
 
 const { black, grayLightest, red } = appColors;
 
-const propTypes = {
-  handlePlayClick: func.isRequired,
-  handleRecordClick: func.isRequired,
-  handleClearButtonClick: func.isRequired,
-};
-
 function ToolbarComponent(props) {
-  const { handlePlayClick, handleRecordClick, handleClearButtonClick } = props;
-
   const {
     isPlaying,
     isArmed,
@@ -44,6 +36,7 @@ function ToolbarComponent(props) {
     isSnapToGridActive,
     isAutoQuantizeActive,
     dispatch,
+    imperativeHandlers: { togglePlayStop, toggleRecord, clearProjectCanvas },
   } = useProjectContext();
 
   const lightGray = getDarker(grayLightest);
@@ -67,7 +60,7 @@ function ToolbarComponent(props) {
           <div>
             <IconButton
               iconClassName={playButtonClass}
-              onClick={handlePlayClick}
+              onClick={togglePlayStop}
             />
           </div>
         </Tooltip>
@@ -76,10 +69,7 @@ function ToolbarComponent(props) {
             className={isRecording ? styles.pulse : undefined}
             style={{ color: (isArmed || isRecording) && red }}
           >
-            <IconButton
-              iconClassName={'ion-record'}
-              onClick={handleRecordClick}
-            />
+            <IconButton iconClassName={'ion-record'} onClick={toggleRecord} />
           </div>
         </Tooltip>
       </div>
@@ -223,7 +213,7 @@ function ToolbarComponent(props) {
             hasBorder
             // darkHover
             color={grayLightest}
-            onClick={handleClearButtonClick}
+            onClick={clearProjectCanvas}
             title="Clear all shapes (CANNOT UNDO)"
           >
             Clear
@@ -241,7 +231,5 @@ function ToolbarComponent(props) {
     </div>
   );
 }
-
-ToolbarComponent.propTypes = propTypes;
 
 export default ToolbarComponent;

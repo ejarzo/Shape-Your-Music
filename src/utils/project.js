@@ -1,4 +1,11 @@
 import { DEFAULT_SYNTHS } from './synths';
+import { getDefaultParamValues } from 'utils/synths';
+import Teoria from 'teoria';
+
+export const TOOL_TYPES = {
+  EDIT: 'edit',
+  DRAW: 'draw',
+};
 
 export const PROJECT_ACTIONS = {
   SET_ACTIVE_TOOL: 'SET_ACTIVE_TOOL',
@@ -22,6 +29,22 @@ export const DEFAULT_PROJECT = {
   scale: 'major',
   selectedSynths: DEFAULT_SYNTHS,
 };
+
+export const getInitState = initState => ({
+  projectName: initState.projectName,
+  activeColorIndex: 0,
+  isGridActive: !!initState.isGridActive,
+  isSnapToGridActive: !!initState.isSnapToGridActive,
+  isAutoQuantizeActive: !!initState.isAutoQuantizeActive,
+  tempo: initState.tempo,
+  scaleObj: Teoria.note(initState.tonic).scale(initState.scale),
+  activeTool: TOOL_TYPES.DRAW,
+  selectedSynths: initState.selectedSynths,
+  knobVals:
+    initState.knobVals && initState.knobVals.length > 0
+      ? initState.knobVals
+      : initState.selectedSynths.map(getDefaultParamValues),
+});
 
 export const getProjectSaveData = projectData => {
   const {

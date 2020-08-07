@@ -14,7 +14,7 @@ import ShapeVertex from './ShapeVertex';
 import Portal from 'react-portal';
 import ShapeEditorPopover from './ShapeEditorPopover';
 import withProjectContext from 'components/Project/withProjectContext';
-import { TOOL_TYPES } from 'components/Project';
+import { TOOL_TYPES } from 'utils/project';
 
 const propTypes = {
   scaleObj: object.isRequired,

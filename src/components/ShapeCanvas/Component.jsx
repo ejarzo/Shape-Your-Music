@@ -1,20 +1,14 @@
-import React, {
-  useContext,
-  useRef,
-  forwardRef,
-  useImperativeHandle,
-} from 'react';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import { Stage, Layer, Group } from 'react-konva';
 import ShapesWrapper from './ShapesWrapper';
 import PhantomShape from './PhantomShape';
 import Grid from './Grid';
 import { themeColors } from 'utils/color';
-import { TOOL_TYPES } from 'components/Project';
+import { TOOL_TYPES } from 'utils/project';
 import { DRAWING_STATES } from './Container';
 
-import ProjectContextProvider, {
-  ProjectContext,
-} from 'components/Project/ProjectContextProvider';
+import ProjectContextProvider from 'components/Project/ProjectContextProvider';
+import { useProjectContext } from 'context/useProjectContext';
 
 function ShapeCanvasComponent(props, ref) {
   const {
@@ -50,7 +44,7 @@ function ShapeCanvasComponent(props, ref) {
   /* 
   NOTE: hack to propagate context through the Konva Stage
   */
-  const projectContext = useContext(ProjectContext);
+  const projectContext = useProjectContext();
   const {
     activeTool,
     isAltPressed,

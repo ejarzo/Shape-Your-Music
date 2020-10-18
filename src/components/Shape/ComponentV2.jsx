@@ -1,9 +1,4 @@
-import React, {
-  useImperativeHandle,
-  useRef,
-  forwardRef,
-  useContext,
-} from 'react';
+import React, { useImperativeHandle, useRef, forwardRef } from 'react';
 import { Circle, Group, Line } from 'react-konva';
 import Portal from 'react-portal';
 
@@ -13,9 +8,9 @@ import { themeColors, appColors } from 'utils/color';
 
 import ShapeVertex from './ShapeVertex';
 import ShapeEditorPopover from './ShapeEditorPopover';
-import { TOOL_TYPES } from 'components/Project';
-import { ProjectContext } from 'components/Project/ProjectContextProvider';
+import { TOOL_TYPES } from 'utils/project';
 import styles from './styles.module.css';
+import { useProjectContext } from 'context/useProjectContext';
 
 function ShapeComponent(props, ref) {
   const shapeFillRef = useRef();
@@ -46,7 +41,7 @@ function ShapeComponent(props, ref) {
     },
   }));
 
-  const { scaleObj, isPlaying, activeTool } = useContext(ProjectContext);
+  const { scaleObj, isPlaying, activeTool } = useProjectContext();
   const {
     // shape
     index,

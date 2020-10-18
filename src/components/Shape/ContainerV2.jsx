@@ -9,7 +9,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import { themeColors, appColors } from 'utils/color';
-import { TOOL_TYPES } from 'components/Project';
+import { TOOL_TYPES } from 'utils/project';
 import { ProjectContext } from 'components/Project/ProjectContextProvider';
 
 import { convertValToRange } from 'utils/math';

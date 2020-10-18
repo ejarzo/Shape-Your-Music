@@ -1,10 +1,13 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import moment from 'moment';
 import Tone from 'tone';
 import Recorder from 'utils/Recorder';
 
 export const useRecorder = () => {
-  const recorder = useRef(new Recorder(Tone.Master));
+  const recorder = useRef(null);
+  useEffect(() => {
+    recorder.current = new Recorder(Tone.Master);
+  }, []);
   const [isRecording, setIsRecording] = useState(false);
   const [isArmed, setIsArmed] = useState(false);
   const [downloadUrls, setDownloadUrls] = useState([]);

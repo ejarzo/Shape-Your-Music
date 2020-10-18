@@ -1,22 +1,14 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { themeColors } from 'utils/color';
 import styles from './styles.module.css';
 import { SEND_CHANNELS } from 'utils/music';
 
-import withProjectContext from 'components/Project/withProjectContext';
 import ColorController from './ColorController';
+import { useProjectContext } from 'context/useProjectContext';
 
-const propTypes = {
-  onInstChange: PropTypes.func.isRequired,
-  onKnobChange: PropTypes.func.isRequired,
-  knobVals: PropTypes.array.isRequired,
-  selectedSynths: PropTypes.array.isRequired,
-};
-
-function ColorControllerPanel(props) {
-  const { onInstChange, onKnobChange, knobVals, selectedSynths } = props;
+function ColorControllerPanel() {
+  const { knobVals, selectedSynths } = useProjectContext();
   const [isCollapsed, setCollapsed] = useState(false);
 
   return (
@@ -40,11 +32,11 @@ function ColorControllerPanel(props) {
                 key={`colorController-${colorIndex}`}
               >
                 <ColorController
+                  colorIndex={colorIndex}
+                  // TODO: Compute these in ColorController component
                   color={themeColors[colorIndex]}
                   synthType={synthType}
                   receiveChannel={`${SEND_CHANNELS.FX_PREFIX}${colorIndex}`}
-                  onInstChange={onInstChange(colorIndex)}
-                  onKnobChange={onKnobChange(colorIndex)}
                   knobVals={knobVals[colorIndex]}
                 />
               </div>
@@ -56,6 +48,4 @@ function ColorControllerPanel(props) {
   );
 }
 
-ColorControllerPanel.propTypes = propTypes;
-
-export default withProjectContext(ColorControllerPanel);
+export default ColorControllerPanel;

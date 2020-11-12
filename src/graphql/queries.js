@@ -36,6 +36,12 @@ export const GET_ALL_PROJECTS = gql`
         name
         userId
         userName
+        shapesList {
+          points
+          isMuted
+          colorIndex
+          # quantizeFactor
+        }
       }
     }
   }
@@ -51,6 +57,12 @@ export const GET_MY_PROJECTS = gql`
         name
         userId
         userName
+        shapesList {
+          points
+          isMuted
+          colorIndex
+          # quantizeFactor
+        }
       }
     }
   }

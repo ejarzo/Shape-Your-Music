@@ -9,7 +9,7 @@ export default props => {
   const id = getProjectIdFromResponse(projectPreview);
   const {
     ts,
-    data: { name, userName },
+    data: { name, userName, shapesList },
   } = projectPreview;
 
   const dateModified = formatTimestamp(ts);

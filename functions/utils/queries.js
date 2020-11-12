@@ -34,6 +34,12 @@ export const allProjects = `
         name
         userId
         userName
+        shapesList {
+          points
+          isMuted
+          colorIndex
+          # quantizeFactor
+        }
       }
     }
   }
@@ -49,6 +55,12 @@ export const projectByUserId = `
         name
         userId
         userName
+        shapesList {
+          points
+          isMuted
+          colorIndex
+          # quantizeFactor
+        }
       }
     }
   }

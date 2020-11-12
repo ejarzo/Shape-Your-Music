@@ -6,16 +6,19 @@
 }
 
 .ProjectCard {
+  position: relative;
   background: #fff;
   padding: 1em;
   border: 1px solid #fff;
   transition: all 0.2s;
-  /* transform: scale3d(1, 1, 1); */
-  /* box-shadow: 0 0 2px 0px rgba(0, 0, 0, 0); */
+  transform: scale3d(1, 1, 1);
+  z-index: 1;
+  box-shadow: 0 0 2px 0px rgba(0, 0, 0, 0);
 }
 
 .ProjectCard:hover {
-  border-color: #ddd;
-  /* transform: scale3d(1.1, 1.1, 1);
-  box-shadow: 0 2px 10px 0px rgba(0, 0, 0, 0.1); */
+  /* border-color: #ddd; */
+  z-index: 2;
+  transform: scale3d(1.1, 1.1, 1);
+  box-shadow: 0 2px 50px -10px rgba(0, 0, 0, 0.1);
 }

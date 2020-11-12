@@ -1,9 +1,10 @@
 .projectCard {
   padding: 15px;
   border: 1px solid #ddd;
+  transform: scale3d(1, 1, 1);
 }
 
 .projectCard:hover {
-  border-color: #242424;
+  /* border-color: #242424; */
+  transform: scale3d(1.1, 1.1, 1);
 }
-

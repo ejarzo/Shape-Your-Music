@@ -53,7 +53,14 @@ function ProjectList(props) {
                       <strong>{name}</strong>
                     </div>
                     <div>
-                      by <em>{userName}</em>
+                      by{' '}
+                      <em
+                        style={{
+                          color: userName === 'ejarzo' && themeColors[0],
+                        }}
+                      >
+                        {userName}
+                      </em>
                     </div>
                     <div className="text-gray">
                       {dateCreated && formatTimestamp(dateCreated)}

@@ -42,6 +42,7 @@ function ProjectList(props) {
                               <Line
                                 points={points}
                                 fill={themeColors[colorIndex]}
+                                opacity={0.8}
                                 lineJoin="bevel"
                                 closed
                               />

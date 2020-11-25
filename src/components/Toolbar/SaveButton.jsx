@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Popconfirm, Input, Icon } from 'antd';
+import { Popconfirm, Input } from 'antd';
+import { QuestionCircleOutlined, SaveOutlined } from '@ant-design/icons';
 
 const MAX_NAME_LENGTH = 30;
 
@@ -38,9 +39,9 @@ function SaveButton(props) {
       okText="Save"
       cancelText="Cancel"
       onConfirm={handleSubmit}
-      icon={<Icon type="question-circle-o" />}
+      icon={<QuestionCircleOutlined />}
     >
-      <Icon id="SaveButton" type="save" />
+      <SaveOutlined id="SaveButton" />
     </Popconfirm>
   );
 }

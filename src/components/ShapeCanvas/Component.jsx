@@ -3,12 +3,13 @@ import { Stage, Layer, Group } from 'react-konva';
 import ShapesWrapper from './ShapesWrapper';
 import PhantomShape from './PhantomShape';
 import Grid from './Grid';
-import { themeColors } from 'utils/color';
+import { appColors, themeColors } from 'utils/color';
 import { TOOL_TYPES } from 'utils/project';
 import { DRAWING_STATES } from './Container';
 
 import ProjectContextProvider from 'components/Project/ProjectContextProvider';
 import { useProjectContext } from 'context/useProjectContext';
+import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeContext';
 
 function ShapeCanvasComponent(props, ref) {
   const {
@@ -36,6 +37,8 @@ function ShapeCanvasComponent(props, ref) {
   } = props;
   const shapesGroupRef = useRef({});
 
+  const { isDarkMode } = useColorThemeContext();
+
   useImperativeHandle(ref, () => ({
     getShapeState: shapesGroupRef.current.getShapeState,
     getShapeMIDISequences: shapesGroupRef.current.getShapeMIDISequences,
@@ -57,7 +60,10 @@ function ShapeCanvasComponent(props, ref) {
   return (
     <div
       id="holder"
-      style={{ cursor: isEditMode && isAltPressed && 'copy' }}
+      style={{
+        cursor: isEditMode && isAltPressed && 'copy',
+        background: isDarkMode ? appColors.black : appColors.grayLight,
+      }}
       onContextMenu={e => {
         e.preventDefault();
       }}

@@ -100,3 +100,51 @@ div[tabindex='-1']:focus {
 .ant-tooltip {
   font-weight: bold;
 }
+
+.ant-drawer-title,
+.ant-drawer-close {
+  color: inherit;
+}
+
+/* .ant-popover-inner {
+  background-color: rgb(110, 110, 110);
+  color: #eeeeee;
+} */
+
+/*  ==================== Darkmode changes ==================== */
+
+/* .styles_toolbar__mu6A3 {
+  background: #343434;
+}
+
+.styles_headerMenu__2aEMl {
+  background: #2e2e2e;
+  color: #ddd;
+}
+
+.styles_headerMenu__2aEMl {
+  border-bottom: 1px solid #252525;
+}
+
+body {
+  background: #323232;
+}
+
+.styles_ProjectCard__32opC {
+  background: #353535;
+  border: 1px solid #2e2a2a;
+  color: #eee;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: rgba(230, 219, 219, 0.85);
+}
+
+a {
+  color: #e7dada;
+} */

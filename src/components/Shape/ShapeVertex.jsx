@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Color from 'color';
 import { useStrictMode, Circle } from 'react-konva';
-useStrictMode(true);
+// useStrictMode(true);
 
 /*
   The shape's vertecies. Can be dragged to edit the shape.

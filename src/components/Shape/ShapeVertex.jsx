@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Color from 'color';
-import { useStrictMode, Circle } from 'react-konva';
+import { /* useStrictMode, */ Circle } from 'react-konva';
 // useStrictMode(true);
 
 /*
-  The shape's vertecies. Can be dragged to edit the shape.
+  The shape's vertexes. Can be dragged to edit the shape.
 */
 function ShapeVertex(props) {
   const { p, index, color, dragBoundFunc, onVertexDragMove } = props;

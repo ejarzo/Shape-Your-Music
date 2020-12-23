@@ -33,7 +33,7 @@ function ToolbarComponent(props) {
     scaleObj,
     tempo,
     isGridActive,
-    isSnapToGridActive,
+    // isSnapToGridActive,
     isAutoQuantizeActive,
     dispatch,
     imperativeHandlers: { togglePlayStop, toggleRecord, clearProjectCanvas },

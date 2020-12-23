@@ -3,12 +3,12 @@ import cx from 'classnames';
 import { THEMES } from 'utils/color';
 
 export const ColorThemeContext = createContext({
-  theme: THEMES.DARK,
+  theme: THEMES.LIGHT,
   setTheme: () => {},
 });
 
 export const ColorThemeContextProvider = ({ children }) => {
-  const [theme, setTheme] = useState(THEMES.DARK);
+  const [theme, setTheme] = useState(THEMES.LIGHT);
   const isDarkMode = theme === THEMES.DARK;
   return (
     <ColorThemeContext.Provider value={{ theme, setTheme, isDarkMode }}>

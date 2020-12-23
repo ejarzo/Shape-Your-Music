@@ -23,7 +23,8 @@ const HeaderLink = props => {
 
 function HeaderMenu(props) {
   const { theme, setTheme, isDarkMode } = useColorThemeContext();
-  console.log(theme);
+  // TODO: reveal when dark mode works
+  const showDarkModeButton = false;
 
   return (
     <CurrentUserContextConsumer>
@@ -60,15 +61,19 @@ function HeaderMenu(props) {
           </div>
           <div className={styles.headerAccount}>
             <div>
-              <Button
-                onClick={() => {
-                  setTheme(theme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT);
-                }}
-                type="link"
-                size="small"
-                style={{ color: isDarkMode && appColors.grayLightest }}
-                icon={isDarkMode ? <BulbFilled /> : <BulbOutlined />}
-              />
+              {showDarkModeButton && (
+                <Button
+                  onClick={() => {
+                    setTheme(
+                      theme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT
+                    );
+                  }}
+                  type="link"
+                  size="small"
+                  style={{ color: isDarkMode && appColors.grayLightest }}
+                  icon={isDarkMode ? <BulbFilled /> : <BulbOutlined />}
+                />
+              )}
               {user ? (
                 <span>
                   <Dropdown

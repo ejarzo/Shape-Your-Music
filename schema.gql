@@ -37,5 +37,5 @@ type Query {
   allProjects: [Project!]
   projectsByUserId(userId: String!): [Project!]
   allProjectsSortedByDateCreated: [Project!]!
-    @resolver(name: "all_projects_sorted_by_title", paginated: true)
+    @resolver(name: "all_projects_sorted_by_date_created", paginated: true)
 }

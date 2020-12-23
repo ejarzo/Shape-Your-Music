@@ -1,7 +1,5 @@
-/* TODO -- automate this... */
-
 // CreateIndex({
-//   name: 'all_projects_sorted_by_title',
+//   name: 'all_projects_sorted_by_date_created',
 //   source: Collection('Project'),
 //   terms: [],
 //   values: [
@@ -16,12 +14,12 @@
 // });
 
 // Update(
-//   Function("all_projects_sorted_by_title"),
+//   Function("all_projects_sorted_by_date_created"),
 //   {
 //     body: Query(Lambda(["size", "after", "before"],
 //       Let(
 //         {
-//           match: Match(Index("all_projects_sorted_by_title")),
+//           match: Match(Index("all_projects_sorted_by_date_created")),
 //           page: If(
 //             Equals(Var("before"), null),
 //             If(

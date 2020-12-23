@@ -5,6 +5,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { CurrentUserContextProvider } from 'context/CurrentUserContext';
 import Routes from './Routes';
 import netlifyIdentity from 'netlify-identity-widget';
+import { ColorThemeContextProvider } from 'context/ColorThemeContext/ColorThemeContextProvider';
 
 const client = new ApolloClient({
   uri: '/.netlify/functions/graphql',
@@ -29,7 +30,9 @@ function App() {
     <ErrorBoundary>
       <ApolloProvider client={client}>
         <CurrentUserContextProvider>
-          <Routes />
+          <ColorThemeContextProvider>
+            <Routes />
+          </ColorThemeContextProvider>
         </CurrentUserContextProvider>
       </ApolloProvider>
     </ErrorBoundary>

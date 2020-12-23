@@ -20,6 +20,7 @@ import { SCALES, TONICS } from 'utils/music';
 import ColorSelect from './ColorSelect';
 import { PROJECT_ACTIONS } from 'utils/project';
 import { useProjectContext } from 'context/useProjectContext';
+import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeContext';
 
 const { black, grayLightest, red } = appColors;
 
@@ -32,7 +33,7 @@ function ToolbarComponent(props) {
     scaleObj,
     tempo,
     isGridActive,
-    isSnapToGridActive,
+    // isSnapToGridActive,
     isAutoQuantizeActive,
     dispatch,
     imperativeHandlers: { togglePlayStop, toggleRecord, clearProjectCanvas },
@@ -43,10 +44,17 @@ function ToolbarComponent(props) {
   const isDrawTool = activeTool === TOOL_TYPES.DRAW;
   const isEditTool = activeTool === TOOL_TYPES.EDIT;
 
+  const { isDarkMode } = useColorThemeContext();
   return (
-    <div className={styles.toolbar}>
+    <div
+      className={styles.toolbar}
+      style={{ background: isDarkMode && '#333' }}
+    >
       {/* TRANSPORT CONTROLS */}
-      <div className={styles.toolbarSection}>
+      <div
+        className={styles.toolbarSection}
+        style={{ color: isDarkMode && appColors.grayLightest }}
+      >
         <Tooltip
           title={
             <span>
@@ -124,29 +132,30 @@ function ToolbarComponent(props) {
 
       {/* CANVAS CONTROLS */}
       <div
-        style={{ display: 'grid', gridTemplateColumns: '66% 34%', gridGap: 3 }}
+        style={{ display: 'grid', gridTemplateColumns: '50% 50%', gridGap: 3 }}
       >
         <div
-          className={cx(styles.toolbarSection, styles.canvasControls)}
+          // className={cx(styles.toolbarSection)}
           style={{
             borderRadius: 3,
             padding: 0,
-            border: `1px solid ${lightGray}`,
-            background: lightGray,
+            border: !isDarkMode && `1px solid ${lightGray}`,
+            // background: lightGray,
             gridGap: 1,
             overflow: 'hidden',
+            height: '100%',
           }}
         >
-          <div>
-            <CheckboxButton
-              checked={isGridActive}
-              onChange={() => {
-                dispatch({ type: PROJECT_ACTIONS.TOGGLE_GRID });
-              }}
-              label={'Grid'}
-            />
-          </div>
-          <div>
+          <CheckboxButton
+            checked={isGridActive}
+            onChange={() => {
+              dispatch({ type: PROJECT_ACTIONS.TOGGLE_GRID });
+              dispatch({ type: PROJECT_ACTIONS.TOGGLE_SNAP_TO_GRID });
+            }}
+            label={'Grid'}
+            color={isDarkMode && appColors.black}
+          />
+          {/*  <div>
             <CheckboxButton
               checked={isSnapToGridActive}
               onChange={() => {
@@ -154,7 +163,7 @@ function ToolbarComponent(props) {
               }}
               label={'Snap'}
             />
-          </div>
+          </div> */}
         </div>
 
         <Tooltip title="Locks shape perimeters">
@@ -162,8 +171,8 @@ function ToolbarComponent(props) {
             style={{
               borderRadius: 3,
               padding: 0,
-              border: `1px solid ${lightGray}`,
-              background: lightGray,
+              border: !isDarkMode && `1px solid ${lightGray}`,
+              // background: lightGray,
               gridGap: 1,
               overflow: 'hidden',
             }}
@@ -174,6 +183,7 @@ function ToolbarComponent(props) {
                 dispatch({ type: PROJECT_ACTIONS.TOGGLE_AUTO_QUANTIZE });
               }}
               label={'Sync'}
+              color={isDarkMode && appColors.black}
             />
           </div>
         </Tooltip>
@@ -194,6 +204,7 @@ function ToolbarComponent(props) {
             dispatch({ type: PROJECT_ACTIONS.SET_TONIC, payload: value });
           }}
           title="Key Root"
+          baseColor={isDarkMode && appColors.black}
         />
         <CustomSelect
           value={scaleObj.name}
@@ -202,6 +213,7 @@ function ToolbarComponent(props) {
             dispatch({ type: PROJECT_ACTIONS.SET_MODE, payload: value });
           }}
           title="Key Mode"
+          baseColor={isDarkMode && appColors.black}
         />
       </div>
 

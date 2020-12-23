@@ -1,14 +1,18 @@
 import React from 'react';
+import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
 import { formatTimestamp } from 'utils/time';
 import { ROUTES } from 'Routes';
 import { Button } from 'antd';
 import { Stage, Layer, Line } from 'react-konva';
-import { themeColors } from 'utils/color';
+import { appColors, themeColors } from 'utils/color';
+import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeContext';
+import Color from 'color';
 
 function ProjectList(props) {
   const { title, projects } = props;
+  const { isDarkMode } = useColorThemeContext();
   return (
     <div>
       <h1>{title}</h1>
@@ -27,9 +31,23 @@ function ProjectList(props) {
             return (
               <div key={_id}>
                 <Link to={`${ROUTES.PROJECT}/${_id}`}>
-                  <div className={styles.ProjectCard}>
+                  <div
+                    className={cx(styles.ProjectCard, {
+                      [styles.isDarkMode]: isDarkMode,
+                    })}
+                    style={{
+                      background:
+                        isDarkMode && Color(appColors.black).lighten(0.3),
+                      color: isDarkMode && appColors.grayLightest,
+                      border: isDarkMode && 'none',
+                    }}
+                  >
                     <Stage
-                      style={{ background: '#eee' }}
+                      style={{
+                        background: isDarkMode
+                          ? appColors.black
+                          : appColors.grayLightest,
+                      }}
                       width={200}
                       height={100}
                       scaleX={0.1}

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
 import styles from './styles.module.css';
 
 const propTypes = {
@@ -34,7 +35,7 @@ function Downloads(props) {
               <audio src={url} controls />
 
               <Button
-                icon="download"
+                icon={<DownloadOutlined />}
                 href={url}
                 download={fileName || `recording-${i}`}
                 title={`shape-your-music-download-${i}`}

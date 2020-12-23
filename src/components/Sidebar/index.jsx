@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
-import { Badge, Icon, Drawer, Tooltip, Button, Popconfirm } from 'antd';
-
+import { Badge, Drawer, Tooltip, Button, Popconfirm } from 'antd';
+import {
+  DownloadOutlined,
+  ExportOutlined,
+  QuestionCircleOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
 import Downloads from 'components/Downloads';
 import SaveButton from 'components/Toolbar/SaveButton';
 import styles from './styles.module.css';
 import { useProjectContext } from 'context/useProjectContext';
+import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeContext';
+import { appColors } from 'utils/color';
+import Color from 'color';
 
 function Sidebar(props) {
   const { showSaveButton, showSettingsButton } = props;
@@ -21,11 +29,19 @@ function Sidebar(props) {
     imperativeHandlers: { exportProjectToMIDI, saveProject, deleteProject },
   } = useProjectContext();
 
+  const { isDarkMode } = useColorThemeContext();
+
   const count = downloadUrls.length - seenDownloadCount;
 
   return (
     <div className={styles.sidebar}>
-      <div className={styles.tabs}>
+      <div
+        className={styles.tabs}
+        style={{
+          color: isDarkMode && appColors.grayLightest,
+          background: isDarkMode && Color(appColors.black).lighten(0.4),
+        }}
+      >
         {showSaveButton && (
           <Tooltip placement="right" title="Save Project">
             <div className={styles.tabButton}>
@@ -40,18 +56,19 @@ function Sidebar(props) {
           <Tooltip placement="right" title="Downloads">
             <div
               className={styles.tabButton}
+              style={{ color: isDarkMode && appColors.grayLightest }}
               onClick={() => {
                 setSeenDownloadCount(downloadUrls.length);
                 setIsDownloadsDrawerVisible(true);
               }}
             >
-              <Icon type="download" />
+              <DownloadOutlined />
             </div>
           </Tooltip>
         </Badge>
         <Tooltip placement="right" title="Export to MIDI">
           <div className={styles.tabButton} onClick={exportProjectToMIDI}>
-            <Icon type="export" />
+            <ExportOutlined />
           </div>
         </Tooltip>
         {showSettingsButton && (
@@ -62,7 +79,7 @@ function Sidebar(props) {
                 setIsSettingsDrawerVisible(true);
               }}
             >
-              <Icon type="setting" />
+              <SettingOutlined />
             </div>
           </Tooltip>
         )}
@@ -74,6 +91,15 @@ function Sidebar(props) {
         width={400}
         onClose={() => setIsDownloadsDrawerVisible(false)}
         visible={isDownloadsDrawerVisible}
+        drawerStyle={{
+          background: isDarkMode && appColors.black,
+          color: isDarkMode && appColors.grayLightest,
+        }}
+        headerStyle={{
+          borderColor: 'rgba(0,0,0,0.1)',
+          background: isDarkMode && appColors.black,
+          color: isDarkMode && appColors.grayLightest,
+        }}
       >
         <Downloads downloadUrls={downloadUrls} />
       </Drawer>
@@ -92,7 +118,7 @@ function Sidebar(props) {
             okType="danger"
             cancelText="Cancel"
             onConfirm={deleteProject}
-            icon={<Icon type="question-circle-o" />}
+            icon={<QuestionCircleOutlined />}
           >
             <Button style={{ fontWeight: 'bold' }} type="danger">
               Delete Project

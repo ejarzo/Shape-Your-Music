@@ -4,15 +4,24 @@ import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
 import { formatTimestamp } from 'utils/time';
 import { ROUTES } from 'Routes';
-import { Button } from 'antd';
+import { Button, Space } from 'antd';
 import { Stage, Layer, Line } from 'react-konva';
 import { appColors, themeColors } from 'utils/color';
 import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeContext';
 import Color from 'color';
 
 function ProjectList(props) {
-  const { title, projects } = props;
+  const {
+    title,
+    projects,
+    onPrevPageClick,
+    onNextPageClick,
+    before,
+    after,
+  } = props;
+
   const { isDarkMode } = useColorThemeContext();
+
   return (
     <div>
       <h1>{title}</h1>
@@ -55,17 +64,16 @@ function ProjectList(props) {
                     >
                       <Layer>
                         {shapesList &&
-                          shapesList.map(({ points, colorIndex }) => {
-                            return (
-                              <Line
-                                points={points}
-                                fill={themeColors[colorIndex]}
-                                opacity={0.8}
-                                lineJoin="bevel"
-                                closed
-                              />
-                            );
-                          })}
+                          shapesList.map(({ points, colorIndex }, i) => (
+                            <Line
+                              key={i}
+                              points={points}
+                              fill={themeColors[colorIndex]}
+                              opacity={0.8}
+                              lineJoin="bevel"
+                              closed
+                            />
+                          ))}
                       </Layer>
                     </Stage>
                     <div>
@@ -89,6 +97,30 @@ function ProjectList(props) {
               </div>
             );
           })}
+      </div>
+      <div style={{ textAlign: 'center', marginTop: 40 }}>
+        <Space>
+          {onPrevPageClick && (
+            <Button
+              size="large"
+              type="text"
+              disabled={!before}
+              onClick={onPrevPageClick}
+            >
+              {'< Newer'}
+            </Button>
+          )}
+          {onNextPageClick && (
+            <Button
+              size="large"
+              type="text"
+              disabled={!after}
+              onClick={onNextPageClick}
+            >
+              {'Older >'}
+            </Button>
+          )}
+        </Space>
       </div>
     </div>
   );

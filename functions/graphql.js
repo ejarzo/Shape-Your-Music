@@ -5,7 +5,12 @@ import {
 } from 'apollo-server-lambda';
 import { GraphQLClient } from 'graphql-request';
 import { typeDefs } from './utils/schema';
-import { allProjects, findProjectByID, projectByUserId } from './utils/queries';
+import {
+  allProjects,
+  allProjectsSortedByDateCreated,
+  findProjectByID,
+  projectByUserId,
+} from './utils/queries';
 import { updateProject, createProject, deleteProject } from './utils/mutations';
 import { initSentry, resolversWrapper, objectMap } from './utils/errors';
 
@@ -24,6 +29,16 @@ const resolvers = {
     allProjects: async () => {
       const response = await client.request(allProjects);
       return { data: response.allProjects.data.reverse() };
+    },
+    allProjectsSortedByDateCreated: async (_, variables) => {
+      const response = await client.request(
+        allProjectsSortedByDateCreated,
+        variables
+      );
+      const {
+        allProjectsSortedByDateCreated: { data, before, after },
+      } = response;
+      return { data, before, after };
     },
     myProjects: async (_, variables, { user }) => {
       if (!user) {

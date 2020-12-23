@@ -36,4 +36,6 @@ type Project {
 type Query {
   allProjects: [Project!]
   projectsByUserId(userId: String!): [Project!]
+  allProjectsSortedByDateCreated: [Project!]!
+    @resolver(name: "all_projects_sorted_by_date_created", paginated: true)
 }

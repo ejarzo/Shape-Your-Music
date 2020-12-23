@@ -30,42 +30,35 @@ export const GET_ALL_PROJECTS = gql`
   query AllProjects {
     allProjects {
       data {
-        _id
-        _ts
-        dateCreated
-        name
-        userId
-        userName
-        shapesList {
-          points
-          isMuted
-          colorIndex
-          # quantizeFactor
-        }
+        ...ProjectFragment
       }
     }
   }
+  ${ProjectFragment}
+`;
+
+export const GET_ALL_PROJECTS_SORTED_BY_DATE_CREATED = gql`
+  query AllProjectsSortedByDateCreated($_size: Int, $_cursor: String) {
+    allProjectsSortedByDateCreated(_size: $_size, _cursor: $_cursor) {
+      before
+      after
+      data {
+        ...ProjectFragment
+      }
+    }
+  }
+  ${ProjectFragment}
 `;
 
 export const GET_MY_PROJECTS = gql`
   query MyProjects {
     myProjects {
       data {
-        _id
-        _ts
-        dateCreated
-        name
-        userId
-        userName
-        shapesList {
-          points
-          isMuted
-          colorIndex
-          # quantizeFactor
-        }
+        ...ProjectFragment
       }
     }
   }
+  ${ProjectFragment}
 `;
 
 export const GET_PROJECT = gql`

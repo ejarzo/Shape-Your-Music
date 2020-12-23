@@ -1,15 +1,13 @@
 import React from 'react';
 import PageContainer from 'components/PageContainer';
-import { Spin, Icon } from 'antd';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 function Loading(props) {
   return (
     <PageContainer>
       <div style={{ textAlign: 'center' }}>
-        <Spin
-          delay={100}
-          indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}
-        />
+        <Spin delay={100} indicator={<LoadingOutlined />} />
       </div>
     </PageContainer>
   );

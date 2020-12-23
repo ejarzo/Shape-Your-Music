@@ -28,42 +28,35 @@ export const allProjects = `
   query AllProjects {
     allProjects {
       data {
-        _id
-        _ts
-        dateCreated
-        name
-        userId
-        userName
-        shapesList {
-          points
-          isMuted
-          colorIndex
-          # quantizeFactor
-        }
+        ...ProjectFragment
       }
     }
   }
+  ${PROJECT_FRAGMENT}
+`;
+
+export const allProjectsSortedByDateCreated = `
+  query AllProjectsSortedByDateCreated($_size: Int, $_cursor: String) {
+    allProjectsSortedByDateCreated(_size: $_size, _cursor: $_cursor) {
+      before
+      after
+      data {
+        ...ProjectFragment
+      }
+    }
+  }
+  ${PROJECT_FRAGMENT}
 `;
 
 export const projectByUserId = `
   query ProjectsByUserId($userId: String!) {
     projectsByUserId(userId: $userId) {
       data {
-        _id
-        _ts
-        dateCreated
-        name
-        userId
-        userName
-        shapesList {
-          points
-          isMuted
-          colorIndex
-          # quantizeFactor
-        }
+        ...ProjectFragment
       }
     }
   }
+  ${PROJECT_FRAGMENT}
 `;
 
 export const findProjectByID = `

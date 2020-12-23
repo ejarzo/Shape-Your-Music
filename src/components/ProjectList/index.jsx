@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
 import { formatTimestamp } from 'utils/time';
 import { ROUTES } from 'Routes';
-import { Button } from 'antd';
+import { Button, Pagination } from 'antd';
 import { Stage, Layer, Line } from 'react-konva';
 import { appColors, themeColors } from 'utils/color';
 import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeContext';
@@ -89,6 +89,13 @@ function ProjectList(props) {
               </div>
             );
           })}
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <Pagination
+          style={{ margin: '20px auto' }}
+          defaultCurrent={1}
+          total={50}
+        />
       </div>
     </div>
   );

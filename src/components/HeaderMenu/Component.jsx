@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Menu, Button, Dropdown } from 'antd';
+import { Menu, Button, Dropdown, Modal, Typography } from 'antd';
 import { BulbFilled, BulbOutlined, DownOutlined } from '@ant-design/icons';
 import { CurrentUserContextConsumer } from 'context/CurrentUserContext';
 import { getUserName } from 'utils/user';
@@ -9,11 +9,15 @@ import { ROUTES } from 'Routes';
 import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeContext';
 import { appColors, THEMES } from 'utils/color';
 import Color from 'color';
+import AboutModalContent from 'components/AboutModalContent';
+
+const { Link: AntLink } = Typography;
 
 const HeaderLink = props => {
   const { isDarkMode } = useColorThemeContext();
   return (
     <NavLink
+      component={AntLink}
       activeStyle={{ fontWeight: 'bold' }}
       style={{ color: isDarkMode && appColors.grayLightest }}
       {...props}
@@ -25,6 +29,7 @@ function HeaderMenu(props) {
   const { theme, setTheme, isDarkMode } = useColorThemeContext();
   // TODO: reveal when dark mode works
   const showDarkModeButton = false;
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
     <CurrentUserContextConsumer>
@@ -44,6 +49,15 @@ function HeaderMenu(props) {
                 .toString(),
           }}
         >
+          <Modal
+            // title="About Shape Your Music"
+            visible={isModalVisible}
+            onCancel={() => setIsModalVisible(false)}
+            footer={null}
+            width={700}
+          >
+            <AboutModalContent />
+          </Modal>
           <div className={styles.headerMenuLinks}>
             <HeaderLink exact to={ROUTES.INDEX}>
               Create
@@ -51,6 +65,13 @@ function HeaderMenu(props) {
             <HeaderLink exact to={ROUTES.DISCOVER}>
               Discover
             </HeaderLink>
+            <AntLink
+              size="small"
+              type="link"
+              onClick={() => setIsModalVisible(true)}
+            >
+              About
+            </AntLink>
             <a
               href="https://github.com/ejarzo/Shape-Your-Music/"
               target="blank"

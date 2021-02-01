@@ -43,44 +43,25 @@ Each shape is a certain color. The current color with which you are drawing is c
 
 The toolbar allows you to adjust various aspects of your project.
 
-#### Transport
-
 | Name      | Description |
 | --------- | ----------- |
 | Play/Stop | Pressing play starts all shapes at their origin point. Shapes that are added during playback will start playing as soon as they are completed. |
 | Record    | Pressing record allows you to download your project as an audio file (.wav). If playback is stopped when you click record, recording will begin when you begin playback. If the project is playing when you click record, the recording will start instantly. Pressing stop or record again will end the recording and show a window where you can listen and download the file that was generated. |
-
-#### Drawing
-
-| Name   | Description |
-| ------ | ----------- |
 | Color  | Select the color of the shapes you are drawing. Different colored shapes produce different sounds. |
-| Draw   | Draw mode allows you to create shapes. Click to place vertices. Click on the origin point to complete a shape. Right click to cancel. |
-| Edit   | Edit mode allows you to adjust your shapes. Drag vertices to edit the perimeter of your shape. Drag the whole shape to move it. Click on a shape to show more detailed options (see shape controls). |
-
-#### Canvas
-
-| Name         | Description |
-| ------------ | ----------- |
-| Grid         | When selected, the grid is shown |
-| Snap To Grid | When selected, all points will snap to the grid when drawn, or when shapes are moved |
+| Draw Tool   | Draw mode allows you to create shapes. Click to place vertices. Click on the origin point to complete a shape. Right click to cancel. |
+| Edit Tool  | Edit mode allows you to adjust your shapes. Drag vertices to edit the perimeter of your shape. Drag the whole shape to move it. Click on a shape to show more detailed options (see shape controls). |
+| Grid         | When selected, the grid is shown and all points will snap to the grid when drawn, or when shapes are moved  |
 | Sync         | When selected, shapes will snap and lock to the same length - so that they will loop at the same time. Shapes can be “halved’ or “doubled” so that they loop half or twice as often. This allows for a defined rhythm. |
-| Fullscreen   | Toggle Fullscreen |
-| Clear        | Delete all shapes |
-
-#### Music
-
-| Name  | Description                     |
-| ----- | ------------------------------- |
 | Tempo | Change the speed of playback    |
 | Key   | Select the root note            |
 | Scale | Select the musical scale (mode) |
+| Clear        | Delete all shapes |
 
 ### Exporting
 
 There are two ways to export your project: as audio or as MIDI.
 1. **Audio**: Recording audio works like many DAWs. Click the record button to begin recording. Recording will begin when playback starts and captures the audio output of the project. Clicking record again or stopping playback will stop the current recording, which can then be downloaded as a `.wav` file from the Downloads section in the sidebar.
-2. **MIDI**: Click `Export to MIDI` to download the project as a folder of MIDI files, one for each shape. Since the tempo is not synced to any real BPM, the melodies may sound slower or faster when loaded into another program, but all shapes will maintain their relative lengths.
+2. **MIDI**: Click the `Export to MIDI` icon on the left to download the project as a folder of MIDI files, one for each shape. Since the tempo is not synced to any real BPM, the melodies may sound slower or faster when loaded into another program, but all shapes will maintain their relative lengths.
 
 ### Shape Menu
 
@@ -92,11 +73,14 @@ The Shape menu allows you to control a shape's properties. CLICK on a shape to d
 | -------------- | ------------------------------- |
 | Volume Slider  | The left side of the panel is a volume slider. Drag the white bar to adjust how loud the shape is  |
 | Mute (toggle)  | When selected, the shape produces no sound |
-| Solo (togggle) | When selected, the shape will be the only shape producing sound |
+| Solo (toggle)  | When selected, the shape will be the only shape producing sound |
 | Color          | Change the shape's color. This will change its sound to the corresponding instrument for that color |
-| \*2            | Doubles the perimiter of the shape, making the loop last for twice as long |
-| \2             | Halves the perimiter of the shape, making the loop last for half as long |
+| \*2            | Doubles the perimeter of the shape, making the loop last for twice as long |
+| \2             | Halves the perimeter of the shape, making the loop last for half as long |
 | Reverse        | Reverse the direction of playback. Reversing the direction will recalculate the notes based on the new angles - instead of simply playing the notes in opposite order |
+| To Front       | Moves the shape to the front of the canvas -- has no effect on the audio |
+| To Back        | Moves the shape to the back of the canvas -- has no effect on the audio |
+| Duplicate      | Creates a clone of the shape |
 | Delete Shape   | Deletes the shape from the canvas |
 
 

@@ -3,7 +3,7 @@
   z-index: 2;
   grid-template-rows: 100%;
   grid-column-gap: 15px;
-  grid-template-columns: 80px 120px 180px 250px 120px 250px 120px 1fr;
+  grid-template-columns: 80px 120px 180px 100px 200px 120px 250px 120px 1fr;
   min-width: 800px;
   top: 0px;
   height: 50px;
@@ -42,7 +42,7 @@
 
 .musicalControls {
   /*width: 250px;*/
-  grid-template-columns: 40px 70px 1fr;
+  grid-template-columns: 70px 1fr;
 }
 
 .toolbar button {

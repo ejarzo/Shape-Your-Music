@@ -52,6 +52,7 @@ export const getSelectStyles = baseColor => {
       '&:hover': {
         backgroundColor: getLighter(backgroundColor),
       },
+      userSelect: 'none',
     }),
     menuList: base => ({ ...base, padding: 0 }),
     valueContainer: base => ({ ...base, padding: 0 }),

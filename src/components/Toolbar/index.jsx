@@ -189,14 +189,21 @@ function ToolbarComponent(props) {
         </Tooltip>
       </div>
 
-      {/* MUSICAL CONTROLS */}
-      <div className={cx(styles.toolbarSection, styles.musicalControls)}>
+      <div
+        className={cx(styles.toolbarSection)}
+        style={{
+          gridTemplateColumns: '1fr',
+        }}
+      >
         <TempoInput
           onChange={val => {
             dispatch({ type: PROJECT_ACTIONS.SET_TEMPO, payload: val });
           }}
           value={tempo}
         />
+      </div>
+      {/* MUSICAL CONTROLS */}
+      <div className={cx(styles.toolbarSection, styles.musicalControls)}>
         <CustomSelect
           value={scaleObj.tonic.toString(true)}
           options={TONICS}

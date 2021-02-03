@@ -1,37 +1,24 @@
 import Tone from 'tone';
 import { setEffectWet } from '../utils';
 
-import A0 from './samples/GrandPiano-A0.mp3';
-import A1 from './samples/GrandPiano-A1.mp3';
-import A2 from './samples/GrandPiano-A2.mp3';
-import A3 from './samples/GrandPiano-A3.mp3';
-import A4 from './samples/GrandPiano-A4.mp3';
-import C1 from './samples/GrandPiano-C1.mp3';
-import C2 from './samples/GrandPiano-C2.mp3';
-import C3 from './samples/GrandPiano-C3.mp3';
-import C4 from './samples/GrandPiano-C4.mp3';
-import C5 from './samples/GrandPiano-C5.mp3';
-import FSHARP1 from './samples/GrandPiano-Fsharp1.mp3';
-// import FSHARP2 from './samples/GrandPiano-Fsharp2.mp3';
-// import FSHARP3 from './samples/GrandPiano-Fsharp3.mp3';
-// import FSHARP4 from './samples/GrandPiano-Fsharp4.mp3';
-// import FSHARP5 from './samples/GrandPiano-Fsharp5.mp3';
+const getUrl = note =>
+  `https://raw.githubusercontent.com/ejarzo/Shape-Your-Music/master/src/instrumentPresets/piano/samples/GrandPiano-${note}.mp3`;
 
 export default {
   name: 'Grand Piano',
   baseSynth: Tone.Sampler,
   params: {
-    A0,
-    A1,
-    A2,
-    A3,
-    A4,
-    C1,
-    C2,
-    C3,
-    C4,
-    C5,
-    'F#1': FSHARP1,
+    A0: getUrl('A0'),
+    A1: getUrl('A1'),
+    A2: getUrl('A2'),
+    A3: getUrl('A3'),
+    A4: getUrl('A4'),
+    C1: getUrl('C1'),
+    C2: getUrl('C2'),
+    C3: getUrl('C3'),
+    C4: getUrl('C4'),
+    C5: getUrl('C5'),
+    'F#1': getUrl('Fsharp1'),
     // 'F#2': FSHARP2,
     // 'F#3': FSHARP3,
     // 'F#4': FSHARP4,

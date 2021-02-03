@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Draggable from 'react-draggable';
-
-import styles from './styles.module.css';
+import CustomSlider from 'components/Slider';
+import { appColors, getDarker } from 'utils/color';
+const { grayLightest } = appColors;
+const lightGray = getDarker(grayLightest);
 
 const propTypes = {
   onChange: PropTypes.func.isRequired,
@@ -12,18 +13,23 @@ const propTypes = {
 function TempoInput(props) {
   const { value, onChange } = props;
   return (
-    <Draggable
-      axis="x"
-      position={{ x: 0 }}
-      bounds={{ left: 0, top: 0, right: 0, bottom: 0 }}
-      onDrag={e => {
-        onChange(value + Math.floor(e.movementX / 2));
+    <div
+      style={{
+        borderRadius: 3,
+        overflow: 'hidden',
+        border: `1px solid ${lightGray}`,
       }}
     >
-      <div title="Tempo" className={styles.wrapper}>
-        <span className={styles.value}>{value}</span>
-      </div>
-    </Draggable>
+      <CustomSlider
+        min={5}
+        max={100}
+        color="#eee"
+        vertical={false}
+        defaultValue={value}
+        onChange={onChange}
+        label={<span style={{ color: 'initial' }}>Tempo</span>}
+      />
+    </div>
   );
 }
 

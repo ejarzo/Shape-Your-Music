@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getDarker, appColors } from 'utils/color';
+import { getDarker } from 'utils/color';
 import 'rc-slider/assets/index.css';
 import Slider from 'rc-slider';
 
@@ -25,15 +25,19 @@ function CustomSlider(props) {
           margin: 0,
           padding: 0,
           left: 0,
+          borderRight: !vertical && '6px solid white',
+          borderTop: vertical && '6px solid white',
         }}
         handleStyle={{
           border: 'none',
           borderRadius: 0,
-          height: vertical ? 6 : '100%',
-          width: vertical ? '100%' : 6,
-          backgroundColor: appColors.white,
+          height: vertical ? '200%' : '100%',
+          width: vertical ? '100%' : '200%',
+          // backgroundColor: 'rgba(100, 0,0,0.5)',
+          backgroundColor: 'transparent',
           margin: 0,
           padding: 0,
+          outline: 'none',
         }}
         railStyle={{
           margin: 0,

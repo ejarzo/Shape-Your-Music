@@ -12,8 +12,6 @@ _A geometric sequencer that suggests one answer to the question "What does a sha
 
 Shape Your Music is a musical [geoboard](https://en.wikipedia.org/wiki/Geoboard) that explores a new way of composing and performing music using geometry.
 
-It allows you to create melodic loops by drawing shapes. When a shape plays, a node traverses the perimeter of the shape at a constant speed, sounding a note at each vertex. The first note of a shape is determined by the shape's `y` position on the plane. The note for each subsequent edge is determined by the angle between that edge and the previous edge. This angle determines the musical interval between the two notes(edges). For example: A sharp right turn means that the next note is much higher than the previous, while a shallow left turn means that the next note is a little lower. When the last point is reached, the loop starts again.
-
 Using this app, one can:
 
 - Draw multiple shapes to generate unique polyrhythms
@@ -36,6 +34,8 @@ Sound is created by drawing polygons on the canvas and clicking PLAY (or space b
 There are two modes: Draw and Edit (toggle between them with Tab). While in DRAW mode, clicking on the canvas allows you to draw polygons by placing vertices. In EDIT mode, you can adjust each polygon by dragging its vertices, or by dragging the entire polygon to a new position. Shapes higher up on the canvas start at higher notes than shapes lower down. Moving shapes left or right places them in stereo space (left/right on your speakers or headphones). Also in EDIT mode, you can click on a shape to display a context menu with more options.
 
 Each shape is a certain color. The current color with which you are drawing is controlled with the color palette in the toolbar. A shape's color determines which instrument it uses to produce sound. The sounds for each color can be controlled with the colored panels at the bottom of the screen; if the red panel is set to the "Cello" instrument, every red shape will make a cello sound.
+
+When a shape plays, a node traverses the perimeter of the shape at a constant speed, sounding a note at each vertex. The first note of a shape is determined by the shape's `y` position on the plane. The note for each subsequent edge is determined by the angle between that edge and the previous edge. This angle determines the musical interval between the two notes(edges). For example: A sharp right turn means that the next note is much higher than the previous, while a shallow left turn means that the next note is a little lower. When the last point is reached, the loop starts again.
 
 ### Toolbar ![Toolbar](assets/readme-images/toolbar.png)
 

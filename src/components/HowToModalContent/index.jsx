@@ -79,6 +79,19 @@ const videoData = [
       </span>
     ),
   },
+  {
+    id: 511273130,
+    title: 'Save and Load a Project',
+    description: (
+      <span>
+        Click the Save icon to name and save your project. You can view your
+        projects in the account dropdown in the top right corner.
+        <br />
+        <br />
+        If you are not logged in you will be prompted to log in or sign up.
+      </span>
+    ),
+  },
 ];
 
 export default ({ message }) => (

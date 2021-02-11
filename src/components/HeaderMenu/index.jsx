@@ -18,7 +18,11 @@ const HeaderLink = props => {
   return (
     <NavLink
       component={AntLink}
-      activeStyle={{ fontWeight: 'bold' }}
+      activeStyle={{
+        fontWeight: 'bold',
+        // borderBottom: '2px solid #666',
+        // height: 25,
+      }}
       style={{ color: isDarkMode && appColors.grayLightest }}
       {...props}
     />

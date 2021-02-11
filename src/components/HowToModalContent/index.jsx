@@ -103,7 +103,7 @@ export default ({ message }) => (
           <iframe
             title={title}
             style={{ boxShadow: '0 0 20px rgba(0,0,0,0.2)' }}
-            src={`https://player.vimeo.com/video/${id}?color=ffffff`}
+            src={`https://player.vimeo.com/video/${id}?color=ffffff&title=0&byline=0&portrait=0`}
             width="640"
             height="488"
             frameborder="0"

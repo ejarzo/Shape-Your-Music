@@ -1,9 +1,28 @@
 import React from 'react';
 import { Typography } from 'antd';
 
-const { Paragraph, Title } = Typography;
+const { Paragraph, Title, Text } = Typography;
 
 const videoData = [
+  {
+    id: 511362280,
+    title: 'How Shapes Make Melodies',
+    description: (
+      <span>
+        When a shape plays, a node traverses the perimeter of the shape at a
+        constant speed, sounding a note at each vertex.
+        <br />
+        <br />
+        The first note of a shape is determined by the shape's{' '}
+        <Text code>y</Text> position on the plane. The note for each subsequent
+        edge is determined by the angle between that edge and the previous edge.
+        This angle determines the musical interval between the two notes(edges).
+        For example: A sharp right turn means that the next note is much lower
+        than the previous, while a shallow left turn means that the next note is
+        a little higher. When the last point is reached, the loop starts again.
+      </span>
+    ),
+  },
   {
     id: 510746450,
     title: 'Drawing and Changing Colors',

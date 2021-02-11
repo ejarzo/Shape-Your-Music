@@ -58,7 +58,7 @@ function HeaderMenu(props) {
             visible={isAboutModalVisible}
             onCancel={() => setIsAboutModalVisible(false)}
             footer={null}
-            width={700}
+            // width={700}
           >
             <AboutModalContent />
           </Modal>

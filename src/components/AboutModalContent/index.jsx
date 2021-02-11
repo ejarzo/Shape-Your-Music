@@ -7,7 +7,7 @@ const { Paragraph, Title, Text } = Typography;
 
 export default ({ message }) => (
   <div>
-    <Title level={2}>What is this?</Title>
+    <Title level={2}>About Shape Your Music</Title>
     <Paragraph>
       Shape Your Music is a musical{' '}
       <a
@@ -18,15 +18,9 @@ export default ({ message }) => (
         geoboard
       </a>{' '}
       that explores a new way of composing and performing music using geometry.
-      It allows you to create melodic loops by drawing shapes.
+      It allows you to create melodic loops by drawing and manipulating shapes.
     </Paragraph>
-    <Paragraph>
-      This is a project by{' '}
-      <a className="textLink" href="https://ejarzo.github.io/" target="blank">
-        Elias Jarzombek
-      </a>
-      .
-    </Paragraph>
+
     <Paragraph>
       The code is available on{' '}
       <a
@@ -36,9 +30,17 @@ export default ({ message }) => (
       >
         GitHub
       </a>
+      . Feel free to contribute!
+    </Paragraph>
+
+    <Paragraph>
+      This is a project by{' '}
+      <a className="textLink" href="https://ejarzo.github.io/" target="blank">
+        Elias Jarzombek
+      </a>
       .
     </Paragraph>
-    <Title level={2}>Features</Title>
+    {/* <Title level={2}>Features</Title>
     <Paragraph>Using this app, you can:</Paragraph>
     <ul>
       <li>Draw multiple shapes to generate unique polyrhythms</li>
@@ -59,11 +61,16 @@ export default ({ message }) => (
           browse other people's creations
         </Link>
       </li>
-    </ul>
+    </ul> */}
 
-    <Title level={2}>User Manual</Title>
+    <Title level={2}>How do I use this?</Title>
     <Paragraph>
-      For more information about how to use the interface, see the{' '}
+      For more information about how to use the interface, check out the videos
+      on the{' '}
+      <Link className="textLink" to={ROUTES.TUTORIAL}>
+        tutorial page
+      </Link>{' '}
+      or see the{' '}
       <a
         className="textLink"
         href="https://github.com/ejarzo/Shape-Your-Music/#-user-manual"
@@ -71,9 +78,10 @@ export default ({ message }) => (
       >
         user manual on GitHub
       </a>
+      .
     </Paragraph>
 
-    <Title level={2}>Shapes</Title>
+    {/* <Title level={2}>Shapes</Title>
     <Paragraph>
       When a shape plays, a node traverses the perimeter of the shape at a
       constant speed, sounding a note at each vertex. The first note of a shape
@@ -84,6 +92,6 @@ export default ({ message }) => (
       the next note is much higher than the previous, while a shallow left turn
       means that the next note is a little lower. When the last point is
       reached, the loop starts again.
-    </Paragraph>
+    </Paragraph> */}
   </div>
 );

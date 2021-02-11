@@ -1,7 +1,7 @@
 import React, { useState, useRef, useReducer } from 'react';
 import Teoria from 'teoria';
 import { HotKeys } from 'react-hotkeys';
-
+import { isEqual } from 'lodash';
 import Toolbar from 'components/Toolbar';
 import Sidebar from 'components/Sidebar';
 import ShapeCanvas from 'components/ShapeCanvas';
@@ -17,6 +17,7 @@ import styles from './styles.module.css';
 import { useRecorder } from './useRecorder';
 import { useAudioOutput } from './useAudioOutput';
 import { PROJECT_ACTIONS, TOOL_TYPES, getInitState } from 'utils/project';
+import useUnload from 'hooks/useUnload';
 
 export default props => {
   const {
@@ -138,6 +139,35 @@ export default props => {
 
   const { projectName, tempo } = state;
 
+  // "May lose unsaved changes" message
+  useUnload(e => {
+    console.log('Unloading');
+    const projectData = state;
+    const shapesList = shapeCanvas.current.getShapesList();
+    const currentState = {
+      ...projectData,
+      shapesList,
+    };
+
+    console.log('initState');
+    console.log(getInitState(initState));
+    console.log('currentState');
+    console.log(currentState);
+
+    const hasShapes = shapeCanvas.current.getShapesList().length > 0;
+    const statesAreEqual = isEqual(
+      { ...getInitState(initState), shapesList: initState.shapesList },
+      currentState
+    );
+
+    // prevent unload if user can save, there are shapes drawn, and the current state is different than the initial state
+
+    if (showSaveButton && hasShapes && !statesAreEqual) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
+
   const {
     isArmed,
     isRecording,
@@ -185,7 +215,10 @@ export default props => {
   const exportProjectToMIDI = async () => {
     // get list of MIDI events from the shape canvas
     const shapeNoteEventsList = shapeCanvas.current.getShapeMIDINoteEvents();
-    await convertAndDownloadTracksAsMIDI({ tempo, shapeNoteEventsList });
+    await convertAndDownloadTracksAsMIDI({
+      tempo,
+      shapeNoteEventsList,
+    });
   };
 
   const saveProject = projectName => {
@@ -194,11 +227,6 @@ export default props => {
 
     const projectData = state;
     const shapesList = shapeCanvas.current.getShapesList();
-    console.log('shapes list', shapesList);
-    // TODO: do something with this screenshot
-    // const screenshot = this.shapeCanvas.getScreenshot();
-    // console.log('generated screenshot:', screenshot);
-    // this.setState({ projectName });
 
     saveProjectMutation({
       ...projectData,
@@ -234,10 +262,15 @@ export default props => {
     TOGGLE_ACTIVE_TOOL: e => {
       e.preventDefault();
       e.stopPropagation();
-      dispatch({ type: PROJECT_ACTIONS.TOGGLE_ACTIVE_TOOL });
+      dispatch({
+        type: PROJECT_ACTIONS.TOGGLE_ACTIVE_TOOL,
+      });
     },
     CHANGE_DRAW_COLOR: ({ key }) => {
-      dispatch({ type: PROJECT_ACTIONS.CHANGE_DRAW_COLOR, payload: key });
+      dispatch({
+        type: PROJECT_ACTIONS.CHANGE_DRAW_COLOR,
+        payload: key,
+      });
     },
     ALT_DOWN: () => setIsAltPressed(true),
     ALT_UP: () => setIsAltPressed(false),

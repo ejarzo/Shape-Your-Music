@@ -6,12 +6,14 @@ import DiscoverGQL from 'views/DiscoverGQL';
 import UserProjects from 'views/UserProjects';
 import NotFound from 'views/NotFound';
 import PageWrapper from 'components/PageWrapper';
+import Tutorial from 'views/Tutorial';
 
 export const ROUTES = {
   INDEX: '/',
   DISCOVER: '/discover',
   PROJECT: '/project',
   MY_PROJECTS: '/myprojects',
+  TUTORIAL: '/tutorial',
 };
 
 function Routes() {
@@ -35,6 +37,7 @@ function Routes() {
           />
           <Route path={ROUTES.DISCOVER} component={DiscoverGQL} />
           <Route path={ROUTES.MY_PROJECTS} component={UserProjects} />
+          <Route path={ROUTES.TUTORIAL} component={Tutorial} />
           <Route component={NotFound} />
         </Switch>
       </PageWrapper>

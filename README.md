@@ -37,7 +37,9 @@ Each shape is a certain color. The current color with which you are drawing is c
 
 When a shape plays, a node traverses the perimeter of the shape at a constant speed, sounding a note at each vertex. The first note of a shape is determined by the shape's `y` position on the plane. The note for each subsequent edge is determined by the angle between that edge and the previous edge. This angle determines the musical interval between the two notes(edges). For example: A sharp right turn means that the next note is much higher than the previous, while a shallow left turn means that the next note is a little lower. When the last point is reached, the loop starts again.
 
-### Toolbar ![Toolbar](assets/readme-images/toolbar.png)
+### Toolbar
+
+![Screen Shot 2021-02-12 at 4 13 20 PM](https://user-images.githubusercontent.com/9386882/107823119-3b50ea00-6d4d-11eb-9e46-38dbeb813318.png)
 
 The toolbar allows you to adjust various aspects of your project.
 

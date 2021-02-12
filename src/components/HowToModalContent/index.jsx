@@ -51,7 +51,7 @@ const videoData = [
   },
   {
     id: 510746381,
-    title: 'Duplicate and Reverse',
+    title: 'Duplicating and Reversing Shapes',
     description: (
       <span>
         Duplicate a shape by clicking on a shape using the Edit tool to bring up
@@ -89,7 +89,7 @@ const videoData = [
   },
   {
     id: 510746360,
-    title: 'Record and Download',
+    title: 'Recording and Downloading a Project',
     description: (
       <span>
         Click the Record icon to begin recording. The audio of your composition
@@ -100,7 +100,7 @@ const videoData = [
   },
   {
     id: 511273130,
-    title: 'Save and Load a Project',
+    title: 'Saving and Loading a Project',
     description: (
       <span>
         Click the Save icon to name and save your project. You can view your

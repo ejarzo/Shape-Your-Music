@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 import { Link } from 'react-router-dom';
 
 import { ROUTES } from 'Routes';
-const { Paragraph, Title, Text } = Typography;
+const { Paragraph, Title } = Typography;
 
 export default ({ message }) => (
   <div>

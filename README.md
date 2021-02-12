@@ -65,7 +65,7 @@ There are two ways to export your project: as audio or as MIDI.
 
 ### Shape Menu
 
-![Shape Menu](assets/readme-images/shape-context-menu.png)
+![image](https://user-images.githubusercontent.com/9386882/107823235-73f0c380-6d4d-11eb-94c8-5c8ce5312639.png)
 
 The Shape menu allows you to control a shape's properties. CLICK on a shape to display this menu.
 

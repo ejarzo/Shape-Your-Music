@@ -9,6 +9,6 @@
   functions = 'build/functions'
 
 [[headers]]
-  for = "/src/registerServiceWorker.js"
+  for = "service-worker.js"
   [headers.values]
     cache-control = "max-age=0,no-cache,no-store,must-revalidate"

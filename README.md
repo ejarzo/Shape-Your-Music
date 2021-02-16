@@ -12,22 +12,16 @@ _A geometric sequencer that suggests one answer to the question "What does a sha
 
 Shape Your Music is a musical [geoboard](https://en.wikipedia.org/wiki/Geoboard) that explores a new way of composing and performing music using geometry.
 
-It allows you to create melodic loops by drawing shapes. When a shape plays, a node traverses the perimeter of the shape at a constant speed, sounding a note at each vertex. Thus each edge represents a note. The first note of a shape is determined by the shape's `y` position on the plane. The note for each subsequent edge is determined by the angle between that edge and the previous edge. This angle determines the musical interval between the two notes(edges). For example: A sharp right turn means that the next note is much higher than the previous, while a shallow left turn means that the next note is a little lower. When the last point is reached, the loop starts again.
-
 Using this app, one can:
 
 - Draw multiple shapes to generate unique polyrhythms
 - Manipulate shapes in real time to improvise and perform
+- Change and adjust the sound that shapes of each color produces
 - Experiment with different musical modes, keys, and tempos
 - Use grid and syncing options to create defined rhythms and loops
 - Move shapes up or down to transpose them within the scale, or side to side to move them in stereo space
-- Change and adjust the sound that each color produces
 - Record and export your project as either an audio file or as MIDI files
 - Save projects and browse other people's creations
-
-[Read more](https://ejarzo.github.io/#sym)
-
-This is the third iteration of this project. I wrote the [original](https://github.com/ejarzo/sym_v2) in vanilla JS/jQuery 😬!
 
 ---
 
@@ -35,11 +29,17 @@ This is the third iteration of this project. I wrote the [original](https://gith
 
 ### Overview
 
-Sound is created by drawing shapes on the canvas and clicking PLAY. There are two modes: DRAW and EDIT. While in DRAW mode, clicking on the canvas allows you to draw polygons by placing vertices. Each polygon represents a musical melody. In EDIT mode, you can adjust each polygon by dragging its vertices, or by dragging the entire polygon to a new position. Shapes higher up on the canvas start at higher notes than shapes lower down. Moving shapes left or right places them in stereo space (left/right on your speakers or headphones). Also in EDIT mode, you can click on a shape to display a context menu with more options.
+Sound is created by drawing polygons on the canvas and clicking PLAY (or space bar). Each polygon represents a looping musical phrase.
+
+There are two modes: Draw and Edit (toggle between them with Tab). While in DRAW mode, clicking on the canvas allows you to draw polygons by placing vertices. In EDIT mode, you can adjust each polygon by dragging its vertices, or by dragging the entire polygon to a new position. Shapes higher up on the canvas start at higher notes than shapes lower down. Moving shapes left or right places them in stereo space (left/right on your speakers or headphones). Also in EDIT mode, you can click on a shape to display a context menu with more options.
 
 Each shape is a certain color. The current color with which you are drawing is controlled with the color palette in the toolbar. A shape's color determines which instrument it uses to produce sound. The sounds for each color can be controlled with the colored panels at the bottom of the screen; if the red panel is set to the "Cello" instrument, every red shape will make a cello sound.
 
-### Toolbar ![Toolbar](assets/readme-images/toolbar.png)
+When a shape plays, a node traverses the perimeter of the shape at a constant speed, sounding a note at each vertex. The first note of a shape is determined by the shape's `y` position on the plane. The note for each subsequent edge is determined by the angle between that edge and the previous edge. This angle determines the musical interval between the two notes(edges). For example: A sharp right turn means that the next note is much higher than the previous, while a shallow left turn means that the next note is a little lower. When the last point is reached, the loop starts again.
+
+### Toolbar
+
+![Screen Shot 2021-02-12 at 4 13 20 PM](https://user-images.githubusercontent.com/9386882/107823119-3b50ea00-6d4d-11eb-9e46-38dbeb813318.png)
 
 The toolbar allows you to adjust various aspects of your project.
 
@@ -65,7 +65,7 @@ There are two ways to export your project: as audio or as MIDI.
 
 ### Shape Menu
 
-![Shape Menu](assets/readme-images/shape-context-menu.png)
+![image](https://user-images.githubusercontent.com/9386882/107823235-73f0c380-6d4d-11eb-94c8-5c8ce5312639.png)
 
 The Shape menu allows you to control a shape's properties. CLICK on a shape to display this menu.
 

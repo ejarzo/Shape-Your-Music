@@ -35,7 +35,7 @@ export default ({ message }) => (
 
     <Paragraph>
       This is a project by{' '}
-      <a className="textLink" href="https://ejarzo.github.io/" target="blank">
+      <a className="textLink" href="https://eliasjarzombek.com/" target="blank">
         Elias Jarzombek
       </a>
       .

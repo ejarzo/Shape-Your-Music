@@ -108,7 +108,7 @@ To run: `yarn` and then `yarn start:app`.
 ### Backend
 _NOTE: If you just want to play around with the client code, you can ignore this setup. Just use `yarn start:app`_
 
-The backend consists of a a [FaunaDB database](https://fauna.com/) and serverless [Netlify functions](https://www.netlify.com/docs/functions/) to provide an API for viewing and saving projects. It uses [Netlify Identity](https://www.netlify.com/docs/identity/) to handle users, account creation and login. All functions live in the [functions](https://github.com/ejarzo/Shape-Your-Music/tree/master/functions) folder.
+The backend consists of a [FaunaDB database](https://fauna.com/) and serverless [Netlify functions](https://www.netlify.com/docs/functions/) to provide an API for viewing and saving projects. It uses [Netlify Identity](https://www.netlify.com/docs/identity/) to handle users, account creation and login. All functions live in the [functions](https://github.com/ejarzo/Shape-Your-Music/tree/master/functions) folder.
 
 If you want to be able to save data locally, you wil need a [FaunaDB account](https://dashboard.fauna.com/accounts/register) (it's free). Once you have an account, you will need a server key that you will set in your local environment.
 

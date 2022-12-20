@@ -232,6 +232,25 @@ function ShapeContainerV2(props, ref) {
     });
   };
 
+  const handleVertexDelete = i => e => {
+    setState(s => {
+      let points = s.points.slice();
+      /* Only delete if we have more than two points */
+      if (points.length <= 2 * 2) return s;
+
+      /* remove x and y points */
+      points.splice(i, 2);
+
+      if (isAutoQuantizeActive) {
+        points = getPointsForFixedPerimeterLength(
+          points,
+          quantizeLength * s.quantizeFactor
+        );
+      }
+      return { ...s, points };
+    });
+  };
+
   const resetHover = () => {
     // hack to update Konva layout following imperative changes
     setIsHoveredOver(true);
@@ -318,6 +337,7 @@ function ShapeContainerV2(props, ref) {
       handleMouseOver={() => setIsHoveredOver(true)}
       handleMouseOut={() => setIsHoveredOver(false)}
       handleVertexDragMove={handleVertexDragMove}
+      handleVertexDelete={handleVertexDelete}
       // editor panel handlers
       handleColorChange={handleColorChange}
       handleDelete={handleDelete}

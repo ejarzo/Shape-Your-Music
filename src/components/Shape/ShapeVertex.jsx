@@ -7,7 +7,14 @@ import { /* useStrictMode, */ Circle } from 'react-konva';
   The shape's vertexes. Can be dragged to edit the shape.
 */
 function ShapeVertex(props) {
-  const { p, index, color, dragBoundFunc, onVertexDragMove } = props;
+  const {
+    p,
+    index,
+    color,
+    dragBoundFunc,
+    handleVertexDelete,
+    handleVertexDragMove,
+  } = props;
   const luminosity = Color(color).luminosity();
   const lightenAmount = 1.8 * (1 - luminosity);
   const defaultRadius = 4;
@@ -33,9 +40,10 @@ function ShapeVertex(props) {
       strokeWidth={strokeWidth}
       draggable
       dragBoundFunc={dragBoundFunc}
-      onDragMove={onVertexDragMove}
+      onDragMove={handleVertexDragMove}
       onMouseOver={() => setRadius(hoverRadius)}
       onMouseOut={() => setRadius(defaultRadius)}
+      onDblClick={handleVertexDelete}
     />
   );
 }

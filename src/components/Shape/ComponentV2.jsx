@@ -75,6 +75,7 @@ function ShapeComponent(props, ref) {
     handleMouseOver,
     handleMouseOut,
     handleVertexDragMove,
+    handleVertexDelete,
     handleReverseClick,
     handleDuplicateClick,
   } = props;
@@ -144,7 +145,8 @@ function ShapeComponent(props, ref) {
                 key={i}
                 index={i}
                 p={{ x: p, y: arr[i + 1] }}
-                onVertexDragMove={handleVertexDragMove(i)}
+                handleVertexDragMove={handleVertexDragMove(i)}
+                handleVertexDelete={handleVertexDelete(i)}
                 color={color}
               />
             )
@@ -240,7 +242,8 @@ function ShapeComponent(props, ref) {
             x: points[0],
             y: points[1],
           }}
-          onVertexDragMove={handleVertexDragMove(0)}
+          handleVertexDragMove={handleVertexDragMove(0)}
+          handleVertexDelete={handleVertexDelete(0)}
         />
 
         {progressDot}

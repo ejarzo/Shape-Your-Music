@@ -166,7 +166,7 @@ function ToolbarComponent(props) {
           </div> */}
         </div>
 
-        <Tooltip title="Locks shape perimeters">
+        <Tooltip title="Sync shape perimeter lengths">
           <div
             style={{
               borderRadius: 3,
@@ -227,15 +227,23 @@ function ToolbarComponent(props) {
       {/* OTHER */}
       <div className={cx(styles.toolbarSection, styles.OtherControls)}>
         <div>
-          <Button
-            hasBorder
-            // darkHover
-            color={grayLightest}
-            onClick={clearProjectCanvas}
-            title="Clear all shapes (CANNOT UNDO)"
+          <Popconfirm
+            title="Clear Canvas? (cannot be undone)"
+            placement="bottom"
+            okText="Clear"
+            cancelText="Cancel"
+            okType="danger"
+            onConfirm={clearProjectCanvas}
+            icon={<QuestionCircleOutlined />}
           >
-            Clear
-          </Button>
+            <Button
+              hasBorder
+              color={grayLightest}
+              // onClick={clearProjectCanvas}
+            >
+              Clear
+            </Button>
+          </Popconfirm>
         </div>
         {/* TODO: re-enable if fullscreen bug is fixed (ShapeEditorPopover not appearing in fullscreen) */}
         {/* <div>

@@ -12,10 +12,16 @@ export const useShapeSynth = ({
   isMuted,
   isSoloed,
   panVal,
+  averagePoint,
 }) => {
-  const { tempo, scaleObj, knobVals, selectedSynths } = useContext(
-    ProjectContext
-  );
+  const {
+    tempo,
+    scaleObj,
+    knobVals,
+    selectedSynths,
+    isProximityModeActive,
+    proximityModeRadius,
+  } = useContext(ProjectContext);
   const [isBuffering, setIsBuffering] = useState(false);
   const selectedSynth = selectedSynths[colorIndex];
   const shapeKnobVals = knobVals[colorIndex];
@@ -25,6 +31,7 @@ export const useShapeSynth = ({
     synthContainer.current = new Synth({
       onStartLoading: () => setIsBuffering(true),
       onEndLoading: () => setIsBuffering(false),
+      averagePoint,
     });
     return () => {
       synthContainer.current.dispose();
@@ -78,6 +85,20 @@ export const useShapeSynth = ({
   useEffect(() => {
     synthContainer.current.setPan(panVal);
   }, [panVal]);
+
+  useEffect(() => {
+    if (averagePoint) {
+      synthContainer.current.setPan3d(averagePoint);
+    }
+  }, [averagePoint]);
+
+  useEffect(() => {
+    synthContainer.current.setProximityRadius(proximityModeRadius);
+  }, [proximityModeRadius]);
+
+  useEffect(() => {
+    synthContainer.current.setProximityMode(isProximityModeActive);
+  }, [isProximityModeActive]);
 
   return { isBuffering };
 };

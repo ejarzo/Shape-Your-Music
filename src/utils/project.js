@@ -2,6 +2,10 @@ import { DEFAULT_SYNTHS } from './synths';
 import { getDefaultParamValues } from 'utils/synths';
 import Teoria from 'teoria';
 
+export const DEFAULT_PROXIMITY_MODE_RADIUS = 400;
+export const MIN_PROXIMITY_RADIUS = 50;
+export const MAX_PROXIMITY_RADIUS = 900;
+
 export const TOOL_TYPES = {
   EDIT: 'edit',
   DRAW: 'draw',
@@ -15,6 +19,8 @@ export const PROJECT_ACTIONS = {
   TOGGLE_GRID: 'TOGGLE_GRID',
   TOGGLE_SNAP_TO_GRID: 'TOGGLE_SNAP_TO_GRID',
   TOGGLE_AUTO_QUANTIZE: 'TOGGLE_AUTO_QUANTIZE',
+  TOGGLE_PROXIMITY_MODE: 'TOGGLE_PROXIMITY_MODE',
+  SET_PROXIMITY_MODE_RADIUS: 'SET_PROXIMITY_MODE_RADIUS',
   SET_TEMPO: 'SET_TEMPO',
   SET_TONIC: 'SET_TONIC',
   SET_MODE: 'SET_MODE',
@@ -36,6 +42,10 @@ export const getInitState = initState => ({
   isGridActive: !!initState.isGridActive,
   isSnapToGridActive: !!initState.isSnapToGridActive,
   isAutoQuantizeActive: !!initState.isAutoQuantizeActive,
+  // isProximityModeActive: !!initState.isProximityModeActive,
+  isProximityModeActive: true,
+  proximityModeRadius:
+    initState.proximityModeRadius || DEFAULT_PROXIMITY_MODE_RADIUS,
   tempo: initState.tempo,
   scaleObj: Teoria.note(initState.tonic).scale(initState.scale),
   activeTool: TOOL_TYPES.DRAW,

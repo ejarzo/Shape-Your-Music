@@ -128,6 +128,7 @@ function ShapeContainerV2(props, ref) {
     [points, colorIndex, shapeAttrs.fill]
   );
 
+  // console.log(panVal);
   const { isBuffering } = useShapeSynth({
     colorIndex,
     volume,
@@ -138,6 +139,7 @@ function ShapeContainerV2(props, ref) {
     isMuted,
     isSoloed,
     panVal,
+    averagePoint,
   });
 
   // ======================= HOOKS =======================

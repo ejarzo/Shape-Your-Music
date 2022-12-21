@@ -10,6 +10,7 @@ import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeCon
 import { appColors, THEMES } from 'utils/color';
 import Color from 'color';
 import AboutModalContent from 'components/AboutModalContent';
+import WhatsNewModalContent from 'components/WhatsNewModalContent';
 
 const { Link: AntLink } = Typography;
 
@@ -34,6 +35,7 @@ function HeaderMenu(props) {
   // TODO: reveal when dark mode works
   const showDarkModeButton = false;
   const [isAboutModalVisible, setIsAboutModalVisible] = useState(false);
+  const [isWhatsNewVisible, setIsWhatsNewVisible] = useState(false);
 
   return (
     <CurrentUserContextConsumer>
@@ -61,6 +63,15 @@ function HeaderMenu(props) {
             // width={700}
           >
             <AboutModalContent />
+          </Modal>
+          <Modal
+            // title="About Shape Your Music"
+            visible={isWhatsNewVisible}
+            onCancel={() => setIsWhatsNewVisible(false)}
+            footer={null}
+            // width={700}
+          >
+            <WhatsNewModalContent />
           </Modal>
           <div className={styles.headerMenuLinks}>
             <HeaderLink exact to={ROUTES.INDEX}>
@@ -99,6 +110,29 @@ function HeaderMenu(props) {
             >
               GitHub
             </a>
+            <div
+              style={{
+                borderRadius: '50%',
+                width: 4,
+                height: 4,
+                background: '#555',
+                position: 'relative',
+                top: 8,
+                marginRight: 10,
+              }}
+            ></div>
+            <AntLink
+              style={{
+                background: 'pink',
+                padding: '0 8px',
+                borderRadius: 2,
+              }}
+              size="small"
+              type="link"
+              onClick={() => setIsWhatsNewVisible(true)}
+            >
+              {`What's New`}
+            </AntLink>
           </div>
           <div className={styles.headerAccount}>
             <div>

@@ -1,3 +1,5 @@
+export const PROXIMITY_MODE_RADIUS = 400;
+
 export const TONICS = [
   { value: 'a', label: 'A' },
   { value: 'a#', label: 'A#' },

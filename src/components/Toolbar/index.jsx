@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Tooltip } from 'antd';
+import { Popconfirm, Popover, Tooltip } from 'antd';
 
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
@@ -14,15 +14,21 @@ import { appColors, getDarker } from 'utils/color';
 
 import styles from './styles.module.css';
 
-import { TOOL_TYPES } from 'utils/project';
-import { SCALES, TONICS } from 'utils/music';
+import {
+  MAX_PROXIMITY_RADIUS,
+  MIN_PROXIMITY_RADIUS,
+  TOOL_TYPES,
+} from 'utils/project';
+import { PROXIMITY_MODE_RADIUS, SCALES, TONICS } from 'utils/music';
 
 import ColorSelect from './ColorSelect';
 import { PROJECT_ACTIONS } from 'utils/project';
 import { useProjectContext } from 'context/useProjectContext';
 import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeContext';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import CustomSlider from 'components/Slider';
 
-const { black, grayLightest, red } = appColors;
+const { black, grayLightest, red, grayMedium } = appColors;
 
 function ToolbarComponent(props) {
   const {
@@ -35,6 +41,7 @@ function ToolbarComponent(props) {
     isGridActive,
     // isSnapToGridActive,
     isAutoQuantizeActive,
+    isProximityModeActive,
     dispatch,
     imperativeHandlers: { togglePlayStop, toggleRecord, clearProjectCanvas },
   } = useProjectContext();
@@ -132,7 +139,11 @@ function ToolbarComponent(props) {
 
       {/* CANVAS CONTROLS */}
       <div
-        style={{ display: 'grid', gridTemplateColumns: '50% 50%', gridGap: 3 }}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '80px 80px 1fr',
+          gridGap: 3,
+        }}
       >
         <div
           // className={cx(styles.toolbarSection)}
@@ -187,6 +198,79 @@ function ToolbarComponent(props) {
             />
           </div>
         </Tooltip>
+        <div
+          style={{
+            borderRadius: 3,
+            padding: 0,
+            border: !isDarkMode && `1px solid ${lightGray}`,
+            // background: lightGray,
+            gridGap: 1,
+            overflow: 'hidden',
+          }}
+        >
+          <CheckboxButton
+            checked={isProximityModeActive}
+            onChange={() => {
+              dispatch({ type: PROJECT_ACTIONS.TOGGLE_PROXIMITY_MODE });
+            }}
+            labelStyle={{ fontSize: '0.9em' }}
+            label={'Proximity Mode'}
+            renderLabel={label => (
+              <div
+                style={{
+                  // minWidth: 120,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Tooltip title="Use the mouse position to listen to shapes">
+                  {label}
+                </Tooltip>
+
+                <Popover
+                  placement="bottomRight"
+                  arrowPointAtCenter
+                  className="proximityRadiusPopover"
+                  content={() => (
+                    <div
+                      style={{
+                        borderRadius: 2,
+                        overflow: 'hidden',
+                        // border: `1px solid ${lightGray}`,
+                        border: `1px solid ${grayMedium}`,
+                        width: 120,
+                        height: 30,
+                      }}
+                    >
+                      <CustomSlider
+                        min={MIN_PROXIMITY_RADIUS}
+                        max={MAX_PROXIMITY_RADIUS}
+                        color="#eee"
+                        // disabled={!isProximityModeActive}
+                        vertical={false}
+                        defaultValue={PROXIMITY_MODE_RADIUS}
+                        onChange={val => {
+                          dispatch({
+                            type: PROJECT_ACTIONS.SET_PROXIMITY_MODE_RADIUS,
+                            payload: val,
+                          });
+                        }}
+                        label={<span style={{ color: 'initial' }}>Radius</span>}
+                      />
+                    </div>
+                  )}
+                >
+                  <div style={{ paddingLeft: 5 }}>
+                    <i className="ion-chevron-down" />
+                  </div>
+                </Popover>
+              </div>
+            )}
+            color={isDarkMode && appColors.black}
+          />
+        </div>
+        {/*  */}
       </div>
 
       <div

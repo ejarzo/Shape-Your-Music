@@ -85,6 +85,11 @@ export default props => {
           ...state,
           isAutoQuantizeActive: !state.isAutoQuantizeActive,
         };
+      case PROJECT_ACTIONS.TOGGLE_PROXIMITY_MODE:
+        return {
+          ...state,
+          isProximityModeActive: !state.isProximityModeActive,
+        };
       case PROJECT_ACTIONS.SET_TEMPO:
         const min = 1;
         const max = 100;
@@ -163,8 +168,8 @@ export default props => {
     // prevent unload if user can save, there are shapes drawn, and the current state is different than the initial state
 
     if (showSaveButton && hasShapes && !statesAreEqual) {
-      e.preventDefault();
-      e.returnValue = '';
+      // e.preventDefault();
+      // e.returnValue = '';
     }
   });
 

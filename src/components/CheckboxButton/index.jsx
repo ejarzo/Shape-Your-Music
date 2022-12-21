@@ -26,7 +26,7 @@ function CheckboxButton(props) {
         backgroundColor: props.checked ? grayLightest : getDarker(props.color),
         color: props.checked ? props.color : grayLightest,
       }
-    : defaultStyle;
+    : { ...defaultStyle, ...props.labelStyle };
 
   return (
     <div className={styles.inputWrapper}>
@@ -42,7 +42,7 @@ function CheckboxButton(props) {
         htmlFor={props.label.toLowerCase()}
         style={labelStyle}
       >
-        {props.label}
+        {props.renderLabel ? props.renderLabel(props.label) : props.label}
       </label>
     </div>
   );

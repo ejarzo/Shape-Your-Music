@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Color from 'color';
-import { /* useStrictMode, */ Circle, Text } from 'react-konva';
+import { /* useStrictMode, */ Circle } from 'react-konva';
 // useStrictMode(true);
 
 /*

@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
-import Color from 'color';
-import { /* useStrictMode, */ Circle, Text } from 'react-konva';
+import React, { useState } from 'react';
+// import Color from 'color';
+import { /* useStrictMode, */ Circle } from 'react-konva';
 // useStrictMode(true);
 
 /*
@@ -10,20 +10,20 @@ function EdgeMidpoint(props) {
   const {
     p1,
     p2,
-    index,
+    // index,
     color,
     handleMouseDown,
     // dragBoundFunc,
     // handleVertexDelete,
-    handleVertexDragMove,
+    // handleVertexDragMove,
   } = props;
-  const luminosity = Color(color).luminosity();
-  const lightenAmount = 1.8 * (1 - luminosity);
+  // const luminosity = Color(color).luminosity();
+  // const lightenAmount = 1.8 * (1 - luminosity);
   const defaultRadius = 5;
   const hoverRadius = 7;
   const strokeWidth = 2;
   const [radius, setRadius] = useState(defaultRadius);
-  const [strokeW, setStrokeW] = useState(3);
+  // const [strokeW, setStrokeW] = useState(3);
   return (
     <>
       {/*<Text x={(p1.x + p2.x) / 2 + 10} y={(p1.y + p2.y) / 2} text={index} />*/}
@@ -43,11 +43,11 @@ function EdgeMidpoint(props) {
         opacity={0.9}
         onMouseOver={() => {
           setRadius(hoverRadius);
-          setStrokeW(3);
+          // setStrokeW(3);
         }}
         onMouseOut={() => {
           setRadius(defaultRadius);
-          setStrokeW(2);
+          // setStrokeW(2);
         }}
       />
     </>

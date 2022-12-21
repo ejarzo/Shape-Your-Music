@@ -31,7 +31,6 @@ export const useShapeSynth = ({
     synthContainer.current = new Synth({
       onStartLoading: () => setIsBuffering(true),
       onEndLoading: () => setIsBuffering(false),
-      averagePoint,
     });
     return () => {
       synthContainer.current.dispose();

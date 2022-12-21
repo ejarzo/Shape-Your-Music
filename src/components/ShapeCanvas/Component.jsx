@@ -10,7 +10,6 @@ import { DRAWING_STATES } from './Container';
 import ProjectContextProvider from 'components/Project/ProjectContextProvider';
 import { useProjectContext } from 'context/useProjectContext';
 import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeContext';
-import { PROXIMITY_MODE_RADIUS } from 'utils/music';
 
 function ShapeCanvasComponent(props, ref) {
   const {

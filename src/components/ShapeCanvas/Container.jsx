@@ -91,12 +91,12 @@ class ShapeCanvas extends Component {
     const { onMount, initShapesList } = this.props;
     console.log('initshapeslist', initShapesList);
     onMount(this);
-    // this.setState({
-    //   shapesList: initShapesList || [],
-    // });
     this.setState({
-      shapesList: this.generateRandomShapes(2, 4),
+      shapesList: initShapesList || [],
     });
+    // this.setState({
+    //   shapesList: this.generateRandomShapes(2, 4),
+    // });
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {

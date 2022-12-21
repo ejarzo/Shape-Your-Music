@@ -42,8 +42,7 @@ export const getInitState = initState => ({
   isGridActive: !!initState.isGridActive,
   isSnapToGridActive: !!initState.isSnapToGridActive,
   isAutoQuantizeActive: !!initState.isAutoQuantizeActive,
-  // isProximityModeActive: !!initState.isProximityModeActive,
-  isProximityModeActive: true,
+  isProximityModeActive: !!initState.isProximityModeActive,
   proximityModeRadius:
     initState.proximityModeRadius || DEFAULT_PROXIMITY_MODE_RADIUS,
   tempo: initState.tempo,

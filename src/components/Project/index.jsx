@@ -16,7 +16,13 @@ import { getDefaultParamValues } from 'utils/synths';
 import styles from './styles.module.css';
 import { useRecorder } from './useRecorder';
 import { useAudioOutput } from './useAudioOutput';
-import { PROJECT_ACTIONS, TOOL_TYPES, getInitState } from 'utils/project';
+import {
+  PROJECT_ACTIONS,
+  TOOL_TYPES,
+  getInitState,
+  MIN_PROXIMITY_RADIUS,
+  MAX_PROXIMITY_RADIUS,
+} from 'utils/project';
 import useUnload from 'hooks/useUnload';
 
 export default props => {
@@ -90,11 +96,19 @@ export default props => {
           ...state,
           isProximityModeActive: !state.isProximityModeActive,
         };
-      case PROJECT_ACTIONS.SET_TEMPO:
+      case PROJECT_ACTIONS.SET_PROXIMITY_MODE_RADIUS: {
+        const proximityModeRadius = Math.max(
+          Math.min(action.payload, MAX_PROXIMITY_RADIUS),
+          MIN_PROXIMITY_RADIUS
+        );
+        return { ...state, proximityModeRadius };
+      }
+      case PROJECT_ACTIONS.SET_TEMPO: {
         const min = 1;
         const max = 100;
         const tempo = Math.max(Math.min(action.payload, max), min);
         return { ...state, tempo };
+      }
       case PROJECT_ACTIONS.SET_TONIC:
         return {
           ...state,

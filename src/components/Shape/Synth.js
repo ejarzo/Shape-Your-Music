@@ -93,7 +93,6 @@ export function Synth({ onStartLoading, onEndLoading }) {
         orientationY: 1,
         orientationZ: 1,
       });
-      console.log(panner3d);
       panner3d._rampTimeConstant = 0.6;
 
       /* TODO use below functions? */

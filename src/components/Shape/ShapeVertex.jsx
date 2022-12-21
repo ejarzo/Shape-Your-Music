@@ -17,8 +17,8 @@ function ShapeVertex(props) {
   } = props;
   const luminosity = Color(color).luminosity();
   const lightenAmount = 1.8 * (1 - luminosity);
-  const defaultRadius = 5;
-  const hoverRadius = 7;
+  const defaultRadius = 6;
+  const hoverRadius = 8;
   const strokeWidth = 2;
   const [radius, setRadius] = useState(defaultRadius);
 

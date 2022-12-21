@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { object, string, number, array, bool, func } from 'prop-types';
 
-import { dist } from 'utils/math';
+import { convertValToRange, dist } from 'utils/math';
 import { themeColors } from 'utils/color';
 import ShapeCanvasComponent from './Component';
 import { TOOL_TYPES } from 'utils/project';
@@ -15,7 +15,7 @@ export const DRAWING_STATES = {
   DRAWING: 'drawing', // drawing but not previewing
 };
 
-// Tone.Listener.forwardY = 1;
+/* Setup Tone Listener */
 Tone.Listener.upX = 0;
 Tone.Listener.upY = 0;
 Tone.Listener.upZ = 1;
@@ -91,12 +91,12 @@ class ShapeCanvas extends Component {
     const { onMount, initShapesList } = this.props;
     console.log('initshapeslist', initShapesList);
     onMount(this);
-    this.setState({
-      shapesList: initShapesList || [],
-    });
     // this.setState({
-    //   shapesList: this.generateRandomShapes(5, 5),
+    //   shapesList: initShapesList || [],
     // });
+    this.setState({
+      shapesList: this.generateRandomShapes(2, 4),
+    });
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -389,22 +389,28 @@ class ShapeCanvas extends Component {
 
   generateRandomShapes(nShapes, nPoints) {
     const shapesList = [];
-    const pad = 0.1;
-
     for (let i = 0; i < nShapes; i++) {
       const pointsList = [];
       for (let j = 0; j < nPoints * 2; j++) {
         const rand = Math.random();
         if (j % 2) {
-          const randY =
-            rand * window.innerHeight * (1 - pad) +
-            window.innerHeight * (pad / 2);
-          pointsList.push(randY);
+          const y = convertValToRange(
+            rand,
+            0,
+            1,
+            window.innerHeight * 0.2,
+            window.innerHeight * 0.8
+          );
+          pointsList.push(y);
         } else {
-          const randX =
-            rand * window.innerWidth * (1 - pad) +
-            window.innerWidth * (pad / 2);
-          pointsList.push(parseInt(randX));
+          const x = convertValToRange(
+            rand,
+            0,
+            1,
+            window.innerWidth * 0.1,
+            window.innerWidth * 0.9
+          );
+          pointsList.push(parseInt(x));
         }
       }
       shapesList.push({

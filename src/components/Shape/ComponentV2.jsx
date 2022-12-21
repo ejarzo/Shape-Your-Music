@@ -144,14 +144,12 @@ function ShapeComponent(props, ref) {
         {/* Midpoints */}
         {points.map((x, i, arr) => {
           if (i % 2) return null;
-          // if (i > arr.length - 2) return null;
           return (
             <EdgeMidpoint
               key={i}
               index={i}
               color={color}
               handleMouseDown={handleVertexAdd(i)}
-              // handleVertexDragMove={handleVertexDragMove(i)}
               p1={{ x: x, y: arr[i + 1] }}
               p2={{ x: arr[i + 2] || arr[0], y: arr[i + 3] || arr[1] }}
             />

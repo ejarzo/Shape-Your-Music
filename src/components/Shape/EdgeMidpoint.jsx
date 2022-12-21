@@ -1,53 +1,53 @@
-import React, { useState } from 'react';
-// import Color from 'color';
-import { /* useStrictMode, */ Circle } from 'react-konva';
-// useStrictMode(true);
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Circle } from 'react-konva';
+import { dist, getMidpoint } from '../../utils/math';
+import { MousePosContext } from '../ShapeCanvas/Component';
 
 /*
-  The shape's vertexes. Can be dragged to edit the shape.
+  Midpoint along a shape edge. Can be clicked on to create a new vertex
 */
 function EdgeMidpoint(props) {
-  const {
-    p1,
-    p2,
-    // index,
-    color,
-    handleMouseDown,
-    // dragBoundFunc,
-    // handleVertexDelete,
-    // handleVertexDragMove,
-  } = props;
-  // const luminosity = Color(color).luminosity();
-  // const lightenAmount = 1.8 * (1 - luminosity);
-  const defaultRadius = 5;
-  const hoverRadius = 7;
+  const { p1, p2, color, handleMouseDown } = props;
+
+  const ref = useRef(null);
+  const mousePos = useContext(MousePosContext);
+  const [isInRange, setIsInRange] = useState(false);
+
+  const pt = getMidpoint(p1.x, p1.y, p2.x, p2.y);
+
+  useEffect(() => {
+    let absPt = pt;
+    if (ref.current) {
+      absPt = ref.current.getAbsolutePosition();
+    }
+    const isInRange = dist(absPt.x, absPt.y, mousePos.x, mousePos.y) < 160;
+    setIsInRange(isInRange);
+  }, [mousePos, pt]);
+
+  const { x, y } = pt;
+
+  const defaultRadius = 6;
+  const hoverRadius = 8;
   const strokeWidth = 2;
   const [radius, setRadius] = useState(defaultRadius);
-  // const [strokeW, setStrokeW] = useState(3);
+
   return (
     <>
-      {/*<Text x={(p1.x + p2.x) / 2 + 10} y={(p1.y + p2.y) / 2} text={index} />*/}
+      {/*<Text x={x + 10} y={y} text={`${absPt.x}, ${absPt.y}`} />*/}
       <Circle
-        x={(p1.x + p2.x) / 2}
-        y={(p1.y + p2.y) / 2}
+        ref={ref}
+        x={x}
+        y={y}
         radius={radius}
-        // draggable
-        onMouseDown={e => {
-          console.log('midpoint mouse down');
-          handleMouseDown(e);
-        }}
-        // handleDrag={handleVertexDragMove}
-        // fill={color}
+        onMouseDown={handleMouseDown}
         stroke={color}
         strokeWidth={strokeWidth}
-        opacity={0.9}
+        opacity={isInRange ? 0.9 : 0}
         onMouseOver={() => {
           setRadius(hoverRadius);
-          // setStrokeW(3);
         }}
         onMouseOut={() => {
           setRadius(defaultRadius);
-          // setStrokeW(2);
         }}
       />
     </>

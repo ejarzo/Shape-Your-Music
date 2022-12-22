@@ -31,7 +31,7 @@ Using this app, one can:
 
 Sound is created by drawing polygons on the canvas and clicking PLAY (or space bar). Each polygon represents a looping musical phrase.
 
-There are two modes: Draw and Edit (toggle between them with Tab). While in DRAW mode, clicking on the canvas allows you to draw polygons by placing vertices. In EDIT mode, you can adjust each polygon by dragging its vertices, or by dragging the entire polygon to a new position. Shapes higher up on the canvas start at higher notes than shapes lower down. Moving shapes left or right places them in stereo space (left/right on your speakers or headphones). Also in EDIT mode, you can click on a shape to display a context menu with more options.
+There are two modes: Draw and Edit (toggle between them with Tab). While in DRAW mode, clicking on the canvas allows you to draw polygons by placing vertices. In EDIT mode, You can **add** vertices by clicking on an edge midpoint, or **delete** vertices by double-clicking them. You can also drag each polygon to adjust its position, or drag the entire shape to a new position. Shapes higher up on the canvas start at higher notes than shapes lower down. Moving shapes left or right places them in stereo space (left/right on your speakers or headphones). Also in EDIT mode, you can click on a shape to display a context menu with more options.
 
 Each shape is a certain color. The current color with which you are drawing is controlled with the color palette in the toolbar. A shape's color determines which instrument it uses to produce sound. The sounds for each color can be controlled with the colored panels at the bottom of the screen; if the red panel is set to the "Cello" instrument, every red shape will make a cello sound.
 
@@ -39,23 +39,24 @@ When a shape plays, a node traverses the perimeter of the shape at a constant sp
 
 ### Toolbar
 
-![Screen Shot 2021-02-12 at 4 13 20 PM](https://user-images.githubusercontent.com/9386882/107823119-3b50ea00-6d4d-11eb-9e46-38dbeb813318.png)
+![Toolbar screenshot](assets/readme-images/toolbar.png)
 
 The toolbar allows you to adjust various aspects of your project.
 
-| Name      | Description |
-| --------- | ----------- |
-| Play/Stop | Pressing play starts all shapes at their origin point. Shapes that are added during playback will start playing as soon as they are completed. |
-| Record    | Pressing record allows you to download your project as an audio file (.wav). If playback is stopped when you click record, recording will begin when you begin playback. If the project is playing when you click record, the recording will start instantly. Pressing stop or record again will end the recording and show a window where you can listen and download the file that was generated. |
-| Color  | Select the color of the shapes you are drawing. Different colored shapes produce different sounds. |
-| Draw Tool   | Draw mode allows you to create shapes. Click to place vertices. Click on the origin point to complete a shape. Right click to cancel. |
-| Edit Tool  | Edit mode allows you to adjust your shapes. Drag vertices to edit the perimeter of your shape. Drag the whole shape to move it. Click on a shape to show more detailed options (see shape controls). |
-| Grid         | When selected, the grid is shown and all points will snap to the grid when drawn, or when shapes are moved  |
-| Sync         | When selected, shapes will snap and lock to the same length - so that they will loop at the same time. Shapes can be “halved’ or “doubled” so that they loop half or twice as often. This allows for a defined rhythm. |
-| Tempo | Change the speed of playback    |
-| Key   | Select the root note            |
-| Scale | Select the musical scale (mode) |
-| Clear        | Delete all shapes |
+| Name           | Description                                                                                                                                                                                                                                                                                                                                                                                         |
+|----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Play/Stop      | Pressing play starts all shapes at their origin point. Shapes that are added during playback will start playing as soon as they are completed.                                                                                                                                                                                                                                                      |
+| Record         | Pressing record allows you to download your project as an audio file (.wav). If playback is stopped when you click record, recording will begin when you begin playback. If the project is playing when you click record, the recording will start instantly. Pressing stop or record again will end the recording and show a window where you can listen and download the file that was generated. |
+| Color          | Select the color of the shapes you are drawing. Different colored shapes produce different sounds.                                                                                                                                                                                                                                                                                                  |
+| Draw Tool      | Draw mode allows you to create shapes. Click to place vertices. Click on the origin point to complete a shape. Right click to cancel.                                                                                                                                                                                                                                                               |
+| Edit Tool      | Edit mode allows you to adjust your shapes. Drag vertices to edit the perimeter of your shape. Drag the whole shape to move it. Click on a shape to show more detailed options (see shape controls).                                                                                                                                                                                                |
+| Grid           | When selected, the grid is shown and all points will snap to the grid when drawn, or when shapes are moved                                                                                                                                                                                                                                                                                          |
+| Sync           | When selected, shapes will snap and lock to the same length - so that they will loop at the same time. Shapes can be “halved’ or “doubled” so that they loop half or twice as often. This allows for a defined rhythm.                                                                                                                                                                              |
+| Proximity Mode | Turn on Proximity Mode to experience your project spatially, where the listening position is controlled with the mouse. Hover over the dropdown icon to adjust the listening radius.                                                                                                                                                                                                                |
+| Tempo          | Change the speed of playback                                                                                                                                                                                                                                                                                                                                                                        |
+| Key            | Select the root note                                                                                                                                                                                                                                                                                                                                                                                |
+| Scale          | Select the musical scale (mode)                                                                                                                                                                                                                                                                                                                                                                     |
+| Clear          | Delete all shapes                                                                                                                                                                                                                                                                                                                                                                                   |
 
 ### Exporting
 
@@ -67,7 +68,7 @@ There are two ways to export your project: as audio or as MIDI.
 
 ![image](https://user-images.githubusercontent.com/9386882/107823235-73f0c380-6d4d-11eb-94c8-5c8ce5312639.png)
 
-The Shape menu allows you to control a shape's properties. CLICK on a shape to display this menu.
+The Shape menu allows you to control a shape's properties. CLICK on a shape (in EDIT mode) to display this menu.
 
 | Control        | Description                     |
 | -------------- | ------------------------------- |

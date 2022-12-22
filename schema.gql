@@ -25,6 +25,8 @@ type Project {
   isGridActive: Boolean!
   isSnapToGridActive: Boolean!
   isAutoQuantizeActive: Boolean!
+  isProximityModeActive: Boolean
+  proximityModeRadius: Int
   shapesList: [Shape!]
   userId: String!
   userName: String!

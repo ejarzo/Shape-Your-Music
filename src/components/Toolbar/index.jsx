@@ -28,9 +28,9 @@ import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeCon
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import CustomSlider from 'components/Slider';
 
-const { black, grayLightest, red, grayMedium } = appColors;
+const { white, black, grayLightest, red, grayMedium } = appColors;
 
-function ToolbarComponent(props) {
+function ToolbarComponent() {
   const {
     isPlaying,
     isArmed,
@@ -39,9 +39,9 @@ function ToolbarComponent(props) {
     scaleObj,
     tempo,
     isGridActive,
-    // isSnapToGridActive,
     isAutoQuantizeActive,
     isProximityModeActive,
+    proximityModeRadius,
     dispatch,
     imperativeHandlers: { togglePlayStop, toggleRecord, clearProjectCanvas },
   } = useProjectContext();
@@ -237,8 +237,7 @@ function ToolbarComponent(props) {
                       style={{
                         borderRadius: 2,
                         overflow: 'hidden',
-                        // border: `1px solid ${lightGray}`,
-                        border: `1px solid ${grayMedium}`,
+                        border: `1px solid ${white}`,
                         width: 120,
                         height: 30,
                       }}
@@ -247,8 +246,8 @@ function ToolbarComponent(props) {
                         min={MIN_PROXIMITY_RADIUS}
                         max={MAX_PROXIMITY_RADIUS}
                         color="#eee"
-                        // disabled={!isProximityModeActive}
                         vertical={false}
+                        value={proximityModeRadius}
                         defaultValue={PROXIMITY_MODE_RADIUS}
                         onChange={val => {
                           dispatch({

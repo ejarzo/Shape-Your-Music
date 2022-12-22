@@ -10,6 +10,8 @@ export const ProjectFragment = gql`
     tonic
     isSnapToGridActive
     isAutoQuantizeActive
+    isProximityModeActive
+    proximityModeRadius
     isGridActive
     dateCreated
     selectedSynths

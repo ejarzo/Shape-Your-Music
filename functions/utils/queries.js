@@ -8,6 +8,8 @@ export const PROJECT_FRAGMENT = `
     tonic
     isSnapToGridActive
     isAutoQuantizeActive
+    isProximityModeActive
+    proximityModeRadius
     isGridActive
     dateCreated
     selectedSynths

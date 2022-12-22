@@ -28,7 +28,7 @@ import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeCon
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import CustomSlider from 'components/Slider';
 
-const { white, black, grayLightest, red, grayMedium } = appColors;
+const { white, black, grayLightest, red } = appColors;
 
 function ToolbarComponent() {
   const {

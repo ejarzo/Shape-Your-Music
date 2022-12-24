@@ -54,7 +54,7 @@
     "react-scripts": "^3.1.1",
     "react-select": "^3.0.8",
     "teoria": "^2.5.0",
-    "tone": "^13.8.12",
+    "tone": "13.8.25",
     "utf-8-validate": "^5.0.2"
   },
   "scripts": {

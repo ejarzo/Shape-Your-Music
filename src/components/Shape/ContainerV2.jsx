@@ -60,6 +60,7 @@ function ShapeContainerV2(props, ref) {
     animCircleX: 0,
     animCircleY: 0,
     panVal: 0,
+    // lastCreatedVertexFromMidpoint: 2,
   });
 
   const {
@@ -71,6 +72,7 @@ function ShapeContainerV2(props, ref) {
     firstNoteIndex,
     quantizeFactor,
     panVal,
+    // lastCreatedVertexFromMidpoint,
   } = state;
 
   const [isHoveredOver, setIsHoveredOver] = useState(false);
@@ -128,6 +130,7 @@ function ShapeContainerV2(props, ref) {
     [points, colorIndex, shapeAttrs.fill]
   );
 
+  // console.log(panVal);
   const { isBuffering } = useShapeSynth({
     colorIndex,
     volume,
@@ -138,6 +141,7 @@ function ShapeContainerV2(props, ref) {
     isMuted,
     isSoloed,
     panVal,
+    averagePoint,
   });
 
   // ======================= HOOKS =======================
@@ -190,7 +194,15 @@ function ShapeContainerV2(props, ref) {
   };
 
   /* Drag */
-  const handleDrag = () => {
+  const handleDrag = e => {
+    // console.log('handleMouseMove');
+    // const { lastCreatedVertexFromMidpoint } = state;
+    // if (e && lastCreatedVertexFromMidpoint > -1) {
+    //   console.log(e);
+    //   handleVertexDragMove(lastCreatedVertexFromMidpoint)(e);
+    //   return;
+    // }
+
     setState(s => {
       const absPos = shapeRef.current.getAbsolutePosition();
       const avgPoint = getAveragePoint(s.points);
@@ -209,18 +221,73 @@ function ShapeContainerV2(props, ref) {
       };
     });
   };
+  //
+  // const handleMouseMove = e => {
+  //   console.log('handleMouseMove');
+  //   const { lastCreatedVertexFromMidpoint } = state;
+  //   if (e && lastCreatedVertexFromMidpoint > -1) {
+  //     handleVertexDragMove(lastCreatedVertexFromMidpoint)(e);
+  //     // return;
+  //   }
+  // };
 
-  const dragBoundFunc = ({ x, y }) => ({
-    x: snapToGrid(x),
-    y: snapToGrid(y),
-  });
+  const dragBoundFunc = ({ x, y }) => {
+    return {
+      x: snapToGrid(x),
+      y: snapToGrid(y),
+    };
+  };
 
   const handleVertexDragMove = i => e => {
     setState(s => {
       const { x, y } = e.target.position();
+      // console.log(x, y);
       let points = s.points.slice();
       points[i] = snapToGrid(x);
       points[i + 1] = snapToGrid(y);
+
+      if (isAutoQuantizeActive) {
+        points = getPointsForFixedPerimeterLength(
+          points,
+          quantizeLength * s.quantizeFactor
+        );
+      }
+      return { ...s, points };
+    });
+  };
+
+  const handleVertexDelete = i => e => {
+    setState(s => {
+      let points = s.points.slice();
+      /* Only delete if we have more than two points */
+      if (points.length <= 2 * 2) return s;
+
+      /* remove x and y points */
+      points.splice(i, 2);
+
+      if (isAutoQuantizeActive) {
+        points = getPointsForFixedPerimeterLength(
+          points,
+          quantizeLength * s.quantizeFactor
+        );
+      }
+      return { ...s, points };
+    });
+  };
+
+  /* Create new point at midpoint of previous and next points*/
+  const handleVertexAdd = i => e => {
+    setState(s => {
+      let points = s.points.slice();
+      const x = points[i];
+      const y = points[i + 1];
+      const nextX = points[i + 2] || points[0];
+      const nextY = points[i + 3] || points[1];
+      const newX = (x + nextX) / 2;
+      const newY = (y + nextY) / 2;
+
+      /* remove x and y points */
+      points.splice(i + 2, 0, ...[newX, newY]);
 
       if (isAutoQuantizeActive) {
         points = getPointsForFixedPerimeterLength(
@@ -305,8 +372,11 @@ function ShapeContainerV2(props, ref) {
       averagePoint={averagePoint}
       editorPosition={{ x: editorX, y: editorY }}
       // shape event handlers
+      // draggable={lastCreatedVertexFromMidpoint < -1}
+      draggable
       dragBoundFunc={dragBoundFunc}
       handleDrag={handleDrag}
+      // handleMouseMove={handleMouseMove}
       handleDragStart={() => setIsDragging(true)}
       handleDragEnd={() => setIsDragging(false)}
       handleClick={() => {
@@ -318,6 +388,8 @@ function ShapeContainerV2(props, ref) {
       handleMouseOver={() => setIsHoveredOver(true)}
       handleMouseOut={() => setIsHoveredOver(false)}
       handleVertexDragMove={handleVertexDragMove}
+      handleVertexDelete={handleVertexDelete}
+      handleVertexAdd={handleVertexAdd}
       // editor panel handlers
       handleColorChange={handleColorChange}
       handleDelete={handleDelete}

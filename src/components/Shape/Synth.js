@@ -2,6 +2,7 @@ import Tone from 'tone';
 import { SYNTH_PRESETS } from 'instrumentPresets';
 import { SEND_CHANNELS } from 'utils/music';
 import { forEachPoint, getNoteInfo } from 'utils/shape';
+import { DEFAULT_PROXIMITY_MODE_RADIUS } from 'utils/project';
 
 export function Synth({ onStartLoading, onEndLoading }) {
   console.log('Synth constructed');
@@ -28,6 +29,9 @@ export function Synth({ onStartLoading, onEndLoading }) {
 
   let volume = -Infinity;
   let panner = null;
+  let panner3d = null;
+  let pannerNode = null;
+
   let solo = null;
   let gain = null;
 
@@ -35,10 +39,17 @@ export function Synth({ onStartLoading, onEndLoading }) {
   let scaleObj = null;
   let synthObj = null;
 
+  let isProximityMode;
+  let proximityRadius;
+  let avgPt;
+  let panVal;
+
   const disposeSynth = () => {
     synth.triggerRelease();
     panner.disconnect();
     panner.dispose();
+    panner3d.disconnect();
+    panner3d.dispose();
     solo.disconnect();
     solo.dispose();
     gain.disconnect();
@@ -71,11 +82,38 @@ export function Synth({ onStartLoading, onEndLoading }) {
       synth.volume.exponentialRampToValueAtTime(volume, Tone.now() + 0.2);
 
       panner = new Tone.Panner(0);
+      panner3d = new Tone.Panner3D({
+        panningModel: 'HRTF',
+        positionX: 0,
+        positionY: 0,
+        distanceModel: 'linear',
+        // distanceModel: 'inverse',
+        maxDistance: proximityRadius || DEFAULT_PROXIMITY_MODE_RADIUS,
+        orientationX: 1,
+        orientationY: 1,
+        orientationZ: 1,
+      });
+      panner3d._rampTimeConstant = 0.6;
+
+      /* TODO use below functions? */
+      if (panVal) {
+        panner.pan.value = panVal * 0.9;
+      }
+      if (avgPt) {
+        panner3d.positionX = avgPt.x;
+        panner3d.positionY = avgPt.y;
+      }
+      if (isProximityMode) {
+        pannerNode = panner3d;
+      } else {
+        pannerNode = panner;
+      }
+
       solo = new Tone.Solo();
       // NOTE: this is where we connect to the output channel for this color
       gain = new Tone.Gain().send(`${SEND_CHANNELS.FX_PREFIX}${colorIndex}`, 0);
 
-      synth.chain(panner, solo, gain);
+      synth.chain(pannerNode, solo, gain);
     },
     setKnobValues: knobVals => {
       knobVals.forEach((val, i) => {
@@ -143,7 +181,27 @@ export function Synth({ onStartLoading, onEndLoading }) {
       part.playbackRate = tempo / 50;
     },
     setPan: val => {
+      panVal = val;
       panner.pan.value = val * 0.9;
+    },
+    setPan3d: _avgPt => {
+      avgPt = _avgPt;
+      panner3d.positionX = avgPt.x;
+      panner3d.positionY = avgPt.y;
+    },
+    setProximityMode: _isProximityMode => {
+      isProximityMode = _isProximityMode;
+      if (isProximityMode) {
+        pannerNode = panner3d;
+      } else {
+        pannerNode = panner;
+      }
+      synth.disconnect();
+      synth.chain(pannerNode, solo, gain);
+    },
+    setProximityRadius: _proximityRadius => {
+      proximityRadius = _proximityRadius;
+      panner3d.set('maxDistance', proximityRadius);
     },
     dispose: () => {
       part.dispose();

@@ -1,5 +1,5 @@
 import React, { useRef, forwardRef, useImperativeHandle } from 'react';
-import { Stage, Layer, Group } from 'react-konva';
+import { Stage, Layer, Group, Circle } from 'react-konva';
 import ShapesWrapper from './ShapesWrapper';
 import PhantomShape from './PhantomShape';
 import Grid from './Grid';
@@ -10,6 +10,8 @@ import { DRAWING_STATES } from './Container';
 import ProjectContextProvider from 'components/Project/ProjectContextProvider';
 import { useProjectContext } from 'context/useProjectContext';
 import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeContext';
+
+export const MousePosContext = React.createContext({});
 
 function ShapeCanvasComponent(props, ref) {
   const {
@@ -26,6 +28,7 @@ function ShapeCanvasComponent(props, ref) {
     deletedShapeIndeces,
     onContentClick,
     onContentMouseMove,
+    onDragMove,
     onContentMouseDown,
     handleShapeClick,
     handleShapeDelete,
@@ -53,6 +56,8 @@ function ShapeCanvasComponent(props, ref) {
     isAltPressed,
     isGridActive,
     activeColorIndex,
+    isProximityModeActive,
+    proximityModeRadius,
   } = projectContext;
 
   const isEditMode = activeTool === TOOL_TYPES.EDIT;
@@ -73,46 +78,74 @@ function ShapeCanvasComponent(props, ref) {
         height={height}
         onContentClick={onContentClick}
         onContentMouseMove={onContentMouseMove}
+        onDragMove={onDragMove}
         onContentMouseDown={onContentMouseDown}
       >
         <ProjectContextProvider value={projectContext}>
-          {isGridActive && (
+          <MousePosContext.Provider value={mousePos}>
+            {isProximityModeActive && (
+              <Layer>
+                <Circle
+                  x={mousePos.x}
+                  y={mousePos.y}
+                  transformsEnabled="position"
+                  radius={proximityModeRadius}
+                  fill={'white'}
+                  opacity={0.36}
+                  // fillRadialGradientStartPoint={{ x: 0, y: 0 }}
+                  // fillRadialGradientStartRadius={0}
+                  // fillRadialGradientEndPoint={{ x: 0, y: 0 }}
+                  // fillRadialGradientEndRadius={PROXIMITY_MODE_RADIUS}
+                  // fillRadialGradientColorStops={[
+                  //   0,
+                  //   'white',
+                  //   0.8,
+                  //   'white',
+                  //   1,
+                  //   'rgba(255,255,255,0)',
+                  // ]}
+                />
+              </Layer>
+            )}
+
+            {isGridActive && (
+              <Layer>
+                <Group>
+                  <Grid width={width} height={height} gridSize={gridSize} />
+                </Group>
+              </Layer>
+            )}
+
             <Layer>
               <Group>
-                <Grid width={width} height={height} gridSize={gridSize} />
+                <ShapesWrapper
+                  ref={shapesGroupRef}
+                  shapesList={shapesList}
+                  deletedShapeIndeces={deletedShapeIndeces}
+                  selectedShapeIndex={selectedShapeIndex}
+                  soloedShapeIndex={soloedShapeIndex}
+                  snapToGrid={snapToGrid}
+                  handleShapeClick={handleShapeClick}
+                  handleShapeDelete={handleShapeDelete}
+                  handleShapeDuplicate={handleShapeDuplicate}
+                  handleShapeColorChange={handleShapeColorChange}
+                  handleShapeVolumeChange={handleShapeVolumeChange}
+                  handleShapeSoloChange={handleShapeSoloChange}
+                  handleShapeMuteChange={handleShapeMuteChange}
+                />
               </Group>
             </Layer>
-          )}
 
-          <Layer>
-            <Group>
-              <ShapesWrapper
-                ref={shapesGroupRef}
-                shapesList={shapesList}
-                deletedShapeIndeces={deletedShapeIndeces}
-                selectedShapeIndex={selectedShapeIndex}
-                soloedShapeIndex={soloedShapeIndex}
-                snapToGrid={snapToGrid}
-                handleShapeClick={handleShapeClick}
-                handleShapeDelete={handleShapeDelete}
-                handleShapeDuplicate={handleShapeDuplicate}
-                handleShapeColorChange={handleShapeColorChange}
-                handleShapeVolumeChange={handleShapeVolumeChange}
-                handleShapeSoloChange={handleShapeSoloChange}
-                handleShapeMuteChange={handleShapeMuteChange}
+            <Layer>
+              <PhantomShape
+                mousePos={mousePos}
+                points={currPoints}
+                drawingState={drawingState}
+                closed={drawingState === DRAWING_STATES.PREVIEW}
+                color={themeColors[activeColorIndex]}
               />
-            </Group>
-          </Layer>
-
-          <Layer>
-            <PhantomShape
-              mousePos={mousePos}
-              points={currPoints}
-              drawingState={drawingState}
-              closed={drawingState === DRAWING_STATES.PREVIEW}
-              color={themeColors[activeColorIndex]}
-            />
-          </Layer>
+            </Layer>
+          </MousePosContext.Provider>
         </ProjectContextProvider>
       </Stage>
     </div>

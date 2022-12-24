@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
 import { object, string, number, array, bool, func } from 'prop-types';
 
-import { dist } from 'utils/math';
+import { convertValToRange, dist } from 'utils/math';
 import { themeColors } from 'utils/color';
 import ShapeCanvasComponent from './Component';
 import { TOOL_TYPES } from 'utils/project';
 
 import withProjectContext from 'components/Project/withProjectContext';
+import Tone from 'tone';
 
 export const DRAWING_STATES = {
   PENDING: 'pending', // not currently drawing
   PREVIEW: 'preview', // mouse is hovered over final position, showing a preview of the finished shape
   DRAWING: 'drawing', // drawing but not previewing
+};
+
+/* Setup Tone Listener */
+Tone.Listener.upX = 0;
+Tone.Listener.upY = 0;
+Tone.Listener.upZ = 1;
+Tone.Listener.forwardX = 1;
+Tone.Listener.forwardY = 1;
+Tone.Listener.forwardZ = 0;
+
+const updateToneListener = (x, y) => {
+  Tone.Listener.setPosition(x, y, 40);
 };
 
 const propTypes = {
@@ -24,6 +37,7 @@ const propTypes = {
   isGridActive: bool.isRequired,
   isSnapToGridActive: bool.isRequired,
   isAutoQuantizeActive: bool.isRequired,
+  isProximityModeActive: bool.isRequired,
   activeColorIndex: number.isRequired,
   knobVals: array.isRequired,
 };
@@ -62,6 +76,7 @@ class ShapeCanvas extends Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseDrag = this.handleMouseDrag.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleShapeClick = this.handleShapeClick.bind(this);
     this.handleShapeDelete = this.handleShapeDelete.bind(this);
@@ -79,6 +94,9 @@ class ShapeCanvas extends Component {
     this.setState({
       shapesList: initShapesList || [],
     });
+    // this.setState({
+    //   shapesList: this.generateRandomShapes(2, 4),
+    // });
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -234,12 +252,30 @@ class ShapeCanvas extends Component {
     }
   }
 
+  handleMouseDrag({ evt }) {
+    const { isProximityModeActive } = this.props;
+    const { clientX, clientY } = evt;
+    const x = clientX;
+    const y = clientY - 80;
+    if (isProximityModeActive) {
+      updateToneListener(x, y);
+    }
+    this.setState({
+      mousePos: { x, y },
+    });
+  }
+
   handleMouseMove({ evt: { offsetX, offsetY } }) {
-    const { activeTool } = this.props;
+    const { activeTool, isProximityModeActive } = this.props;
     const { drawingState, currPoints } = this.state;
 
     let x = offsetX;
     let y = offsetY;
+
+    if (isProximityModeActive) {
+      updateToneListener(x, y);
+    }
+
     const originX = this.state.currPoints[0];
     const originY = this.state.currPoints[1];
 
@@ -267,6 +303,10 @@ class ShapeCanvas extends Component {
       this.setState({
         mousePos: { x: x, y: y },
         drawingState: newDrawingState,
+      });
+    } else {
+      this.setState({
+        mousePos: { x: offsetX, y: offsetY },
       });
     }
   }
@@ -349,23 +389,33 @@ class ShapeCanvas extends Component {
 
   generateRandomShapes(nShapes, nPoints) {
     const shapesList = [];
-
     for (let i = 0; i < nShapes; i++) {
       const pointsList = [];
       for (let j = 0; j < nPoints * 2; j++) {
+        const rand = Math.random();
         if (j % 2) {
-          pointsList.push(
-            parseInt(Math.random() * (window.innerHeight - 100), 10)
+          const y = convertValToRange(
+            rand,
+            0,
+            1,
+            window.innerHeight * 0.2,
+            window.innerHeight * 0.8
           );
+          pointsList.push(y);
         } else {
-          pointsList.push(
-            parseInt(Math.random() * (window.innerWidth - 20) + 20, 10)
+          const x = convertValToRange(
+            rand,
+            0,
+            1,
+            window.innerWidth * 0.1,
+            window.innerWidth * 0.9
           );
+          pointsList.push(parseInt(x));
         }
       }
       shapesList.push({
         points: pointsList,
-        colorIndex: 0,
+        colorIndex: Math.floor(Math.random() * 5),
         volume: this.defaultVolume,
         isMuted: false,
       });
@@ -396,6 +446,7 @@ class ShapeCanvas extends Component {
         gridSize={gridSize}
         onContentClick={this.handleClick}
         onContentMouseMove={this.handleMouseMove}
+        onDragMove={this.handleMouseDrag}
         onContentMouseDown={this.handleMouseDown}
         shapesList={shapesList}
         selectedShapeIndex={selectedShapeIndex}

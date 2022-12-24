@@ -38,6 +38,8 @@ export const typeDefs = gql`
     scale: String!
     isSnapToGridActive: Boolean!
     isAutoQuantizeActive: Boolean!
+    isProximityModeActive: Boolean
+    proximityModeRadius: Int
     tonic: String!
     isGridActive: Boolean!
     shapesList: [Shape!]
@@ -56,6 +58,8 @@ export const typeDefs = gql`
     isGridActive: Boolean!
     isSnapToGridActive: Boolean!
     isAutoQuantizeActive: Boolean!
+    isProximityModeActive: Boolean!
+    proximityModeRadius: Int!
     shapesList: [ShapeInput!]
     selectedSynths: [Synth!]
     dateCreated: Long
@@ -70,6 +74,8 @@ export const typeDefs = gql`
     isGridActive: Boolean
     isSnapToGridActive: Boolean
     isAutoQuantizeActive: Boolean
+    isProximityModeActive: Boolean!
+    proximityModeRadius: Int!
     shapesList: [ShapeInput!]
     selectedSynths: [Synth!]
     dateCreated: Long

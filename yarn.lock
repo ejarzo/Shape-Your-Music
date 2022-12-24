@@ -13591,7 +13591,7 @@ tonal-midi@^0.69.7:
   dependencies:
     note-parser "^2.0.1"
 
-tone@^13.8.12:
+tone@13.8.25:
   version "13.8.25"
   resolved "https://registry.yarnpkg.com/tone/-/tone-13.8.25.tgz#057eefb39d4c749524db0ca210e34303cdc3c025"
   integrity sha512-8QqmLn+/R+Urib/78zf93+NqFLddXS777kQO7+EbJHwqy+nmug+SJFRp2KIytT0LQY2sJBiopNb2ceHA8uQQJg==

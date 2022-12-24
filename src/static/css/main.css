@@ -99,7 +99,7 @@ div[tabindex='-1']:focus {
   height: 31px !important;
   text-align: center !important;
   z-index: 100;
-  boxshadow: 0 0 12px 0 rgba(0, 0, 0, 0.11) !important;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.11) !important;
   background: white !important;
 }
 
@@ -114,6 +114,10 @@ div[tabindex='-1']:focus {
 
 .ant-popover.ant-popover-placement-rightTop {
   z-index: 2000;
+}
+
+.ant-popover-placement-bottomRight .ant-popover-inner-content {
+  padding: 0;
 }
 
 .ant-tooltip {

@@ -7,6 +7,7 @@ import { convertValToRange } from 'utils/math';
 import { themeColors, appColors } from 'utils/color';
 
 import ShapeVertex from './ShapeVertex';
+import EdgeMidpoint from './EdgeMidpoint';
 import ShapeEditorPopover from './ShapeEditorPopover';
 import { TOOL_TYPES } from 'utils/project';
 import styles from './styles.module.css';
@@ -75,8 +76,12 @@ function ShapeComponent(props, ref) {
     handleMouseOver,
     handleMouseOut,
     handleVertexDragMove,
+    handleVertexAdd,
+    handleVertexDelete,
     handleReverseClick,
     handleDuplicateClick,
+    onMouseMove,
+    draggable,
   } = props;
 
   const color = themeColors[colorIndex];
@@ -109,8 +114,9 @@ function ShapeComponent(props, ref) {
       <Group
         key="shapeGroup"
         ref={groupRef}
-        draggable
+        draggable={draggable}
         dragBoundFunc={dragBoundFunc}
+        onMouseMove={onMouseMove}
         onDragMove={handleDrag}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
@@ -135,6 +141,21 @@ function ShapeComponent(props, ref) {
           transformsEnabled="position"
         />
 
+        {/* Midpoints */}
+        {points.map((x, i, arr) => {
+          if (i % 2) return null;
+          return (
+            <EdgeMidpoint
+              key={i}
+              index={i}
+              color={color}
+              handleMouseDown={handleVertexAdd(i)}
+              p1={{ x: x, y: arr[i + 1] }}
+              p2={{ x: arr[i + 2] || arr[0], y: arr[i + 3] || arr[1] }}
+            />
+          );
+        })}
+
         {/* shape verteces */}
         {points.map(
           (p, i, arr) =>
@@ -144,7 +165,8 @@ function ShapeComponent(props, ref) {
                 key={i}
                 index={i}
                 p={{ x: p, y: arr[i + 1] }}
-                onVertexDragMove={handleVertexDragMove(i)}
+                handleVertexDragMove={handleVertexDragMove(i)}
+                handleVertexDelete={handleVertexDelete(i)}
                 color={color}
               />
             )
@@ -170,7 +192,6 @@ function ShapeComponent(props, ref) {
             </div>
           </div>
         </Portal>
-
         {/* editor panel that opens on shape click */}
         <Portal isOpened={isSelected}>
           <ShapeEditorPopover
@@ -240,7 +261,8 @@ function ShapeComponent(props, ref) {
             x: points[0],
             y: points[1],
           }}
-          onVertexDragMove={handleVertexDragMove(0)}
+          handleVertexDragMove={handleVertexDragMove(0)}
+          handleVertexDelete={handleVertexDelete(0)}
         />
 
         {progressDot}

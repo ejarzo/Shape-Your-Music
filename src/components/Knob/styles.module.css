@@ -4,6 +4,7 @@
 
 .knobTitle {
   color: #fff;
+  user-select: none;
   text-transform: capitalize; 
 }
 

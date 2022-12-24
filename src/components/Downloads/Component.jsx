@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import { Alert, Button } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import styles from './styles.module.css';
 
@@ -26,6 +26,12 @@ function Downloads(props) {
           </span>
         )}
       </div>
+      <Alert
+        style={{ marginBottom: 20 }}
+        showIcon
+        type="warning"
+        message="Recordings will be lost when you leave or reload the page."
+      />
       <ul>
         {downloadUrls
           .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))

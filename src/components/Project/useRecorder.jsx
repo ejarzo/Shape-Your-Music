@@ -1,12 +1,12 @@
 import { useRef, useState, useEffect } from 'react';
 import moment from 'moment';
-import Tone from 'tone';
+import * as Tone from 'tone';
 import Recorder from 'utils/Recorder';
 
 export const useRecorder = () => {
   const recorder = useRef(null);
   useEffect(() => {
-    recorder.current = new Recorder(Tone.Master);
+    // recorder.current = new Recorder(Tone.Master);
   }, []);
   const [isRecording, setIsRecording] = useState(false);
   const [isArmed, setIsArmed] = useState(false);
@@ -15,23 +15,23 @@ export const useRecorder = () => {
   const beginRecording = () => {
     setIsArmed(false);
     setIsRecording(true);
-    recorder.current.record();
+    // recorder.current.record();
   };
 
   const stopRecording = (fileName = 'My project') => {
-    recorder.current.exportWAV(blob => {
-      const url = URL.createObjectURL(blob);
-      const newDownloadUrls = downloadUrls.slice();
-      const createdAt = moment();
-      newDownloadUrls.push({
-        url,
-        fileName: `${fileName}[shapeyourmusic].wav`,
-        createdAt,
-      });
-      setDownloadUrls(newDownloadUrls);
-      recorder.current.stop();
-      recorder.current.clear();
-    });
+    // recorder.current.exportWAV(blob => {
+    //   const url = URL.createObjectURL(blob);
+    //   const newDownloadUrls = downloadUrls.slice();
+    //   const createdAt = moment();
+    //   newDownloadUrls.push({
+    //     url,
+    //     fileName: `${fileName}[shapeyourmusic].wav`,
+    //     createdAt,
+    //   });
+    //   setDownloadUrls(newDownloadUrls);
+    //   recorder.current.stop();
+    //   recorder.current.clear();
+    // });
     setIsRecording(false);
   };
 

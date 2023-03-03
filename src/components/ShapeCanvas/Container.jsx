@@ -7,7 +7,7 @@ import ShapeCanvasComponent from './Component';
 import { TOOL_TYPES } from 'utils/project';
 
 import withProjectContext from 'components/Project/withProjectContext';
-import Tone from 'tone';
+import * as Tone from 'tone';
 
 export const DRAWING_STATES = {
   PENDING: 'pending', // not currently drawing

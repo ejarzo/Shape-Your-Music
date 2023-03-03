@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import { setSynthParam, setSynthEnvelopeParam } from './utils';
 
 export default {

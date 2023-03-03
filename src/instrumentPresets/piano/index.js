@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import { setEffectWet } from '../utils';
 
 const getUrl = note =>

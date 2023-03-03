@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Tone from 'tone';
+import * as Tone from 'tone';
 import { SEND_CHANNELS } from 'utils/music';
 
 export const useAudioOutput = () => {
@@ -16,7 +16,8 @@ export const useAudioOutput = () => {
     });
 
     const masterLimiter = new Tone.Limiter(-2);
-    const masterOutput = new Tone.Gain(0.9).receive(
+    /* TODO set gain */
+    const masterOutput = new Tone.Channel(0, 0).receive(
       SEND_CHANNELS.MASTER_OUTPUT
     );
     masterOutput.chain(masterCompressor, masterLimiter, Tone.Master);

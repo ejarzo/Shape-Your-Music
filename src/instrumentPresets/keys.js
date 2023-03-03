@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import { setSynthParam, setSynthEnvelopeParam, setEffectWet } from './utils';
 
 export default {
@@ -8,7 +8,7 @@ export default {
     portamento: 0,
     oscillator: {
       detune: 0,
-      type: 'custom',
+      // type: 'custom',
       partials: [2, 1, 2, 2],
       phase: 0,
       volume: -6,

@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import { SYNTH_PRESETS } from 'instrumentPresets';
 import { SEND_CHANNELS } from 'utils/music';
 import { forEachPoint, getNoteInfo } from 'utils/shape';
@@ -48,8 +48,8 @@ export function Synth({ onStartLoading, onEndLoading }) {
     synth.triggerRelease();
     panner.disconnect();
     panner.dispose();
-    panner3d.disconnect();
-    panner3d.dispose();
+    // panner3d.disconnect();
+    // panner3d.dispose();
     solo.disconnect();
     solo.dispose();
     gain.disconnect();
@@ -70,7 +70,7 @@ export function Synth({ onStartLoading, onEndLoading }) {
         disposeSynth();
       }
 
-      synth = new synthObj.baseSynth(synthObj.params, () => {
+      synth = new synthObj.baseSynth({ ...synthObj.params }, () => {
         onEndLoading();
         isBuffering = false;
       });
@@ -110,8 +110,12 @@ export function Synth({ onStartLoading, onEndLoading }) {
       }
 
       solo = new Tone.Solo();
+
       // NOTE: this is where we connect to the output channel for this color
-      gain = new Tone.Gain().send(`${SEND_CHANNELS.FX_PREFIX}${colorIndex}`, 0);
+      gain = new Tone.Channel().send(
+        `${SEND_CHANNELS.FX_PREFIX}${colorIndex}`,
+        0
+      );
 
       synth.chain(pannerNode, solo, gain);
     },
@@ -124,7 +128,7 @@ export function Synth({ onStartLoading, onEndLoading }) {
       });
     },
     setNoteEvents: (scaleObj, points) => {
-      part.removeAll();
+      part.clear();
 
       let delay = 0;
       let prevNoteIndex = firstNoteIndex;

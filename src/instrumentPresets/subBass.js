@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import { setSynthParam, setEffectWet } from './utils';
 import { convertValToRange } from 'utils/math';
 

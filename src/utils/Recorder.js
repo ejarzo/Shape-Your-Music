@@ -4,7 +4,7 @@
 /* eslint-disable */
 
 import InlineWorker from 'inline-worker';
-import Tone from 'tone';
+import * as Tone from 'tone';
 
 export class Recorder {
   constructor(source, cfg) {

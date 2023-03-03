@@ -32,7 +32,7 @@
     "graphql-request": "^1.8.2",
     "http-proxy-middleware": "^0.20.0",
     "inline-worker": "1.1.0",
-    "jszip": "3.1.5",
+    "jszip": "3.7.0",
     "konva": "^6.0.0",
     "lodash": "^4.17.21",
     "midi-writer-js": "1.5.2",

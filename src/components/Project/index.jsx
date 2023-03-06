@@ -180,10 +180,10 @@ export default props => {
     );
 
     // prevent unload if user can save, there are shapes drawn, and the current state is different from the initial state
-    if (showSaveButton && hasShapes && !statesAreEqual) {
-      e.preventDefault();
-      e.returnValue = '';
-    }
+    // if (showSaveButton && hasShapes && !statesAreEqual) {
+    //   e.preventDefault();
+    //   e.returnValue = '';
+    // }
   });
 
   const {

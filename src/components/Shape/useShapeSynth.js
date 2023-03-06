@@ -50,6 +50,7 @@ export const useShapeSynth = ({
   }, [firstNoteIndex]);
 
   useEffect(() => {
+    console.log('calling set synth', selectedSynth, colorIndex);
     synthContainer.current.setSynth(selectedSynth, colorIndex);
   }, [selectedSynth, colorIndex]);
 

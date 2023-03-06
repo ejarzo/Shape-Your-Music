@@ -48,7 +48,7 @@ export function Synth({ onStartLoading, onEndLoading }) {
     synth.triggerRelease();
     panner.disconnect();
     panner.dispose();
-    // panner3d.disconnect();
+    panner3d.disconnect();
     // panner3d.dispose();
     solo.disconnect();
     solo.dispose();
@@ -69,11 +69,17 @@ export function Synth({ onStartLoading, onEndLoading }) {
       if (synth) {
         disposeSynth();
       }
-
-      synth = new synthObj.baseSynth({ ...synthObj.params }, () => {
+      const { isSampler } = synthObj;
+      console.log('base synth', synthObj.baseSynth);
+      const onLoaded = () => {
         onEndLoading();
         isBuffering = false;
-      });
+      };
+      synth = new synthObj.baseSynth(
+        synthObj.params,
+        ...(isSampler ? [onLoaded] : [])
+      );
+
       if (synth instanceof Tone.Sampler) {
         onStartLoading();
         isBuffering = true;

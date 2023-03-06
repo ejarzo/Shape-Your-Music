@@ -7,7 +7,7 @@ export const useAudioOutput = () => {
 
   useEffect(() => {
     /* master output */
-    const masterCompressor = new Tone.Compressor({
+    const destinationCompressor = new Tone.Compressor({
       ratio: 16,
       threshold: -30,
       release: 0.25,
@@ -15,17 +15,27 @@ export const useAudioOutput = () => {
       knee: 30,
     });
 
-    const masterLimiter = new Tone.Limiter(-2);
+    const destinationLimiter = new Tone.Limiter(-2);
+
     /* TODO set gain */
-    const masterOutput = new Tone.Channel(0, 0).receive(
+    const destinationOutput = new Tone.Channel(-2, 0).receive(
       SEND_CHANNELS.MASTER_OUTPUT
     );
-    masterOutput.chain(masterCompressor, masterLimiter, Tone.Master);
+
+    const recordOut = new Tone.Channel(0, 0).send(SEND_CHANNELS.RECORDER, 0);
+    destinationLimiter.connect(recordOut);
+
+    destinationOutput.chain(
+      destinationCompressor,
+      destinationLimiter,
+      recordOut,
+      Tone.Destination
+    );
     return () => {
       Tone.Transport.stop();
-      masterCompressor.dispose();
-      masterLimiter.dispose();
-      masterOutput.dispose();
+      destinationCompressor.dispose();
+      destinationLimiter.dispose();
+      destinationOutput.dispose();
     };
   }, []);
 

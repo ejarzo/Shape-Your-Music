@@ -58,9 +58,6 @@ function registerValidSW(swUrl) {
     .then(registration => {
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
-        if (window.confirm('A new version is available; please refresh!')) {
-          window.location.reload();
-        }
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
@@ -69,6 +66,13 @@ function registerValidSW(swUrl) {
               // It's the perfect time to display a "New content is
               // available; please refresh." message in your web app.
               // window.alert('A new version is available; please refresh!');
+              console.log('A new version is available; please refresh!');
+              registration.active.postMessage('NEW_CONTENT_AVAILABLE');
+              // if (
+              //   window.confirm('A new version is available; please refresh!')
+              // ) {
+              //   window.location.reload();
+              // }
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a

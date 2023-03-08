@@ -66,13 +66,6 @@ function registerValidSW(swUrl) {
               // It's the perfect time to display a "New content is
               // available; please refresh." message in your web app.
               // window.alert('A new version is available; please refresh!');
-              if (
-                window &&
-                window.confirm &&
-                window.confirm('A new version is available; please refresh!')
-              ) {
-                window.location.reload();
-              }
               console.log('A new version is available; please refresh!');
               registration.active.postMessage('NEW_CONTENT_AVAILABLE');
             } else {

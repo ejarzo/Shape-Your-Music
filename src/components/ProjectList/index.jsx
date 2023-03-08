@@ -69,6 +69,8 @@ function ProjectList(props) {
                               key={i}
                               points={points}
                               fill={themeColors[colorIndex]}
+                              stroke={themeColors[colorIndex]}
+                              strokeWidth={3}
                               opacity={0.8}
                               lineJoin="bevel"
                               closed

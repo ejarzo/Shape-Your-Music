@@ -67,12 +67,12 @@ function registerValidSW(swUrl) {
               // available; please refresh." message in your web app.
               // window.alert('A new version is available; please refresh!');
               console.log('A new version is available; please refresh!');
-              registration.active.postMessage('NEW_CONTENT_AVAILABLE');
+              registration.postMessage('NEW_CONTENT_AVAILABLE');
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
-              registration.active.postMessage('CONTENT_CACHED');
+              registration.postMessage('CONTENT_CACHED');
               console.log('Content is cached for offline use.');
             }
           }

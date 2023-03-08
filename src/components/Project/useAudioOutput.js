@@ -23,13 +23,14 @@ export const useAudioOutput = () => {
     );
 
     const recordOut = new Tone.Channel(0, 0).send(SEND_CHANNELS.RECORDER, 0);
-    destinationLimiter.connect(recordOut);
+    const finalNode = new Tone.Gain();
+
+    finalNode.fan(recordOut, Tone.Destination);
 
     destinationOutput.chain(
       destinationCompressor,
       destinationLimiter,
-      recordOut,
-      Tone.Destination
+      finalNode
     );
     return () => {
       Tone.Transport.stop();

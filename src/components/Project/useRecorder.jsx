@@ -2,6 +2,23 @@ import { useRef, useState, useEffect } from 'react';
 import moment from 'moment';
 import * as Tone from 'tone';
 import { SEND_CHANNELS } from 'utils/music';
+import audiobufferToWav from 'audiobuffer-to-wav';
+
+async function convertWebMToWAV(webmBlob) {
+  // Read the WebM data as an ArrayBuffer
+  const arrayBuffer = await webmBlob.arrayBuffer();
+
+  // Decode the WebM data using the Web Audio API
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+  // Encode the AudioBuffer as WAV using the 'audiobuffer-to-wav' library
+  const wavBlob = new Blob([audiobufferToWav(audioBuffer)], {
+    type: 'audio/wav',
+  });
+
+  return wavBlob;
+}
 
 export const useRecorder = () => {
   const recorder = useRef(null);
@@ -23,13 +40,14 @@ export const useRecorder = () => {
   };
 
   const stopRecording = async (fileName = 'My project') => {
-    const recording = await recorder.current.stop();
-    const url = URL.createObjectURL(recording);
+    const webmBlob = await recorder.current.stop();
+    const wavBlob = await convertWebMToWAV(webmBlob);
+    const url = URL.createObjectURL(wavBlob);
     const newDownloadUrls = downloadUrls.slice();
     const createdAt = moment();
     newDownloadUrls.push({
       url,
-      fileName: `${fileName}[shapeyourmusic].webm`,
+      fileName: `${fileName}[shapeyourmusic].wav`,
       createdAt,
     });
     setDownloadUrls(newDownloadUrls);

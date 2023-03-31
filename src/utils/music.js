@@ -37,4 +37,5 @@ export const SCALES = [
 export const SEND_CHANNELS = {
   MASTER_OUTPUT: 'masterOutput',
   FX_PREFIX: 'colorFx-',
+  RECORDER: 'RECORDER',
 };

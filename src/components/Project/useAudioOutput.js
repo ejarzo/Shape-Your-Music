@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Tone from 'tone';
+import * as Tone from 'tone';
 import { SEND_CHANNELS } from 'utils/music';
 
 export const useAudioOutput = () => {
@@ -7,7 +7,7 @@ export const useAudioOutput = () => {
 
   useEffect(() => {
     /* master output */
-    const masterCompressor = new Tone.Compressor({
+    const destinationCompressor = new Tone.Compressor({
       ratio: 16,
       threshold: -30,
       release: 0.25,
@@ -15,16 +15,28 @@ export const useAudioOutput = () => {
       knee: 30,
     });
 
-    const masterLimiter = new Tone.Limiter(-2);
-    const masterOutput = new Tone.Gain(0.9).receive(
+    const destinationLimiter = new Tone.Limiter(-2);
+
+    /* TODO set gain */
+    const destinationOutput = new Tone.Channel(-2, 0).receive(
       SEND_CHANNELS.MASTER_OUTPUT
     );
-    masterOutput.chain(masterCompressor, masterLimiter, Tone.Master);
+
+    const recordOut = new Tone.Channel(0, 0).send(SEND_CHANNELS.RECORDER, 0);
+    const finalNode = new Tone.Gain();
+
+    finalNode.fan(recordOut, Tone.Destination);
+
+    destinationOutput.chain(
+      destinationCompressor,
+      destinationLimiter,
+      finalNode
+    );
     return () => {
       Tone.Transport.stop();
-      masterCompressor.dispose();
-      masterLimiter.dispose();
-      masterOutput.dispose();
+      destinationCompressor.dispose();
+      destinationLimiter.dispose();
+      destinationOutput.dispose();
     };
   }, []);
 

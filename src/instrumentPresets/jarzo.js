@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import { convertValToRange } from 'utils/math';
 import { setEffectWet } from './utils';
 
@@ -97,10 +97,9 @@ export default {
       default: 0,
       target: 'instrument',
       func: (shape, val) => {
-        shape.synth.voice0.envelope.set(
-          'attack',
-          convertValToRange(val, 0, 100, 1, 0)
-        );
+        shape.synth.voice0.envelope.set({
+          attack: convertValToRange(val, 0, 100, 1, 0),
+        });
       },
     },
     {
@@ -108,14 +107,12 @@ export default {
       default: 0.1,
       target: 'instrument',
       func: (shape, val) => {
-        shape.synth.voice1.oscillator.set(
-          'detune',
-          convertValToRange(val, 0, 100, 0, 20)
-        );
-        shape.synth.voice0.oscillator.set(
-          'detune',
-          convertValToRange(val / 100, 0, 100, 0, 20)
-        );
+        shape.synth.voice1.oscillator.set({
+          detune: convertValToRange(val, 0, 100, 0, 20),
+        });
+        shape.synth.voice0.oscillator.set({
+          detune: convertValToRange(val / 100, 0, 100, 0, 20),
+        });
       },
     },
     {

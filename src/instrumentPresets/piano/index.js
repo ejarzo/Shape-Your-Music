@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import { setEffectWet } from '../utils';
 
 const getUrl = note =>
@@ -7,6 +7,7 @@ const getUrl = note =>
 export default {
   name: 'Grand Piano',
   baseSynth: Tone.Sampler,
+  isSampler: true,
   params: {
     A0: getUrl('A0'),
     A1: getUrl('A1'),

@@ -21,6 +21,7 @@
     "antd": "^4.8.4",
     "apollo-boost": "^0.4.7",
     "apollo-server-lambda": "^2.9.16",
+    "audiobuffer-to-wav": "^1.0.0",
     "bufferutil": "^4.0.1",
     "chalk": "^2.4.2",
     "classnames": "^2.2.5",
@@ -51,10 +52,10 @@
     "react-portal": "^3.2.0",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "^3.1.1",
+    "react-scripts": "^3.2.0",
     "react-select": "^3.0.8",
     "teoria": "^2.5.0",
-    "tone": "13.8.25",
+    "tone": "14.8.49",
     "utf-8-validate": "^5.0.2"
   },
   "scripts": {
@@ -64,9 +65,10 @@
     "upload-schema": "yarn checkForFaunaKey && curl -u $FAUNADB_SERVER_SECRET: https://graphql.fauna.com/import --data-binary \"@schema.gql\"",
     "start:server": "yarn upload-schema && netlify-lambda serve functions -c ./webpack.config.js",
     "start:devserver": "NODE_ENV=development yarn start:server",
-    "build": "npm-run-all --parallel build:**",
+    "build": "npm-run-all --parallel build:** && npm run-script append-sw",
     "build:app": "craco build",
     "build:functions": "netlify-lambda build functions -c ./webpack.config.js",
+    "append-sw": "cat src/sw-epilog.js >> build/service-worker.js",
     "test": "craco test --env=jsdom",
     "eject": "react-scripts eject"
   },

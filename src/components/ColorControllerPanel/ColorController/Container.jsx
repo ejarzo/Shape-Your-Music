@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { string, array } from 'prop-types';
-import Tone from 'tone';
+import * as Tone from 'tone';
 import ColorControllerComponent from './Component';
 import { SYNTH_PRESETS } from 'instrumentPresets';
 import { SEND_CHANNELS } from 'utils/music';
@@ -28,10 +28,10 @@ class ColorController extends Component {
     const { effects } = SYNTH_PRESETS[synthType];
 
     this.fxList = [];
-    this.fxBus = new Tone.Gain(0.8);
+    this.fxBus = new Tone.Channel(0, 0);
     this.fxBus.receive(receiveChannel);
 
-    this.output = new Tone.Gain(1);
+    this.output = new Tone.Channel();
     this.output.send(SEND_CHANNELS.MASTER_OUTPUT, 0);
     this.connectEffects(effects);
 
@@ -98,13 +98,13 @@ class ColorController extends Component {
   // called by the callbacks in the synth object
   // TODO figure out better way?
   setEffectAmount(effectIndex, val, parameter) {
-    this.fxList[effectIndex].set(parameter, val);
+    this.fxList[effectIndex].set({ [parameter]: val });
   }
 
   connectEffects(fxConstructors) {
     this.disposeEffects();
 
-    this.fxBus = new Tone.Gain(0.8);
+    this.fxBus = new Tone.Channel(0, 0);
     this.fxBus.receive(this.props.receiveChannel);
 
     fxConstructors.forEach(fxObj => {

@@ -11,30 +11,12 @@ import {
   showSuccessMessage,
 } from 'utils/message';
 import ProjectContainer from 'components/Project';
-// import { CREATE_PROJECT } from 'graphql/mutations';
-// import { GET_ALL_PROJECTS, GET_MY_PROJECTS } from 'graphql/queries';
 import { ROUTES } from 'Routes';
 import { apiPostProject } from 'utils/middleware';
 
 function ProjectCreate(props) {
   const { user: currentUser, authenticate } = useContext(CurrentUserContext);
   const { history } = props;
-
-  // const [createProjectMutation] = useMutation(CREATE_PROJECT, {
-  //   refetchQueries: () => [
-  //     { query: GET_ALL_PROJECTS },
-  //     { query: GET_MY_PROJECTS },
-  //   ],
-  //   onError: showErrorMessage,
-  //   onCompleted: ({ createProject }) => {
-  //     const { _id, name } = createProject;
-  //     showSuccessMessage(`Saved "${name}"`);
-  //     history.push({
-  //       pathname: `${ROUTES.PROJECT}/${_id}`,
-  //       state: { projectData: createProject },
-  //     });
-  //   },
-  // });
 
   const saveProject = async project => {
     /* TODO: Automatically save on user login success */

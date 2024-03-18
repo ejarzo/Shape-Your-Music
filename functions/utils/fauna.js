@@ -1,5 +1,6 @@
 import faunadb from 'faunadb';
-import { initSentry } from './errors';
+import * as Sentry from '@sentry/node';
+import { initSentry, captureError } from './errors';
 
 initSentry();
 
@@ -29,7 +30,7 @@ export const withErrorWrapper = callback => async (event, context) => {
     console.log('GOT ERROR', err.name);
     console.log('ERROR MESSAGE:', err.message);
 
-    Sentry.captureException(err);
+    captureError(err, context);
     try {
       return {
         statusCode: err.requestResult.statusCode,

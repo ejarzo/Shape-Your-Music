@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CurrentUserContext } from 'context/CurrentUserContext/CurrentUserContextProvider';
-import { useQuery, useMutation } from '@apollo/react-hooks';
 import { withRouter } from 'react-router';
 
 import Loading from 'components/Loading';
@@ -14,12 +14,6 @@ import {
 
 import { DEFAULT_SYNTHS } from 'utils/synths';
 import { ROUTES } from 'Routes';
-import {
-  GET_PROJECT,
-  GET_ALL_PROJECTS,
-  GET_MY_PROJECTS,
-} from 'graphql/queries';
-import { UPDATE_PROJECT, DELETE_PROJECT } from 'graphql/mutations';
 import ErrorMessage from 'components/ErrorMessage';
 import {
   apiDeleteProject,
@@ -38,11 +32,6 @@ function ProjectEdit(props) {
 
   console.log('ProjectEdit render. projectId:', projectId);
 
-  // const { loading, data, error } = useQuery(GET_PROJECT, {
-  //   skip: !!projectData,
-  //   variables: { id: projectId },
-  // });
-
   const [{ loading, data, error }, setResult] = useState({ loading: true });
 
   useEffect(() => {
@@ -57,32 +46,7 @@ function ProjectEdit(props) {
       }
     };
     fetchData();
-  }, []);
-
-  // const [saveProjectMutation] = useMutation(UPDATE_PROJECT, {
-  //   onError: showErrorMessage,
-  //   onCompleted: ({ updateProject }) => {
-  //     const { name } = updateProject;
-  //     showSuccessMessage(`Saved "${name}"`);
-  //     // Update local state that may contain old data
-  //     history.push({
-  //       state: { projectData: updateProject },
-  //     });
-  //   },
-  // });
-
-  // const [deleteProjectMutation] = useMutation(DELETE_PROJECT, {
-  //   refetchQueries: () => [
-  //     { query: GET_ALL_PROJECTS },
-  //     { query: GET_MY_PROJECTS },
-  //   ],
-  //   onError: showErrorMessage,
-  //   onCompleted: ({ deleteProject }) => {
-  //     const { name } = deleteProject;
-  //     showSuccessMessage(`Deleted "${name}"`);
-  //     history.push(ROUTES.INDEX);
-  //   },
-  // });
+  }, [projectId]);
 
   if (loading) return <Loading />;
   if (error) return <ErrorMessage message={error.message} />;

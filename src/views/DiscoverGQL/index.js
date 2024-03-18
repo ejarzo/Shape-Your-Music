@@ -1,34 +1,37 @@
-import React, { useState } from 'react';
-import { useQuery } from '@apollo/react-hooks';
-
+import React, { useEffect, useState } from 'react';
 import ProjectList from 'components/ProjectList';
 import Loading from 'components/Loading';
 import PageContainer from 'components/PageContainer';
-import { GET_ALL_PROJECTS_SORTED_BY_DATE_CREATED } from 'graphql/queries';
 import ErrorMessage from 'components/ErrorMessage';
+import { fetchAllProjects } from 'utils/middleware';
 
 function DiscoverGQLContainer() {
-  const pageSize = 24;
-  const [cursor, setCursor] = useState(null);
-  const { loading, error, data } = useQuery(
-    GET_ALL_PROJECTS_SORTED_BY_DATE_CREATED,
-    { variables: { _size: pageSize, _cursor: cursor } }
-  );
+  const [pagination, setPagination] = useState({});
+  const [{ loading, error, data }, setResult] = useState({ loading: true });
 
-  if (loading) return <Loading />;
+  useEffect(() => {
+    setResult({ loading: true });
+    const fetchData = async () => {
+      try {
+        const result = await fetchAllProjects(pagination);
+        setResult({ loading: false, data: result });
+      } catch (error) {
+        setResult({ loading: false, error });
+      }
+    };
+    fetchData();
+  }, [pagination]);
+
   if (error) return <ErrorMessage message={error.message} />;
+  if (!data || loading) return <Loading />;
 
-  const {
-    before,
-    after,
-    data: projectsData,
-  } = data.allProjectsSortedByDateCreated;
+  const { before, after, data: projectsData } = data;
 
   const onNextPageClick = () => {
-    setCursor(after);
+    setPagination({ after });
   };
   const onPrevPageClick = () => {
-    setCursor(before);
+    setPagination({ before });
   };
 
   return (

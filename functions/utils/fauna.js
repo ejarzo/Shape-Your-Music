@@ -14,11 +14,16 @@ export const getFauna = () => ({
 export const getId = urlPath => urlPath.match(/([^\/]*)\/*$/)[0];
 export const getUserName = user => user && user.user_metadata.full_name;
 
-export const getProjectPreviewData = ({ name, userName, shapesList }) => {
-  // console.log(rest);
+export const getProjectPreviewData = ({
+  name,
+  userName,
+  shapesList,
+  dateCreated,
+}) => {
   return {
     name,
     userName,
+    dateCreated,
     shapesList,
   };
 };

@@ -27,6 +27,7 @@
     "color": "^2.0.1",
     "craco-antd": "^1.19.0",
     "date-fns": "^2.0.1",
+    "faunadb": "2.6.1",
     "file-saver": "2.0.0",
     "graphql": "^14.5.8",
     "graphql-request": "^1.8.2",

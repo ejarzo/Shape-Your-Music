@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { withRouter } from 'react-router';
-import { useMutation } from '@apollo/react-hooks';
+// import { useMutation } from '@apollo/react-hooks';
 
 import { DEFAULT_PROJECT, getProjectSaveData } from 'utils/project';
 import { CurrentUserContext } from 'context/CurrentUserContext/CurrentUserContextProvider';
@@ -11,31 +11,32 @@ import {
   showSuccessMessage,
 } from 'utils/message';
 import ProjectContainer from 'components/Project';
-import { CREATE_PROJECT } from 'graphql/mutations';
-import { GET_ALL_PROJECTS, GET_MY_PROJECTS } from 'graphql/queries';
+// import { CREATE_PROJECT } from 'graphql/mutations';
+// import { GET_ALL_PROJECTS, GET_MY_PROJECTS } from 'graphql/queries';
 import { ROUTES } from 'Routes';
+import { apiPostProject } from 'utils/middleware';
 
 function ProjectCreate(props) {
   const { user: currentUser, authenticate } = useContext(CurrentUserContext);
   const { history } = props;
 
-  const [createProjectMutation] = useMutation(CREATE_PROJECT, {
-    refetchQueries: () => [
-      { query: GET_ALL_PROJECTS },
-      { query: GET_MY_PROJECTS },
-    ],
-    onError: showErrorMessage,
-    onCompleted: ({ createProject }) => {
-      const { _id, name } = createProject;
-      showSuccessMessage(`Saved "${name}"`);
-      history.push({
-        pathname: `${ROUTES.PROJECT}/${_id}`,
-        state: { projectData: createProject },
-      });
-    },
-  });
+  // const [createProjectMutation] = useMutation(CREATE_PROJECT, {
+  //   refetchQueries: () => [
+  //     { query: GET_ALL_PROJECTS },
+  //     { query: GET_MY_PROJECTS },
+  //   ],
+  //   onError: showErrorMessage,
+  //   onCompleted: ({ createProject }) => {
+  //     const { _id, name } = createProject;
+  //     showSuccessMessage(`Saved "${name}"`);
+  //     history.push({
+  //       pathname: `${ROUTES.PROJECT}/${_id}`,
+  //       state: { projectData: createProject },
+  //     });
+  //   },
+  // });
 
-  const saveProject = project => {
+  const saveProject = async project => {
     /* TODO: Automatically save on user login success */
     if (!currentUser) {
       authenticate();
@@ -44,11 +45,18 @@ function ProjectCreate(props) {
 
     showLoadingMessage('Saving...');
     const projectSaveData = getProjectSaveData(project);
-    createProjectMutation({
-      variables: {
-        data: projectSaveData,
-      },
-    });
+    try {
+      const { data: savedProject } = await apiPostProject(projectSaveData);
+      console.log({ savedProject });
+      showSuccessMessage(`Saved "${savedProject.name}"`);
+      history.push({
+        pathname: `${ROUTES.PROJECT}/${savedProject._id}`,
+        state: { projectData: savedProject },
+      });
+    } catch (error) {
+      showErrorMessage(error);
+      return;
+    }
   };
 
   const projectProps = {

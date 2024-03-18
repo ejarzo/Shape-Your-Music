@@ -33,6 +33,12 @@ export const fetchAllProjects = async pagination => {
   return fetcher(url);
 };
 
+export const fetchMyProjects = async pagination => {
+  const queryParams = new URLSearchParams(pagination);
+  const url = `${API_URL}/my-projects?${queryParams}`;
+  return fetcher(url);
+};
+
 export const fetcher = async (url, opts) => {
   const currentUser = netlifyIdentity.currentUser();
   let token;

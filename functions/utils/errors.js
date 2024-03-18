@@ -9,6 +9,13 @@ export const initSentry = () => {
   });
 };
 
+export const captureError = (error, context) => {
+  Sentry.withScope(scope => {
+    scope.setExtra('context', context);
+    Sentry.captureException(error);
+  });
+};
+
 export const objectMap = (object, mapper) =>
   Object.entries(object).reduce(
     (acc, [key, value]) => ({

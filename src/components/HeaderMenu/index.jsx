@@ -123,7 +123,7 @@ function HeaderMenu(props) {
             ></div>
             <AntLink
               style={{
-                background: 'pink',
+                // background: 'pink',
                 padding: '0 8px',
                 borderRadius: 2,
               }}
@@ -132,6 +132,19 @@ function HeaderMenu(props) {
               onClick={() => setIsWhatsNewVisible(true)}
             >
               {`What's New`}
+            </AntLink>
+            <AntLink
+              style={{
+                background: 'rgba(191, 251, 228, 0.8)',
+                padding: '0 8px',
+                borderRadius: 2,
+              }}
+              size="small"
+              type="link"
+              href="https://eliasjarzombek.gumroad.com/l/constellation"
+              target="_blank"
+            >
+              {`Get the plugin`}
             </AntLink>
           </div>
           <div className={styles.headerAccount}>

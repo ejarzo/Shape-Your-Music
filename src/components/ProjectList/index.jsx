@@ -11,14 +11,7 @@ import { useColorThemeContext } from 'context/ColorThemeContext/useColorThemeCon
 import Color from 'color';
 
 function ProjectList(props) {
-  const {
-    title,
-    projects,
-    onPrevPageClick,
-    onNextPageClick,
-    before,
-    after,
-  } = props;
+  const { title, projects, onLoadMore, hasMore, isLoading } = props;
 
   const { isDarkMode } = useColorThemeContext();
 
@@ -101,28 +94,16 @@ function ProjectList(props) {
           })}
       </div>
       <div style={{ textAlign: 'center', marginTop: 40 }}>
-        <Space>
-          {onPrevPageClick && (
-            <Button
-              size="large"
-              type="text"
-              disabled={!before}
-              onClick={onPrevPageClick}
-            >
-              {'< Newer'}
-            </Button>
-          )}
-          {onNextPageClick && (
-            <Button
-              size="large"
-              type="text"
-              disabled={!after}
-              onClick={onNextPageClick}
-            >
-              {'Older >'}
-            </Button>
-          )}
-        </Space>
+        {hasMore && (
+          <Button
+            size="large"
+            type="primary"
+            onClick={onLoadMore}
+            loading={isLoading}
+          >
+            Load More
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ export const fetchProject = async id => {
 
 export const fetchAllProjects = async pagination => {
   const queryParams = new URLSearchParams(pagination);
-  const url = `${API_URL}/all-projects?${queryParams}`;
+  const url = `${API_URL}/v2-all-projects?${queryParams}`;
   return fetcher(url);
 };
 

@@ -4,7 +4,7 @@
   publish = "dist"
 
 [build]
-  command = "craco build"
+  command = "CI=false craco build"
   publish = "build/"
 
 [[headers]]

@@ -5,6 +5,7 @@
   
 [build]
   command = "CI=false craco build && yarn append-sw"
+  functions = "netlify/functions"
   publish = "build/"
 
 [[headers]]

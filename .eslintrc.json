@@ -5,5 +5,8 @@
     "jasmine": true
   },
   "extends": ["react-app"],
-  "plugins": ["prettier", "react", "jasmine"]
+  "plugins": ["prettier", "react", "jasmine"],
+  "rules": {
+    "import/no-anonymous-default-export": "off"
+  }
 }

@@ -5189,7 +5189,7 @@ bare-stream@^2.6.4:
   dependencies:
     streamx "^2.21.0"
 
-base64-js@^1.2.0, base64-js@^1.3.0, base64-js@^1.3.1:
+base64-js@^1.2.0, base64-js@^1.3.0, base64-js@^1.3.1, base64-js@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
@@ -8316,6 +8316,13 @@ fastq@^1.17.0, fastq@^1.17.1, fastq@^1.6.0:
   integrity sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==
   dependencies:
     reusify "^1.0.4"
+
+fauna@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/fauna/-/fauna-2.5.0.tgz#2b55dd00486342704c5cbeeab135265af33846cb"
+  integrity sha512-M20HYevQ+cDpnDc6+eZNm+bLHf95KIQNyuep97mAEMcJ5bHjgt3klbL5O3MgNsGYEPuJqf3lI0czZ5lbofnAAA==
+  dependencies:
+    base64-js "^1.5.1"
 
 faunadb@2.6.1:
   version "2.6.1"

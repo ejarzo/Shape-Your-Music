@@ -1,8 +1,8 @@
 [dev]
   command = "craco start"
-  port = 3000
   publish = "dist"
-
+  functions = "netlify/functions"
+  
 [build]
   command = "CI=false craco build && yarn append-sw"
   publish = "build/"

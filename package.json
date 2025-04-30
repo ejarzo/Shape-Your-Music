@@ -57,11 +57,11 @@
   },
   "scripts": {
     "checkForFaunaKey": "node ./scripts/check-for-fauna-key.js",
-    "start": "craco start",
+    "start": "yarn netlify dev",
     "start:app": "craco start",
     "start:server": "yarn netlify serve:functions",
     "start:devserver": "NODE_ENV=development yarn start:server",
-    "build": "CI=false yarn build:app && yarn build:functions && yarn append-sw",
+    "build": "yarn netlify build",
     "build:app": "craco build",
     "build:functions": "yarn netlify build functions",
     "append-sw": "cat src/sw-epilog.js >> build/service-worker.js",

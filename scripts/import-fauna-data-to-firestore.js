@@ -57,7 +57,7 @@ async function importProjects() {
           isMuted: shape.isMuted ?? false,
           quantizeFactor: shape.quantizeFactor ?? 1,
         })),
-        selectedSynths: project.selectedSynths,
+        selectedSynths: project.selectedSynths || [],
         userId: project.userId,
         userName: project.userName,
         dateCreated: project.dateCreated,

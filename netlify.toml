@@ -4,7 +4,7 @@
   publish = "dist"
 
 [build]
-  command = "CI=false craco build"
+  command = "CI=false craco build && yarn append-sw"
   publish = "build/"
 
 [[headers]]

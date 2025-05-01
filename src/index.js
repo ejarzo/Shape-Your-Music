@@ -20,6 +20,7 @@ serviceWorker.register({
     if (registration && registration.waiting) {
       registration.waiting.postMessage({ type: 'SKIP_WAITING' });
     }
+    serviceWorker.unregister();
     window.location.reload(true); // Force reload from server, not cache
   },
 });

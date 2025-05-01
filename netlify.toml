@@ -4,7 +4,7 @@
   functions = "netlify/functions"
   
 [build]
-  command = "CI=false craco build && yarn append-sw"
+  command = "CI=false craco build"
   functions = "netlify/functions"
   publish = "build/"
 
